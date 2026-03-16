@@ -15,6 +15,7 @@ thisCV: a web-based CV builder
   }
   forms: {
     id: {
+      title: string
       content: [
         {key: value},
       ]
