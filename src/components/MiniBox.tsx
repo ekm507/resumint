@@ -11,7 +11,7 @@ type Form = {
 
 type RowData = {
   name?: string;
-  value?: number | string;
+  value?: number | string | Array<number | string>;
 };
 
 export default function MiniBox({ form }: Prop) {
