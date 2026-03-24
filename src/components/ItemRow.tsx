@@ -10,7 +10,7 @@ export default function ItemRow({ row }: Props) {
   if (valueType === "array") {
     valueRender = (
       <div className="ItamArray flex flex-col gap-1 border p-1">
-        {value.map((item) => (
+        {(value as Array<number | string>).map((item) => (
           <div key={item} className="ItemArrayItem text-cyan-800 border">
             {item}
           </div>
@@ -27,11 +27,9 @@ export default function ItemRow({ row }: Props) {
     );
   }
   return (
-    <>
-      <div className="ItemRow flex flex-row gap-1 p-1 border ">
-        {name && <div className="itemName border p-1">{name}</div>}
-        {valueRender}
-      </div>
-    </>
+    <div className="ItemRow flex flex-row gap-1 p-1 border ">
+      {name && <div className="itemName border p-1">{name}</div>}
+      {valueRender}
+    </div>
   );
 }
