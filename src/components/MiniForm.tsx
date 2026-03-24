@@ -8,10 +8,16 @@ import {
 interface Prop {
   form: FormStructure;
   onFormChange: (id: string, newForm: FormStructure) => void;
+  onDelete: (id: string) => void;
   className?: string;
 }
 
-export default function MiniForm({ form, onFormChange, className = "" }: Prop) {
+export default function MiniForm({
+  form,
+  onFormChange,
+  onDelete,
+  className = "",
+}: Prop) {
   const { id, title, content } = form;
 
   function updateContent(newContent: Row[]) {
@@ -65,6 +71,12 @@ export default function MiniForm({ form, onFormChange, className = "" }: Prop) {
 
   return (
     <div className={"border flex flex-col gap-2" + " " + className}>
+      <button
+        className="border hover:cursor-pointer"
+        onClick={() => onDelete(id)}
+      >
+        ❌
+      </button>
       <input
         className="border p-1"
         value={title}

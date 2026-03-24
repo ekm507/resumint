@@ -45,6 +45,19 @@ export default function App() {
     setForms((prev) => prev.map((f) => (f.id === id ? form : f)));
   }
 
+  function deleteForm(id: string) {
+    setForms(forms.filter((form) => form.id !== id));
+  }
+
+  function addForm() {
+    const lastRow = forms[forms.length - 1];
+    const lastID = lastRow ? +lastRow.id : -1;
+    setForms([
+      ...forms,
+      { id: String(lastID + 1), title: "", content: [] } as FormStructure,
+    ]);
+  }
+
   return (
     <div className="flex flex-row gap-8 p-4">
       <div className="flex flex-col text-3xl p-3 border">
@@ -53,9 +66,17 @@ export default function App() {
             key={form.id}
             className="border p-1 flex flex-col items-center justify-center w-max h-full"
           >
-            <MiniForm form={form} onFormChange={setForm} />
+            <MiniForm
+              form={form}
+              onFormChange={setForm}
+              onDelete={deleteForm}
+            />
           </div>
         ))}
+        <button className="border hover:cursor-pointer" onClick={addForm}>
+          {" "}
+          +{" "}
+        </button>
       </div>
       <div className="flex flex-col gap-4 p-3 border items-center justify-center h-full text-3xl">
         {forms.map((form, index) => (
