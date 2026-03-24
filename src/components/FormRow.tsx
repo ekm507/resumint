@@ -21,18 +21,31 @@ export default function FormRow({ rowData, className = "" }: Props) {
     );
   } else if (typeof value == "number") {
     valueRender = (
-      <div className="ItemNumber text-amber-800 border p-1">{value}</div>
+      <input
+        key="value"
+        type="number"
+        placeholder="numberic value"
+        className="ItemString text-amber-800 border p-1"
+      />
     );
   } else if (typeof value == "string") {
     valueRender = (
-      <div className="ItemString text-blue-800 border p-1">{value}</div>
+      <input
+        key="value"
+        placeholder="string value"
+        className="ItemString text-blue-800 border p-1"
+      />
     );
   }
   return (
     <div
       className={"ItemRow flex flex-row gap-1 p-1 border " + " " + className}
     >
-      {name && <div className="itemName border p-1">{name}</div>}
+      <input
+        key="name"
+        placeholder="item name"
+        className="itemName border p-1"
+      />
       {valueRender}
     </div>
   );
