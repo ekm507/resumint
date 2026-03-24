@@ -71,7 +71,24 @@ export default function FormRow({
           setName(rowID, e.target.value);
         }}
       />
-      {valueRender}
+      <div className="flex flex-row">
+        <div className="relative inline-block">
+          <select
+            className="drawer"
+            onChange={(e) => {
+              setValueType(e.target.value);
+            }}
+          >
+            {["string", "number", "array"].map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {valueRender}
+      </div>
     </div>
   );
 }
