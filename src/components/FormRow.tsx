@@ -1,12 +1,12 @@
-import { useState } from "react";
-
 interface Props {
-  setName: (rowID: string | number, name: string) => void;
+  setName: (rowID: number, name: string) => void;
   setValue: (
-    rowID: string | number,
+    rowID: number,
     value: number | string | Array<string | number>,
   ) => void;
-  rowID: string | number;
+  rowID: number;
+  valueType: "string" | "number" | "array";
+  setValueType: (rowID: number, value: "string" | "number" | "array") => void;
   className?: string;
 }
 
@@ -14,9 +14,10 @@ export default function FormRow({
   setName,
   setValue,
   rowID,
+  valueType,
+  setValueType,
   className = "",
 }: Props) {
-  const [valueType, setValueType] = useState("string");
   const value = [""] as Array<string | number>;
   let valueRender;
   if (valueType === "array") {
@@ -77,7 +78,10 @@ export default function FormRow({
             value={valueType}
             className="w-8 h-8 appearance-none text-transparent cursor-pointer border rounded"
             onChange={(e) => {
-              setValueType(e.target.value);
+              setValueType(
+                rowID,
+                e.target.value as "string" | "number" | "array",
+              );
             }}
           >
             {["string", "number", "array"].map((item, index) => (
