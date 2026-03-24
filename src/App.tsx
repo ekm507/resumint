@@ -72,6 +72,7 @@ export default function App() {
   }
 
   function importData(event: ChangeEvent<HTMLInputElement>) {
+    // TODO check if json is in intended format
     const process = async () => {
       const file = event.target.files?.[0];
       if (!file) return;
