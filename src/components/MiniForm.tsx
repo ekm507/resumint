@@ -7,22 +7,21 @@ interface Prop {
 
 export default function MiniForm({ className = "" }: Prop) {
   type Row = {
-    [rowID: string]: {
-      name: string;
-      value: string | number | Array<string | number>;
-    };
+    rowID: string;
+    name: string;
+    value: string | number | Array<string | number>;
   };
   const [rowData, setRowData] = useState<Row[]>([
-    { ["rowID"]: { name: "", value: "" } },
+    { rowID: "0", name: "", value: "" },
   ]);
 
   function setName(rowID: string | number, name: string) {
     setRowData((prev) =>
       prev.map((row) =>
-        row[rowID]
+        row.rowID === rowID
           ? {
               ...row,
-              [rowID]: { ...row[rowID], name },
+              name,
             }
           : row,
       ),
@@ -34,10 +33,10 @@ export default function MiniForm({ className = "" }: Prop) {
   ) {
     setRowData((prev) =>
       prev.map((row) =>
-        row[rowID]
+        row.rowID === rowID
           ? {
               ...row,
-              [rowID]: { ...row[rowID], value },
+              value,
             }
           : row,
       ),
