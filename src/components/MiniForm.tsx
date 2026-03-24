@@ -72,10 +72,10 @@ export default function MiniForm({ className = "" }: Prop) {
   return (
     <div className={"border flex flex-col gap-2" + " " + className}>
       <p className="border p-1">this is a form</p>
-      {rowData.map((item, rowID) => (
+      {rowData.map((item) => (
         <FormRow
-          key={rowID}
-          rowID={rowID}
+          key={item.rowID}
+          rowID={item.rowID}
           setName={setName}
           setValue={setValue}
           valueType={item.valueType}
