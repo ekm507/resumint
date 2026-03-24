@@ -1,14 +1,13 @@
+import type { Row } from "../utils/types";
+
 interface Props {
-  rowData: {
-    name?: string;
-    value?: number | string | Array<string | number>;
-  };
+  row: Row;
 }
 
-export default function ItemRow({ rowData }: Props) {
-  const { name, value } = rowData;
+export default function ItemRow({ row }: Props) {
+  const { name, value, valueType } = row;
   let valueRender;
-  if (Array.isArray(value)) {
+  if (valueType === "array") {
     valueRender = (
       <div className="ItamArray flex flex-col gap-1 border p-1">
         {value.map((item) => (
