@@ -7,10 +7,15 @@ interface Prop {
   className?: string;
 }
 
-export default function MiniForm({ className = "" }: Prop) {
-  const [rowData, setRowData] = useState<Row[]>([
-    { id: "0", name: "", value: "", valueType: "string" },
-  ]);
+export default function MiniForm({
+  initialForm,
+  onFormChange,
+  className = "",
+}: Prop) {
+  const initialRowData = initialForm
+    ? initialForm.content
+    : ([{ id: "0", name: "", value: "", valueType: "string" }] as Row[]);
+  const [rowData, setRowData] = useState(initialRowData as Row[]);
 
   function setName(id: string, name: string) {
     setRowData((prev) =>
@@ -56,7 +61,6 @@ export default function MiniForm({ className = "" }: Prop) {
         {
           id: String(lastID + 1),
           name: "",
-          value: "",
           valueType: lastValueType,
         },
       ];
@@ -74,6 +78,8 @@ export default function MiniForm({ className = "" }: Prop) {
         <FormRow
           key={item.id}
           id={item.id}
+          name={item.name}
+          value={item.value}
           setName={setName}
           setValue={setValue}
           valueType={item.valueType}
