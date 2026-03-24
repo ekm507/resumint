@@ -43,6 +43,13 @@ export default function MiniForm({ className = "" }: Prop) {
     );
   }
 
+  function addRow() {
+    setRowData((prev) => {
+      const last = prev[prev.length - 1].rowID;
+      return [...prev, { rowID: last + 1, name: "", value: "" }];
+    });
+  }
+
   return (
     <div className={"border flex flex-col gap-2" + " " + className}>
       <p className="border p-1">this is a form</p>
@@ -54,6 +61,7 @@ export default function MiniForm({ className = "" }: Prop) {
           setValue={setValue}
         />
       ))}
+      <button onClick={addRow}>+</button>
     </div>
   );
 }
