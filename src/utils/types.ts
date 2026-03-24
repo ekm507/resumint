@@ -2,7 +2,7 @@ export type ValueTypeName = "string" | "number" | "array";
 export type ValueType = string | number | Array<string | number>;
 
 export type Row = {
-  id: string; // Using string for ID for more flexibility
+  id: string;
   name: string;
   valueType?: ValueTypeName;
   value: ValueType;
@@ -10,7 +10,7 @@ export type Row = {
 
 export type FormStructure = {
   id: string;
-  title?: string;
+  title: string;
   content: Row[];
 };
 
