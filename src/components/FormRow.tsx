@@ -74,7 +74,8 @@ export default function FormRow({
       <div className="flex flex-row">
         <div className="relative inline-block">
           <select
-            className="drawer"
+            value={valueType}
+            className="w-8 h-8 appearance-none text-transparent cursor-pointer border rounded"
             onChange={(e) => {
               setValueType(e.target.value);
             }}
@@ -85,6 +86,9 @@ export default function FormRow({
               </option>
             ))}
           </select>
+          <span className="absolute inset-0 pointer-events-none">
+            {{ array: 0, number: 1, string: 2 }[valueType]}▼
+          </span>
         </div>
 
         {valueRender}
