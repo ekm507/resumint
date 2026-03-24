@@ -1,25 +1,21 @@
 import { useState } from "react";
 import FormRow from "./FormRow";
-
+import type { ValueTypeName, FormStructure, Row } from "../utils/types";
 interface Prop {
+  initialForm?: Partial<FormStructure>;
+  onFormChange?: (newForm: FormStructure) => void;
   className?: string;
 }
 
 export default function MiniForm({ className = "" }: Prop) {
-  type Row = {
-    rowID: number;
-    name: string;
-    valueType: "string" | "number" | "array";
-    value: string | number | Array<string | number>;
-  };
   const [rowData, setRowData] = useState<Row[]>([
-    { rowID: 0, name: "", value: "", valueType: "string" },
+    { id: "0", name: "", value: "", valueType: "string" },
   ]);
 
-  function setName(rowID: number | number, name: string) {
+  function setName(id: string, name: string) {
     setRowData((prev) =>
       prev.map((row) =>
-        row.rowID === rowID
+        row.id === id
           ? {
               ...row,
               name,
@@ -29,12 +25,12 @@ export default function MiniForm({ className = "" }: Prop) {
     );
   }
   function setValue(
-    rowID: number,
+    id: string,
     value: number | string | Array<string | number>,
   ) {
     setRowData((prev) =>
       prev.map((row) =>
-        row.rowID === rowID
+        row.id === id
           ? {
               ...row,
               value,
@@ -44,29 +40,31 @@ export default function MiniForm({ className = "" }: Prop) {
     );
   }
 
-  function setValueType(
-    rowID: number,
-    valueType: "string" | "number" | "array",
-  ) {
+  function setValueType(id: string, valueType: ValueTypeName) {
     setRowData((prev) =>
-      prev.map((row) => (row.rowID === rowID ? { ...row, valueType } : row)),
+      prev.map((row) => (row.id === id ? { ...row, valueType } : row)),
     );
   }
 
   function addRow() {
     setRowData((prev) => {
       const lastRow = prev[prev.length - 1];
-      const lastID = lastRow ? Number(lastRow.rowID) : -1; // start at -1 so next becomes 0
+      const lastID = lastRow ? +lastRow.id : -1;
       const lastValueType = lastRow ? lastRow.valueType : "string";
       return [
         ...prev,
-        { rowID: lastID + 1, name: "", value: "", valueType: lastValueType },
+        {
+          id: String(lastID + 1),
+          name: "",
+          value: "",
+          valueType: lastValueType,
+        },
       ];
     });
   }
 
-  function deleteRow(rowID: number) {
-    setRowData((prev) => prev.filter((item) => item.rowID !== rowID));
+  function deleteRow(id: string) {
+    setRowData((prev) => prev.filter((item) => item.id !== id));
   }
 
   return (
@@ -74,8 +72,8 @@ export default function MiniForm({ className = "" }: Prop) {
       <p className="border p-1">this is a form</p>
       {rowData.map((item) => (
         <FormRow
-          key={item.rowID}
-          rowID={item.rowID}
+          key={item.id}
+          id={item.id}
           setName={setName}
           setValue={setValue}
           valueType={item.valueType}

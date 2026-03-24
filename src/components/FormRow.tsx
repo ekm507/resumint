@@ -1,20 +1,19 @@
+import type { ValueType, ValueTypeName } from "../utils/types";
+
 interface Props {
-  setName: (rowID: number, name: string) => void;
-  setValue: (
-    rowID: number,
-    value: number | string | Array<string | number>,
-  ) => void;
-  rowID: number;
-  valueType: "string" | "number" | "array";
-  setValueType: (rowID: number, value: "string" | "number" | "array") => void;
-  deleteSelf: (rowID: number) => void;
+  setName: (id: string, name: string) => void;
+  setValue: (id: string, value: ValueType) => void;
+  id: string;
+  valueType: ValueTypeName;
+  setValueType: (id: string, value: ValueTypeName) => void;
+  deleteSelf: (id: string) => void;
   className?: string;
 }
 
 export default function FormRow({
   setName,
   setValue,
-  rowID,
+  id,
   valueType,
   setValueType,
   deleteSelf,
@@ -32,7 +31,7 @@ export default function FormRow({
             placeholder="string or number"
             onChange={(event) => {
               value[index] = event.target.value;
-              setValue(rowID, value);
+              setValue(id, value);
             }}
           />
         ))}
@@ -46,7 +45,7 @@ export default function FormRow({
         placeholder="numberic value"
         className="ItemString text-amber-800 border p-1"
         onChange={(event) => {
-          setValue(rowID, event.target.value);
+          setValue(id, event.target.value);
         }}
       />
     );
@@ -57,7 +56,7 @@ export default function FormRow({
         placeholder="string value"
         className="ItemString text-blue-800 border p-1"
         onChange={(event) => {
-          setValue(rowID, event.target.value);
+          setValue(id, event.target.value);
         }}
       />
     );
@@ -66,13 +65,13 @@ export default function FormRow({
     <div
       className={"ItemRow flex flex-row gap-1 p-1 border " + " " + className}
     >
-      <button onClick={() => deleteSelf(rowID)}>🗑️</button>
+      <button onClick={() => deleteSelf(id)}>🗑️</button>
       <input
         key="name"
         placeholder="item name"
         className="itemName border p-1"
         onChange={(e) => {
-          setName(rowID, e.target.value);
+          setName(id, e.target.value);
         }}
       />
       <div className="flex flex-row">
@@ -81,10 +80,7 @@ export default function FormRow({
             value={valueType}
             className="w-8 h-8 appearance-none text-transparent cursor-pointer border rounded"
             onChange={(e) => {
-              setValueType(
-                rowID,
-                e.target.value as "string" | "number" | "array",
-              );
+              setValueType(id, e.target.value as "string" | "number" | "array");
             }}
           >
             {["string", "number", "array"].map((item, index) => (
