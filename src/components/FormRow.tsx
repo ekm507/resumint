@@ -1,7 +1,10 @@
 import type { ValueType, ValueTypeName } from "../utils/types";
+import { GetDefaultValue } from "../utils/types";
 
 interface Props {
+  name?: string;
   setName: (id: string, name: string) => void;
+  value?: ValueType;
   setValue: (id: string, value: ValueType) => void;
   id: string;
   valueType: ValueTypeName;
@@ -11,7 +14,9 @@ interface Props {
 }
 
 export default function FormRow({
+  name = "",
   setName,
+  value = "",
   setValue,
   id,
   valueType,
@@ -19,19 +24,23 @@ export default function FormRow({
   deleteSelf,
   className = "",
 }: Props) {
-  const value = [""] as Array<string | number>;
   let valueRender;
   if (valueType === "array") {
     valueRender = (
       <div className="ItamArray flex flex-col gap-1 border p-1">
-        {value.map((_, index) => (
+        {(value as Array<string | number>).map((item, index) => (
           <input
             key={index}
+            value={item as string | number}
             className="ItemArrayItem text-cyan-800 border"
             placeholder="string or number"
             onChange={(event) => {
-              value[index] = event.target.value;
-              setValue(id, value);
+              setValue(
+                id,
+                (value as Array<string | number>).map((item, i) =>
+                  i === index ? event.target.value : item,
+                ),
+              );
             }}
           />
         ))}
@@ -42,6 +51,7 @@ export default function FormRow({
       <input
         key="value"
         type="number"
+        value={value as number}
         placeholder="numberic value"
         className="ItemString text-amber-800 border p-1"
         onChange={(event) => {
@@ -53,6 +63,7 @@ export default function FormRow({
     valueRender = (
       <input
         key="value"
+        value={value as string}
         placeholder="string value"
         className="ItemString text-blue-800 border p-1"
         onChange={(event) => {
@@ -67,6 +78,7 @@ export default function FormRow({
     >
       <button onClick={() => deleteSelf(id)}>🗑️</button>
       <input
+        defaultValue={name}
         key="name"
         placeholder="item name"
         className="itemName border p-1"
@@ -80,7 +92,9 @@ export default function FormRow({
             value={valueType}
             className="w-8 h-8 appearance-none text-transparent cursor-pointer border rounded"
             onChange={(e) => {
-              setValueType(id, e.target.value as "string" | "number" | "array");
+              const type = e.target.value as ValueTypeName;
+              setValueType(id, type);
+              setValue(id, GetDefaultValue(type));
             }}
           >
             {["string", "number", "array"].map((item, index) => (
