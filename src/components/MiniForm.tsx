@@ -1,6 +1,11 @@
 import { useState } from "react";
 import FormRow from "./FormRow";
-import type { ValueTypeName, FormStructure, Row } from "../utils/types";
+import {
+  type ValueTypeName,
+  type FormStructure,
+  type Row,
+  GetDefaultValue,
+} from "../utils/types";
 interface Prop {
   initialForm?: Partial<FormStructure>;
   onFormChange?: (newForm: FormStructure) => void;
@@ -15,6 +20,7 @@ export default function MiniForm({
   const initialRowData = initialForm
     ? initialForm.content
     : ([{ id: "0", name: "", value: "", valueType: "string" }] as Row[]);
+  const title = initialForm ? initialForm.title : "";
   const [rowData, setRowData] = useState(initialRowData as Row[]);
 
   function setName(id: string, name: string) {
@@ -55,12 +61,15 @@ export default function MiniForm({
     setRowData((prev) => {
       const lastRow = prev[prev.length - 1];
       const lastID = lastRow ? +lastRow.id : -1;
-      const lastValueType = lastRow ? lastRow.valueType : "string";
+      const lastValueType = lastRow
+        ? (lastRow.valueType as ValueTypeName)
+        : ("string" as ValueTypeName);
       return [
         ...prev,
         {
           id: String(lastID + 1),
           name: "",
+          value: GetDefaultValue(lastValueType),
           valueType: lastValueType,
         },
       ];
@@ -73,7 +82,7 @@ export default function MiniForm({
 
   return (
     <div className={"border flex flex-col gap-2" + " " + className}>
-      <p className="border p-1">this is a form</p>
+      <p className="border p-1">{title}</p>
       {rowData.map((item) => (
         <FormRow
           key={item.id}
@@ -82,7 +91,7 @@ export default function MiniForm({
           value={item.value}
           setName={setName}
           setValue={setValue}
-          valueType={item.valueType}
+          valueType={item.valueType ? item.valueType : "string"}
           setValueType={setValueType}
           deleteSelf={deleteRow}
         />
