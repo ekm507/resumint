@@ -1,5 +1,3 @@
-import type React from "react";
-
 interface Props {
   rowData: {
     name?: string;
@@ -31,7 +29,7 @@ export default function ItemRow({ rowData }: Props) {
   }
   return (
     <>
-      <div className="ItemRow flex flex-row gap-1 p-2 border ">
+      <div className="ItemRow flex flex-row gap-1 p-1 border ">
         {name && <div className="itemName border p-1">{name}</div>}
         {valueRender}
       </div>
