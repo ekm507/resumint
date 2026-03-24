@@ -1,4 +1,3 @@
-import { useState } from "react";
 import FormRow from "./FormRow";
 import {
   type ValueTypeName,
@@ -7,83 +6,72 @@ import {
   GetDefaultValue,
 } from "../utils/types";
 interface Prop {
-  initialForm?: Partial<FormStructure>;
-  onFormChange?: (newForm: FormStructure) => void;
+  form: FormStructure;
+  onFormChange: (id: string, newForm: FormStructure) => void;
   className?: string;
 }
 
-export default function MiniForm({
-  initialForm,
-  onFormChange,
-  className = "",
-}: Prop) {
-  const initialRowData = initialForm
-    ? initialForm.content
-    : ([{ id: "0", name: "", value: "", valueType: "string" }] as Row[]);
-  const title = initialForm ? initialForm.title : "";
-  const [rowData, setRowData] = useState(initialRowData as Row[]);
+export default function MiniForm({ form, onFormChange, className = "" }: Prop) {
+  const { id, title, content } = form;
 
-  function setName(id: string, name: string) {
-    setRowData((prev) =>
-      prev.map((row) =>
-        row.id === id
-          ? {
-              ...row,
-              name,
-            }
-          : row,
-      ),
+  function updateContent(newContent: Row[]) {
+    onFormChange(id, { ...form, content: newContent });
+  }
+
+  function setName(rowId: string, name: string) {
+    updateContent(
+      content.map((row) => (row.id === rowId ? { ...row, name } : row)),
     );
   }
   function setValue(
-    id: string,
+    rowId: string,
     value: number | string | Array<string | number>,
   ) {
-    setRowData((prev) =>
-      prev.map((row) =>
-        row.id === id
-          ? {
-              ...row,
-              value,
-            }
-          : row,
-      ),
+    updateContent(
+      content.map((row) => (row.id === rowId ? { ...row, value } : row)),
     );
   }
 
-  function setValueType(id: string, valueType: ValueTypeName) {
-    setRowData((prev) =>
-      prev.map((row) => (row.id === id ? { ...row, valueType } : row)),
+  function setValueType(rowId: string, valueType: ValueTypeName) {
+    updateContent(
+      content.map((row) => (row.id === rowId ? { ...row, valueType } : row)),
     );
+  }
+
+  function setTitle(title: string) {
+    onFormChange(id, { ...form, title });
   }
 
   function addRow() {
-    setRowData((prev) => {
-      const lastRow = prev[prev.length - 1];
-      const lastID = lastRow ? +lastRow.id : -1;
-      const lastValueType = lastRow
-        ? (lastRow.valueType as ValueTypeName)
-        : ("string" as ValueTypeName);
-      return [
-        ...prev,
-        {
-          id: String(lastID + 1),
-          name: "",
-          value: GetDefaultValue(lastValueType),
-          valueType: lastValueType,
-        },
-      ];
-    });
+    const lastRow = content[content.length - 1];
+    const lastID = lastRow ? +lastRow.id : -1;
+    const lastValueType = lastRow
+      ? (lastRow.valueType as ValueTypeName)
+      : ("string" as ValueTypeName);
+    updateContent([
+      ...content,
+      {
+        id: String(lastID + 1),
+        name: "",
+        value: GetDefaultValue(lastValueType),
+        valueType: lastValueType,
+      },
+    ]);
   }
 
-  function deleteRow(id: string) {
-    setRowData((prev) => prev.filter((item) => item.id !== id));
+  function deleteRow(rowId: string) {
+    updateContent(content.filter((item) => item.id !== rowId));
   }
 
   return (
     <div className={"border flex flex-col gap-2" + " " + className}>
-      <p className="border p-1">{title}</p>
-      {rowData.map((item) => (
+      <input
+        className="border p-1"
+        value={title}
+        placeholder="Title"
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      {content.map((item) => (
         <FormRow
           key={item.id}
           id={item.id}

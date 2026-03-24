@@ -36,11 +36,12 @@ export default function App() {
     },
     {
       id: "2",
+      title: "",
       content: [],
     },
   ] as FormStructure[]);
 
-  function setForm(id, form) {
+  function setForm(id: string, form: FormStructure) {
     setForms((prev) => prev.map((f) => (f.id === id ? form : f)));
   }
 
@@ -52,7 +53,7 @@ export default function App() {
             key={form.id}
             className="border p-1 flex flex-col items-center justify-center w-max h-full"
           >
-            <MiniForm initialForm={form} />
+            <MiniForm form={form} onFormChange={setForm} />
           </div>
         ))}
       </div>
