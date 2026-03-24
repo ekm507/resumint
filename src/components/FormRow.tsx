@@ -7,6 +7,7 @@ interface Props {
   rowID: number;
   valueType: "string" | "number" | "array";
   setValueType: (rowID: number, value: "string" | "number" | "array") => void;
+  deleteSelf: (rowID: number) => void;
   className?: string;
 }
 
@@ -16,6 +17,7 @@ export default function FormRow({
   rowID,
   valueType,
   setValueType,
+  deleteSelf,
   className = "",
 }: Props) {
   const value = [""] as Array<string | number>;
@@ -64,6 +66,7 @@ export default function FormRow({
     <div
       className={"ItemRow flex flex-row gap-1 p-1 border " + " " + className}
     >
+      <button onClick={() => deleteSelf(rowID)}>🗑️</button>
       <input
         key="name"
         placeholder="item name"

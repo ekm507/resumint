@@ -55,13 +55,18 @@ export default function MiniForm({ className = "" }: Prop) {
 
   function addRow() {
     setRowData((prev) => {
-      const last = prev[prev.length - 1].rowID;
-      const lastValueType = prev[prev.length - 1].valueType;
+      const lastRow = prev[prev.length - 1];
+      const lastID = lastRow ? Number(lastRow.rowID) : -1; // start at -1 so next becomes 0
+      const lastValueType = lastRow ? lastRow.valueType : "string";
       return [
         ...prev,
-        { rowID: last + 1, name: "", value: "", valueType: lastValueType },
+        { rowID: lastID + 1, name: "", value: "", valueType: lastValueType },
       ];
     });
+  }
+
+  function deleteRow(rowID: number) {
+    setRowData((prev) => prev.filter((item) => item.rowID !== rowID));
   }
 
   return (
@@ -75,6 +80,7 @@ export default function MiniForm({ className = "" }: Prop) {
           setValue={setValue}
           valueType={item.valueType}
           setValueType={setValueType}
+          deleteSelf={deleteRow}
         />
       ))}
       <button onClick={addRow}>+</button>
