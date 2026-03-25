@@ -108,9 +108,9 @@ export default function App() {
           className="toolbar-button"
           onClick={() => {
             const a = document.getElementById("editor-panel");
-            a.style.display = "none";
+            if (a) a.style.display = "none";
             printPDF();
-            a.style.display = "flex";
+            if (a) a.style.display = "flex";
           }}
         >
           Print
