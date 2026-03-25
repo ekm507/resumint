@@ -8,6 +8,8 @@ export type Row = {
   value: ValueType;
 };
 
+export type DirTypeNames = "lrt" | "rtl" | "auto";
+
 export type FormStructure = {
   id: string;
   title: string;
