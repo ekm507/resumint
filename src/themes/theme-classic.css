@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+.theme-classic.resume {
+    @apply font-serif text-gray-900 bg-white border p-8;
+}
+
+.theme-classic .resume-section {
+    @apply flex flex-col gap-2 py-3 border-b border-gray-300;
+}
+
+.theme-classic .resume-section-title {
+    @apply text-xl font-bold uppercase tracking-wide text-gray-800;
+}
+
+.theme-classic .resume-section-content {
+    @apply flex flex-col gap-1;
+}
+
+.theme-classic .resume-item {
+    @apply flex gap-2;
+}
+
+.theme-classic .resume-item-name {
+    @apply font-semibold min-w-[130px];
+}
+
+.theme-classic .resume-item-value {
+    @apply text-gray-700;
+}
+
+.theme-classic .resume-item-array {
+    @apply flex flex-wrap gap-1;
+}
+
+.theme-classic .resume-array-item {
+    @apply text-gray-700;
+}
