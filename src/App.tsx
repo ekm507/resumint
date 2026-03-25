@@ -157,7 +157,6 @@ export default function App() {
           </button>
         </div>
 
-        {/* RESUME RENDER */}
         <div
           id="resume-render"
           ref={resumeRef}
