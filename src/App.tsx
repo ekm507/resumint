@@ -46,7 +46,7 @@ export default function App() {
   }
 
   function deleteForm(id: string) {
-    setForms(forms.filter((form) => form.id !== id));
+    setForms((prev) => prev.filter((form) => form.id !== id));
   }
 
   function addForm() {
@@ -122,12 +122,12 @@ export default function App() {
           </button>
         </div>
         <div className="flex flex-col gap-4 p-3 border items-center justify-center h-full text-3xl">
-          {forms.map((form, index) => (
+          {forms.map((form) => (
             <div
-              key={index}
+              key={form.id}
               className="border p-1 flex flex-col items-center justify-center w-max h-full"
             >
-              <MiniBox key={form.title} form={form} />
+              <MiniBox form={form} />
             </div>
           ))}
         </div>
