@@ -35,3 +35,11 @@
 .theme-minimal .resume-array-item {
     @apply text-gray-600;
 }
+/* COLUMN LAYOUT */
+.theme-minimal .resume-columns {
+    @apply grid grid-cols-2 gap-10;
+}
+
+.theme-minimal .resume-column {
+    @apply flex flex-col gap-5;
+}

@@ -35,3 +35,12 @@
 .theme-classic .resume-array-item {
     @apply text-gray-700;
 }
+
+/* COLUMN LAYOUT */
+.theme-classic .resume-columns {
+    @apply grid grid-cols-2 gap-8;
+}
+
+.theme-classic .resume-column {
+    @apply flex flex-col gap-4;
+}

@@ -39,3 +39,12 @@
 .theme-terminal .resume-array-item {
     @apply border border-green-700 px-2;
 }
+
+/* COLUMN LAYOUT */
+.theme-terminal .resume-columns {
+    @apply grid grid-cols-2 gap-6 border-t border-green-700 pt-4;
+}
+
+.theme-terminal .resume-column {
+    @apply flex flex-col gap-3;
+}

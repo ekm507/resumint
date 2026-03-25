@@ -169,22 +169,23 @@ export default function App() {
         <div
           id="resume-render"
           ref={resumeRef}
-          className={"resume " + "theme-" + theme}
+          className={"resume theme-" + theme}
         >
-          {left.map((item) => {
-            const form = forms.find((f) => f.id === item.id);
-            if (form) return <MiniBox key={item.id} form={form} />;
-          })}{" "}
-        </div>
-        <div
-          id="resume-render"
-          ref={resumeRef}
-          className={"resume " + "theme-" + theme}
-        >
-          {right.map((item) => {
-            const form = forms.find((f) => f.id === item.id);
-            if (form) return <MiniBox key={item.id} form={form} />;
-          })}{" "}
+          <div className="resume-columns">
+            <div className="resume-column">
+              {left.map((item) => {
+                const form = forms.find((f) => f.id === item.id);
+                if (form) return <MiniBox key={item.id} form={form} />;
+              })}
+            </div>
+
+            <div className="resume-column">
+              {right.map((item) => {
+                const form = forms.find((f) => f.id === item.id);
+                if (form) return <MiniBox key={item.id} form={form} />;
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>

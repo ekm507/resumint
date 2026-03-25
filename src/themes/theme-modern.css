@@ -57,3 +57,12 @@
 .theme-modern .resume-array-item {
     @apply px-2 py-1 bg-cyan-100 text-cyan-800 rounded border text-sm;
 }
+
+/* COLUMN LAYOUT */
+.theme-modern .resume-columns {
+    @apply grid grid-cols-2 gap-6;
+}
+
+.theme-modern .resume-column {
+    @apply flex flex-col gap-4;
+}
