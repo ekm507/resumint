@@ -79,7 +79,6 @@ export default function FormRow({
       <button onClick={() => deleteSelf(id)}>🗑️</button>
       <input
         value={name}
-        key="name"
         placeholder="item name"
         className="itemName border p-1"
         onChange={(e) => {
