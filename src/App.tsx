@@ -4,6 +4,9 @@ import MiniForm from "./components/MiniForm";
 import type { FormStructure } from "./utils/types";
 import { themeNames } from "./themes";
 
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+
 export default function App() {
   const [forms, setForms] = useState([
     {
@@ -91,9 +94,27 @@ export default function App() {
     process();
   }
 
+  const resumeRef = useRef<HTMLDivElement>(null);
+
+  const printPDF = useReactToPrint({
+    contentRef: resumeRef,
+    documentTitle: "resume",
+  });
+
   return (
     <div className="app-root">
       <div className="app-toolbar">
+        <button
+          className="toolbar-button"
+          onClick={() => {
+            const a = document.getElementById("editor-panel");
+            a.style.display = "none";
+            printPDF();
+            a.style.display = "flex";
+          }}
+        >
+          Print
+        </button>
         <button className="toolbar-button" onClick={() => exportData()}>
           export data
         </button>
@@ -120,7 +141,7 @@ export default function App() {
 
       <div className="app-layout">
         {/* FORM EDITOR */}
-        <div className="editor-panel">
+        <div className="editor-panel" id="editor-panel">
           {forms.map((form) => (
             <div key={form.id} className="editor-form-wrapper">
               <MiniForm
@@ -137,7 +158,11 @@ export default function App() {
         </div>
 
         {/* RESUME RENDER */}
-        <div id="resume-render" className={"resume " + "theme-" + theme}>
+        <div
+          id="resume-render"
+          ref={resumeRef}
+          className={"resume " + "theme-" + theme}
+        >
           {forms.map((form) => (
             <div key={form.id} className="resume-section-wrapper">
               <MiniBox form={form} />
