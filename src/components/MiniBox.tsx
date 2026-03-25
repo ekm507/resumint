@@ -7,12 +7,14 @@ interface Prop {
 }
 
 export default function MiniBox({ form, dir = "auto" }: Prop) {
-  const rendered = (
-    <div className="formbox flex flex-col gap-1" dir={dir}>
-      {form.title && <h1 className="p-1 border">{form.title}</h1>}
-      {form.content &&
-        form.content.map((item) => <ItemRow key={item.id} row={item} />)}
-    </div>
+  return (
+    <section className="resume-section" dir={dir}>
+      {form.title && <h1 className="resume-section-title">{form.title}</h1>}
+
+      <div className="resume-section-content">
+        {form.content &&
+          form.content.map((item) => <ItemRow key={item.id} row={item} />)}
+      </div>
+    </section>
   );
-  return rendered;
 }

@@ -6,12 +6,14 @@ interface Props {
 
 export default function ItemRow({ row }: Props) {
   const { name, value, valueType } = row;
+
   let valueRender;
+
   if (valueType === "array") {
     valueRender = (
-      <div className="ItamArray flex flex-col gap-1 border p-1">
+      <div className="resume-item-value resume-item-array">
         {(value as Array<number | string>).map((item) => (
-          <div key={item} className="ItemArrayItem text-cyan-800 border">
+          <div key={item} className="resume-array-item">
             {item}
           </div>
         ))}
@@ -19,16 +21,17 @@ export default function ItemRow({ row }: Props) {
     );
   } else if (valueType === "number") {
     valueRender = (
-      <div className="ItemNumber text-amber-800 border p-1">{value}</div>
+      <div className="resume-item-value resume-item-number">{value}</div>
     );
   } else if (valueType === "string") {
     valueRender = (
-      <div className="ItemString text-blue-800 border p-1">{value}</div>
+      <div className="resume-item-value resume-item-string">{value}</div>
     );
   }
+
   return (
-    <div className="ItemRow flex flex-row gap-1 p-1 border ">
-      {name && <div className="itemName border p-1">{name}</div>}
+    <div className="resume-item">
+      {name && <div className="resume-item-name">{name}</div>}
       {valueRender}
     </div>
   );
