@@ -89,22 +89,19 @@ export default function FormRow({
         <div className="relative inline-block">
           <select
             value={valueType}
-            className="w-8 h-8 appearance-none text-transparent cursor-pointer border rounded"
+            className=" cursor-pointer border rounded"
             onChange={(e) => {
               const type = e.target.value as ValueTypeName;
               setValueType(id, type);
               setValue(id, GetDefaultValue(type));
             }}
           >
-            {["string", "number", "array"].map((item, index) => (
-              <option key={index} value={item}>
+            {["string", "number", "array"].map((item) => (
+              <option key={item} value={item}>
                 {item}
               </option>
             ))}
           </select>
-          <span className="absolute inset-0 pointer-events-none">
-            {{ array: 0, number: 1, string: 2 }[valueType]}▼
-          </span>
         </div>
 
         {valueRender}
