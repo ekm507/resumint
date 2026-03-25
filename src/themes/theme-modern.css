@@ -1,41 +1,5 @@
 @import "tailwindcss";
 
-/* APP LAYOUT */
-
-.app-root {
-    @apply flex flex-col items-center gap-4 p-4;
-}
-
-.app-toolbar {
-    @apply flex gap-4;
-}
-
-.toolbar-button {
-    @apply px-4 py-2 bg-amber-500 text-white rounded cursor-pointer hover:bg-amber-600;
-}
-
-.toolbar-file {
-    @apply px-4 py-2 bg-cyan-500 text-white rounded cursor-pointer;
-}
-
-.app-layout {
-    @apply flex gap-10 w-full justify-center;
-}
-
-/* EDITOR */
-
-.editor-panel {
-    @apply flex flex-col gap-3 border p-4 text-xl;
-}
-
-.editor-form-wrapper {
-    @apply border p-2;
-}
-
-.editor-add-button {
-    @apply border px-3 py-1 text-xl cursor-pointer hover:bg-gray-100;
-}
-
 /* RESUME ROOT */
 
 .resume {
