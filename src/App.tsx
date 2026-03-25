@@ -60,7 +60,6 @@ export default function App() {
   }
 
   const [theme, setTheme] = useState("modern");
-  console.log(theme, themeNames);
 
   function exportData(filename: string = "thecv_data.json") {
     const text = JSON.stringify(forms);
