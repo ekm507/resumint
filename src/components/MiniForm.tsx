@@ -40,7 +40,11 @@ export default function MiniForm({
 
   function setValueType(rowId: string, valueType: ValueTypeName) {
     updateContent(
-      content.map((row) => (row.id === rowId ? { ...row, valueType } : row)),
+      content.map((row) =>
+        row.id === rowId
+          ? { ...row, valueType, value: GetDefaultValue(valueType) }
+          : row,
+      ),
     );
   }
 

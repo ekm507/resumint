@@ -93,7 +93,6 @@ export default function FormRow({
             onChange={(e) => {
               const type = e.target.value as ValueTypeName;
               setValueType(id, type);
-              setValue(id, GetDefaultValue(type));
             }}
           >
             {["string", "number", "array"].map((item) => (
