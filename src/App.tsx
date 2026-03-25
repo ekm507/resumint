@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import MiniBox from "./components/MiniBox";
 import MiniForm from "./components/MiniForm";
-import type { FormStructure } from "./utils/types";
+import type { FormStructure, LayoutItem } from "./utils/types";
 import { themeNames } from "./themes";
 
 import { useRef } from "react";
@@ -43,6 +43,12 @@ export default function App() {
       content: [],
     },
   ] as FormStructure[]);
+
+  const [layout, setLayout] = useState<LayoutItem[]>([
+    { id: "0", column: "left" },
+    { id: "1", column: "right" },
+    { id: "2", column: "left" },
+  ]);
 
   function setForm(id: string, form: FormStructure) {
     setForms((prev) => prev.map((f) => (f.id === id ? form : f)));
@@ -100,6 +106,9 @@ export default function App() {
     contentRef: resumeRef,
     documentTitle: "resume",
   });
+
+  const left = layout.filter((i) => i.column === "left");
+  const right = layout.filter((i) => i.column === "right");
 
   return (
     <div className="app-root">
@@ -162,11 +171,22 @@ export default function App() {
           ref={resumeRef}
           className={"resume " + "theme-" + theme}
         >
-          {forms.map((form) => (
-            <div key={form.id} className="resume-section-wrapper">
-              <MiniBox form={form} />
-            </div>
-          ))}
+          <div>
+            {left.map((item) => {
+              const form = forms.find((f) => f.id === item.id);
+              if (form) return <MiniBox key={item.id} form={form} />;
+            })}{" "}
+          </div>
+          <div
+            id="resume-render"
+            ref={resumeRef}
+            className={"resume " + "theme-" + theme}
+          >
+            {right.map((item) => {
+              const form = forms.find((f) => f.id === item.id);
+              if (form) return <MiniBox key={item.id} form={form} />;
+            })}{" "}
+          </div>
         </div>
       </div>
     </div>

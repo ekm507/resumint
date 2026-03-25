@@ -16,6 +16,11 @@ export type FormStructure = {
   content: Row[];
 };
 
+export type LayoutItem = {
+  id: string;
+  column: "left" | "right";
+};
+
 export function GetDefaultValue(type: ValueTypeName) {
   switch (type) {
     case "number":
