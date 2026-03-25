@@ -117,8 +117,7 @@ export default function App() {
             </div>
           ))}
           <button className="border hover:cursor-pointer" onClick={addForm}>
-            {" "}
-            +{" "}
+            +
           </button>
         </div>
         <div className="flex flex-col gap-4 p-3 border items-center justify-center h-full text-3xl">
