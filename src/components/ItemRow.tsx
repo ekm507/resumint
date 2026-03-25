@@ -17,11 +17,11 @@ export default function ItemRow({ row }: Props) {
         ))}
       </div>
     );
-  } else if (typeof value == "number") {
+  } else if (valueType === "number") {
     valueRender = (
       <div className="ItemNumber text-amber-800 border p-1">{value}</div>
     );
-  } else if (typeof value == "string") {
+  } else if (valueType === "string") {
     valueRender = (
       <div className="ItemString text-blue-800 border p-1">{value}</div>
     );
