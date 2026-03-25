@@ -55,7 +55,7 @@ export default function FormRow({
         placeholder="numberic value"
         className="ItemString text-amber-800 border p-1"
         onChange={(event) => {
-          setValue(id, event.target.value);
+          setValue(id, +event.target.value);
         }}
       />
     );
