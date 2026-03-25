@@ -23,15 +23,27 @@ export default function FormRow({
   deleteSelf,
   className = "",
 }: Props) {
+  function addArrayItem() {
+    const arr = Array.isArray(value) ? [...value] : [];
+    arr.push("");
+    setValue(id, arr);
+  }
+
+  function removeIndex(index: number) {
+    if (!Array.isArray(value)) return;
+    const arr = [...value];
+    arr.splice(index, 1);
+    setValue(id, arr);
+  }
+
   function renderValueInput() {
     switch (valueType) {
       case "array":
         return (
           <div className="editor-array">
-            {(value as Array<string | number>).map((item, index) => (
+            {(value as Array<string | number>)?.map((item, index) => (
               <div className="editor-array-item-wrapper" key={index}>
                 <input
-                  key={index}
                   value={item}
                   className="editor-array-item"
                   placeholder="string or number"
@@ -41,7 +53,9 @@ export default function FormRow({
                     setValue(id, newArray);
                   }}
                 />
+
                 <button
+                  type="button"
                   className="editor-array-remove"
                   onClick={() => removeIndex(index)}
                 >
@@ -49,6 +63,15 @@ export default function FormRow({
                 </button>
               </div>
             ))}
+
+            {/* ADD NEW ARRAY ITEM BUTTON */}
+            <button
+              type="button"
+              className="editor-array-add"
+              onClick={addArrayItem}
+            >
+              ＋ Add item
+            </button>
           </div>
         );
 
@@ -82,7 +105,11 @@ export default function FormRow({
 
   return (
     <div className={`editor-row ${className}`}>
-      <button className="editor-row-delete" onClick={() => deleteSelf(id)}>
+      <button
+        type="button"
+        className="editor-row-delete"
+        onClick={() => deleteSelf(id)}
+      >
         🗑️
       </button>
 
