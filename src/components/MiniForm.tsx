@@ -74,33 +74,39 @@ export default function MiniForm({
   }
 
   return (
-    <div className={"border flex flex-col gap-2" + " " + className}>
-      <button
-        className="border hover:cursor-pointer"
-        onClick={() => onDelete(id)}
-      >
-        ❌
-      </button>
-      <input
-        className="border p-1"
-        value={title}
-        placeholder="Title"
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      {content.map((item) => (
-        <FormRow
-          key={item.id}
-          id={item.id}
-          name={item.name}
-          value={item.value}
-          setName={setName}
-          setValue={setValue}
-          valueType={item.valueType ? item.valueType : "string"}
-          setValueType={setValueType}
-          deleteSelf={deleteRow}
+    <div className={`editor-form ${className}`}>
+      <div className="editor-form-header">
+        <button className="editor-form-delete" onClick={() => onDelete(id)}>
+          ❌
+        </button>
+
+        <input
+          className="editor-form-title"
+          value={title}
+          placeholder="Title"
+          onChange={(e) => setTitle(e.target.value)}
         />
-      ))}
-      <button onClick={addRow}>+</button>
+      </div>
+
+      <div className="editor-form-rows">
+        {content.map((item) => (
+          <FormRow
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            value={item.value}
+            setName={setName}
+            setValue={setValue}
+            valueType={item.valueType ? item.valueType : "string"}
+            setValueType={setValueType}
+            deleteSelf={deleteRow}
+          />
+        ))}
+      </div>
+
+      <button className="editor-row-add" onClick={addRow}>
+        +
+      </button>
     </div>
   );
 }

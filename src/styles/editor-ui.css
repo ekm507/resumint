@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+/* APP ROOT */
+
+.app-root {
+    @apply flex flex-col items-center gap-6 p-6 bg-gray-100 min-h-screen;
+}
+
+.app-layout {
+    @apply flex gap-10 w-full justify-center flex-wrap;
+}
+
+/* TOOLBAR */
+
+.app-toolbar {
+    @apply flex gap-3 bg-white border border-gray-200 rounded-lg p-3 shadow-sm;
+}
+
+.toolbar-button {
+    @apply px-4 py-2 bg-indigo-600 text-white rounded cursor-pointer transition-colors duration-150 hover:bg-indigo-700 active:scale-[0.98];
+}
+
+.toolbar-button:disabled {
+    @apply bg-gray-400 cursor-not-allowed;
+}
+
+.toolbar-file {
+    @apply px-3 py-2 border border-gray-300 rounded cursor-pointer bg-white hover:bg-gray-50 transition;
+}
+
+/* EDITOR PANEL */
+
+.editor-panel {
+    @apply flex flex-col gap-4 bg-white border border-gray-200 rounded-xl p-5 shadow-md w-[420px] max-w-full;
+}
+
+.editor-form-wrapper {
+    @apply w-full;
+}
+
+.editor-add-button {
+    @apply border border-dashed border-gray-300 rounded-lg py-2 text-xl hover:bg-gray-100 cursor-pointer transition;
+}
+
+/* FORM */
+
+.editor-form {
+    @apply flex flex-col gap-3 border border-gray-200 rounded-lg p-3 bg-gray-50;
+}
+
+.editor-form-header {
+    @apply flex gap-2 items-center;
+}
+
+.editor-form-title {
+    @apply border border-gray-300 rounded px-2 py-1 flex-1 outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+}
+
+.editor-form-delete {
+    @apply text-red-500 hover:text-red-700 cursor-pointer transition;
+}
+
+.editor-form-rows {
+    @apply flex flex-col gap-2;
+}
+
+/* ROW */
+
+.editor-row {
+    @apply flex gap-2 items-start border border-gray-200 rounded p-2 bg-white transition hover:shadow-sm;
+}
+
+.editor-row-delete {
+    @apply text-gray-400 hover:text-red-500 cursor-pointer transition;
+}
+
+.editor-row-name {
+    @apply border border-gray-300 rounded px-2 py-1 w-[120px] outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+}
+
+.editor-row-value-area {
+    @apply flex gap-2 items-center flex-wrap flex-1;
+}
+
+.editor-row-type {
+    @apply border border-gray-300 rounded px-1 py-1 cursor-pointer outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+}
+
+/* INPUTS */
+
+.editor-input {
+    @apply border border-gray-300 rounded px-2 py-1 outline-none
+           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400
+           max-w-full;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.editor-input-number {
+    @apply text-amber-700;
+}
+
+.editor-input-string {
+    @apply text-blue-700;
+}
+
+/* ARRAY */
+
+.editor-array {
+    @apply flex flex-col gap-1 border border-gray-200 rounded p-1 bg-gray-50 min-w-[140px];
+}
+
+.editor-array-item-wrapper {
+    @apply flex items-center gap-2;
+}
+
+.editor-array-remove {
+    @apply text-red-500 text-sm cursor-pointer hover:text-red-700 transition px-1;
+}
+
+.editor-array-item {
+    @apply border border-gray-300 rounded px-2 py-1 text-cyan-700 outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 w-full;
+}
+
+.editor-array-add {
+    @apply border border-gray-300 rounded px-2 py-1 text-sm cursor-pointer hover:bg-gray-200 transition;
+}
+
+/* ADD ROW BUTTON */
+
+.editor-row-add {
+    @apply border border-gray-300 rounded py-1 hover:bg-gray-200 cursor-pointer transition text-lg font-medium;
+}
+
+.editor-row-add:active {
+    @apply scale-[0.98];
+}
