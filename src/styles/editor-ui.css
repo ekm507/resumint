@@ -79,7 +79,7 @@
 }
 
 .editor-row-value-area {
-    @apply flex gap-2 items-center flex-wrap flex-1;
+    @apply flex gap-2 items-center flex-wrap flex-1 min-w-0;
 }
 
 .editor-row-type {
