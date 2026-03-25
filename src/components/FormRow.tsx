@@ -2,9 +2,9 @@ import type { ValueType, ValueTypeName } from "../utils/types";
 import { GetDefaultValue } from "../utils/types";
 
 interface Props {
-  name?: string;
+  name: string;
   setName: (id: string, name: string) => void;
-  value?: ValueType;
+  value: ValueType;
   setValue: (id: string, value: ValueType) => void;
   id: string;
   valueType: ValueTypeName;
@@ -78,7 +78,7 @@ export default function FormRow({
     >
       <button onClick={() => deleteSelf(id)}>🗑️</button>
       <input
-        defaultValue={name}
+        value={name}
         key="name"
         placeholder="item name"
         className="itemName border p-1"
