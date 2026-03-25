@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import MiniBox from "./components/MiniBox";
 import MiniForm from "./components/MiniForm";
 import type { FormStructure } from "./utils/types";
+import { themeNames } from "./themes";
 
 export default function App() {
   const [forms, setForms] = useState([
@@ -58,6 +59,9 @@ export default function App() {
     ]);
   }
 
+  const [theme, setTheme] = useState("modern");
+  console.log(theme, themeNames);
+
   function exportData(filename: string = "thecv_data.json") {
     const text = JSON.stringify(forms);
     const blob = new Blob([text], { type: "Application/json" });
@@ -101,6 +105,18 @@ export default function App() {
           className="toolbar-file"
           onChange={importData}
         />
+        <select
+          value={theme}
+          onChange={(e) => {
+            setTheme(e.target.value);
+          }}
+        >
+          {themeNames.map((name) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="app-layout">
@@ -122,7 +138,7 @@ export default function App() {
         </div>
 
         {/* RESUME RENDER */}
-        <div id="resume-render" className="resume theme-modern">
+        <div id="resume-render" className={"resume " + "theme-" + theme}>
           {forms.map((form) => (
             <div key={form.id} className="resume-section-wrapper">
               <MiniBox form={form} />
