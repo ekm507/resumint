@@ -105,22 +105,24 @@ export default function FormRow({
 
   return (
     <div className={`editor-row ${className}`}>
-      <button
-        type="button"
-        className="editor-row-delete"
-        onClick={() => deleteSelf(id)}
-      >
-        🗑️
-      </button>
+      <div className="editor-row-left">
+        <button
+          type="button"
+          className="editor-row-delete"
+          onClick={() => deleteSelf(id)}
+        >
+          🗑️
+        </button>
 
-      <input
-        value={name}
-        placeholder="item name"
-        className="editor-row-name"
-        onChange={(e) => setName(id, e.target.value)}
-      />
+        <input
+          value={name}
+          placeholder="item name"
+          className="editor-row-name"
+          onChange={(e) => setName(id, e.target.value)}
+        />
+      </div>
 
-      <div className="editor-row-value-area">
+      <div className="editor-row-right">
         <select
           value={valueType}
           className="editor-row-type"

@@ -171,11 +171,13 @@ export default function App() {
           ref={resumeRef}
           className={"resume theme-" + theme}
         >
-          <DraggableLayout
-            layout={layout}
-            setLayout={setLayout}
-            forms={forms}
-          />
+          <div className="resume-page">
+            <DraggableLayout
+              layout={layout}
+              setLayout={setLayout}
+              forms={forms}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -3,11 +3,10 @@
 /* APP ROOT */
 
 .app-root {
-    @apply flex flex-col items-center gap-6 p-6 bg-gray-100 min-h-screen;
+    @apply flex flex-col items-center gap-4 p-3 bg-gray-100 h-screen overflow-hidden;
 }
-
 .app-layout {
-    @apply flex gap-10 w-full justify-center flex-wrap;
+    @apply flex gap-10 w-full justify-center flex-1 overflow-hidden;
 }
 
 /* TOOLBAR */
@@ -29,9 +28,8 @@
 }
 
 /* EDITOR PANEL */
-
 .editor-panel {
-    @apply flex flex-col gap-4 bg-white border border-gray-200 rounded-xl p-5 shadow-md w-[420px] max-w-full;
+    @apply flex flex-col gap-3 bg-white border border-gray-200 rounded-xl p-3 shadow-md min-w-[320px] max-w-full overflow-y-auto;
 }
 
 .editor-form-wrapper {
@@ -45,7 +43,7 @@
 /* FORM */
 
 .editor-form {
-    @apply flex flex-col gap-3 border border-gray-200 rounded-lg p-3 bg-gray-50;
+    @apply flex flex-col gap-2 border border-gray-200 rounded-lg p-2 bg-gray-50;
 }
 
 .editor-form-header {
@@ -67,7 +65,7 @@
 /* ROW */
 
 .editor-row {
-    @apply flex gap-2 items-start border border-gray-200 rounded p-2 bg-white transition hover:shadow-sm;
+    @apply flex flex-wrap gap-2 items-start border border-gray-200 rounded p-2 bg-white transition hover:shadow-sm;
 }
 
 .editor-row-delete {
@@ -75,11 +73,13 @@
 }
 
 .editor-row-name {
-    @apply border border-gray-300 rounded px-2 py-1 w-[120px] outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+    @apply border border-gray-300 rounded px-2 py-1 outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+    width: 120px;
+    flex-shrink: 0;
 }
 
 .editor-row-value-area {
-    @apply flex gap-2 items-center flex-wrap flex-1 min-w-0;
+    @apply flex gap-2 items-center flex-wrap flex-1 min-w-[140px];
 }
 
 .editor-row-type {
@@ -134,4 +134,16 @@
 
 .editor-row-add:active {
     @apply scale-[0.98];
+}
+
+#resume-render {
+    @apply flex-1 overflow-y-auto flex justify-start flex-col;
+}
+
+.resume-page {
+    width: 794px; /* A4 width at 96dpi */
+    min-height: 1123px;
+    background: white;
+    border: solid 1px;
+    padding: 16px;
 }
