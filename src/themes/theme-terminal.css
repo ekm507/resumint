@@ -1,7 +1,11 @@
 @import "tailwindcss";
 
 .theme-terminal.resume {
-    @apply font-mono bg-black text-green-400 p-6 border border-green-500;
+    @apply font-mono text-green-400 p-6 border border-green-500;
+}
+
+.theme-terminal .resume-page {
+    @apply bg-black;
 }
 
 .theme-terminal .resume-section {
