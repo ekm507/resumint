@@ -3,7 +3,7 @@ import MiniBox from "./components/MiniBox";
 import MiniForm from "./components/MiniForm";
 import type { FormStructure, LayoutItem } from "./utils/types";
 import { themeNames } from "./themes";
-
+import DraggableLayout from "./components/DraggableLayout";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 
@@ -171,21 +171,11 @@ export default function App() {
           ref={resumeRef}
           className={"resume theme-" + theme}
         >
-          <div className="resume-columns">
-            <div className="resume-column">
-              {left.map((item) => {
-                const form = forms.find((f) => f.id === item.id);
-                if (form) return <MiniBox key={item.id} form={form} />;
-              })}
-            </div>
-
-            <div className="resume-column">
-              {right.map((item) => {
-                const form = forms.find((f) => f.id === item.id);
-                if (form) return <MiniBox key={item.id} form={form} />;
-              })}
-            </div>
-          </div>
+          <DraggableLayout
+            layout={layout}
+            setLayout={setLayout}
+            forms={forms}
+          />
         </div>
       </div>
     </div>
