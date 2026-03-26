@@ -146,3 +146,11 @@
     border: solid 1px;
     padding: 16px;
 }
+
+.resume-columns {
+    @apply flex gap-4 w-full h-full;
+}
+
+.resume-column {
+    @apply flex-1 flex flex-col min-h-[200px];
+}
