@@ -1,5 +1,4 @@
 import { useState, type ChangeEvent } from "react";
-import MiniBox from "./components/MiniBox";
 import MiniForm from "./components/MiniForm";
 import type { FormStructure, LayoutItem } from "./utils/types";
 import { themeNames } from "./themes";
@@ -106,9 +105,6 @@ export default function App() {
     contentRef: resumeRef,
     documentTitle: "resume",
   });
-
-  const left = layout.filter((i) => i.column === "left");
-  const right = layout.filter((i) => i.column === "right");
 
   return (
     <div className="app-root">
