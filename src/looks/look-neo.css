@@ -1,0 +1,223 @@
+@import "tailwindcss";
+@import "../utils/patterns.css";
+/* ===========================================================
+   NEO SOFT THEME — Modern Compact Dark with Icon Buttons
+   =========================================================== */
+/* -----------------------------------------------------------
+   APP ROOT
+   ----------------------------------------------------------- */
+.look-neo .app-root {
+    @apply flex flex-col items-center gap-3 p-4
+           bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900
+           text-slate-100 h-screen overflow-hidden;
+}
+
+.look-neo .app-layout {
+    @apply flex gap-6 w-full justify-center flex-1 overflow-hidden;
+}
+
+/* -----------------------------------------------------------
+   TOOLBAR
+   ----------------------------------------------------------- */
+
+.look-neo .app-toolbar {
+    @apply flex gap-2 bg-slate-800/40 backdrop-blur-xl border border-slate-700/60
+           rounded-xl p-2 shadow-lg;
+}
+
+.look-neo .toolbar-button {
+    @apply px-3 py-1.5 bg-cyan-600 text-white rounded-lg cursor-pointer
+           transition-all duration-200 hover:bg-cyan-700
+           active:scale-[0.97] shadow-md hover:shadow-lg text-sm;
+}
+
+.look-neo .toolbar-button:disabled {
+    @apply bg-slate-500 cursor-not-allowed shadow-none;
+}
+
+.look-neo .toolbar-file {
+    @apply px-3 py-1.5 border border-slate-600 rounded-lg cursor-pointer
+           bg-slate-700/40 hover:bg-slate-700/60 transition-colors shadow-md text-sm;
+}
+
+/* -----------------------------------------------------------
+   EDITOR PANEL
+   ----------------------------------------------------------- */
+
+.look-neo .editor-panel {
+    @apply flex flex-col gap-2 bg-slate-800/50 backdrop-blur-xl border border-slate-700/60
+           rounded-2xl p-3 shadow-xl min-w-[270px] max-w-full overflow-y-auto;
+}
+
+.look-neo .editor-form-wrapper {
+    @apply w-full;
+}
+
+.look-neo .editor-add-button {
+    @apply border border-dashed border-slate-500 rounded-xl py-2 text-base text-slate-300
+           hover:bg-slate-700/40 hover:border-slate-400 cursor-pointer transition;
+}
+
+/* -----------------------------------------------------------
+   FORM
+   ----------------------------------------------------------- */
+
+.look-neo .editor-form {
+    @apply flex flex-col gap-2 border border-slate-700 rounded-xl p-3
+           bg-slate-800/40 shadow-md;
+}
+
+.look-neo .editor-form-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-neo .editor-form-title {
+    @apply border border-slate-600 rounded-md px-3 py-1.5 flex-1 outline-none
+           bg-slate-900/40 text-slate-100
+           focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
+}
+
+.look-neo .editor-form-rows {
+    @apply flex flex-col gap-2;
+}
+
+/* -----------------------------------------------------------
+   ICON BUTTON STYLE
+   ----------------------------------------------------------- */
+
+.look-neo .editor-form-collapse,
+.look-neo .editor-form-delete,
+.look-neo .editor-array-remove,
+.look-neo .editor-row-delete {
+    @apply flex items-center justify-center
+           w-7 h-7
+           rounded-md
+           border border-slate-600
+           bg-slate-800/60
+           cursor-pointer
+           transition-all
+           hover:bg-slate-700
+           hover:border-slate-500
+           active:scale-95;
+}
+
+/* Delete buttons slightly red */
+
+.look-neo .editor-form-delete,
+.look-neo .editor-array-remove,
+.look-neo .editor-row-delete {
+    @apply border-red-500/40 hover:border-red-400 hover:bg-red-500/10;
+}
+
+/* Collapse rotation */
+
+.look-neo .editor-form-collapse.collapsed {
+    transform: rotate(-90deg);
+}
+
+/* -----------------------------------------------------------
+   ROW
+   ----------------------------------------------------------- */
+
+.look-neo .editor-row {
+    @apply flex flex-wrap gap-2 items-start border border-slate-700 rounded-xl p-2.5
+           bg-slate-900/40 shadow-md transition hover:shadow-lg;
+}
+
+.look-neo .editor-row-name {
+    @apply border border-slate-600 rounded-lg px-3 py-1.5 outline-none
+           bg-slate-900/40 text-slate-100
+           focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.look-neo .editor-row-value-area {
+    @apply flex gap-2 items-center flex-wrap flex-1 min-w-[130px];
+}
+
+.look-neo .editor-row-type {
+    @apply border border-slate-600 rounded-lg px-2 py-1 cursor-pointer outline-none
+           bg-slate-900/40 text-slate-100
+           focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
+}
+
+/* -----------------------------------------------------------
+   INPUTS
+   ----------------------------------------------------------- */
+
+.look-neo .editor-input {
+    @apply border border-slate-600 rounded-lg px-3 py-1.5 outline-none bg-slate-900/40
+           text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 max-w-full;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.look-neo .editor-input-number {
+    @apply text-amber-400;
+}
+
+.look-neo .editor-input-string {
+    @apply text-sky-400;
+}
+
+/* -----------------------------------------------------------
+   ARRAY
+   ----------------------------------------------------------- */
+
+.look-neo .editor-array {
+    @apply flex flex-col gap-2 border border-slate-700 rounded-xl p-2 bg-slate-900/30
+           min-w-[140px];
+}
+
+.look-neo .editor-array-item-wrapper {
+    @apply flex items-center gap-2;
+}
+
+.look-neo .editor-array-item {
+    @apply border border-slate-600 rounded-lg px-3 py-1.5 text-cyan-300 outline-none
+           bg-slate-900/40 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 w-full;
+}
+
+.look-neo .editor-array-add {
+    @apply border border-slate-600 rounded-lg px-2 py-1 text-sm cursor-pointer
+           hover:bg-slate-700/40 transition;
+}
+
+/* -----------------------------------------------------------
+   ADD ROW BUTTON
+   ----------------------------------------------------------- */
+
+.look-neo .editor-row-add {
+    @apply border border-slate-600 rounded-lg py-1.5 hover:bg-slate-700/40 cursor-pointer
+           transition text-base font-medium text-slate-200;
+}
+
+.look-neo .editor-row-add:active {
+    @apply scale-[0.97];
+}
+
+/* -----------------------------------------------------------
+   RENDER AREA
+   ----------------------------------------------------------- */
+
+.look-neo #resume-render {
+    @apply flex-1 overflow-y-auto flex justify-start flex-col;
+    @apply bg-paper;
+}
+
+.look-neo .resume-page {
+    width: 794px;
+    min-height: 1123px;
+    border: solid 1px #334155;
+    padding: 20px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.45);
+}
+
+.look-neo .resume-columns {
+    @apply flex gap-6 w-full h-full;
+}
+
+.look-neo .resume-column {
+    @apply flex-1 flex flex-col min-h-[200px];
+}
