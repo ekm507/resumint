@@ -73,15 +73,7 @@ export default function App() {
     const text = JSON.stringify(forms);
     const blob = new Blob([text], { type: "Application/json" });
 
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = filename;
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    URL.revokeObjectURL(link.href);
+    downloadBlob(blob, filename);
   }
 
   function importData(event: ChangeEvent<HTMLInputElement>) {
