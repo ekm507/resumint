@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+/* APP ROOT */
+
+.look-white .app-root {
+    @apply flex flex-col items-center gap-4 p-4 bg-gray-50 h-screen overflow-hidden;
+}
+.look-white .app-layout {
+    @apply flex gap-8 w-full justify-center flex-1 overflow-hidden;
+}
+
+/* TOOLBAR */
+
+.look-white .app-toolbar {
+    @apply flex gap-3 bg-white/70 backdrop-blur-md border border-gray-200/60
+           rounded-xl p-3 shadow-sm;
+}
+
+.look-white .toolbar-button {
+    @apply px-4 py-2 bg-indigo-600 text-white rounded-lg cursor-pointer
+           transition-all duration-200 hover:bg-indigo-700
+           active:scale-[0.97] shadow-sm hover:shadow-md;
+}
+
+.look-white .toolbar-button:disabled {
+    @apply bg-gray-300 cursor-not-allowed shadow-none;
+}
+
+.look-white .toolbar-file {
+    @apply px-3 py-2 border border-gray-300/70 rounded-lg cursor-pointer bg-white/80
+           hover:bg-gray-100 transition-colors shadow-sm;
+}
+
+/* EDITOR PANEL */
+
+.look-white .editor-panel {
+    @apply flex flex-col gap-4 bg-white/80 backdrop-blur-md border border-gray-200/60
+           rounded-2xl p-4 shadow-md min-w-[340px] max-w-full overflow-y-auto;
+}
+
+.look-white .editor-form-wrapper {
+    @apply w-full;
+}
+
+.look-white .editor-add-button {
+    @apply border border-dashed border-gray-300 rounded-xl py-3 text-lg text-gray-600
+           hover:bg-gray-100 hover:border-gray-400 cursor-pointer transition;
+}
+
+/* FORM */
+
+.look-white .editor-form {
+    @apply flex flex-col gap-3 border border-gray-200/70 rounded-xl p-3 bg-gray-50/50
+           shadow-sm;
+}
+
+.look-white .editor-form-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-white .editor-form-title {
+    @apply border border-gray-300/70 rounded-md px-3 py-1.5 flex-1 outline-none
+           bg-white focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+}
+
+.look-white .editor-form-delete {
+    @apply text-red-500 hover:text-red-600 cursor-pointer transition;
+}
+
+.look-white .editor-form-rows {
+    @apply flex flex-col gap-3;
+}
+
+/* COLLAPSE BUTTON */
+
+.look-white .editor-form-collapse {
+    @apply text-gray-500 cursor-pointer select-none transition-transform duration-200;
+}
+
+.look-white .editor-form-collapse:hover {
+    @apply text-gray-700;
+}
+
+.look-white .editor-form-collapse.collapsed {
+    transform: rotate(-90deg);
+}
+
+/* COLLAPSIBLE BODY */
+
+.look-white .editor-form-body {
+    @apply flex flex-col gap-3 overflow-hidden transition-all duration-300 ease-in-out;
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.look-white .editor-form-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+/* ROW */
+
+.look-white .editor-row {
+    @apply flex flex-wrap gap-3 items-start border border-gray-200 rounded-xl p-3
+           bg-white shadow-sm transition hover:shadow-md;
+}
+
+.look-white .editor-row-delete {
+    @apply text-gray-400 hover:text-red-500 cursor-pointer transition;
+}
+
+.look-white .editor-row-name {
+    @apply border border-gray-300 rounded-lg px-3 py-1.5 outline-none
+           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+    width: 130px;
+    flex-shrink: 0;
+}
+
+.look-white .editor-row-value-area {
+    @apply flex gap-2 items-center flex-wrap flex-1 min-w-[150px];
+}
+
+.look-white .editor-row-type {
+    @apply border border-gray-300 rounded-lg px-2 py-1 cursor-pointer outline-none
+           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+}
+
+/* INPUTS */
+
+.look-white .editor-input {
+    @apply border border-gray-300 rounded-lg px-3 py-1.5 outline-none bg-white
+           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 max-w-full;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.look-white .editor-input-number {
+    @apply text-amber-700;
+}
+
+.look-white .editor-input-string {
+    @apply text-blue-700;
+}
+
+/* ARRAY */
+
+.look-white .editor-array {
+    @apply flex flex-col gap-2 border border-gray-200 rounded-xl p-2 bg-gray-50/60
+           min-w-[150px];
+}
+
+.look-white .editor-array-item-wrapper {
+    @apply flex items-center gap-2;
+}
+
+.look-white .editor-array-remove {
+    @apply text-red-500 text-sm cursor-pointer hover:text-red-600 transition px-1;
+}
+
+.look-white .editor-array-item {
+    @apply border border-gray-300 rounded-lg px-3 py-1.5 text-cyan-700 outline-none
+           bg-white focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 w-full;
+}
+
+.look-white .editor-array-add {
+    @apply border border-gray-300 rounded-lg px-2 py-1 text-sm cursor-pointer
+           hover:bg-gray-200 transition;
+}
+
+/* ADD ROW BUTTON */
+
+.look-white .editor-row-add {
+    @apply border border-gray-300 rounded-lg py-1.5 hover:bg-gray-200 cursor-pointer
+           transition text-lg font-medium;
+}
+
+.look-white .editor-row-add:active {
+    @apply scale-[0.97];
+}
+
+/* RENDER AREA */
+
+.look-white #resume-render {
+    @apply flex-1 overflow-y-auto flex justify-start flex-col;
+}
+
+.look-white .resume-page {
+    width: 794px;
+    min-height: 1123px;
+    border: solid 1px #ddd;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.look-white .resume-columns {
+    @apply flex gap-6 w-full h-full;
+}
+
+.look-white .resume-column {
+    @apply flex-1 flex flex-col min-h-[200px];
+}
