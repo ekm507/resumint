@@ -202,22 +202,11 @@
    ----------------------------------------------------------- */
 
 .look-neo #resume-render {
-    @apply flex-1 overflow-y-auto flex justify-start flex-col;
     @apply bg-paper;
 }
 
 .look-neo .resume-page {
-    width: 794px;
-    min-height: 1123px;
     border: solid 1px #334155;
     padding: 20px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.45);
-}
-
-.look-neo .resume-columns {
-    @apply flex gap-6 w-full h-full;
-}
-
-.look-neo .resume-column {
-    @apply flex-1 flex flex-col min-h-[200px];
 }
