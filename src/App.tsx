@@ -5,7 +5,7 @@ import { themeNames } from "./themes";
 import DraggableLayout from "./components/DraggableLayout";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-
+import { downloadBlob } from "./utils/functions";
 export default function App() {
   const [forms, setForms] = useState([
     {
@@ -68,9 +68,14 @@ export default function App() {
   }
 
   const [theme, setTheme] = useState("modern");
+  const [lookName, setLookName] = useState("default");
 
   function exportData(filename: string = "thecv_data.json") {
-    const text = JSON.stringify(forms);
+    const all_objects = {
+      forms,
+      layout,
+    };
+    const text = JSON.stringify(all_objects);
     const blob = new Blob([text], { type: "Application/json" });
 
     downloadBlob(blob, filename);
@@ -83,9 +88,10 @@ export default function App() {
       if (!file) return;
 
       const text = await file.text();
-      const data = JSON.parse(text);
+      const all_objects = JSON.parse(text);
 
-      setForms(data);
+      setForms(all_objects.forms);
+      setLayout(all_objects.layout);
     };
 
     process();
@@ -99,7 +105,7 @@ export default function App() {
   });
 
   return (
-    <div className="app-root">
+    <div className={"app-root " + "look-" + lookName}>
       <div className="app-toolbar">
         <button
           className="toolbar-button"
