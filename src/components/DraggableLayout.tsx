@@ -7,10 +7,12 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
+  useDroppable,
+} from "@dnd-kit/core";
+import type {
   DragStartEvent,
   DragOverEvent,
   DragEndEvent,
-  useDroppable,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -129,38 +131,114 @@ export default function DraggableLayout({
     if (!over) return;
 
     const activeId = active.id as string;
-    const overId = over.id as string;
+    const overId = over.id as string; // This is the ID of the element being dragged over
 
     const activeCol = findColumn(activeId);
+
+    // Determine the target column:
+    // If the 'over' element is one of our column IDs ('left', 'right'), use that.
+    // Otherwise, try to find the column of the element it's over.
     const overCol =
       overId === "left" || overId === "right" ? overId : findColumn(overId);
 
-    if (!activeCol || !overCol || activeCol === overCol) return;
+    // If we can't determine the target column, or if it's the same as the source, exit.
+    if (!activeCol || !overCol || activeCol === overCol) {
+      // If overId is NOT "left" or "right", and it's not a form ID, then it's a drag over empty space.
+      // In this case, we want to determine the column based on the X-coordinate of the event.
+      if (overId !== "left" && overId !== "right" && !findColumn(overId)) {
+        const droppableRect = document
+          .querySelector(
+            `.${overCol === "left" ? "resume-column-left" : "resume-column-right"}`,
+          )
+          ?.getBoundingClientRect();
+        if (droppableRect) {
+          const midPoint = droppableRect.left + droppableRect.width / 2;
+          if (event.clientX < midPoint) {
+            // Dragging over the left half of the empty column area
+            const targetCol = "left";
+            if (targetCol !== activeCol) {
+              setColumns((prev) => {
+                const activeItems = prev[activeCol as keyof ColumnsState];
+                return {
+                  ...prev,
+                  [activeCol as keyof ColumnsState]: activeItems.filter(
+                    (id) => id !== activeId,
+                  ),
+                  [targetCol]: [
+                    ...prev[targetCol as keyof ColumnsState],
+                    activeId,
+                  ],
+                };
+              });
+            }
+          } else {
+            // Dragging over the right half of the empty column area
+            const targetCol = "right";
+            if (targetCol !== activeCol) {
+              setColumns((prev) => {
+                const activeItems = prev[activeCol as keyof ColumnsState];
+                return {
+                  ...prev,
+                  [activeCol as keyof ColumnsState]: activeItems.filter(
+                    (id) => id !== activeId,
+                  ),
+                  [targetCol]: [
+                    ...prev[targetCol as keyof ColumnsState],
+                    activeId,
+                  ],
+                };
+              });
+            }
+          }
+        }
+      }
+      return;
+    }
 
+    // If moving within the same column, rely on arrayMove in onDragEnd
+    // This onDragOver is primarily for moving between columns.
+    // We need to decide how to handle reordering within a column if it's also
+    // a target for a drop from another column. For now, we'll focus on inter-column moves.
+
+    // If we reach here, it's a valid inter-column move.
+    // The actual reordering logic will be more robust in onDragEnd.
+    // Here, we primarily ensure the item is removed from its original column.
     setColumns((prev) => {
       const activeItems = prev[activeCol as keyof ColumnsState];
       const overItems = prev[overCol as keyof ColumnsState];
-      const activeIndex = activeItems.indexOf(activeId);
-      const overIndex = overItems.indexOf(overId);
 
-      let newIndex = overIndex >= 0 ? overIndex : overItems.length + 1;
+      // Remove from source column
+      const newActiveItems = activeItems.filter((id) => id !== activeId);
+
+      // Add to target column (at the end for now, precise positioning handled by onDragEnd)
+      // If overId is a column ID, append. If it's an item ID, insert before it.
+      const newOverItems = [...overItems];
+      if (overId === "left" || overId === "right") {
+        newOverItems.push(activeId);
+      } else {
+        const overIndex = overItems.indexOf(overId);
+        if (overIndex !== -1) {
+          newOverItems.splice(overIndex, 0, activeId);
+        } else {
+          // If overId is not found in the target column (shouldn't happen if findColumn works)
+          // append it.
+          newOverItems.push(activeId);
+        }
+      }
 
       return {
         ...prev,
-        [activeCol]: prev[activeCol as keyof ColumnsState].filter(
-          (id) => id !== activeId,
-        ),
-        [overCol]: [
-          ...prev[overCol as keyof ColumnsState].slice(0, newIndex),
-          activeItems[activeIndex],
-          ...prev[overCol as keyof ColumnsState].slice(
-            newIndex,
-            prev[overCol as keyof ColumnsState].length,
-          ),
-        ],
+        [activeCol as keyof ColumnsState]: newActiveItems,
+        [overCol as keyof ColumnsState]: newOverItems,
       };
     });
   };
+
+  // Add to DroppableColumn:
+
+  // In DroppableColumn component, add classes to the main div:
+  // ref={setNodeRef} className={`resume-column ${id}`}
+  // Add CSS for .resume-column-left and .resume-column-right
 
   const onDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
