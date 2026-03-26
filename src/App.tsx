@@ -6,6 +6,7 @@ import DraggableLayout from "./components/DraggableLayout";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { downloadBlob } from "./utils/functions";
+import { lookNames } from "./looks";
 export default function App() {
   const [forms, setForms] = useState([
     {
@@ -68,7 +69,7 @@ export default function App() {
   }
 
   const [theme, setTheme] = useState("modern");
-  const [lookName, setLookName] = useState("default");
+  const [lookName, setLookName] = useState("neo");
 
   function exportData(filename: string = "thecv_data.json") {
     const all_objects = {
@@ -128,6 +129,18 @@ export default function App() {
           className="toolbar-file"
           onChange={importData}
         />
+        <select
+          value={lookName}
+          onChange={(e) => {
+            setLookName(e.target.value);
+          }}
+        >
+          {lookNames.map((name) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
         <select
           value={theme}
           onChange={(e) => {
