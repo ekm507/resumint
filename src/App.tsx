@@ -11,36 +11,53 @@ export default function App() {
   const [forms, setForms] = useState([
     {
       id: "0",
-      title: "tools",
+      title: "Personal Information",
       content: [
-        { id: "0", name: "plier", valueType: "string", value: "nice" },
-        { id: "1", name: "keys", valueType: "number", value: 5 },
-        { id: "2", name: "goods", valueType: "array", value: ["allen", " a2"] },
+        {
+          id: "0",
+          name: "name",
+          value: "Erfan Kheyrollahi",
+          valueType: "string",
+        },
+        { id: "1", name: "Age", value: 27, valueType: "number" },
       ],
     },
     {
       id: "1",
-      title: "مهارت‌ها",
+      title: "Properties",
       content: [
-        { id: "0", name: "انگلیسی", valueType: "number", value: 5 },
         {
-          id: "1",
-          name: "نقطه‌ی قوت",
-          valueType: "string",
-          value: "سر و زبون",
-        },
-        {
-          id: "2",
-          name: "زبان‌ها",
+          id: "0",
+          name: "items in bag",
+          value: [
+            { id: "0", value: "pen" },
+            { id: "1", value: "notebook" },
+            { id: "2", value: "laptop" },
+            { id: "3", value: "tissues" },
+            { id: "4", value: "bicycle keys" },
+          ],
           valueType: "array",
-          value: ["پایتون", "جاوااسکریپت"],
         },
       ],
     },
     {
       id: "2",
-      title: "",
-      content: [],
+      title: "story",
+      content: [
+        {
+          id: "0",
+          name: "once there was a ship on the sea and the name of the ship was billy o tea.",
+          value: "",
+          valueType: "string",
+        },
+        {
+          id: "1",
+          name: "",
+          value:
+            "soon may the wellerman come. to bring us sugar and tea and rum...",
+          valueType: "string",
+        },
+      ],
     },
   ] as FormStructure[]);
 

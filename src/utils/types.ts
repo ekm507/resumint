@@ -1,5 +1,5 @@
 export type ValueTypeName = "string" | "number" | "array";
-export type ValueType = string | number | Array<string | number>;
+export type ValueType = string | number | { id: string; value: string }[];
 
 export type Row = {
   id: string;

@@ -12,20 +12,24 @@ export default function ItemRow({ row }: Props) {
   if (valueType === "array") {
     valueRender = (
       <div className="resume-item-value resume-item-array">
-        {(value as Array<number | string>).map((item) => (
-          <div key={item} className="resume-array-item">
-            {item}
+        {(value as { id: string; value: string }[]).map((item) => (
+          <div key={item.id} className="resume-array-item">
+            {item.value}
           </div>
         ))}
       </div>
     );
   } else if (valueType === "number") {
     valueRender = (
-      <div className="resume-item-value resume-item-number">{value}</div>
+      <div className="resume-item-value resume-item-number">
+        {value as number}
+      </div>
     );
   } else if (valueType === "string") {
     valueRender = (
-      <div className="resume-item-value resume-item-string">{value}</div>
+      <div className="resume-item-value resume-item-string">
+        {value as string}
+      </div>
     );
   }
 

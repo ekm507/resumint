@@ -4,6 +4,7 @@ import {
   type FormStructure,
   type Row,
   GetDefaultValue,
+  type ValueType,
 } from "../utils/types";
 import { useState } from "react";
 interface Prop {
@@ -30,10 +31,7 @@ export default function MiniForm({
       content.map((row) => (row.id === rowId ? { ...row, name } : row)),
     );
   }
-  function setValue(
-    rowId: string,
-    value: number | string | Array<string | number>,
-  ) {
+  function setValue(rowId: string, value: ValueType) {
     updateContent(
       content.map((row) => (row.id === rowId ? { ...row, value } : row)),
     );

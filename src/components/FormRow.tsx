@@ -1,4 +1,5 @@
 import type { ValueType, ValueTypeName } from "../utils/types";
+import ArrayItem from "./ArrayItem";
 
 interface Props {
   name: string;
@@ -25,15 +26,26 @@ export default function FormRow({
 }: Props) {
   function addArrayItem() {
     const arr = Array.isArray(value) ? [...value] : [];
-    arr.push("");
+    const lastId = +(arr[arr.length - 1]?.id ?? -1);
+    const newId = String(lastId + 1);
+    arr.push({ id: newId, value: "" });
     setValue(id, arr);
   }
 
-  function removeIndex(index: number) {
-    if (!Array.isArray(value)) return;
-    const arr = [...value];
-    arr.splice(index, 1);
-    setValue(id, arr);
+  function setArrayValue(arrayId: string, arrayValue: string) {
+    const newArray = (value as { id: string; value: string }[]).map((item) =>
+      item.id === arrayId ? { id: arrayId, value: arrayValue } : item,
+    );
+    setValue(id, newArray);
+  }
+
+  function deleteArrayItem(arrayId: string) {
+    setValue(
+      id,
+      (value as { id: string; value: string }[]).filter(
+        (item) => item.id !== arrayId,
+      ),
+    );
   }
 
   function renderValueInput() {
@@ -41,30 +53,16 @@ export default function FormRow({
       case "array":
         return (
           <div className="editor-array">
-            {(value as Array<string | number>)?.map((item, index) => (
-              <div className="editor-array-item-wrapper" key={index}>
-                <input
-                  value={item}
-                  className="editor-array-item"
-                  placeholder="string or number"
-                  onChange={(e) => {
-                    const newArray = [...(value as Array<string | number>)];
-                    newArray[index] = e.target.value;
-                    setValue(id, newArray);
-                  }}
-                />
-
-                <button
-                  type="button"
-                  className="editor-array-remove"
-                  onClick={() => removeIndex(index)}
-                >
-                  ❌
-                </button>
-              </div>
+            {(value as { id: string; value: string }[])?.map((item) => (
+              <ArrayItem
+                value={item.value}
+                key={item.id}
+                id={item.id}
+                setValue={setArrayValue}
+                deleteSelf={deleteArrayItem}
+              />
             ))}
 
-            {/* ADD NEW ARRAY ITEM BUTTON */}
             <button
               type="button"
               className="editor-array-add"
