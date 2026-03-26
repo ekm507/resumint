@@ -6,6 +6,10 @@
     @apply flex flex-col gap-6 p-6 border rounded-lg bg-white text-lg min-w-[400px];
 }
 
+.theme-modern .resume-page {
+    @apply bg-white;
+}
+
 .resume-section-wrapper {
     @apply w-full;
 }
