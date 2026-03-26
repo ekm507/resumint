@@ -143,7 +143,6 @@
 .resume-page {
     width: 794px; /* A4 width at 96dpi */
     min-height: 1123px;
-    background: white;
     border: solid 1px;
     padding: 16px;
 }
