@@ -5,6 +5,7 @@ import {
   type Row,
   GetDefaultValue,
 } from "../utils/types";
+import { useState } from "react";
 interface Prop {
   form: FormStructure;
   onFormChange: (id: string, newForm: FormStructure) => void;
@@ -73,11 +74,19 @@ export default function MiniForm({
     updateContent(content.filter((item) => item.id !== rowId));
   }
 
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
     <div className={`editor-form ${className}`}>
       <div className="editor-form-header">
         <button className="editor-form-delete" onClick={() => onDelete(id)}>
           ❌
+        </button>
+        <button
+          className={`editor-form-collapse ${collapsed ? "collapsed" : ""}`}
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          ▼
         </button>
 
         <input
@@ -88,25 +97,27 @@ export default function MiniForm({
         />
       </div>
 
-      <div className="editor-form-rows">
-        {content.map((item) => (
-          <FormRow
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            value={item.value}
-            setName={setName}
-            setValue={setValue}
-            valueType={item.valueType ? item.valueType : "string"}
-            setValueType={setValueType}
-            deleteSelf={deleteRow}
-          />
-        ))}
-      </div>
+      <div className={`editor-form-body ${collapsed ? "collapsed" : ""}`}>
+        <div className="editor-form-rows">
+          {content.map((item) => (
+            <FormRow
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              value={item.value}
+              setName={setName}
+              setValue={setValue}
+              valueType={item.valueType ? item.valueType : "string"}
+              setValueType={setValueType}
+              deleteSelf={deleteRow}
+            />
+          ))}
+        </div>
 
-      <button className="editor-row-add" onClick={addRow}>
-        +
-      </button>
+        <button className="editor-row-add" onClick={addRow}>
+          +
+        </button>
+      </div>
     </div>
   );
 }

@@ -62,6 +62,33 @@
     @apply flex flex-col gap-2;
 }
 
+/* COLLAPSE BUTTON */
+
+.editor-form-collapse {
+    @apply text-gray-500 cursor-pointer select-none transition-transform duration-200;
+}
+
+.editor-form-collapse:hover {
+    @apply text-gray-700;
+}
+
+.editor-form-collapse.collapsed {
+    transform: rotate(-90deg);
+}
+
+/* COLLAPSIBLE BODY */
+
+.editor-form-body {
+    @apply flex flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out;
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.editor-form-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
 /* ROW */
 
 .editor-row {
