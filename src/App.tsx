@@ -73,16 +73,23 @@ export default function App() {
 
   function deleteForm(id: string) {
     setForms((prev) => prev.filter((form) => form.id !== id));
+    setLayout((prev) => prev.filter((position) => position.id !== id));
   }
 
   function addForm() {
     const lastRow = forms[forms.length - 1];
     const lastID = lastRow ? +lastRow.id : -1;
+    const newID = String(lastID + 1);
 
     setForms([
       ...forms,
-      { id: String(lastID + 1), title: "", content: [] } as FormStructure,
+      { id: newID, title: "", content: [] } as FormStructure,
     ]);
+
+    // const lastLayoutColumn =
+    //   layout.find((x) => (x.id = String(lastID)))?.column ?? "left";
+    const column = "left";
+    setLayout([...layout, { id: newID, column }]);
   }
 
   const [theme, setTheme] = useState("modern");
