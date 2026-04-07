@@ -1,4 +1,9 @@
-import type { ValueType, ValueTypeName } from "../utils/types";
+import type { ChangeEvent } from "react";
+import {
+  ValueTypesList,
+  type ValueType,
+  type ValueTypeName,
+} from "../utils/types";
 import ArrayItem from "./ArrayItem";
 
 interface Props {
@@ -48,6 +53,19 @@ export default function FormRow({
     );
   }
 
+  function handleImageUpload(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setValue(id, reader.result as string);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
   function renderValueInput() {
     switch (valueType) {
       case "array":
@@ -93,6 +111,10 @@ export default function FormRow({
             className="editor-input editor-input-string"
             onChange={(e) => setValue(id, e.target.value)}
           />
+        );
+      case "image":
+        return (
+          <input type="file" accept="image/*" onChange={handleImageUpload} />
         );
     }
   }
