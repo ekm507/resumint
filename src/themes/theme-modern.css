@@ -3,7 +3,7 @@
 /* RESUME ROOT */
 
 .theme-modern.resume {
-    @apply flex flex-col gap-6 p-6 border rounded-lg bg-white text-lg min-w-[400px];
+    @apply flex flex-col gap-4 p-4 bg-white text-sm min-w-[400px] text-gray-800;
 }
 
 .theme-modern .resume-page {
@@ -17,56 +17,72 @@
 /* SECTION */
 
 .theme-modern .resume-section {
-    @apply flex flex-col gap-3 border rounded-lg p-4 shadow-sm bg-gray-50;
+    @apply flex flex-col gap-2 p-3 rounded-xl bg-gray-50 border border-gray-200;
 }
 
 .theme-modern .resume-section-title {
-    @apply text-2xl font-bold border-b pb-1;
+    @apply text-base font-semibold text-gray-900 border-b border-gray-200 pb-1;
 }
 
 .theme-modern .resume-section-content {
-    @apply flex flex-col gap-2;
+    @apply flex flex-col gap-1.5;
 }
 
 /* ROW */
 
 .theme-modern .resume-item {
-    @apply flex gap-3 items-start;
+    @apply flex gap-2 items-start;
 }
 
 .theme-modern .resume-item-name {
-    @apply font-semibold text-gray-700 min-w-[120px];
+    @apply font-medium text-gray-600 min-w-[95px] text-xs;
 }
 
 /* VALUES */
 
 .theme-modern .resume-item-value {
-    @apply flex gap-2;
+    @apply flex gap-1.5 flex-wrap;
 }
 
 .theme-modern .resume-item-string {
-    @apply text-blue-700;
+    @apply text-blue-600;
 }
 
 .theme-modern .resume-item-number {
-    @apply text-amber-700;
+    @apply text-amber-600;
 }
 
 /* ARRAY VALUES */
 
 .theme-modern .resume-item-array {
-    @apply flex flex-wrap gap-2;
+    @apply flex flex-wrap gap-1.5;
 }
 
 .theme-modern .resume-array-item {
-    @apply px-2 py-1 bg-cyan-100 text-cyan-800 rounded border text-sm;
+    @apply px-2 py-0.5 bg-cyan-50 text-cyan-700 rounded-md border border-cyan-200 text-xs;
+}
+
+/* IMAGE */
+
+.theme-modern resume-image {
+    @apply block w-full rounded-xl overflow-hidden mb-2;
+}
+
+.theme-modern resume-image img {
+    @apply w-full h-auto object-cover;
+}
+
+.theme-modern resume-item-image img {
+    @apply w-10 h-10 rounded-md object-cover;
 }
 
 /* COLUMN LAYOUT */
+
 .theme-modern .resume-columns {
-    @apply grid grid-cols-2 gap-6;
+    grid-template-columns: 2fr 1fr;
+    @apply grid gap-4;
 }
 
 .theme-modern .resume-column {
-    @apply flex flex-col gap-4;
+    @apply flex flex-col gap-3;
 }
