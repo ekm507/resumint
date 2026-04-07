@@ -31,6 +31,12 @@ export default function ItemRow({ row }: Props) {
         {value as string}
       </div>
     );
+  } else if (valueType === "image") {
+    valueRender = (
+      <div className="resume-item-value resume-item-image">
+        <img src={value as string} className="resume-image" />
+      </div>
+    );
   }
 
   return (
