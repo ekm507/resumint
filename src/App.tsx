@@ -94,6 +94,7 @@ export default function App() {
 
   const [theme, setTheme] = useState("modern");
   const [lookName, setLookName] = useState("neo");
+  const [accentColor, setAccentColor] = useState("#16a34a");
 
   function exportData(filename: string = "thecv_data.json") {
     const all_objects = {
@@ -128,6 +129,14 @@ export default function App() {
     contentRef: resumeRef,
     documentTitle: "resume",
   });
+
+  function darken(hex: string, amount = 0.4) {
+    const num = parseInt(hex.slice(1), 16);
+    const r = (num >> 16) * (1 - amount);
+    const g = ((num >> 8) & 0x00ff) * (1 - amount);
+    const b = (num & 0x0000ff) * (1 - amount);
+    return `rgb(${r},${g},${b})`;
+  }
 
   return (
     <div className={"app-root " + "look-" + lookName}>
@@ -165,6 +174,11 @@ export default function App() {
             </option>
           ))}
         </select>
+        <input
+          type="color"
+          value={accentColor}
+          onChange={(e) => setAccentColor(e.target.value)}
+        />
         <select
           value={theme}
           onChange={(e) => {
@@ -201,6 +215,12 @@ export default function App() {
           id="resume-render"
           ref={resumeRef}
           className={"resume theme-" + theme}
+          style={
+            {
+              "--accent": accentColor,
+              "--accent-dark": {darken(accentColor)},
+            } as React.CSSProperties
+          }
         >
           <div className="resume-page">
             <DraggableLayout
