@@ -7,6 +7,8 @@ import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { downloadBlob } from "./utils/functions";
 import { lookNames } from "./looks";
+import { generateAccentPalette } from "./utils/theming";
+
 export default function App() {
   const [forms, setForms] = useState([
     {
@@ -96,6 +98,8 @@ export default function App() {
   const [lookName, setLookName] = useState("neo");
   const [accentColor, setAccentColor] = useState("#16a34a");
 
+  const accentPalette = generateAccentPalette(accentColor);
+
   function exportData(filename: string = "thecv_data.json") {
     const all_objects = {
       forms,
@@ -129,14 +133,6 @@ export default function App() {
     contentRef: resumeRef,
     documentTitle: "resume",
   });
-
-  function darken(hex: string, amount = 0.4) {
-    const num = parseInt(hex.slice(1), 16);
-    const r = (num >> 16) * (1 - amount);
-    const g = ((num >> 8) & 0x00ff) * (1 - amount);
-    const b = (num & 0x0000ff) * (1 - amount);
-    return `rgb(${r},${g},${b})`;
-  }
 
   return (
     <div className={"app-root " + "look-" + lookName}>
@@ -215,12 +211,7 @@ export default function App() {
           id="resume-render"
           ref={resumeRef}
           className={"resume theme-" + theme}
-          style={
-            {
-              "--accent": accentColor,
-              "--accent-dark": darken(accentColor),
-            } as React.CSSProperties
-          }
+          style={accentPalette as React.CSSProperties}
         >
           <div className="resume-page">
             <DraggableLayout
