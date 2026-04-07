@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+/* RESUME ROOT */
+
+.theme-polar-bear.resume {
+    @apply flex flex-col gap-5 p-6 bg-slate-50 text-sm min-w-[400px] text-slate-800;
+}
+
+.theme-polar-bear .resume-page {
+    @apply bg-slate-50;
+}
+
+.theme-polar-bear .resume-section-wrapper {
+    @apply w-full;
+}
+
+/* SECTION */
+
+.theme-polar-bear .resume-section {
+    @apply flex flex-col gap-3 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm;
+}
+
+.theme-polar-bear .resume-section-title {
+    @apply text-sm font-semibold text-slate-900 tracking-wide;
+}
+
+.theme-polar-bear .resume-section-content {
+    @apply flex flex-col gap-2;
+}
+
+/* ROW */
+
+.theme-polar-bear .resume-item {
+    @apply flex gap-3 items-start;
+}
+
+.theme-polar-bear .resume-item-name {
+    @apply text-slate-500 min-w-[100px] text-xs uppercase tracking-wide;
+}
+
+/* VALUES */
+
+.theme-polar-bear .resume-item-value {
+    @apply flex flex-wrap gap-2;
+}
+
+.theme-polar-bear .resume-item-string {
+    @apply text-sky-600;
+}
+
+.theme-polar-bear .resume-item-number {
+    @apply text-indigo-600;
+}
+
+/* ARRAY VALUES */
+
+.theme-polar-bear .resume-item-array {
+    @apply flex flex-wrap gap-2;
+}
+
+.theme-polar-bear .resume-array-item {
+    @apply px-2.5 py-1 rounded-md bg-sky-50 text-sky-700 text-xs border border-sky-100;
+}
+
+/* IMAGE */
+
+.theme-polar-bear .resume-image {
+    @apply rounded-full object-cover mx-auto border-4 border-white shadow-md;
+}
+
+.theme-polar-bear .resume-item-image img {
+    @apply rounded-full object-cover border border-slate-200;
+}
+
+/* COLUMN LAYOUT */
+
+.theme-polar-bear .resume-columns {
+    grid-template-columns: 2fr 1fr;
+    @apply grid gap-5;
+}
+
+.theme-polar-bear .resume-column {
+    @apply flex flex-col gap-4;
+}
