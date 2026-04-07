@@ -64,16 +64,12 @@
 
 /* IMAGE */
 
-.theme-modern resume-image {
-    @apply block w-full rounded-xl overflow-hidden mb-2;
+.theme-modern .resume-image {
+    @apply rounded-full object-cover border-4 border-gray-200 shadow-md mx-auto;
 }
 
-.theme-modern resume-image img {
-    @apply w-full h-auto object-cover;
-}
-
-.theme-modern resume-item-image img {
-    @apply w-10 h-10 rounded-md object-cover;
+.theme-modern .resume-item-image img {
+    @apply rounded-full object-cover border border-gray-200;
 }
 
 /* COLUMN LAYOUT */
