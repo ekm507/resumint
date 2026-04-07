@@ -126,7 +126,7 @@ export default function FormRow({
           className="editor-row-type"
           onChange={(e) => handleTypeChange(e.target.value as ValueTypeName)}
         >
-          {["string", "number", "array"].map((type) => (
+          {ValueTypesList.map((type) => (
             <option key={type} value={type}>
               {type}
             </option>

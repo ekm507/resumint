@@ -1,4 +1,5 @@
 export type ValueTypeName = "string" | "number" | "array";
+export const ValueTypesList = ["string", "number", "array"];
 export type ValueType = string | number | { id: string; value: string }[];
 
 export type Row = {
