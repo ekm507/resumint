@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
-/* RESUME ROOT */
+.theme-classic {
+    --accent-50: #fefce8;
+    --accent-100: #fef9c3;
+    --accent-200: #fef08a;
+    --accent-300: #fde047;
+    --accent-400: #facc15;
+    --accent-500: #eab308;
+    --accent-600: #ca8a04;
+    --accent-700: #a16207;
+    --accent-800: #854d0e;
+    --accent-900: #713f12;
+}
 
 .theme-classic.resume {
     @apply flex flex-col gap-5 p-6 bg-white text-sm min-w-[400px] text-gray-900 font-serif;
@@ -14,31 +25,27 @@
     @apply w-full;
 }
 
-/* SECTION */
-
 .theme-classic .resume-section {
-    @apply flex flex-col gap-2 pb-3 border-b border-gray-300;
+    @apply flex flex-col gap-2 pb-3 border-b;
+    border-color: var(--accent-200);
 }
 
 .theme-classic .resume-section-title {
-    @apply text-base font-bold text-gray-800 tracking-wide;
+    @apply text-base font-bold tracking-wide;
+    color: var(--accent-800);
 }
 
 .theme-classic .resume-section-content {
     @apply flex flex-col gap-1.5;
 }
 
-/* ROW */
-
 .theme-classic .resume-item {
     @apply flex gap-3 items-start;
 }
 
 .theme-classic .resume-item-name {
-    @apply text-gray-600 min-w-[100px] text-xs italic;
+    @apply min-w-[100px] text-xs italic text-gray-600;
 }
-
-/* VALUES */
 
 .theme-classic .resume-item-value {
     @apply flex flex-wrap gap-1.5;
@@ -49,30 +56,27 @@
 }
 
 .theme-classic .resume-item-number {
-    @apply text-gray-700;
+    color: var(--accent-700);
 }
-
-/* ARRAY VALUES */
 
 .theme-classic .resume-item-array {
     @apply flex flex-wrap gap-2;
 }
 
 .theme-classic .resume-array-item {
-    @apply text-gray-800 text-xs;
+    @apply text-xs;
+    color: var(--accent-800);
 }
 
-/* IMAGE */
-
 .theme-classic .resume-image {
-    @apply rounded-full object-cover mx-auto border border-gray-300;
+    @apply rounded-full object-cover mx-auto border;
+    border-color: var(--accent-300);
 }
 
 .theme-classic .resume-item-image img {
-    @apply rounded-full object-cover border border-gray-300;
+    @apply rounded-full object-cover border;
+    border-color: var(--accent-300);
 }
-
-/* COLUMN LAYOUT */
 
 .theme-classic .resume-columns {
     grid-template-columns: 2fr 1fr;
