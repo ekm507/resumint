@@ -1,44 +1,82 @@
 @import "tailwindcss";
 
+/* RESUME ROOT */
+
 .theme-classic.resume {
-    @apply font-serif text-gray-900 bg-white border p-8;
+    @apply flex flex-col gap-5 p-6 bg-white text-sm min-w-[400px] text-gray-900 font-serif;
 }
 
+.theme-classic .resume-page {
+    @apply bg-white;
+}
+
+.theme-classic .resume-section-wrapper {
+    @apply w-full;
+}
+
+/* SECTION */
+
 .theme-classic .resume-section {
-    @apply flex flex-col gap-2 py-3 border-b border-gray-300;
+    @apply flex flex-col gap-2 pb-3 border-b border-gray-300;
 }
 
 .theme-classic .resume-section-title {
-    @apply text-xl font-bold uppercase tracking-wide text-gray-800;
+    @apply text-base font-bold text-gray-800 tracking-wide;
 }
 
 .theme-classic .resume-section-content {
-    @apply flex flex-col gap-1;
+    @apply flex flex-col gap-1.5;
 }
 
+/* ROW */
+
 .theme-classic .resume-item {
-    @apply flex gap-2;
+    @apply flex gap-3 items-start;
 }
 
 .theme-classic .resume-item-name {
-    @apply font-semibold min-w-[130px];
+    @apply text-gray-600 min-w-[100px] text-xs italic;
 }
 
+/* VALUES */
+
 .theme-classic .resume-item-value {
+    @apply flex flex-wrap gap-1.5;
+}
+
+.theme-classic .resume-item-string {
+    @apply text-gray-900;
+}
+
+.theme-classic .resume-item-number {
     @apply text-gray-700;
 }
 
+/* ARRAY VALUES */
+
 .theme-classic .resume-item-array {
-    @apply flex flex-wrap gap-1;
+    @apply flex flex-wrap gap-2;
 }
 
 .theme-classic .resume-array-item {
-    @apply text-gray-700;
+    @apply text-gray-800 text-xs;
+}
+
+/* IMAGE */
+
+.theme-classic .resume-image {
+    @apply rounded-full object-cover mx-auto border border-gray-300;
+}
+
+.theme-classic .resume-item-image img {
+    @apply rounded-full object-cover border border-gray-300;
 }
 
 /* COLUMN LAYOUT */
+
 .theme-classic .resume-columns {
-    @apply grid grid-cols-2 gap-8;
+    grid-template-columns: 2fr 1fr;
+    @apply grid gap-6;
 }
 
 .theme-classic .resume-column {
