@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
-/* RESUME ROOT */
+.theme-minimal {
+    --accent-50: #f0fdf4;
+    --accent-100: #dcfce7;
+    --accent-200: #bbf7d0;
+    --accent-300: #86efac;
+    --accent-400: #4ade80;
+    --accent-500: #22c55e;
+    --accent-600: #16a34a;
+    --accent-700: #15803d;
+    --accent-800: #166534;
+    --accent-900: #14532d;
+}
 
 .theme-minimal.resume {
     @apply flex flex-col gap-6 p-6 bg-white text-sm min-w-[400px] text-gray-900;
@@ -14,31 +25,26 @@
     @apply w-full;
 }
 
-/* SECTION */
-
 .theme-minimal .resume-section {
     @apply flex flex-col gap-3;
 }
 
 .theme-minimal .resume-section-title {
-    @apply text-sm font-semibold uppercase tracking-wide text-gray-500;
+    @apply text-sm font-semibold uppercase tracking-wide;
+    color: var(--accent-700);
 }
 
 .theme-minimal .resume-section-content {
     @apply flex flex-col gap-2;
 }
 
-/* ROW */
-
 .theme-minimal .resume-item {
     @apply flex gap-3 items-start;
 }
 
 .theme-minimal .resume-item-name {
-    @apply text-gray-500 min-w-[95px] text-xs uppercase tracking-wide;
+    @apply min-w-[95px] text-xs uppercase tracking-wide text-gray-500;
 }
-
-/* VALUES */
 
 .theme-minimal .resume-item-value {
     @apply flex gap-2 flex-wrap text-gray-900;
@@ -49,20 +55,17 @@
 }
 
 .theme-minimal .resume-item-number {
-    @apply text-gray-600;
+    color: var(--accent-600);
 }
-
-/* ARRAY VALUES */
 
 .theme-minimal .resume-item-array {
     @apply flex flex-wrap gap-2;
 }
 
 .theme-minimal .resume-array-item {
-    @apply text-gray-700 text-xs;
+    @apply text-xs;
+    color: var(--accent-700);
 }
-
-/* IMAGE */
 
 .theme-minimal .resume-image {
     @apply rounded-full object-cover mx-auto;
@@ -71,8 +74,6 @@
 .theme-minimal .resume-item-image img {
     @apply rounded-full object-cover;
 }
-
-/* COLUMN LAYOUT */
 
 .theme-minimal .resume-columns {
     grid-template-columns: 2fr 1fr;
