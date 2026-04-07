@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
-/* RESUME ROOT */
+/* DEFAULT ACCENT */
+
+.theme-polar-bear {
+    --accent-50: #eff6ff;
+    --accent-100: #dbeafe;
+    --accent-200: #bfdbfe;
+    --accent-300: #93c5fd;
+    --accent-400: #60a5fa;
+    --accent-500: #3b82f6;
+    --accent-600: #2563eb;
+    --accent-700: #1d4ed8;
+    --accent-800: #1e40af;
+    --accent-900: #1e3a8a;
+}
+
+/* ROOT */
 
 .theme-polar-bear.resume {
     @apply flex flex-col gap-5 p-6 bg-slate-50 text-sm min-w-[400px] text-slate-800;
@@ -17,11 +32,13 @@
 /* SECTION */
 
 .theme-polar-bear .resume-section {
-    @apply flex flex-col gap-3 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm;
+    @apply flex flex-col gap-3 p-4 rounded-2xl bg-white border shadow-sm;
+    border-color: var(--accent-100);
 }
 
 .theme-polar-bear .resume-section-title {
-    @apply text-sm font-semibold text-slate-900 tracking-wide;
+    @apply text-sm font-semibold tracking-wide;
+    color: var(--accent-800);
 }
 
 .theme-polar-bear .resume-section-content {
@@ -35,7 +52,7 @@
 }
 
 .theme-polar-bear .resume-item-name {
-    @apply text-slate-500 min-w-[100px] text-xs uppercase tracking-wide;
+    @apply min-w-[100px] text-xs uppercase tracking-wide text-slate-500;
 }
 
 /* VALUES */
@@ -45,34 +62,39 @@
 }
 
 .theme-polar-bear .resume-item-string {
-    @apply text-sky-600;
+    color: var(--accent-600);
 }
 
 .theme-polar-bear .resume-item-number {
-    @apply text-indigo-600;
+    color: var(--accent-700);
 }
 
-/* ARRAY VALUES */
+/* ARRAY */
 
 .theme-polar-bear .resume-item-array {
     @apply flex flex-wrap gap-2;
 }
 
 .theme-polar-bear .resume-array-item {
-    @apply px-2.5 py-1 rounded-md bg-sky-50 text-sky-700 text-xs border border-sky-100;
+    @apply px-2.5 py-1 rounded-md text-xs border;
+    background: var(--accent-50);
+    color: var(--accent-700);
+    border-color: var(--accent-200);
 }
 
 /* IMAGE */
 
 .theme-polar-bear .resume-image {
-    @apply rounded-full object-cover mx-auto border-4 border-white shadow-md;
+    @apply rounded-full object-cover mx-auto border-4 shadow-md;
+    border-color: white;
 }
 
 .theme-polar-bear .resume-item-image img {
-    @apply rounded-full object-cover border border-slate-200;
+    @apply rounded-full object-cover border;
+    border-color: var(--accent-100);
 }
 
-/* COLUMN LAYOUT */
+/* COLUMNS */
 
 .theme-polar-bear .resume-columns {
     grid-template-columns: 2fr 1fr;
