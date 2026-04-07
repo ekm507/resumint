@@ -218,7 +218,7 @@ export default function App() {
           style={
             {
               "--accent": accentColor,
-              "--accent-dark": {darken(accentColor)},
+              "--accent-dark": darken(accentColor),
             } as React.CSSProperties
           }
         >
