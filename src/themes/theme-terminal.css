@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* DEFAULT ACCENT PALETTE (terminal green fallback) */
-
 .theme-terminal {
     --accent-50: #ecfdf5;
     --accent-100: #d1fae5;
@@ -15,10 +13,8 @@
     --accent-900: #064e3b;
 }
 
-/* RESUME ROOT */
-
 .theme-terminal.resume {
-    @apply flex flex-col gap-4 p-4 text-sm min-w-[400px] font-mono border;
+    @apply flex flex-col gap-4 p-4 text-sm min-w-[420px] font-mono border;
     background: black;
     color: var(--accent-400);
     border-color: var(--accent-600);
@@ -31,8 +27,6 @@
 .theme-terminal .resume-section-wrapper {
     @apply w-full;
 }
-
-/* SECTION */
 
 .theme-terminal .resume-section {
     @apply flex flex-col gap-2 p-3 border;
@@ -52,8 +46,6 @@
     @apply flex flex-col gap-1.5;
 }
 
-/* ROW */
-
 .theme-terminal .resume-item {
     @apply flex gap-2 items-start;
 }
@@ -63,8 +55,6 @@
     color: var(--accent-200);
 }
 
-/* VALUES */
-
 .theme-terminal .resume-item-value {
     @apply flex flex-wrap gap-1.5;
 }
@@ -72,12 +62,9 @@
 .theme-terminal .resume-item-string {
     color: var(--accent-400);
 }
-
 .theme-terminal .resume-item-number {
     color: var(--accent-300);
 }
-
-/* ARRAY VALUES */
 
 .theme-terminal .resume-item-array {
     @apply flex flex-wrap gap-1.5;
@@ -89,7 +76,43 @@
     border-color: var(--accent-700);
 }
 
-/* IMAGE */
+/* TEXT */
+
+.theme-terminal .text-block {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+/* HEADINGS */
+
+.theme-terminal .heading-block {
+    font-weight: 700;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    color: var(--accent-300);
+}
+
+/* LISTS */
+
+.theme-terminal .list-block {
+    padding-left: 20px;
+}
+.theme-terminal .list-style-bullet {
+    list-style-type: disc;
+}
+.theme-terminal .list-style-numbered {
+    list-style-type: decimal;
+}
+.theme-terminal .list-style-plain {
+    list-style: none;
+    padding-left: 0;
+}
+
+.theme-terminal .list-block-render-item {
+    margin-bottom: 2px;
+}
+
+/* IMAGES */
 
 .theme-terminal .resume-image {
     @apply rounded-full object-cover mx-auto border;
@@ -101,7 +124,7 @@
     border-color: var(--accent-700);
 }
 
-/* COLUMN LAYOUT */
+/* LAYOUT */
 
 .theme-terminal .resume-columns {
     grid-template-columns: 2fr 1fr;

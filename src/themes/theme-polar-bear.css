@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* DEFAULT ACCENT */
-
 .theme-polar-bear {
     --accent-50: #eff6ff;
     --accent-100: #dbeafe;
@@ -15,10 +13,8 @@
     --accent-900: #1e3a8a;
 }
 
-/* ROOT */
-
 .theme-polar-bear.resume {
-    @apply flex flex-col gap-5 p-6 bg-slate-50 text-sm min-w-[400px] text-slate-800;
+    @apply flex flex-col gap-5 p-6 bg-slate-50 text-sm min-w-[420px] text-slate-800;
 }
 
 .theme-polar-bear .resume-page {
@@ -28,8 +24,6 @@
 .theme-polar-bear .resume-section-wrapper {
     @apply w-full;
 }
-
-/* SECTION */
 
 .theme-polar-bear .resume-section {
     @apply flex flex-col gap-3 p-4 rounded-2xl bg-white border shadow-sm;
@@ -45,8 +39,6 @@
     @apply flex flex-col gap-2;
 }
 
-/* ROW */
-
 .theme-polar-bear .resume-item {
     @apply flex gap-3 items-start;
 }
@@ -55,8 +47,6 @@
     @apply min-w-[100px] text-xs uppercase tracking-wide text-slate-500;
 }
 
-/* VALUES */
-
 .theme-polar-bear .resume-item-value {
     @apply flex flex-wrap gap-2;
 }
@@ -64,12 +54,9 @@
 .theme-polar-bear .resume-item-string {
     color: var(--accent-600);
 }
-
 .theme-polar-bear .resume-item-number {
     color: var(--accent-700);
 }
-
-/* ARRAY */
 
 .theme-polar-bear .resume-item-array {
     @apply flex flex-wrap gap-2;
@@ -82,25 +69,59 @@
     border-color: var(--accent-200);
 }
 
-/* IMAGE */
+/* TEXT */
 
-.theme-polar-bear .resume-image {
-    @apply rounded-full object-cover mx-auto border-4 shadow-md;
-    border-color: white;
+.theme-polar-bear .text-block {
+    white-space: pre-line;
+    line-height: 1.6;
 }
 
-.theme-polar-bear .resume-item-image img {
-    @apply rounded-full object-cover border;
-    border-color: var(--accent-100);
+.theme-polar-bear .text-size-sm {
+    font-size: 0.85rem;
+}
+.theme-polar-bear .text-size-md {
+    font-size: 0.95rem;
+}
+.theme-polar-bear .text-size-lg {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+.theme-polar-bear .text-size-xl {
+    font-size: 1.25rem;
+    font-weight: 600;
 }
 
-/* COLUMNS */
-
-.theme-polar-bear .resume-columns {
-    grid-template-columns: 2fr 1fr;
-    @apply grid gap-5;
+.theme-polar-bear .text-align-left {
+    text-align: left;
+}
+.theme-polar-bear .text-align-center {
+    text-align: center;
+}
+.theme-polar-bear .text-align-right {
+    text-align: right;
+}
+.theme-polar-bear .text-align-justify {
+    text-align: justify;
 }
 
-.theme-polar-bear .resume-column {
-    @apply flex flex-col gap-4;
+/* HEADINGS */
+
+.theme-polar-bear .heading-block {
+    font-weight: 600;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    color: var(--accent-800);
+}
+
+.theme-polar-bear .heading-level-1 {
+    font-size: 1.6rem;
+}
+.theme-polar-bear .heading-level-2 {
+    font-size: 1.35rem;
+}
+.theme-polar-bear .heading-level-3 {
+    font-size: 1.15rem;
+}
+.theme-polar-bear .heading-level-4 {
+    font-size: 1rem;
 }

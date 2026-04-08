@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-/* DEFAULT ACCENT (fallback if palette not injected) */
-
 .theme-ledger {
     --accent-50: #f0fdf4;
     --accent-100: #dcfce7;
@@ -15,22 +13,21 @@
     --accent-900: #14532d;
 }
 
-/* RESUME ROOT */
+/* ROOT */
 
 .theme-ledger.resume {
-    @apply flex flex-col gap-6 p-6 bg-white text-sm min-w-[400px];
-    color: #111827;
+    @apply flex flex-col gap-6 p-6 bg-white text-sm min-w-[420px] text-gray-900;
 }
 
 .theme-ledger .resume-page {
     @apply bg-white;
 }
 
+/* SECTIONS */
+
 .theme-ledger .resume-section-wrapper {
     @apply w-full;
 }
-
-/* SECTION */
 
 .theme-ledger .resume-section {
     @apply flex flex-col gap-3 pt-4;
@@ -46,19 +43,15 @@
     @apply flex flex-col gap-2;
 }
 
-/* ROW */
+/* ITEMS */
 
 .theme-ledger .resume-item {
     @apply flex gap-3 items-start;
 }
 
 .theme-ledger .resume-item-name {
-    @apply text-xs uppercase tracking-wide;
-    color: #6b7280;
-    min-width: 100px;
+    @apply text-xs uppercase tracking-wide text-gray-500 min-w-[100px];
 }
-
-/* VALUES */
 
 .theme-ledger .resume-item-value {
     @apply flex flex-wrap gap-2;
@@ -72,20 +65,95 @@
     color: var(--accent-600);
 }
 
-/* ARRAY VALUES */
-
 .theme-ledger .resume-item-array {
     @apply flex flex-wrap gap-2;
 }
 
 .theme-ledger .resume-array-item {
     @apply text-xs;
-    color: #374151;
     border-bottom: 2px solid var(--accent-500);
-    padding-bottom: 2px;
+    color: #374151;
 }
 
-/* IMAGE */
+/* TEXT */
+
+.theme-ledger .text-block {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+.theme-ledger .text-size-sm {
+    font-size: 0.85rem;
+}
+.theme-ledger .text-size-md {
+    font-size: 0.95rem;
+}
+.theme-ledger .text-size-lg {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+.theme-ledger .text-size-xl {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.theme-ledger .text-align-left {
+    text-align: left;
+}
+.theme-ledger .text-align-center {
+    text-align: center;
+}
+.theme-ledger .text-align-right {
+    text-align: right;
+}
+.theme-ledger .text-align-justify {
+    text-align: justify;
+}
+
+/* HEADINGS */
+
+.theme-ledger .heading-block {
+    font-weight: 600;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    color: var(--accent-800);
+}
+
+.theme-ledger .heading-level-1 {
+    font-size: 1.6rem;
+}
+.theme-ledger .heading-level-2 {
+    font-size: 1.35rem;
+}
+.theme-ledger .heading-level-3 {
+    font-size: 1.15rem;
+}
+.theme-ledger .heading-level-4 {
+    font-size: 1rem;
+}
+
+/* LISTS */
+
+.theme-ledger .list-block {
+    padding-left: 20px;
+}
+.theme-ledger .list-style-bullet {
+    list-style-type: disc;
+}
+.theme-ledger .list-style-numbered {
+    list-style-type: decimal;
+}
+.theme-ledger .list-style-plain {
+    list-style: none;
+    padding-left: 0;
+}
+
+.theme-ledger .list-block-render-item {
+    margin-bottom: 2px;
+    line-height: 1.5;
+}
+
+/* IMAGES */
 
 .theme-ledger .resume-image {
     @apply object-cover mx-auto;
@@ -99,7 +167,7 @@
     border: 3px solid var(--accent-600);
 }
 
-/* COLUMN LAYOUT */
+/* LAYOUT */
 
 .theme-ledger .resume-columns {
     grid-template-columns: 2fr 1fr;
@@ -108,4 +176,23 @@
 
 .theme-ledger .resume-column {
     @apply flex flex-col gap-6;
+}
+
+.theme-ledger .resume-vertical-split {
+    @apply gap-6 items-stretch;
+}
+
+.theme-ledger .resume-vertical-divider {
+    @apply self-stretch;
+    border-left-color: var(--accent-200);
+}
+
+.theme-ledger .resume-divider-solid {
+    border-left-style: solid;
+}
+.theme-ledger .resume-divider-dashed {
+    border-left-style: dashed;
+}
+.theme-ledger .resume-divider-dotted {
+    border-left-style: dotted;
 }

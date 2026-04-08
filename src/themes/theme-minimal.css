@@ -14,7 +14,7 @@
 }
 
 .theme-minimal.resume {
-    @apply flex flex-col gap-6 p-6 bg-white text-sm min-w-[400px] text-gray-900;
+    @apply flex flex-col gap-6 p-6 bg-white text-sm min-w-[420px] text-gray-900;
 }
 
 .theme-minimal .resume-page {
@@ -47,7 +47,7 @@
 }
 
 .theme-minimal .resume-item-value {
-    @apply flex gap-2 flex-wrap text-gray-900;
+    @apply flex flex-wrap gap-2 text-gray-900;
 }
 
 .theme-minimal .resume-item-string {
@@ -67,6 +67,87 @@
     color: var(--accent-700);
 }
 
+/* TEXT */
+
+.theme-minimal .text-block {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+.theme-minimal .text-size-sm {
+    font-size: 0.85rem;
+}
+.theme-minimal .text-size-md {
+    font-size: 0.95rem;
+}
+.theme-minimal .text-size-lg {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+.theme-minimal .text-size-xl {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.theme-minimal .text-align-left {
+    text-align: left;
+}
+.theme-minimal .text-align-center {
+    text-align: center;
+}
+.theme-minimal .text-align-right {
+    text-align: right;
+}
+.theme-minimal .text-align-justify {
+    text-align: justify;
+}
+
+/* HEADINGS */
+
+.theme-minimal .heading-block {
+    font-weight: 600;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    color: var(--accent-700);
+}
+
+.theme-minimal .heading-level-1 {
+    font-size: 1.5rem;
+}
+.theme-minimal .heading-level-2 {
+    font-size: 1.3rem;
+}
+.theme-minimal .heading-level-3 {
+    font-size: 1.1rem;
+}
+.theme-minimal .heading-level-4 {
+    font-size: 1rem;
+}
+
+/* LISTS */
+
+.theme-minimal .list-block {
+    padding-left: 18px;
+}
+
+.theme-minimal .list-style-bullet {
+    list-style-type: disc;
+}
+.theme-minimal .list-style-numbered {
+    list-style-type: decimal;
+}
+.theme-minimal .list-style-plain {
+    list-style: none;
+    padding-left: 0;
+}
+
+.theme-minimal .list-block-render-item {
+    margin-bottom: 2px;
+    line-height: 1.5;
+}
+
+/* IMAGES */
+
 .theme-minimal .resume-image {
     @apply rounded-full object-cover mx-auto;
 }
@@ -75,6 +156,8 @@
     @apply rounded-full object-cover;
 }
 
+/* LAYOUT */
+
 .theme-minimal .resume-columns {
     grid-template-columns: 2fr 1fr;
     @apply grid gap-6;
@@ -82,4 +165,23 @@
 
 .theme-minimal .resume-column {
     @apply flex flex-col gap-5;
+}
+
+.theme-minimal .resume-vertical-split {
+    @apply gap-6 items-stretch;
+}
+
+.theme-minimal .resume-vertical-divider {
+    @apply self-stretch;
+    border-left-color: var(--accent-200);
+}
+
+.theme-minimal .resume-divider-solid {
+    border-left-style: solid;
+}
+.theme-minimal .resume-divider-dashed {
+    border-left-style: dashed;
+}
+.theme-minimal .resume-divider-dotted {
+    border-left-style: dotted;
 }
