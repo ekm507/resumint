@@ -15,6 +15,16 @@ export function ImageEditor({ block, update }: any) {
       props: { ...(block.props || {}), [k]: v },
     });
 
+  const handleFile = (file: File) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setProp("src", reader.result); // base64 string
+    };
+
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="image-block-editor">
       <input
@@ -22,6 +32,16 @@ export function ImageEditor({ block, update }: any) {
         placeholder="image url"
         value={src}
         onChange={(e) => setProp("src", e.target.value)}
+      />
+
+      <input
+        type="file"
+        accept="image/*"
+        className="image-block-file-input"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) handleFile(file);
+        }}
       />
 
       <input
