@@ -221,18 +221,17 @@
 
 .theme-modern .resume-vertical-divider {
     @apply self-stretch;
-    background-color: var(--accent-200);
+    border-left-color: var(--accent-200);
 }
 
 .theme-modern .resume-divider-solid {
-    @apply border-l;
-    border-color: var(--accent-200);
+    border-left-style: solid;
 }
 
 .theme-modern .resume-divider-dashed {
-    border-left: 2px dashed var(--accent-200);
+    border-left-style: dashed;
 }
 
 .theme-modern .resume-divider-dotted {
-    border-left: 2px dotted var(--accent-200);
+    border-left-style: dotted;
 }
