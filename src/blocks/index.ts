@@ -1,3 +1,6 @@
 import "./textBlock";
 import "./listBlock";
-// import "./headingBlock";
+import "./headingBlock";
+import "./imageBlock";
+import "./linkBlock";
+import "./dividerBlock";

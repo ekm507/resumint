@@ -1,35 +1,38 @@
 import { registerBlock } from "./blockRegistry";
-import type { Block } from "../utils/types";
 import BlockEditor from "../components/BlockEditor";
+import type { Block } from "../utils/types";
 
 export function ListEditor({ block, update }: any) {
   const items = block.children || [];
+  const { style = "ul" } = block.props || {};
 
-  const updateChild = (childId: string, newChild: Block) => {
+  const setProp = (key: string, value: any) => {
     update({
       ...block,
-      children: items.map((c: Block) => (c.id === childId ? newChild : c)),
+      props: { ...block.props, [key]: value },
     });
   };
 
-  const deleteChild = (childId: string) => {
+  const updateChild = (id: string, newChild: Block) => {
     update({
       ...block,
-      children: items.filter((c: Block) => c.id !== childId),
+      children: items.map((c: Block) => (c.id === id ? newChild : c)),
     });
   };
 
-  const setChildType = (childId: string, type: string) => {
+  const deleteChild = (id: string) => {
+    update({
+      ...block,
+      children: items.filter((c: Block) => c.id !== id),
+    });
+  };
+
+  const setChildType = (id: string, type: string) => {
     update({
       ...block,
       children: items.map((c: Block) =>
-        c.id === childId
-          ? {
-              id: c.id,
-              blockType: type,
-              props: {},
-              children: [],
-            }
+        c.id === id
+          ? { id: c.id, blockType: type, props: {}, children: [] }
           : c,
       ),
     });
@@ -50,29 +53,48 @@ export function ListEditor({ block, update }: any) {
   };
 
   return (
-    <div className="list-editor">
-      {items.map((child: Block) => (
-        <BlockEditor
-          key={child.id}
-          block={child}
-          updateBlock={updateChild}
-          deleteBlock={deleteChild}
-          setBlockType={setChildType}
-        />
-      ))}
+    <div className="list-block-editor">
+      <select
+        className="list-block-style-select"
+        value={style}
+        onChange={(e) => setProp("style", e.target.value)}
+      >
+        <option value="ul">Bullet</option>
+        <option value="ol">Numbered</option>
+      </select>
 
-      <button onClick={addItem}>+ item</button>
+      <div className="list-block-items">
+        {items.map((child: Block) => (
+          <div className="list-block-item" key={child.id}>
+            <BlockEditor
+              block={child}
+              updateBlock={updateChild}
+              deleteBlock={deleteChild}
+              setBlockType={setChildType}
+            />
+          </div>
+        ))}
+      </div>
+
+      <button className="list-block-add-button" onClick={addItem}>
+        + item
+      </button>
     </div>
   );
 }
 
 export function ListRender({ block }: any) {
+  const { style = "ul" } = block.props || {};
+  const Tag = style === "ol" ? "ol" : "ul";
+
   return (
-    <ul>
+    <Tag className={`list-block list-style-${style}`}>
       {block.children?.map((child: Block) => (
-        <li key={child.id}>{child.props?.text}</li>
+        <li className="list-block-render-item" key={child.id}>
+          {child.props?.text}
+        </li>
       ))}
-    </ul>
+    </Tag>
   );
 }
 
@@ -84,7 +106,9 @@ registerBlock({
     return {
       id: "",
       blockType: "list",
-      props: {},
+      props: {
+        style: "ul",
+      },
       children: [],
     };
   },
