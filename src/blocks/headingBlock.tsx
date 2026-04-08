@@ -2,8 +2,7 @@ import { registerBlock } from "./blockRegistry";
 import type { Block } from "../utils/types";
 
 export function HeadingEditor({ block, update }: any) {
-  const { text = "", level = 2, align = "left" } = block.props || {};
-
+  const { text = "", level = 2, align = "start" } = block.props || {};
   const setProp = (k: string, v: any) =>
     update({
       ...block,
@@ -33,9 +32,9 @@ export function HeadingEditor({ block, update }: any) {
         value={align}
         onChange={(e) => setProp("align", e.target.value)}
       >
-        <option value="left">left</option>
+        <option value="start">start</option>
         <option value="center">center</option>
-        <option value="right">right</option>
+        <option value="end">end</option>
       </select>
     </div>
   );
@@ -47,7 +46,8 @@ export function HeadingRender({ block }: any) {
 
   return (
     <Tag
-      className={`heading-block heading-level-${level} heading-align-${align}`}
+      className={`heading-block heading-level-${level}`}
+      style={{ textAlign: align }}
     >
       {text}
     </Tag>
@@ -65,7 +65,7 @@ registerBlock({
       props: {
         text: "",
         level: 2,
-        align: "left",
+        align: "start",
       },
     };
   },
