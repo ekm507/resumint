@@ -106,13 +106,11 @@ export function ImageRender({ block }: any) {
       src={src}
       alt={alt}
       style={{ width: `${width}%` }}
-      className="rounded"
+      className="resume-image"
     />
   );
 
-  return (
-    <div className={`flex items-center gap-4 justify-${align}`}>{image}</div>
-  );
+  return <div className={`resume-item-image justify-${align}`}>{image}</div>;
 }
 
 registerBlock({
