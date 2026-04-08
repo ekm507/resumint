@@ -214,3 +214,25 @@
 .theme-modern .resume-column {
     @apply flex flex-col gap-4;
 }
+
+.theme-modern .resume-vertical-split {
+    @apply gap-6 items-stretch;
+}
+
+.theme-modern .resume-vertical-divider {
+    @apply self-stretch;
+    background-color: var(--accent-200);
+}
+
+.theme-modern .resume-divider-solid {
+    @apply border-l;
+    border-color: var(--accent-200);
+}
+
+.theme-modern .resume-divider-dashed {
+    border-left: 2px dashed var(--accent-200);
+}
+
+.theme-modern .resume-divider-dotted {
+    border-left: 2px dotted var(--accent-200);
+}

@@ -4,3 +4,4 @@ import "./headingBlock";
 import "./imageBlock";
 import "./linkBlock";
 import "./dividerBlock";
+import "./verticalSplitBlock";
