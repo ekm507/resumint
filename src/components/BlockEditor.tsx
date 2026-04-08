@@ -14,6 +14,10 @@ export default function BlockEditor({
   deleteBlock,
   setBlockType,
 }: Props) {
+  if (!block) {
+    return <div className="block-editor-error">Missing block</div>;
+  }
+
   const def = getBlock(block.blockType);
   const blocks = getAllBlocks();
 

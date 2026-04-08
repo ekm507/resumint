@@ -6,6 +6,10 @@ interface Props {
 }
 
 export default function BlockRenderer({ block }: Props) {
+  if (!block) {
+    return <div className="block-error">Empty block</div>;
+  }
+
   const def = getBlock(block.blockType);
 
   if (!def) {
