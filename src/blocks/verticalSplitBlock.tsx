@@ -101,12 +101,14 @@ export function VerticalSplitEditor({ block, update }: any) {
         <BlockEditor
           block={left}
           updateBlock={updateLeft}
+          deleteBlock={() => {}}
           setBlockType={setLeftType}
         />
 
         <BlockEditor
           block={right}
           updateBlock={updateRight}
+          deleteBlock={() => {}}
           setBlockType={setRightType}
         />
       </div>
