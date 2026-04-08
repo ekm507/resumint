@@ -41,7 +41,7 @@ export function HeadingEditor({ block, update }: any) {
 }
 
 export function HeadingRender({ block }: any) {
-  const { text, level = 2, align = "left" } = block.props || {};
+  const { text, level = 2, align = "start" } = block.props || {};
   const Tag = `h${level}` as any;
 
   return (
