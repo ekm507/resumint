@@ -17,9 +17,10 @@ export default function App() {
 
   const [theme, setTheme] = useState("modern");
   const [lookName, setLookName] = useState("neo");
-  const [accentColor, setAccentColor] = useState("#16a34a");
-
-  const accentPalette = generateAccentPalette(accentColor);
+  const [accentColor, setAccentColor] = useState<string | null>(null);
+  const accentPalette = accentColor
+    ? generateAccentPalette(accentColor)
+    : undefined;
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
@@ -77,9 +78,11 @@ export default function App() {
 
         <input
           type="color"
-          value={accentColor}
+          value={accentColor ?? "#F0F0F0"}
           onChange={(e) => setAccentColor(e.target.value)}
         />
+
+        <button onClick={() => setAccentColor(null)}>Theme default</button>
 
         <select value={theme} onChange={(e) => setTheme(e.target.value)}>
           {themeNames.map((name) => (
@@ -111,7 +114,7 @@ export default function App() {
           id="resume-render"
           ref={resumeRef}
           className={"resume theme-" + theme}
-          style={accentPalette as React.CSSProperties}
+          style={accentPalette as React.CSSProperties | undefined}
         >
           <div className="resume-page">
             <DraggableLayout
