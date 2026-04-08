@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+/* =========================================================
+   COLORFUL EDITOR THEME
+========================================================= */
+
+.look-colorful {
+    @apply text-slate-800;
+}
+
+/* APP ROOT */
+
+.look-colorful .app-root {
+    @apply flex flex-col items-center gap-4 p-4 h-screen overflow-hidden
+           bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100;
+}
+
+.look-colorful .app-layout {
+    @apply flex gap-6 w-full flex-1 justify-center overflow-hidden;
+}
+
+/* TOOLBAR */
+
+.look-colorful .app-toolbar {
+    @apply flex gap-2 bg-white/80 backdrop-blur
+           border border-purple-200
+           rounded-xl p-2 shadow-md;
+}
+
+.look-colorful .toolbar-button {
+    @apply px-3 py-1.5 text-sm rounded-lg cursor-pointer transition
+           bg-gradient-to-r from-indigo-500 to-purple-500
+           text-white hover:from-indigo-600 hover:to-purple-600
+           shadow-sm active:scale-95;
+}
+
+.look-colorful .toolbar-file {
+    @apply px-3 py-1.5 text-sm border border-pink-300 rounded-lg
+           bg-pink-100 hover:bg-pink-200 cursor-pointer;
+}
+
+/* EDITOR PANEL */
+
+.look-colorful .editor-panel {
+    @apply flex flex-col gap-3 bg-white
+           border border-blue-200 rounded-2xl p-3
+           shadow-lg min-w-[280px] overflow-y-auto;
+}
+
+.look-colorful .editor-add-button {
+    @apply border border-dashed border-purple-300 rounded-xl py-2
+           text-purple-600 hover:bg-purple-50
+           hover:border-purple-400 cursor-pointer;
+}
+
+/* BLOCK EDITOR */
+
+.look-colorful .block-editor {
+    @apply flex flex-col gap-2 p-3 rounded-xl border overflow-y-auto
+           border-indigo-200 bg-indigo-50 shadow-sm;
+}
+
+.look-colorful .block-editor-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-colorful .block-type-select {
+    @apply border border-purple-300 rounded-lg px-2 py-1
+           bg-white cursor-pointer outline-none
+           focus:ring-2 focus:ring-purple-500;
+}
+
+/* GENERIC INPUTS */
+
+.look-colorful .text-block-input,
+.look-colorful .heading-block-input,
+.look-colorful .image-block-src-input,
+.look-colorful .image-block-alt-input,
+.look-colorful .link-block-text-input,
+.look-colorful .link-block-url-input {
+    @apply border border-blue-300 rounded-lg px-3 py-1.5 outline-none
+           bg-white w-full
+           focus:ring-2 focus:ring-indigo-500
+           focus:border-indigo-500;
+}
+
+.look-colorful textarea.text-block-input {
+    @apply resize-none py-2;
+}
+
+.look-colorful select {
+    @apply border border-purple-300 rounded-lg px-2 py-1
+           bg-white outline-none
+           focus:ring-2 focus:ring-purple-500;
+}
+
+/* TEXT BLOCK */
+
+.look-colorful .text-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful .text-block-controls {
+    @apply flex gap-2;
+}
+
+/* HEADING BLOCK */
+
+.look-colorful .heading-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* LIST BLOCK */
+
+.look-colorful .list-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful .list-block-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful .list-block-item {
+    @apply border border-pink-200 rounded-lg p-2 bg-pink-50;
+}
+
+.look-colorful .list-block-add-button {
+    @apply border border-dashed border-pink-300 rounded-lg py-1.5
+           hover:bg-pink-100 cursor-pointer;
+}
+
+/* IMAGE BLOCK */
+
+.look-colorful .image-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* LINK BLOCK */
+
+.look-colorful .link-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* DIVIDER BLOCK */
+
+.look-colorful .divider-block-editor {
+    @apply flex gap-2;
+}
+
+/* TAGS BLOCK */
+
+.look-colorful .tags-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful .tags-block-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful .tags-block-item {
+    @apply flex items-center gap-2;
+}
+
+.look-colorful .tags-block-input {
+    @apply border border-green-300 rounded-lg px-3 py-1.5
+           bg-white outline-none
+           focus:ring-2 focus:ring-green-500 flex-1;
+}
+
+.look-colorful .tags-block-remove-button {
+    @apply text-rose-500 text-xs hover:text-rose-600 cursor-pointer;
+}
+
+.look-colorful .tags-block-add-button {
+    @apply border border-dashed border-green-300 rounded-lg py-1.5
+           hover:bg-green-50 cursor-pointer;
+}
+
+/* KEY VALUE BLOCK */
+
+.look-colorful .keyvalue-block-editor {
+    @apply flex items-center gap-2;
+}
+
+.look-colorful .keyvalue-block-key-input {
+    @apply border border-amber-300 rounded px-2 py-1 text-sm bg-white;
+}
+
+.look-colorful .keyvalue-block-value-input {
+    @apply border border-amber-300 rounded px-2 py-1 text-sm bg-white;
+}
+
+/* FORM WRAPPER */
+
+.look-colorful .editor-form-wrapper {
+    @apply flex flex-col;
+}
+
+.look-colorful .editor-form {
+    @apply flex flex-col gap-2 border border-indigo-200
+           rounded-xl p-2 bg-indigo-50;
+}
+
+.look-colorful .editor-form-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-colorful .editor-form-header input {
+    @apply flex-1 border border-purple-300 rounded-lg px-2 py-1
+           bg-white outline-none
+           focus:ring-2 focus:ring-purple-500;
+}
+
+/* DELETE BUTTON */
+
+.look-colorful .block-delete-button {
+    @apply text-red-500 hover:text-red-600 cursor-pointer;
+}
+
+/* ADD BLOCK */
+
+.look-colorful .add-block {
+    @apply flex flex-wrap gap-2 pt-2;
+}
+
+.look-colorful .add-block button {
+    @apply border border-dashed border-indigo-300
+           rounded-lg px-2 py-1 text-xs
+           hover:bg-indigo-100 cursor-pointer;
+}
