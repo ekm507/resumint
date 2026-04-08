@@ -44,9 +44,20 @@ export function ImageEditor({ block, update }: any) {
   };
 
   const handleFile = async (file: File) => {
-    // file size limit (5MB)
+    // size limit
     if (file.size > 5_000_000) {
       alert("Image too large. Maximum size is 5MB.");
+      return;
+    }
+
+    if (file.type === "image/svg+xml" || file.name.endsWith(".svg")) {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        setProp("src", reader.result);
+      };
+
+      reader.readAsDataURL(file);
       return;
     }
 
