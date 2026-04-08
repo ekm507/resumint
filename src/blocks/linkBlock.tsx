@@ -1,3 +1,6 @@
+import type { Block } from "../utils/types";
+import { registerBlock } from "./blockRegistry";
+
 export function LinkEditor({ block, update }: any) {
   const { text = "", url = "", target = "_self" } = block.props || {};
 
@@ -30,3 +33,23 @@ export function LinkRender({ block }: any) {
     </a>
   );
 }
+
+registerBlock({
+  type: "link",
+  label: "Link",
+
+  create(): Block {
+    return {
+      id: "",
+      blockType: "link",
+      props: {
+        text: "",
+        url: "",
+        target: "_self",
+      },
+    };
+  },
+
+  Editor: LinkEditor,
+  Render: LinkRender,
+});

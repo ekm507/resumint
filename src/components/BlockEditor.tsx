@@ -3,7 +3,7 @@ import type { Block } from "../utils/types";
 
 interface Props {
   block: Block;
-  updateBlock: (id: string, props: any) => void;
+  updateBlock: (id: string, block: Block) => void;
   deleteBlock: (id: string) => void;
   setBlockType: (id: string, type: string) => void;
 }
@@ -17,7 +17,13 @@ export default function BlockEditor({
   const def = getBlock(block.blockType);
   const blocks = getAllBlocks();
 
-  if (!def) return <div>Unknown block: {block.blockType}</div>;
+  if (!def) {
+    return (
+      <div className="block-editor-error">Unknown block: {block.blockType}</div>
+    );
+  }
+
+  const Editor = def.Editor;
 
   return (
     <div className="block-editor">
@@ -34,10 +40,15 @@ export default function BlockEditor({
           ))}
         </select>
 
-        <button onClick={() => deleteBlock(block.id)}>❌</button>
+        <button
+          className="block-delete-button"
+          onClick={() => deleteBlock(block.id)}
+        >
+          ❌
+        </button>
       </div>
 
-      <def.Editor
+      <Editor
         block={block}
         update={(newBlock: Block) => updateBlock(block.id, newBlock)}
       />

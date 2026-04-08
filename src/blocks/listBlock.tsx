@@ -1,5 +1,6 @@
 import { registerBlock } from "./blockRegistry";
 import BlockEditor from "../components/BlockEditor";
+import BlockRenderer from "../components/BlockRenderer";
 import type { Block } from "../utils/types";
 
 export function ListEditor({ block, update }: any) {
@@ -91,7 +92,7 @@ export function ListRender({ block }: any) {
     <Tag className={`list-block list-style-${style}`}>
       {block.children?.map((child: Block) => (
         <li className="list-block-render-item" key={child.id}>
-          {child.props?.text}
+          <BlockRenderer block={child} />
         </li>
       ))}
     </Tag>

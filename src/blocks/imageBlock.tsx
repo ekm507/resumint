@@ -1,3 +1,6 @@
+import type { Block } from "../utils/types";
+import { registerBlock } from "./blockRegistry";
+
 export function ImageEditor({ block, update }: any) {
   const {
     src = "",
@@ -43,3 +46,24 @@ export function ImageRender({ block }: any) {
     </div>
   );
 }
+
+registerBlock({
+  type: "image",
+  label: "Image",
+
+  create(): Block {
+    return {
+      id: "",
+      blockType: "image",
+      props: {
+        src: "",
+        alt: "",
+        width: "100%",
+        align: "center",
+      },
+    };
+  },
+
+  Editor: ImageEditor,
+  Render: ImageRender,
+});

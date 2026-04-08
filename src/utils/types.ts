@@ -1,17 +1,11 @@
-export type DirTypeNames = "lrt" | "rtl" | "auto";
+export type DirTypeNames = "ltr" | "rtl" | "auto";
 
 export type LayoutItem = {
   id: string;
   column: "left" | "right";
 };
 
-export type BlockType =
-  | "text"
-  | "heading"
-  | "list"
-  | "image"
-  | "link"
-  | "divider";
+export type BlockType = string;
 
 export interface Block {
   id: string;
@@ -19,15 +13,6 @@ export interface Block {
   props?: Record<string, any>;
   children?: Block[];
 }
-
-export const BlockTypesList: BlockType[] = [
-  "text",
-  "heading",
-  "list",
-  "image",
-  "link",
-  "divider",
-];
 
 export interface FormStructure {
   id: string;

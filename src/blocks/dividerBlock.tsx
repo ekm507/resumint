@@ -1,3 +1,6 @@
+import type { Block } from "../utils/types";
+import { registerBlock } from "./blockRegistry";
+
 export function DividerEditor({ block, update }: any) {
   const { style = "solid", spacing = "md" } = block.props || {};
 
@@ -38,3 +41,22 @@ export function DividerRender({ block }: any) {
     />
   );
 }
+
+registerBlock({
+  type: "divider",
+  label: "Divider",
+
+  create(): Block {
+    return {
+      id: "",
+      blockType: "divider",
+      props: {
+        style: "solid",
+        spacing: "md",
+      },
+    };
+  },
+
+  Editor: DividerEditor,
+  Render: DividerRender,
+});
