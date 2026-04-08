@@ -1,19 +1,22 @@
 @import "tailwindcss";
 
-/* APP ROOT */
+/* =========================================================
+   BASE LAYOUT
+========================================================= */
 
 .app-root {
-    @apply flex flex-col items-center gap-4 p-3 bg-gray-100 h-screen overflow-hidden;
+    @apply flex flex-col items-center gap-4 p-3
+           bg-gray-100 h-screen overflow-hidden;
 }
 
 .app-layout {
-    @apply flex gap-10 w-full justify-center flex-1 overflow-hidden;
+    @apply flex gap-8 w-full flex-1 justify-center overflow-hidden;
 }
 
-/* COLLAPSIBLE BODY */
+/* COLLAPSIBLE FORM */
 
 .editor-form-body {
-    @apply flex flex-col gap-2 overflow-hidden transition-all duration-300 ease-in-out;
+    @apply flex flex-col gap-2 overflow-hidden transition-all duration-300;
     max-height: 1000px;
     opacity: 1;
 }
@@ -23,31 +26,39 @@
     opacity: 0;
 }
 
+/* RENDER AREA */
+
 #resume-render {
-    @apply flex-1 overflow-y-auto flex justify-start flex-col;
+    @apply flex-1 overflow-y-auto flex flex-col items-start;
 }
+
+/* PRINT */
 
 @media print {
     #resume-render {
         @apply p-0 m-0 border-0;
-        box-sizing: border-box;
     }
+
     .resume {
         @apply border-0;
     }
 }
 
+/* PAGE */
+
 .resume-page {
-    width: 210mm; /* A4 width at 96dpi */
+    width: 210mm;
     min-height: 297mm;
-    border: solid 1px;
-    padding: 16px;
+    border: 1px solid #cbd5e1;
+    padding: 20px;
 }
 
+/* COLUMNS */
+
 .resume-columns {
-    @apply flex gap-4 w-full h-full;
+    @apply flex gap-4 w-full;
 }
 
 .resume-column {
-    @apply flex-1 flex flex-col min-h-50;
+    @apply flex-1 flex flex-col gap-2;
 }

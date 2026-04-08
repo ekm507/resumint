@@ -13,63 +13,184 @@
     --accent-900: #1e3a8a;
 }
 
+/* ROOT */
+
 .theme-modern.resume {
-    @apply flex flex-col gap-4 p-4 bg-white text-sm min-w-[400px] text-gray-800;
+    @apply flex flex-col gap-6 p-6 bg-white text-sm min-w-[420px] text-gray-800;
 }
 
 .theme-modern .resume-page {
     @apply bg-white;
 }
 
+/* =========================
+   SECTIONS
+========================= */
+
 .theme-modern .resume-section-wrapper {
     @apply w-full;
 }
 
 .theme-modern .resume-section {
-    @apply flex flex-col gap-2 p-3 rounded-xl bg-gray-50 border;
+    @apply flex flex-col gap-3 p-4 rounded-xl border bg-white shadow-sm;
     border-color: var(--accent-100);
 }
 
 .theme-modern .resume-section-title {
-    @apply text-base font-semibold border-b pb-1;
+    @apply text-sm font-semibold pb-1 border-b;
     color: var(--accent-800);
     border-color: var(--accent-200);
 }
 
 .theme-modern .resume-section-content {
-    @apply flex flex-col gap-1.5;
+    @apply flex flex-col gap-2;
 }
 
+/* =========================
+   ITEMS (old renderer)
+========================= */
+
 .theme-modern .resume-item {
-    @apply flex gap-2 items-start;
+    @apply flex gap-3 items-start;
 }
 
 .theme-modern .resume-item-name {
-    @apply font-medium min-w-[95px] text-xs text-gray-600;
+    @apply min-w-[100px] text-xs font-medium text-gray-500;
 }
 
 .theme-modern .resume-item-value {
-    @apply flex gap-1.5 flex-wrap;
+    @apply flex flex-wrap gap-2 text-gray-800;
 }
 
 .theme-modern .resume-item-string {
-    color: var(--accent-600);
+    @apply text-gray-900;
 }
 
 .theme-modern .resume-item-number {
+    @apply font-medium;
     color: var(--accent-700);
 }
 
 .theme-modern .resume-item-array {
-    @apply flex flex-wrap gap-1.5;
+    @apply flex flex-wrap gap-2;
 }
 
 .theme-modern .resume-array-item {
-    @apply px-2 py-0.5 rounded-md border text-xs;
+    @apply px-2 py-0.5 rounded-md text-xs border;
     background: var(--accent-50);
     color: var(--accent-700);
     border-color: var(--accent-200);
 }
+
+/* =========================
+   TEXT BLOCK
+========================= */
+
+.theme-modern .text-block {
+    white-space: pre-line; /* multiline text */
+    line-height: 1.6;
+}
+
+/* sizes */
+
+.theme-modern .text-size-sm {
+    font-size: 0.85rem;
+}
+
+.theme-modern .text-size-md {
+    font-size: 0.95rem;
+}
+
+.theme-modern .text-size-lg {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.theme-modern .text-size-xl {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* alignment */
+
+.theme-modern .text-align-left {
+    text-align: left;
+}
+
+.theme-modern .text-align-center {
+    text-align: center;
+}
+
+.theme-modern .text-align-right {
+    text-align: right;
+}
+
+.theme-modern .text-align-justify {
+    text-align: justify;
+}
+
+/* =========================
+   HEADING BLOCK
+========================= */
+
+.theme-modern .heading-block {
+    font-weight: 600;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    color: var(--accent-800);
+}
+
+.theme-modern .heading-level-1 {
+    font-size: 1.6rem;
+}
+
+.theme-modern .heading-level-2 {
+    font-size: 1.35rem;
+}
+
+.theme-modern .heading-level-3 {
+    font-size: 1.15rem;
+}
+
+.theme-modern .heading-level-4 {
+    font-size: 1rem;
+}
+
+/* =========================
+   LIST BLOCK
+========================= */
+
+.theme-modern .list-block {
+    padding-left: 20px;
+}
+
+/* bullet */
+
+.theme-modern .list-style-bullet {
+    list-style-type: disc;
+}
+
+/* numbered */
+
+.theme-modern .list-style-numbered {
+    list-style-type: decimal;
+}
+
+/* plain */
+
+.theme-modern .list-style-plain {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.theme-modern .list-block-render-item {
+    margin-bottom: 2px;
+    line-height: 1.5;
+}
+
+/* =========================
+   IMAGES
+========================= */
 
 .theme-modern .resume-image {
     @apply rounded-full object-cover border-4 shadow-md mx-auto;
@@ -77,15 +198,19 @@
 }
 
 .theme-modern .resume-item-image img {
-    @apply rounded-full object-cover border;
+    @apply rounded-lg object-cover border shadow-sm;
     border-color: var(--accent-200);
 }
 
+/* =========================
+   LAYOUT
+========================= */
+
 .theme-modern .resume-columns {
     grid-template-columns: 2fr 1fr;
-    @apply grid gap-4;
+    @apply grid gap-6;
 }
 
 .theme-modern .resume-column {
-    @apply flex flex-col gap-3;
+    @apply flex flex-col gap-4;
 }
