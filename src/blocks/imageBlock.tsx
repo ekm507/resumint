@@ -15,20 +15,48 @@ export function ImageEditor({ block, update }: any) {
       props: { ...(block.props || {}), [k]: v },
     });
 
-  const handleFile = (file: File) => {
-    const reader = new FileReader();
+  const compressImage = (file: File, maxWidth = 1200, quality = 0.8) => {
+    return new Promise<string>((resolve) => {
+      const img = new Image();
+      const reader = new FileReader();
 
-    reader.onload = () => {
-      setProp("src", reader.result); // base64 string
-    };
+      reader.onload = () => {
+        img.src = reader.result as string;
+      };
 
-    reader.readAsDataURL(file);
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+
+        const scale = Math.min(1, maxWidth / img.width);
+
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+
+        const ctx = canvas.getContext("2d");
+        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        const compressed = canvas.toDataURL("image/jpeg", quality);
+        resolve(compressed);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFile = async (file: File) => {
+    // file size limit (5MB)
+    if (file.size > 5_000_000) {
+      alert("Image too large. Maximum size is 5MB.");
+      return;
+    }
+
+    const base64 = await compressImage(file);
+    setProp("src", base64);
   };
 
   return (
     <div className="image-block-editor">
       <input
-        className="image-block-src-input"
         placeholder="image url"
         value={src}
         onChange={(e) => setProp("src", e.target.value)}
@@ -37,7 +65,6 @@ export function ImageEditor({ block, update }: any) {
       <input
         type="file"
         accept="image/*"
-        className="image-block-file-input"
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (file) handleFile(file);
@@ -45,28 +72,46 @@ export function ImageEditor({ block, update }: any) {
       />
 
       <input
-        className="image-block-alt-input"
-        placeholder="alt"
+        placeholder="alt text"
         value={alt}
         onChange={(e) => setProp("alt", e.target.value)}
       />
 
-      <input
-        className="image-block-width-input"
-        value={width}
-        onChange={(e) => setProp("width", e.target.value)}
-      />
+      <div>
+        <label>Width: {width}%</label>
+        <input
+          type="range"
+          min={20}
+          max={100}
+          step={5}
+          value={width}
+          onChange={(e) => setProp("width", Number(e.target.value))}
+        />
+      </div>
+
+      <select value={align} onChange={(e) => setProp("align", e.target.value)}>
+        <option value="start">start</option>
+        <option value="center">center</option>
+        <option value="end">end</option>
+      </select>
     </div>
   );
 }
 
 export function ImageRender({ block }: any) {
-  const { src, alt, width = "100%", align = "center" } = block.props || {};
+  const { src, alt = "", width = 40, align = "center" } = block.props || {};
+
+  const image = (
+    <img
+      src={src}
+      alt={alt}
+      style={{ width: `${width}%` }}
+      className="rounded"
+    />
+  );
 
   return (
-    <div className={`image-block image-align-${align}`}>
-      <img className="image-block-img" src={src} alt={alt} style={{ width }} />
-    </div>
+    <div className={`flex items-center gap-4 justify-${align}`}>{image}</div>
   );
 }
 
