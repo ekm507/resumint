@@ -1,16 +1,25 @@
 @import "tailwindcss";
 
-/* =========================================================
-   BASE LAYOUT
-========================================================= */
+/* ROOT LAYOUT */
 
 .app-root {
     @apply flex flex-col items-center gap-4 p-3
-           bg-gray-100 h-screen overflow-hidden;
+         h-screen overflow-hidden;
 }
 
 .app-layout {
     @apply flex gap-8 w-full flex-1 justify-center overflow-hidden;
+}
+
+/* EDITOR */
+
+.editor-panel {
+    @apply flex flex-col gap-3 overflow-y-auto;
+    min-width: 280px;
+}
+
+.editor-add-button {
+    @apply w-full;
 }
 
 /* COLLAPSIBLE FORM */
@@ -26,22 +35,10 @@
     opacity: 0;
 }
 
-/* RENDER AREA */
+/* RESUME AREA */
 
 #resume-render {
     @apply flex-1 overflow-y-auto flex flex-col items-start;
-}
-
-/* PRINT */
-
-@media print {
-    #resume-render {
-        @apply p-0 m-0 border-0;
-    }
-
-    .resume {
-        @apply border-0;
-    }
 }
 
 /* PAGE */
@@ -61,4 +58,24 @@
 
 .resume-column {
     @apply flex-1 flex flex-col gap-2;
+}
+
+/* PRINT */
+
+@media print {
+    .app-toolbar {
+        display: none;
+    }
+
+    .editor-panel {
+        display: none;
+    }
+
+    #resume-render {
+        @apply p-0 m-0 border-0;
+    }
+
+    .resume {
+        @apply border-0;
+    }
 }
