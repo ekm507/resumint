@@ -125,3 +125,24 @@
 .theme-polar-bear .heading-level-4 {
     font-size: 1rem;
 }
+
+.theme-polar-bear .resume-vertical-split {
+    @apply gap-1 items-stretch;
+}
+
+.theme-polar-bear .resume-vertical-divider {
+    @apply self-stretch;
+    border-left-color: var(--accent-200);
+}
+
+.theme-polar-bear .resume-divider-solid {
+    border-left-style: solid;
+}
+
+.theme-polar-bear .resume-divider-dashed {
+    border-left-style: dashed;
+}
+
+.theme-polar-bear .resume-divider-dotted {
+    border-left-style: dotted;
+}

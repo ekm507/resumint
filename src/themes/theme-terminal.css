@@ -135,3 +135,24 @@
 .theme-terminal .resume-column {
     @apply flex flex-col gap-3;
 }
+
+.theme-terminal .resume-vertical-split {
+    @apply gap-3 items-stretch;
+}
+
+.theme-terminal .resume-vertical-divider {
+    @apply self-stretch;
+    border-left-color: var(--accent-800);
+}
+
+.theme-terminal .resume-divider-solid {
+    border-left-style: solid;
+}
+
+.theme-terminal .resume-divider-dashed {
+    border-left-style: dashed;
+}
+
+.theme-terminal .resume-divider-dotted {
+    border-left-style: dotted;
+}
