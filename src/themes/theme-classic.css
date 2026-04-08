@@ -13,13 +13,19 @@
     --accent-900: #713f12;
 }
 
+/* ROOT */
+
 .theme-classic.resume {
-    @apply flex flex-col gap-5 p-6 bg-white text-sm min-w-[400px] text-gray-900 font-serif;
+    @apply flex flex-col gap-5 p-6 bg-white text-sm min-w-[420px] text-gray-900 font-serif;
 }
 
 .theme-classic .resume-page {
     @apply bg-white;
 }
+
+/* =========================
+   SECTIONS
+========================= */
 
 .theme-classic .resume-section-wrapper {
     @apply w-full;
@@ -31,13 +37,17 @@
 }
 
 .theme-classic .resume-section-title {
-    @apply text-base font-bold tracking-wide;
+    @apply text-base font-bold tracking-wide pb-1;
     color: var(--accent-800);
 }
 
 .theme-classic .resume-section-content {
     @apply flex flex-col gap-1.5;
 }
+
+/* =========================
+   ITEMS
+========================= */
 
 .theme-classic .resume-item {
     @apply flex gap-3 items-start;
@@ -68,15 +78,123 @@
     color: var(--accent-800);
 }
 
+/* =========================
+   TEXT BLOCK
+========================= */
+
+.theme-classic .text-block {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+/* sizes */
+
+.theme-classic .text-size-sm {
+    font-size: 0.85rem;
+}
+
+.theme-classic .text-size-md {
+    font-size: 0.95rem;
+}
+
+.theme-classic .text-size-lg {
+    font-size: 1.05rem;
+    font-weight: 500;
+}
+
+.theme-classic .text-size-xl {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* alignment */
+
+.theme-classic .text-align-left {
+    text-align: left;
+}
+
+.theme-classic .text-align-center {
+    text-align: center;
+}
+
+.theme-classic .text-align-right {
+    text-align: right;
+}
+
+.theme-classic .text-align-justify {
+    text-align: justify;
+}
+
+/* =========================
+   HEADING BLOCK
+========================= */
+
+.theme-classic .heading-block {
+    font-weight: 700;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    color: var(--accent-800);
+}
+
+.theme-classic .heading-level-1 {
+    font-size: 1.7rem;
+}
+
+.theme-classic .heading-level-2 {
+    font-size: 1.4rem;
+}
+
+.theme-classic .heading-level-3 {
+    font-size: 1.15rem;
+}
+
+.theme-classic .heading-level-4 {
+    font-size: 1rem;
+}
+
+/* =========================
+   LIST BLOCK
+========================= */
+
+.theme-classic .list-block {
+    padding-left: 20px;
+}
+
+.theme-classic .list-style-bullet {
+    list-style-type: disc;
+}
+
+.theme-classic .list-style-numbered {
+    list-style-type: decimal;
+}
+
+.theme-classic .list-style-plain {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.theme-classic .list-block-render-item {
+    margin-bottom: 2px;
+    line-height: 1.5;
+}
+
+/* =========================
+   IMAGES
+========================= */
+
 .theme-classic .resume-image {
     @apply rounded-full object-cover mx-auto border;
     border-color: var(--accent-300);
 }
 
 .theme-classic .resume-item-image img {
-    @apply rounded-full object-cover border;
+    @apply rounded object-cover border;
     border-color: var(--accent-300);
 }
+
+/* =========================
+   LAYOUT
+========================= */
 
 .theme-classic .resume-columns {
     grid-template-columns: 2fr 1fr;
@@ -85,4 +203,25 @@
 
 .theme-classic .resume-column {
     @apply flex flex-col gap-4;
+}
+
+.theme-classic .resume-vertical-split {
+    @apply gap-6 items-stretch;
+}
+
+.theme-classic .resume-vertical-divider {
+    @apply self-stretch;
+    border-left-color: var(--accent-200);
+}
+
+.theme-classic .resume-divider-solid {
+    border-left-style: solid;
+}
+
+.theme-classic .resume-divider-dashed {
+    border-left-style: dashed;
+}
+
+.theme-classic .resume-divider-dotted {
+    border-left-style: dotted;
 }
