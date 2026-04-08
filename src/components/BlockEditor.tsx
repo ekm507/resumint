@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getBlock, getAllBlocks } from "../blocks/blockRegistry";
 import type { Block } from "../utils/types";
 
@@ -8,6 +9,7 @@ interface Props {
   setBlockType: (id: string, type: string) => void;
   moveUp: () => void;
   moveDown: () => void;
+  insertBlockAfter: (id: string, type: string) => void;
 }
 
 export default function BlockEditor({
@@ -17,7 +19,10 @@ export default function BlockEditor({
   setBlockType,
   moveUp,
   moveDown,
+  insertBlockAfter,
 }: Props) {
+  const [addOpen, setAddOpen] = useState(false);
+
   if (!block) {
     return <div className="block-editor-error">Missing block</div>;
   }
@@ -47,16 +52,50 @@ export default function BlockEditor({
             </option>
           ))}
         </select>
+      </div>
 
-        <button onClick={moveUp}>⬆</button>
-        <button onClick={moveDown}>⬇</button>
+      <div className="block-hover-controls">
+        <button className="block-hover-button" onClick={moveUp}>
+          ↑
+        </button>
+
+        <button className="block-hover-button" onClick={moveDown}>
+          ↓
+        </button>
 
         <button
-          className="block-delete-button"
+          className="block-hover-button"
+          onClick={() => setAddOpen(!addOpen)}
+        >
+          +
+        </button>
+
+        <button
+          className="block-hover-button text-red-400"
           onClick={() => deleteBlock(block.id)}
         >
-          ❌
+          ✕
         </button>
+
+        {addOpen && (
+          <div className="block-add-menu">
+            <div className="block-add-grid">
+              {blocks.map((b) => (
+                <button
+                  key={b.type}
+                  className="block-add-item"
+                  onClick={() => {
+                    insertBlockAfter(block.id, b.type);
+                    setAddOpen(false);
+                  }}
+                >
+                  <span>{b.icon}</span>
+                  <span>{b.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <Editor

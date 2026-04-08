@@ -221,3 +221,94 @@
          rounded-lg px-2 py-1 text-xs
          hover:bg-slate-700/40 cursor-pointer;
 }
+
+/* =========================================================
+   INSERT BLOCK (+) MENU
+========================================================= */
+
+.look-neo .add-block-container {
+    @apply relative flex justify-center py-1;
+}
+
+.look-neo .add-block-line {
+    @apply absolute top-1/2 left-0 right-0 h-px bg-slate-700 opacity-0 transition;
+}
+
+.look-neo .add-block-container:hover .add-block-line {
+    @apply opacity-100;
+}
+
+.look-neo .add-block-trigger {
+    @apply relative z-10 flex items-center justify-center
+           w-6 h-6 rounded-full text-sm
+           bg-slate-700 border border-slate-600
+           hover:bg-cyan-600 hover:border-cyan-500
+           transition cursor-pointer shadow;
+}
+
+.look-neo .add-block-menu {
+    @apply absolute top-7 z-20 w-64 p-2
+           bg-slate-800/95 backdrop-blur-xl
+           border border-slate-700 rounded-xl shadow-xl;
+}
+
+.look-neo .add-block-grid {
+    @apply grid grid-cols-2 gap-1;
+}
+
+.look-neo .add-block-item {
+    @apply flex items-center gap-2 px-2 py-1.5
+           text-sm rounded-lg cursor-pointer
+           hover:bg-slate-700/60 transition;
+}
+
+.look-neo .add-block-icon {
+    @apply text-base opacity-80;
+}
+
+.look-neo .add-block-label {
+    @apply text-slate-200 text-xs;
+}
+
+/* =========================================================
+   BLOCK HOVER CONTROLS
+========================================================= */
+
+.look-neo .block-editor {
+    @apply relative;
+}
+
+.look-neo .block-hover-controls {
+    @apply absolute right-2 top-2 flex gap-1
+           opacity-0 transition-opacity;
+}
+
+.look-neo .block-editor:hover .block-hover-controls {
+    @apply opacity-100;
+}
+
+.look-neo .block-hover-button {
+    @apply w-6 h-6 flex items-center justify-center
+           rounded-md text-xs
+           bg-slate-800/90 border border-slate-600
+           hover:bg-cyan-600 hover:border-cyan-500
+           cursor-pointer transition;
+}
+
+/* dropdown */
+
+.look-neo .block-add-menu {
+    @apply absolute right-0 top-8 z-20 w-56 p-2
+           bg-slate-800/95 backdrop-blur-xl
+           border border-slate-700 rounded-xl shadow-xl;
+}
+
+.look-neo .block-add-grid {
+    @apply grid grid-cols-2 gap-1;
+}
+
+.look-neo .block-add-item {
+    @apply flex items-center gap-2 px-2 py-1.5
+           text-sm rounded-lg cursor-pointer
+           hover:bg-slate-700/60 transition;
+}
