@@ -1,12 +1,7 @@
-import FormRow from "./FormRow";
-import {
-  type ValueTypeName,
-  type FormStructure,
-  type Row,
-  GetDefaultValue,
-  type ValueType,
-} from "../utils/types";
+import BlockEditor from "./BlockEditor";
+import type { FormStructure, Block, BlockType } from "../utils/types";
 import { useState } from "react";
+
 interface Prop {
   form: FormStructure;
   onFormChange: (id: string, newForm: FormStructure) => void;
@@ -20,56 +15,45 @@ export default function MiniForm({
   onDelete,
   className = "",
 }: Prop) {
-  const { id, title, content } = form;
+  const { id, title, blocks } = form;
 
-  function updateContent(newContent: Row[]) {
-    onFormChange(id, { ...form, content: newContent });
+  function updateBlocks(newBlocks: Block[]) {
+    onFormChange(id, { ...form, blocks: newBlocks });
   }
 
-  function setName(rowId: string, name: string) {
-    updateContent(
-      content.map((row) => (row.id === rowId ? { ...row, name } : row)),
-    );
-  }
-  function setValue(rowId: string, value: ValueType) {
-    updateContent(
-      content.map((row) => (row.id === rowId ? { ...row, value } : row)),
-    );
-  }
-
-  function setValueType(rowId: string, valueType: ValueTypeName) {
-    updateContent(
-      content.map((row) =>
-        row.id === rowId
-          ? { ...row, valueType, value: GetDefaultValue(valueType) }
-          : row,
+  function updateBlock(blockId: string, props: any) {
+    updateBlocks(
+      blocks.map((b) =>
+        b.id === blockId ? { ...b, props: { ...b.props, ...props } } : b,
       ),
     );
+  }
+
+  function setBlockType(blockId: string, type: BlockType) {
+    updateBlocks(
+      blocks.map((b) => (b.id === blockId ? { ...b, type, props: {} } : b)),
+    );
+  }
+
+  function deleteBlock(blockId: string) {
+    updateBlocks(blocks.filter((b) => b.id !== blockId));
   }
 
   function setTitle(title: string) {
     onFormChange(id, { ...form, title });
   }
 
-  function addRow() {
-    const lastRow = content[content.length - 1];
-    const lastID = lastRow ? +lastRow.id : -1;
-    const lastValueType = lastRow
-      ? (lastRow.valueType as ValueTypeName)
-      : ("string" as ValueTypeName);
-    updateContent([
-      ...content,
-      {
-        id: String(lastID + 1),
-        name: "",
-        value: GetDefaultValue(lastValueType),
-        valueType: lastValueType,
-      },
-    ]);
-  }
+  function addBlock() {
+    const last = blocks[blocks.length - 1];
+    const lastId = last ? +last.id : -1;
 
-  function deleteRow(rowId: string) {
-    updateContent(content.filter((item) => item.id !== rowId));
+    const newBlock: Block = {
+      id: String(lastId + 1),
+      blockType: "text",
+      props: { text: "" },
+    };
+
+    updateBlocks([...blocks, newBlock]);
   }
 
   const [collapsed, setCollapsed] = useState(false);
@@ -80,6 +64,7 @@ export default function MiniForm({
         <button className="editor-form-delete" onClick={() => onDelete(id)}>
           ❌
         </button>
+
         <button
           className={`editor-form-collapse ${collapsed ? "collapsed" : ""}`}
           onClick={() => setCollapsed(!collapsed)}
@@ -97,22 +82,18 @@ export default function MiniForm({
 
       <div className={`editor-form-body ${collapsed ? "collapsed" : ""}`}>
         <div className="editor-form-rows">
-          {content.map((item) => (
-            <FormRow
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              value={item.value}
-              setName={setName}
-              setValue={setValue}
-              valueType={item.valueType ? item.valueType : "string"}
-              setValueType={setValueType}
-              deleteSelf={deleteRow}
+          {blocks.map((block) => (
+            <BlockEditor
+              key={block.id}
+              block={block}
+              updateBlock={updateBlock}
+              deleteBlock={deleteBlock}
+              setBlockType={setBlockType}
             />
           ))}
         </div>
 
-        <button className="editor-row-add" onClick={addRow}>
+        <button className="editor-row-add" onClick={addBlock}>
           +
         </button>
       </div>

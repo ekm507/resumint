@@ -1,67 +1,85 @@
-import { useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent, useRef } from "react";
 import MiniForm from "./components/MiniForm";
-import type { FormStructure, LayoutItem } from "./utils/types";
+import type { FormStructure, LayoutItem, Block } from "./utils/types";
 import { themeNames } from "./themes";
 import DraggableLayout from "./components/DraggableLayout";
-import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import { downloadBlob } from "./utils/functions";
 import { lookNames } from "./looks";
 import { generateAccentPalette } from "./utils/theming";
 
 export default function App() {
-  const [forms, setForms] = useState([
+  // داده‌های نمونه با معماری بلوکی
+  const [forms, setForms] = useState<FormStructure[]>([
     {
       id: "0",
       title: "Personal Information",
-      content: [
+      blocks: [
         {
           id: "0",
-          name: "name",
-          value: "Erfan Kheyrollahi",
-          valueType: "string",
+          blockType: "heading",
+          props: { text: "name" },
         },
-        { id: "1", name: "Age", value: 27, valueType: "number" },
+        {
+          id: "1",
+          blockType: "text",
+          props: { text: "Erfan Kheyrollahi" },
+        },
+        {
+          id: "2",
+          blockType: "heading",
+          props: { text: "Age" },
+        },
+        {
+          id: "3",
+          blockType: "text",
+          props: { text: "27" },
+        },
       ],
     },
     {
       id: "1",
       title: "Properties",
-      content: [
+      blocks: [
         {
           id: "0",
-          name: "items in bag",
-          value: [
-            { id: "0", value: "pen" },
-            { id: "1", value: "notebook" },
-            { id: "2", value: "laptop" },
-            { id: "3", value: "tissues" },
-            { id: "4", value: "bicycle keys" },
+          blockType: "heading",
+          props: { text: "items in bag" },
+        },
+        {
+          id: "1",
+          blockType: "list",
+          children: [
+            { id: "1-0", blockType: "text", props: { text: "pen" } },
+            { id: "1-1", blockType: "text", props: { text: "notebook" } },
+            { id: "1-2", blockType: "text", props: { text: "laptop" } },
+            { id: "1-3", blockType: "text", props: { text: "tissues" } },
+            { id: "1-4", blockType: "text", props: { text: "bicycle keys" } },
           ],
-          valueType: "array",
         },
       ],
     },
     {
       id: "2",
       title: "story",
-      content: [
+      blocks: [
         {
           id: "0",
-          name: "once there was a ship on the sea and the name of the ship was billy o tea.",
-          value: "",
-          valueType: "string",
+          blockType: "text",
+          props: {
+            text: "once there was a ship on the sea and the name of the ship was billy o tea.",
+          },
         },
         {
           id: "1",
-          name: "",
-          value:
-            "soon may the wellerman come. to bring us sugar and tea and rum...",
-          valueType: "string",
+          blockType: "text",
+          props: {
+            text: "soon may the wellerman come. to bring us sugar and tea and rum...",
+          },
         },
       ],
     },
-  ] as FormStructure[]);
+  ]);
 
   const [layout, setLayout] = useState<LayoutItem[]>([
     { id: "0", column: "left" },
@@ -79,19 +97,21 @@ export default function App() {
   }
 
   function addForm() {
-    const lastRow = forms[forms.length - 1];
-    const lastID = lastRow ? +lastRow.id : -1;
+    const last = forms[forms.length - 1];
+    const lastID = last ? +last.id : -1;
     const newID = String(lastID + 1);
 
-    setForms([
-      ...forms,
-      { id: newID, title: "", content: [] } as FormStructure,
-    ]);
+    const newForm: FormStructure = {
+      id: newID,
+      title: "",
+      blocks: [],
+    };
 
-    // const lastLayoutColumn =
-    //   layout.find((x) => (x.id = String(lastID)))?.column ?? "left";
-    const column = "left";
-    setLayout([...layout, { id: newID, column }]);
+    setForms((prev) => [...prev, newForm]);
+
+    // فعلاً فرم جدید در ستون چپ قرار می‌گیرد
+    const column: LayoutItem["column"] = "left";
+    setLayout((prev) => [...prev, { id: newID, column }]);
   }
 
   const [theme, setTheme] = useState("modern");
@@ -112,7 +132,8 @@ export default function App() {
   }
 
   function importData(event: ChangeEvent<HTMLInputElement>) {
-    // TODO check if json is in intended format
+    // توجه: اگر فایل قدیمی با content/rows باشد باید یک مهاجرت بنویسیم
+    // فعلاً فرض می‌کنیم داده ورودی با blocks سازگار است.
     const process = async () => {
       const file = event.target.files?.[0];
       if (!file) return;
@@ -120,12 +141,48 @@ export default function App() {
       const text = await file.text();
       const all_objects = JSON.parse(text);
 
+      // اگر کاربر فایل قدیمی با content فرستاد، اینجا می‌توانید مهاجرت خودکار انجام دهید.
+      // مثال ساده (اختیاری):
+      // if (all_objects.forms?.[0]?.content && !all_objects.forms?.[0]?.blocks) {
+      //   all_objects.forms = migrateContentToBlocks(all_objects.forms);
+      // }
+
       setForms(all_objects.forms);
       setLayout(all_objects.layout);
     };
 
     process();
   }
+
+  // مثال مهاجرت ساده از content → blocks (اختیاری)
+  // function migrateContentToBlocks(oldForms: any[]): FormStructure[] {
+  //   return oldForms.map((f, idx) => {
+  //     const blocks: Block[] = (f.content || []).flatMap((row: any, i: number) => {
+  //       if (row.valueType === "array") {
+  //         const listChildren: Block[] = (row.value || []).map((li: any, j: number) => ({
+  //           id: `${i}-${j}`,
+  //           type: "text",
+  //           props: { text: li.value ?? String(li) },
+  //         }));
+  //         return [
+  //           { id: `${i}-heading`, type: "heading", props: { text: row.name || "" } },
+  //           { id: `${i}-list`, type: "list", children: listChildren },
+  //         ];
+  //       }
+  //       return [
+  //         ...(row.name
+  //           ? [{ id: `${i}-heading`, type: "heading", props: { text: row.name } } as Block]
+  //           : []),
+  //         {
+  //           id: `${i}-text`,
+  //           type: "text",
+  //           props: { text: row.value?.toString?.() ?? "" },
+  //         } as Block,
+  //       ];
+  //     });
+  //     return { id: f.id ?? String(idx), title: f.title ?? "", blocks };
+  //   });
+  // }
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
@@ -148,6 +205,7 @@ export default function App() {
         >
           Print
         </button>
+
         <button className="toolbar-button" onClick={() => exportData()}>
           export data
         </button>
@@ -158,6 +216,7 @@ export default function App() {
           className="toolbar-file"
           onChange={importData}
         />
+
         <select
           value={lookName}
           onChange={(e) => {
@@ -170,11 +229,13 @@ export default function App() {
             </option>
           ))}
         </select>
+
         <input
           type="color"
           value={accentColor}
           onChange={(e) => setAccentColor(e.target.value)}
         />
+
         <select
           value={theme}
           onChange={(e) => {
