@@ -2,7 +2,7 @@ import { registerBlock } from "./blockRegistry";
 import type { Block } from "../utils/types";
 
 export function TextEditor({ block, update }: any) {
-  const { text = "", size = "md", align = "left" } = block.props || {};
+  const { text = "", size = "md", align = "start" } = block.props || {};
 
   const setProp = (k: string, v: any) =>
     update({
@@ -34,9 +34,9 @@ export function TextEditor({ block, update }: any) {
           value={align}
           onChange={(e) => setProp("align", e.target.value)}
         >
-          <option value="left">left</option>
+          <option value="start">start</option>
           <option value="center">center</option>
-          <option value="right">right</option>
+          <option value="end">end</option>
           <option value="justify">justify</option>
         </select>
       </div>
@@ -45,10 +45,12 @@ export function TextEditor({ block, update }: any) {
 }
 
 export function TextRender({ block }: any) {
-  const { text, size = "md", align = "left" } = block.props || {};
+  const { text, size = "md", align = "start" } = block.props || {};
 
   return (
-    <p className={`text-block text-size-${size} text-align-${align}`}>{text}</p>
+    <p className={`text-block text-size-${size}`} style={{ textAlign: align }}>
+      {text}
+    </p>
   );
 }
 
@@ -63,7 +65,7 @@ registerBlock({
       props: {
         text: "",
         size: "md",
-        align: "left",
+        align: "start",
       },
     };
   },
