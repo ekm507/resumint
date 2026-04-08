@@ -135,7 +135,7 @@ registerBlock({
       props: {
         src: "https://",
         alt: "",
-        width: "100%",
+        width: 100,
         align: "center",
       },
     };
