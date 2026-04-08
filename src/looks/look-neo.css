@@ -183,3 +183,41 @@
 .look-neo .keyvalue-block-value-input {
     @apply border rounded px-2 py-1 text-sm;
 }
+
+/* FORM WRAPPER */
+
+.look-neo .editor-form-wrapper {
+    @apply flex flex-col;
+}
+
+.look-neo .editor-form {
+    @apply flex flex-col gap-2 border border-slate-700
+         rounded-xl p-2 bg-slate-900/40;
+}
+
+.look-neo .editor-form-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-neo .editor-form-header input {
+    @apply flex-1 border border-slate-600 rounded-lg px-2 py-1
+         bg-slate-900/40 outline-none;
+}
+
+/* DELETE BUTTON */
+
+.look-neo .block-delete-button {
+    @apply text-red-400 hover:text-red-300 cursor-pointer;
+}
+
+/* ADD BLOCK */
+
+.look-neo .add-block {
+    @apply flex flex-wrap gap-2 pt-2;
+}
+
+.look-neo .add-block button {
+    @apply border border-dashed border-slate-500
+         rounded-lg px-2 py-1 text-xs
+         hover:bg-slate-700/40 cursor-pointer;
+}

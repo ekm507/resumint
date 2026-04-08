@@ -253,15 +253,3 @@
 .theme-modern .keyvalue-block-value {
     @apply text-sm;
 }
-
-.theme-modern .keyvalue-block-editor {
-    @apply flex items-center gap-2;
-}
-
-.theme-modern .keyvalue-block-key-input {
-    @apply border rounded px-2 py-1 text-sm;
-}
-
-.theme-modern .keyvalue-block-value-input {
-    @apply border rounded px-2 py-1 text-sm;
-}
