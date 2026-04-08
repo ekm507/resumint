@@ -142,3 +142,32 @@
 .look-neo .divider-block-editor {
     @apply flex gap-2;
 }
+
+/* TAGS BLOCK */
+
+.look-neo .tags-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-neo .tags-block-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-neo .tags-block-item {
+    @apply flex items-center gap-2;
+}
+
+.look-neo .tags-block-input {
+    @apply border border-slate-600 rounded-lg px-3 py-1.5
+           bg-slate-900/40 outline-none
+           focus:ring-2 focus:ring-cyan-500 flex-1;
+}
+
+.look-neo .tags-block-remove-button {
+    @apply text-red-400 text-xs hover:text-red-300 cursor-pointer;
+}
+
+.look-neo .tags-block-add-button {
+    @apply border border-dashed border-slate-500 rounded-lg py-1.5
+           hover:bg-slate-700/40 cursor-pointer;
+}
