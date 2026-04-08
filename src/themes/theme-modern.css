@@ -193,12 +193,12 @@
 ========================= */
 
 .theme-modern .resume-image {
-    @apply rounded-full object-cover border-4 shadow-md mx-auto;
+    @apply object-cover border-4 shadow-md mx-auto;
     border-color: var(--accent-100);
 }
 
 .theme-modern .resume-item-image img {
-    @apply rounded-4xl object-cover border shadow-sm;
+    @apply object-cover border shadow-sm;
     border-color: var(--accent-200);
 }
 
@@ -252,4 +252,16 @@
 
 .theme-modern .keyvalue-block-value {
     @apply text-sm;
+}
+
+.theme-modern .image-shape-solid {
+    border-radius: 0;
+}
+
+.theme-modern .image-shape-rounded {
+    border-radius: 1rem;
+}
+
+.theme-modern .image-shape-circle {
+    border-radius: 9999px;
 }

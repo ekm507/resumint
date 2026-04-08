@@ -5,8 +5,9 @@ export function ImageEditor({ block, update }: any) {
   const {
     src = "",
     alt = "",
-    width = "100%",
+    width = 100,
     align = "center",
+    shape = "rounded",
   } = block.props || {};
 
   const setProp = (k: string, v: any) =>
@@ -105,23 +106,34 @@ export function ImageEditor({ block, update }: any) {
         <option value="center">center</option>
         <option value="end">end</option>
       </select>
+      <select value={shape} onChange={(e) => setProp("shape", e.target.value)}>
+        <option value="solid">solid</option>
+        <option value="rounded">rounded</option>
+        <option value="circle">circle</option>
+      </select>
     </div>
   );
 }
 
 export function ImageRender({ block }: any) {
-  const { src, alt = "", width = 40, align = "center" } = block.props || {};
+  const {
+    src,
+    alt = "",
+    width = 40,
+    align = "center",
+    shape = "rounded",
+  } = block.props || {};
 
-  const image = (
-    <img
-      src={src}
-      alt={alt}
-      style={{ width: `${width}%` }}
-      className="resume-image"
-    />
+  return (
+    <div className={`resume-item-image justify-${align}`}>
+      <img
+        src={src}
+        alt={alt}
+        style={{ width: `${width}%` }}
+        className={`resume-image image-shape-${shape}`}
+      />
+    </div>
   );
-
-  return <div className={`resume-item-image justify-${align}`}>{image}</div>;
 }
 
 registerBlock({
@@ -137,6 +149,7 @@ registerBlock({
         alt: "",
         width: 100,
         align: "center",
+        shape: "rounded",
       },
     };
   },
