@@ -75,8 +75,8 @@
     @apply flex flex-wrap gap-2;
 }
 
-.theme-modern .resume-array-item {
-    @apply px-2 py-0.5 rounded-md text-xs border;
+.theme-modern .tags-block-tag {
+    @apply px-3 py-1 rounded-md text-xs border;
     background: var(--accent-50);
     color: var(--accent-700);
     border-color: var(--accent-200);
@@ -198,7 +198,7 @@
 }
 
 .theme-modern .resume-item-image img {
-    @apply rounded-lg object-cover border shadow-sm;
+    @apply rounded-4xl object-cover border shadow-sm;
     border-color: var(--accent-200);
 }
 

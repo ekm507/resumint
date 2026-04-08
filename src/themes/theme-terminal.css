@@ -156,3 +156,14 @@
 .theme-terminal .resume-divider-dotted {
     border-left-style: dotted;
 }
+
+.theme-terminal .tags-block {
+    @apply flex flex-wrap gap-2;
+}
+
+.theme-terminal .tags-block-tag {
+    @apply px-3 py-1 rounded-md text-xs border;
+    background: var(--accent-50);
+    color: var(--accent-700);
+    border-color: var(--accent-200);
+}
