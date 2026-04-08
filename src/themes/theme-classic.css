@@ -183,7 +183,7 @@
 ========================= */
 
 .theme-classic .resume-image {
-    @apply rounded-full object-cover mx-auto border;
+    @apply rounded-full object-cover border;
     border-color: var(--accent-300);
 }
 

@@ -149,7 +149,7 @@
 /* IMAGES */
 
 .theme-minimal .resume-image {
-    @apply rounded-full object-cover mx-auto;
+    @apply rounded-full object-cover;
 }
 
 .theme-minimal .resume-item-image img {
