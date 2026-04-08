@@ -6,6 +6,8 @@ interface Props {
   updateBlock: (id: string, block: Block) => void;
   deleteBlock: (id: string) => void;
   setBlockType: (id: string, type: string) => void;
+  moveUp: () => void;
+  moveDown: () => void;
 }
 
 export default function BlockEditor({
@@ -13,6 +15,8 @@ export default function BlockEditor({
   updateBlock,
   deleteBlock,
   setBlockType,
+  moveUp,
+  moveDown,
 }: Props) {
   if (!block) {
     return <div className="block-editor-error">Missing block</div>;
@@ -43,6 +47,9 @@ export default function BlockEditor({
             </option>
           ))}
         </select>
+
+        <button onClick={moveUp}>⬆</button>
+        <button onClick={moveDown}>⬇</button>
 
         <button
           className="block-delete-button"

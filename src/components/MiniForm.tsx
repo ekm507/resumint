@@ -28,6 +28,42 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
     updateBlocks(form.blocks.filter((b) => b.id !== id));
   };
 
+  const moveBlock = (id: string, direction: "up" | "down") => {
+    const index = form.blocks.findIndex((b) => b.id === id);
+    if (index === -1) return;
+
+    const newBlocks = [...form.blocks];
+
+    if (direction === "up" && index > 0) {
+      [newBlocks[index - 1], newBlocks[index]] = [
+        newBlocks[index],
+        newBlocks[index - 1],
+      ];
+    }
+
+    if (direction === "down" && index < newBlocks.length - 1) {
+      [newBlocks[index + 1], newBlocks[index]] = [
+        newBlocks[index],
+        newBlocks[index + 1],
+      ];
+    }
+
+    updateBlocks(newBlocks);
+  };
+
+  const insertBlockAt = (index: number, type: string) => {
+    const def = getBlock(type);
+    if (!def) return;
+
+    const block = def.create();
+    block.id = crypto.randomUUID();
+
+    const newBlocks = [...form.blocks];
+    newBlocks.splice(index, 0, block);
+
+    updateBlocks(newBlocks);
+  };
+
   const setBlockType = (id: string, type: string) => {
     const def = getBlock(type);
     if (!def) return;
@@ -80,16 +116,28 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
 
       {!collapsed && (
         <div className="editor-form-body">
-          {form.blocks.map((block) => (
-            <BlockEditor
-              key={block.id}
-              block={block}
-              updateBlock={updateBlock}
-              deleteBlock={deleteBlock}
-              setBlockType={setBlockType}
-            />
-          ))}
+          {form.blocks.map((block, i) => (
+            <div key={block.id}>
+              <BlockEditor
+                block={block}
+                updateBlock={updateBlock}
+                deleteBlock={deleteBlock}
+                setBlockType={setBlockType}
+                moveUp={() => moveBlock(block.id, "up")}
+                moveDown={() => moveBlock(block.id, "down")}
+              />
 
+              <div className="insert-block">
+                {blockTypes.map((b) => (
+                  <button key={b.type} onClick={() => insertBlockAt(i + 1, b.type)}>
+                    + {b.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+          ))}
+          4. Add “insert between” UI
           <div className="add-block">
             {blockTypes.map((b) => (
               <button key={b.type} onClick={() => addBlock(b.type)}>
