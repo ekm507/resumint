@@ -1,239 +1,228 @@
 @import "tailwindcss";
-@import "../utils/patterns.css";
 
-/* ===========================================================
-   SLATE COMPACT THEME
-   Minimal dark editor-like UI
-   =========================================================== */
+/* =========================================================
+   SLATE COMPACT EDITOR THEME
+========================================================= */
 
-/* -----------------------------------------------------------
-   APP ROOT
------------------------------------------------------------ */
+.look-slate {
+    @apply text-slate-200;
+}
+
+/* APP ROOT */
 
 .look-slate .app-root {
-    @apply flex flex-col items-center gap-2 p-3
-           bg-slate-900 text-slate-100
-           min-h-screen overflow-y-auto;
+    @apply flex flex-col items-center gap-2 p-2 h-screen overflow-hidden
+           bg-slate-900;
 }
 
 .look-slate .app-layout {
-    @apply flex gap-4 w-full justify-center flex-1 overflow-hidden;
+    @apply flex gap-3 w-full flex-1 justify-center overflow-hidden;
 }
 
-/* -----------------------------------------------------------
-   TOOLBAR
------------------------------------------------------------ */
+/* TOOLBAR */
 
 .look-slate .app-toolbar {
-    @apply flex gap-1.5 bg-slate-800
-           px-2 py-1 shadow-sm;
+    @apply flex gap-1 bg-slate-800 border border-slate-700
+           rounded-md p-1 shadow-sm;
 }
 
 .look-slate .toolbar-button {
-    @apply px-2.5 py-1 text-sm
-           bg-cyan-600 text-white
-           cursor-pointer transition
-           hover:bg-cyan-700 active:scale-95;
-}
-
-.look-slate .toolbar-button:disabled {
-    @apply bg-slate-600 cursor-not-allowed;
-}
-
-.look-slate .toolbar-file {
-    @apply px-2.5 py-1 text-sm
-           bg-slate-700 cursor-pointer
-           hover:bg-slate-600 transition;
-}
-
-/* -----------------------------------------------------------
-   EDITOR PANEL
------------------------------------------------------------ */
-
-.look-slate .editor-panel {
-    @apply flex flex-col gap-2
-           bg-slate-800
-           p-2
-           min-w-[260px]
-           overflow-y-auto;
-}
-
-.look-slate .editor-form-wrapper {
-    @apply w-full;
-}
-
-.look-slate .editor-add-button {
-    @apply py-1.5 text-sm
-           border border-dashed border-slate-600
-           text-slate-300
-           hover:bg-slate-700 cursor-pointer transition;
-}
-
-/* -----------------------------------------------------------
-   FORM
------------------------------------------------------------ */
-
-.look-slate .editor-form {
-    @apply flex flex-col gap-2
-           bg-slate-800
-           p-2;
-}
-
-.look-slate .editor-form-header {
-    @apply flex gap-1.5 items-center;
-}
-
-.look-slate .editor-form-title {
-    @apply px-2 py-1
-           bg-slate-900
-           outline-none
-           text-slate-100
-           border border-slate-700
-           focus:border-cyan-500;
-}
-
-.look-slate .editor-form-rows {
-    @apply flex flex-col gap-2;
-}
-
-/* -----------------------------------------------------------
-   ICON BUTTONS
------------------------------------------------------------ */
-
-.look-slate .editor-form-collapse,
-.look-slate .editor-form-delete,
-.look-slate .editor-array-remove,
-.look-slate .editor-row-delete {
-    @apply flex items-center justify-center
-           w-6 h-6
-           bg-slate-700
-           cursor-pointer
-           transition
-           hover:bg-slate-600
+    @apply px-2 py-1 text-xs rounded cursor-pointer transition
+           bg-sky-600 hover:bg-sky-700 text-white
            active:scale-95;
 }
 
-.look-slate .editor-form-delete,
-.look-slate .editor-array-remove,
-.look-slate .editor-row-delete {
-    @apply hover:bg-red-600;
+.look-slate .toolbar-file {
+    @apply px-2 py-1 text-xs border border-slate-600 rounded
+           bg-slate-700 hover:bg-slate-600 cursor-pointer;
 }
 
-.look-slate .editor-form-collapse.collapsed {
-    transform: rotate(-90deg);
+/* EDITOR PANEL */
+
+.look-slate .editor-panel {
+    @apply flex flex-col gap-2 bg-slate-500
+           border border-slate-700 rounded-md p-2
+           shadow-sm min-w-[260px] overflow-y-auto;
 }
 
-/* -----------------------------------------------------------
-   ROW
------------------------------------------------------------ */
-
-.look-slate .editor-row {
-    @apply flex flex-wrap gap-2 items-start
-           bg-slate-900
-           p-2;
+.look-slate .editor-add-button {
+    @apply border border-dashed border-slate-600 rounded
+           py-1 text-slate-300 hover:bg-slate-700
+           hover:border-slate-500 cursor-pointer text-xs;
 }
 
-.look-slate .editor-row-name {
-    @apply px-2 py-1
-           bg-slate-900
-           text-slate-100
-           border border-slate-700
-           outline-none
-           focus:border-cyan-500;
-    width: 110px;
-    flex-shrink: 0;
+/* BLOCK EDITOR */
+
+.look-slate .block-editor {
+    @apply flex flex-col gap-1 p-2 rounded border overflow-y-auto
+           border-slate-700 bg-slate-800 shadow-sm;
 }
 
-.look-slate .editor-row-value-area {
-    @apply flex gap-2 items-center flex-wrap flex-1 min-w-[120px];
+.look-slate .block-editor-header {
+    @apply flex gap-1 items-center;
 }
 
-.look-slate .editor-row-type {
-    @apply px-2 py-1
-           bg-slate-900
-           border border-slate-700
-           text-slate-100
-           outline-none
-           cursor-pointer
-           focus:border-cyan-500;
+.look-slate .block-type-select {
+    @apply border border-slate-600 rounded px-1.5 py-0.5
+           bg-slate-800 cursor-pointer outline-none text-xs
+           focus:ring-1 focus:ring-sky-500;
 }
 
-/* -----------------------------------------------------------
-   INPUTS
------------------------------------------------------------ */
+/* GENERIC INPUTS */
 
-.look-slate .editor-input {
-    @apply px-2 py-1
-           bg-slate-900
-           border border-slate-700
-           outline-none
-           text-slate-100
-           focus:border-cyan-500;
-    flex: 1 1 auto;
-    min-width: 0;
+.look-slate .text-block-input,
+.look-slate .heading-block-input,
+.look-slate .image-block-src-input,
+.look-slate .image-block-alt-input,
+.look-slate .link-block-text-input,
+.look-slate .link-block-url-input {
+    @apply border border-slate-600 rounded px-2 py-1 outline-none
+           bg-slate-900 w-full text-sm
+           focus:ring-1 focus:ring-sky-500
+           focus:border-sky-500;
 }
 
-.look-slate .editor-input-number {
-    @apply text-amber-400;
+.look-slate textarea.text-block-input {
+    @apply resize-none py-1;
 }
 
-.look-slate .editor-input-string {
-    @apply text-sky-400;
+.look-slate select {
+    @apply border border-slate-600 rounded px-1.5 py-0.5
+           bg-slate-900 outline-none text-xs
+           focus:ring-1 focus:ring-sky-500;
 }
 
-/* -----------------------------------------------------------
-   ARRAY
------------------------------------------------------------ */
+/* TEXT BLOCK */
 
-.look-slate .editor-array {
-    @apply flex flex-col gap-2
-           bg-slate-900
-           p-2
-           min-w-[130px];
+.look-slate .text-block-editor {
+    @apply flex flex-col gap-1;
 }
 
-.look-slate .editor-array-item-wrapper {
-    @apply flex items-center gap-2;
+.look-slate .text-block-controls {
+    @apply flex gap-1;
 }
 
-.look-slate .editor-array-item {
-    @apply px-2 py-1
-           bg-slate-900
-           border border-slate-700
-           text-cyan-300
-           outline-none
-           focus:border-cyan-500
-           w-full;
+/* HEADING BLOCK */
+
+.look-slate .heading-block-editor {
+    @apply flex flex-col gap-1;
 }
 
-.look-slate .editor-array-add {
-    @apply px-2 py-1 text-sm
-           bg-slate-700
-           cursor-pointer
-           hover:bg-slate-600;
+/* LIST BLOCK */
+
+.look-slate .list-block-editor {
+    @apply flex flex-col gap-1;
 }
 
-/* -----------------------------------------------------------
-   ADD ROW BUTTON
------------------------------------------------------------ */
-
-.look-slate .editor-row-add {
-    @apply py-1 text-sm
-           bg-slate-800
-           hover:bg-slate-700
-           cursor-pointer
-           text-slate-200;
+.look-slate .list-block-items {
+    @apply flex flex-col gap-1;
 }
 
-/* -----------------------------------------------------------
-   RENDER AREA
------------------------------------------------------------ */
-
-.look-slate #resume-render {
-    @apply bg-paper;
+.look-slate .list-block-item {
+    @apply border border-slate-700 rounded p-1.5 bg-slate-800;
 }
 
-.look-slate .resume-page {
-    border: solid 1px #334155;
-    padding: 18px;
+.look-slate .list-block-add-button {
+    @apply border border-dashed border-slate-600 rounded
+           py-1 hover:bg-slate-700 cursor-pointer text-xs;
+}
+
+/* IMAGE BLOCK */
+
+.look-slate .image-block-editor {
+    @apply flex flex-col gap-1;
+}
+
+/* LINK BLOCK */
+
+.look-slate .link-block-editor {
+    @apply flex flex-col gap-1;
+}
+
+/* DIVIDER BLOCK */
+
+.look-slate .divider-block-editor {
+    @apply flex gap-1;
+}
+
+/* TAGS BLOCK */
+
+.look-slate .tags-block-editor {
+    @apply flex flex-col gap-1;
+}
+
+.look-slate .tags-block-items {
+    @apply flex flex-col gap-1;
+}
+
+.look-slate .tags-block-item {
+    @apply flex items-center gap-1;
+}
+
+.look-slate .tags-block-input {
+    @apply border border-slate-600 rounded px-2 py-1
+           bg-slate-900 outline-none text-sm
+           focus:ring-1 focus:ring-sky-500 flex-1;
+}
+
+.look-slate .tags-block-remove-button {
+    @apply text-rose-400 text-xs hover:text-rose-300 cursor-pointer;
+}
+
+.look-slate .tags-block-add-button {
+    @apply border border-dashed border-slate-600 rounded
+           py-1 hover:bg-slate-700 cursor-pointer text-xs;
+}
+
+/* KEY VALUE BLOCK */
+
+.look-slate .keyvalue-block-editor {
+    @apply flex items-center gap-1;
+}
+
+.look-slate .keyvalue-block-key-input {
+    @apply border border-slate-600 rounded px-1.5 py-0.5 text-xs bg-slate-900;
+}
+
+.look-slate .keyvalue-block-value-input {
+    @apply border border-slate-600 rounded px-1.5 py-0.5 text-xs bg-slate-900;
+}
+
+/* FORM WRAPPER */
+
+.look-slate .editor-form-wrapper {
+    @apply flex flex-col;
+}
+
+.look-slate .editor-form {
+    @apply flex flex-col gap-1 border border-slate-700
+           rounded p-2 bg-slate-800;
+}
+
+.look-slate .editor-form-header {
+    @apply flex gap-1 items-center;
+}
+
+.look-slate .editor-form-header input {
+    @apply flex-1 border border-slate-600 rounded px-2 py-0.5
+           bg-slate-900 outline-none text-xs
+           focus:ring-1 focus:ring-sky-500;
+}
+
+/* DELETE BUTTON */
+
+.look-slate .block-delete-button {
+    @apply text-rose-400 hover:text-rose-300 cursor-pointer text-xs;
+}
+
+/* ADD BLOCK */
+
+.look-slate .add-block {
+    @apply flex flex-wrap gap-1 pt-1;
+}
+
+.look-slate .add-block button {
+    @apply border border-dashed border-slate-600
+           rounded px-1.5 py-0.5 text-[11px]
+           hover:bg-slate-700 cursor-pointer;
 }
