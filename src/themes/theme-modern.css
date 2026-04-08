@@ -235,3 +235,33 @@
 .theme-modern .resume-divider-dotted {
     border-left-style: dotted;
 }
+
+.theme-modern .keyvalue-block {
+    @apply flex flex-row items-baseline gap-1;
+}
+
+.theme-modern .keyvalue-block-key {
+    @apply font-medium;
+    color: var(--accent-700);
+}
+
+.theme-modern .keyvalue-block-separator {
+    @apply px-1;
+    color: var(--accent-400);
+}
+
+.theme-modern .keyvalue-block-value {
+    @apply text-sm;
+}
+
+.theme-modern .keyvalue-block-editor {
+    @apply flex items-center gap-2;
+}
+
+.theme-modern .keyvalue-block-key-input {
+    @apply border rounded px-2 py-1 text-sm;
+}
+
+.theme-modern .keyvalue-block-value-input {
+    @apply border rounded px-2 py-1 text-sm;
+}

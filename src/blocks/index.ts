@@ -6,3 +6,4 @@ import "./linkBlock";
 import "./dividerBlock";
 import "./verticalSplitBlock";
 import "./tagsBlock";
+import "./keyValueBlock";

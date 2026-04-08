@@ -171,3 +171,15 @@
     @apply border border-dashed border-slate-500 rounded-lg py-1.5
            hover:bg-slate-700/40 cursor-pointer;
 }
+
+.look-neo .keyvalue-block-editor {
+    @apply flex items-center gap-2;
+}
+
+.look-neo .keyvalue-block-key-input {
+    @apply border rounded px-2 py-1 text-sm;
+}
+
+.look-neo .keyvalue-block-value-input {
+    @apply border rounded px-2 py-1 text-sm;
+}
