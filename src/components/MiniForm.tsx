@@ -1,73 +1,100 @@
-// src/components/MiniForm.tsx
 import { useState } from "react";
-import type { FormStructure } from "../utils/types";
-import { useFormEditor } from "../hooks/useFormEditor";
-import BlockList from "./BlockList";
+import type { FormStructure, Block } from "../utils/types";
+import BlockEditor from "./BlockEditor";
+import { getAllBlocks, getBlock } from "../blocks/blockRegistry";
 
-interface Prop {
+interface Props {
   form: FormStructure;
   onFormChange: (id: string, newForm: FormStructure) => void;
   onDelete: (id: string) => void;
-  className?: string;
 }
 
-export default function MiniForm({
-  form,
-  onFormChange,
-  onDelete,
-  className = "",
-}: Prop) {
+export default function MiniForm({ form, onFormChange, onDelete }: Props) {
   const [collapsed, setCollapsed] = useState(false);
 
-  const {
-    title,
-    blocks,
-    setTitle,
-    updateBlock,
-    deleteBlock,
-    setBlockType,
-    addBlock,
-  } = useFormEditor(form, onFormChange);
+  const setForm = (patch: Partial<FormStructure>) => {
+    onFormChange(form.id, { ...form, ...patch });
+  };
+
+  const updateBlocks = (blocks: Block[]) => {
+    setForm({ blocks });
+  };
+
+  const updateBlock = (id: string, newBlock: Block) => {
+    updateBlocks(form.blocks.map((b) => (b.id === id ? newBlock : b)));
+  };
+
+  const deleteBlock = (id: string) => {
+    updateBlocks(form.blocks.filter((b) => b.id !== id));
+  };
+
+  const setBlockType = (id: string, type: string) => {
+    const def = getBlock(type);
+    if (!def) return;
+
+    updateBlocks(
+      form.blocks.map((b) => {
+        if (b.id !== id) return b;
+
+        const newBlock = def.create();
+
+        return {
+          ...newBlock,
+          id,
+        };
+      }),
+    );
+  };
+
+  const addBlock = (type: string) => {
+    const def = getBlock(type);
+    if (!def) return;
+
+    const block = def.create();
+
+    block.id = crypto.randomUUID();
+
+    updateBlocks([...form.blocks, block]);
+  };
+
+  const blockTypes = getAllBlocks();
 
   return (
-    <div className={`editor-form ${className}`}>
+    <div className="editor-form">
       <div className="editor-form-header">
-        <button
-          className="editor-form-delete"
-          onClick={() => onDelete(form.id)}
-        >
-          ❌
-        </button>
+        <button onClick={() => onDelete(form.id)}>❌</button>
 
-        <button
-          className={`editor-form-collapse ${collapsed ? "collapsed" : ""}`}
-          onClick={() => setCollapsed(!collapsed)}
-          aria-expanded={!collapsed}
-          title={collapsed ? "Expand" : "Collapse"}
-        >
-          ▼
+        <button onClick={() => setCollapsed(!collapsed)}>
+          {collapsed ? "▶" : "▼"}
         </button>
 
         <input
-          className="editor-form-title"
-          value={title}
-          placeholder="Title"
-          onChange={(e) => setTitle(e.target.value)}
+          value={form.title}
+          onChange={(e) => setForm({ title: e.target.value })}
         />
       </div>
 
-      <div className={`editor-form-body ${collapsed ? "collapsed" : ""}`}>
-        <BlockList
-          blocks={blocks}
-          updateBlock={updateBlock}
-          deleteBlock={deleteBlock}
-          setBlockType={setBlockType}
-        />
+      {!collapsed && (
+        <div className="editor-form-body">
+          {form.blocks.map((block) => (
+            <BlockEditor
+              key={block.id}
+              block={block}
+              updateBlock={updateBlock}
+              deleteBlock={deleteBlock}
+              setBlockType={setBlockType}
+            />
+          ))}
 
-        <button className="editor-row-add" onClick={addBlock}>
-          +
-        </button>
-      </div>
+          <div className="add-block">
+            {blockTypes.map((b) => (
+              <button key={b.type} onClick={() => addBlock(b.type)}>
+                + {b.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

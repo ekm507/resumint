@@ -1,11 +1,14 @@
 @import "tailwindcss";
 @import "../utils/patterns.css";
+
 /* ===========================================================
-   NEO SOFT THEME — Modern Compact Dark with Icon Buttons
+   NEO SOFT THEME — Block Editor Version
    =========================================================== */
+
 /* -----------------------------------------------------------
    APP ROOT
-   ----------------------------------------------------------- */
+----------------------------------------------------------- */
+
 .look-neo .app-root {
     @apply flex flex-col items-center gap-3 p-4
            bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900
@@ -18,7 +21,7 @@
 
 /* -----------------------------------------------------------
    TOOLBAR
-   ----------------------------------------------------------- */
+----------------------------------------------------------- */
 
 .look-neo .app-toolbar {
     @apply flex gap-2 bg-slate-800/40 backdrop-blur-xl border border-slate-700/60
@@ -42,7 +45,7 @@
 
 /* -----------------------------------------------------------
    EDITOR PANEL
-   ----------------------------------------------------------- */
+----------------------------------------------------------- */
 
 .look-neo .editor-panel {
     @apply flex flex-col gap-2 bg-slate-800/50 backdrop-blur-xl border border-slate-700/60
@@ -60,10 +63,10 @@
 
 /* -----------------------------------------------------------
    FORM
-   ----------------------------------------------------------- */
+----------------------------------------------------------- */
 
 .look-neo .editor-form {
-    @apply flex flex-col gap-2 border border-slate-700 rounded-xl p-3
+    @apply flex flex-col gap-3 border border-slate-700 rounded-xl p-3
            bg-slate-800/40 shadow-md;
 }
 
@@ -77,17 +80,20 @@
            focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
 }
 
+.look-neo .editor-form-body {
+    @apply flex flex-col gap-2;
+}
+
 .look-neo .editor-form-rows {
-    @apply flex flex-col gap-2 overflow-y-auto;
+    @apply flex flex-col gap-2;
 }
 
 /* -----------------------------------------------------------
-   ICON BUTTON STYLE
-   ----------------------------------------------------------- */
+   ICON BUTTONS
+----------------------------------------------------------- */
 
 .look-neo .editor-form-collapse,
 .look-neo .editor-form-delete,
-.look-neo .editor-array-remove,
 .look-neo .editor-row-delete {
     @apply flex items-center justify-center
            w-7 h-7
@@ -101,105 +107,71 @@
            active:scale-95;
 }
 
-/* Delete buttons slightly red */
-
 .look-neo .editor-form-delete,
-.look-neo .editor-array-remove,
 .look-neo .editor-row-delete {
     @apply border-red-500/40 hover:border-red-400 hover:bg-red-500/10;
 }
-
-/* Collapse rotation */
 
 .look-neo .editor-form-collapse.collapsed {
     transform: rotate(-90deg);
 }
 
 /* -----------------------------------------------------------
-   ROW
-   ----------------------------------------------------------- */
+   BLOCK EDITOR
+----------------------------------------------------------- */
 
-.look-neo .editor-row {
-    @apply flex flex-wrap gap-2 items-start border border-slate-700 rounded-xl p-2.5
-           bg-slate-900/40 shadow-md transition hover:shadow-lg;
+.look-neo .block-editor {
+    @apply flex flex-col gap-2 border border-slate-700 rounded-xl p-3
+           bg-slate-900/40 shadow-md;
 }
 
-.look-neo .editor-row-name {
-    @apply border border-slate-600 rounded-lg px-3 py-1.5 outline-none
-           bg-slate-900/40 text-slate-100
-           focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
-    width: 120px;
-    flex-shrink: 0;
-}
-
-.look-neo .editor-row-value-area {
-    @apply flex gap-2 items-center flex-wrap flex-1 min-w-[130px];
-}
-
-.look-neo .editor-row-type {
-    @apply border border-slate-600 rounded-lg px-2 py-1 cursor-pointer outline-none
-           bg-slate-900/40 text-slate-100
-           focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
-}
-
-/* -----------------------------------------------------------
-   INPUTS
-   ----------------------------------------------------------- */
-
-.look-neo .editor-input {
-    @apply border border-slate-600 rounded-lg px-3 py-1.5 outline-none bg-slate-900/40
-           text-slate-100 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 max-w-full;
-    flex: 1 1 auto;
-    min-width: 0;
-}
-
-.look-neo .editor-input-number {
-    @apply text-amber-400;
-}
-
-.look-neo .editor-input-string {
-    @apply text-sky-400;
-}
-
-/* -----------------------------------------------------------
-   ARRAY
-   ----------------------------------------------------------- */
-
-.look-neo .editor-array {
-    @apply flex flex-col gap-2 border border-slate-700 rounded-xl p-2 bg-slate-900/30
-           min-w-[140px];
-}
-
-.look-neo .editor-array-item-wrapper {
+.look-neo .block-editor-header {
     @apply flex items-center gap-2;
 }
 
-.look-neo .editor-array-item {
-    @apply border border-slate-600 rounded-lg px-3 py-1.5 text-cyan-300 outline-none
-           bg-slate-900/40 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 w-full;
-}
-
-.look-neo .editor-array-add {
-    @apply border border-slate-600 rounded-lg px-2 py-1 text-sm cursor-pointer
-           hover:bg-slate-700/40 transition;
+.look-neo .block-type-select {
+    @apply border border-slate-600 rounded-lg px-2 py-1 outline-none
+           bg-slate-900/40 text-slate-100 cursor-pointer
+           focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
 }
 
 /* -----------------------------------------------------------
-   ADD ROW BUTTON
-   ----------------------------------------------------------- */
+   BLOCK INPUTS
+----------------------------------------------------------- */
 
-.look-neo .editor-row-add {
-    @apply border border-slate-600 rounded-lg py-1.5 hover:bg-slate-700/40 cursor-pointer
-           transition text-base font-medium text-slate-200;
+.look-neo .block-input {
+    @apply border border-slate-600 rounded-lg px-3 py-1.5 outline-none
+           bg-slate-900/40 text-slate-100
+           focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
 }
 
-.look-neo .editor-row-add:active {
+.look-neo .block-textarea {
+    @apply border border-slate-600 rounded-lg px-3 py-2 outline-none
+           bg-slate-900/40 text-slate-100 resize-none
+           focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500;
+}
+
+/* -----------------------------------------------------------
+   ADD BLOCK MENU
+----------------------------------------------------------- */
+
+.look-neo .block-add-menu {
+    @apply flex flex-wrap gap-2 mt-2;
+}
+
+.look-neo .block-add-menu button {
+    @apply border border-slate-600 rounded-lg px-3 py-1.5 text-sm
+           bg-slate-800/60 hover:bg-slate-700/60
+           transition cursor-pointer;
+}
+
+.look-neo .block-add-menu button:active {
     @apply scale-[0.97];
 }
 
 /* -----------------------------------------------------------
    RENDER AREA
-   ----------------------------------------------------------- */
+----------------------------------------------------------- */
 
 .look-neo #resume-render {
     @apply bg-paper;

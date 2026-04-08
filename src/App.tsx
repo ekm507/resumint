@@ -2,13 +2,14 @@ import { useState, useRef, type ChangeEvent } from "react";
 import MiniForm from "./components/MiniForm";
 import DraggableLayout from "./components/DraggableLayout";
 import { useReactToPrint } from "react-to-print";
-
 import { useResumeData } from "./hooks/useResumeData";
 import { exportResumeData, importResumeData } from "./utils/storage";
 
 import { lookNames } from "./looks";
 import { themeNames } from "./themes";
 import { generateAccentPalette } from "./utils/theming";
+
+import "./blocks";
 
 export default function App() {
   const { forms, layout, setLayout, setForm, deleteForm, addForm, setForms } =
