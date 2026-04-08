@@ -1,6 +1,8 @@
-import BlockEditor from "./BlockEditor";
-import type { FormStructure, Block, BlockType } from "../utils/types";
+// src/components/MiniForm.tsx
 import { useState } from "react";
+import type { FormStructure } from "../utils/types";
+import { useFormEditor } from "../hooks/useFormEditor";
+import BlockList from "./BlockList";
 
 interface Prop {
   form: FormStructure;
@@ -15,59 +17,33 @@ export default function MiniForm({
   onDelete,
   className = "",
 }: Prop) {
-  const { id, title, blocks } = form;
-
-  function updateBlocks(newBlocks: Block[]) {
-    onFormChange(id, { ...form, blocks: newBlocks });
-  }
-
-  function updateBlock(blockId: string, props: any) {
-    updateBlocks(
-      blocks.map((b) =>
-        b.id === blockId ? { ...b, props: { ...b.props, ...props } } : b,
-      ),
-    );
-  }
-
-  function setBlockType(blockId: string, type: BlockType) {
-    updateBlocks(
-      blocks.map((b) => (b.id === blockId ? { ...b, type, props: {} } : b)),
-    );
-  }
-
-  function deleteBlock(blockId: string) {
-    updateBlocks(blocks.filter((b) => b.id !== blockId));
-  }
-
-  function setTitle(title: string) {
-    onFormChange(id, { ...form, title });
-  }
-
-  function addBlock() {
-    const last = blocks[blocks.length - 1];
-    const lastId = last ? +last.id : -1;
-
-    const newBlock: Block = {
-      id: String(lastId + 1),
-      blockType: "text",
-      props: { text: "" },
-    };
-
-    updateBlocks([...blocks, newBlock]);
-  }
-
   const [collapsed, setCollapsed] = useState(false);
+
+  const {
+    title,
+    blocks,
+    setTitle,
+    updateBlock,
+    deleteBlock,
+    setBlockType,
+    addBlock,
+  } = useFormEditor(form, onFormChange);
 
   return (
     <div className={`editor-form ${className}`}>
       <div className="editor-form-header">
-        <button className="editor-form-delete" onClick={() => onDelete(id)}>
+        <button
+          className="editor-form-delete"
+          onClick={() => onDelete(form.id)}
+        >
           ❌
         </button>
 
         <button
           className={`editor-form-collapse ${collapsed ? "collapsed" : ""}`}
           onClick={() => setCollapsed(!collapsed)}
+          aria-expanded={!collapsed}
+          title={collapsed ? "Expand" : "Collapse"}
         >
           ▼
         </button>
@@ -81,17 +57,12 @@ export default function MiniForm({
       </div>
 
       <div className={`editor-form-body ${collapsed ? "collapsed" : ""}`}>
-        <div className="editor-form-rows">
-          {blocks.map((block) => (
-            <BlockEditor
-              key={block.id}
-              block={block}
-              updateBlock={updateBlock}
-              deleteBlock={deleteBlock}
-              setBlockType={setBlockType}
-            />
-          ))}
-        </div>
+        <BlockList
+          blocks={blocks}
+          updateBlock={updateBlock}
+          deleteBlock={deleteBlock}
+          setBlockType={setBlockType}
+        />
 
         <button className="editor-row-add" onClick={addBlock}>
           +
