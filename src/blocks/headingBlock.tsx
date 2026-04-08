@@ -4,13 +4,11 @@ import type { Block } from "../utils/types";
 export function HeadingEditor({ block, update }: any) {
   const { text = "", level = 2, align = "left" } = block.props || {};
 
-  const setProp = (key: string, value: any) => {
+  const setProp = (k: string, v: any) =>
     update({
       ...block,
-      props: { ...block.props, [key]: value },
+      props: { ...(block.props || {}), [k]: v },
     });
-  };
-
   return (
     <div className="heading-block-editor">
       <input

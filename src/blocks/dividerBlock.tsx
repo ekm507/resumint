@@ -5,8 +5,10 @@ export function DividerEditor({ block, update }: any) {
   const { style = "solid", spacing = "md" } = block.props || {};
 
   const setProp = (k: string, v: any) =>
-    update({ ...block, props: { ...block.props, [k]: v } });
-
+    update({
+      ...block,
+      props: { ...(block.props || {}), [k]: v },
+    });
   return (
     <div className="divider-block-editor">
       <select

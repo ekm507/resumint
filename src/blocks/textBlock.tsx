@@ -4,15 +4,11 @@ import type { Block } from "../utils/types";
 export function TextEditor({ block, update }: any) {
   const { text = "", size = "md", align = "left" } = block.props || {};
 
-  const setProp = (key: string, value: any) => {
+  const setProp = (k: string, v: any) =>
     update({
       ...block,
-      props: {
-        ...block.props,
-        [key]: value,
-      },
+      props: { ...(block.props || {}), [k]: v },
     });
-  };
 
   return (
     <div className="text-block-editor">

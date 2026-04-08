@@ -10,7 +10,10 @@ export function ImageEditor({ block, update }: any) {
   } = block.props || {};
 
   const setProp = (k: string, v: any) =>
-    update({ ...block, props: { ...block.props, [k]: v } });
+    update({
+      ...block,
+      props: { ...(block.props || {}), [k]: v },
+    });
 
   return (
     <div className="image-block-editor">
@@ -56,7 +59,7 @@ registerBlock({
       id: "",
       blockType: "image",
       props: {
-        src: "",
+        src: "https://",
         alt: "",
         width: "100%",
         align: "center",

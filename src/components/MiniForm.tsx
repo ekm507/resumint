@@ -41,6 +41,10 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
         return {
           ...newBlock,
           id,
+          props: {
+            ...newBlock.props,
+            ...b.props, // preserve existing props
+          },
         };
       }),
     );

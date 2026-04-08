@@ -7,13 +7,11 @@ export function ListEditor({ block, update }: any) {
   const items = block.children || [];
   const { style = "ul" } = block.props || {};
 
-  const setProp = (key: string, value: any) => {
+  const setProp = (k: string, v: any) =>
     update({
       ...block,
-      props: { ...block.props, [key]: value },
+      props: { ...(block.props || {}), [k]: v },
     });
-  };
-
   const updateChild = (id: string, newChild: Block) => {
     update({
       ...block,

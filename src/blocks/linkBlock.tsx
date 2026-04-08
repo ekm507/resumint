@@ -5,8 +5,10 @@ export function LinkEditor({ block, update }: any) {
   const { text = "", url = "", target = "_self" } = block.props || {};
 
   const setProp = (k: string, v: any) =>
-    update({ ...block, props: { ...block.props, [k]: v } });
-
+    update({
+      ...block,
+      props: { ...(block.props || {}), [k]: v },
+    });
   return (
     <div className="link-block-editor">
       <input
