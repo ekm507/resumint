@@ -11,8 +11,17 @@ export function VerticalSplitEditor({ block, update }: any) {
     ratio = "50-50",
   } = block.props || {};
 
-  const left = block.left;
-  const right = block.right;
+  const left = block.left ?? {
+    id: "",
+    blockType: "text",
+    props: { text: "" },
+  };
+
+  const right = block.right ?? {
+    id: "",
+    blockType: "text",
+    props: { text: "" },
+  };
 
   const setProp = (k: string, v: any) =>
     update({
