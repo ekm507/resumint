@@ -1,233 +1,228 @@
 @import "tailwindcss";
 
-/* ===========================================================
-   WHITE SOFT THEME — Clean Compact Light
-   =========================================================== */
+/* =========================================================
+   WHITE POLISHED EDITOR THEME
+========================================================= */
 
-/* -----------------------------------------------------------
-   APP ROOT
-   ----------------------------------------------------------- */
+.look-white {
+    @apply text-slate-800;
+}
+
+/* APP ROOT */
 
 .look-white .app-root {
-    @apply flex flex-col items-center gap-3 p-4
-           bg-gray-50 text-gray-900
-           h-screen overflow-hidden;
+    @apply flex flex-col items-center gap-4 p-4 h-screen overflow-hidden
+           bg-gradient-to-br from-slate-50 via-white to-slate-100;
 }
 
 .look-white .app-layout {
-    @apply flex gap-6 w-full justify-center flex-1 overflow-hidden;
+    @apply flex gap-6 w-full flex-1 justify-center overflow-hidden;
 }
 
-/* -----------------------------------------------------------
-   TOOLBAR
-   ----------------------------------------------------------- */
+/* TOOLBAR */
 
 .look-white .app-toolbar {
-    @apply flex gap-2 bg-white/80 backdrop-blur-md
-           border border-gray-200
+    @apply flex gap-2 bg-white border border-slate-200
            rounded-xl p-2 shadow-sm;
 }
 
 .look-white .toolbar-button {
-    @apply px-3 py-1.5 bg-indigo-600 text-white rounded-lg cursor-pointer
-           transition-all duration-200 hover:bg-indigo-700
-           active:scale-[0.97] shadow-sm hover:shadow-md text-sm;
-}
-
-.look-white .toolbar-button:disabled {
-    @apply bg-gray-300 cursor-not-allowed shadow-none;
+    @apply px-3 py-1.5 text-sm rounded-lg cursor-pointer transition
+           bg-blue-600 text-white hover:bg-blue-700
+           shadow-sm active:scale-95;
 }
 
 .look-white .toolbar-file {
-    @apply px-3 py-1.5 border border-gray-300 rounded-lg cursor-pointer
-           bg-white hover:bg-gray-100 transition-colors shadow-sm text-sm;
+    @apply px-3 py-1.5 text-sm border border-slate-300 rounded-lg
+           bg-slate-50 hover:bg-slate-100 cursor-pointer;
 }
 
-/* -----------------------------------------------------------
-   EDITOR PANEL
-   ----------------------------------------------------------- */
+/* EDITOR PANEL */
 
 .look-white .editor-panel {
-    @apply flex flex-col gap-2 bg-white/90 backdrop-blur-md
-           border border-gray-200
-           rounded-2xl p-3 shadow-md
-           min-w-[270px] max-w-full overflow-y-auto;
-}
-
-.look-white .editor-form-wrapper {
-    @apply w-full;
+    @apply flex flex-col gap-3 bg-white
+           border border-slate-200 rounded-2xl p-3
+           shadow-sm min-w-[280px] overflow-y-auto;
 }
 
 .look-white .editor-add-button {
-    @apply border border-dashed border-gray-300 rounded-xl py-2
-           text-base text-gray-600
-           hover:bg-gray-100 hover:border-gray-400
-           cursor-pointer transition;
+    @apply border border-dashed border-slate-300 rounded-xl py-2
+           text-slate-600 hover:bg-slate-50
+           hover:border-slate-400 cursor-pointer;
 }
 
-/* -----------------------------------------------------------
-   FORM
-   ----------------------------------------------------------- */
+/* BLOCK EDITOR */
+
+.look-white .block-editor {
+    @apply flex flex-col gap-2 p-3 rounded-xl border overflow-y-auto
+           border-slate-200 bg-white shadow-sm;
+}
+
+.look-white .block-editor-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-white .block-type-select {
+    @apply border border-slate-300 rounded-lg px-2 py-1
+           bg-white cursor-pointer outline-none
+           focus:ring-2 focus:ring-blue-500;
+}
+
+/* GENERIC INPUTS */
+
+.look-white .text-block-input,
+.look-white .heading-block-input,
+.look-white .image-block-src-input,
+.look-white .image-block-alt-input,
+.look-white .link-block-text-input,
+.look-white .link-block-url-input {
+    @apply border border-slate-300 rounded-lg px-3 py-1.5 outline-none
+           bg-white w-full
+           focus:ring-2 focus:ring-blue-500
+           focus:border-blue-500;
+}
+
+.look-white textarea.text-block-input {
+    @apply resize-none py-2;
+}
+
+.look-white select {
+    @apply border border-slate-300 rounded-lg px-2 py-1
+           bg-white outline-none
+           focus:ring-2 focus:ring-blue-500;
+}
+
+/* TEXT BLOCK */
+
+.look-white .text-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-white .text-block-controls {
+    @apply flex gap-2;
+}
+
+/* HEADING BLOCK */
+
+.look-white .heading-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* LIST BLOCK */
+
+.look-white .list-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-white .list-block-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-white .list-block-item {
+    @apply border border-slate-200 rounded-lg p-2 bg-slate-50;
+}
+
+.look-white .list-block-add-button {
+    @apply border border-dashed border-slate-300 rounded-lg py-1.5
+           hover:bg-slate-50 cursor-pointer;
+}
+
+/* IMAGE BLOCK */
+
+.look-white .image-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* LINK BLOCK */
+
+.look-white .link-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* DIVIDER BLOCK */
+
+.look-white .divider-block-editor {
+    @apply flex gap-2;
+}
+
+/* TAGS BLOCK */
+
+.look-white .tags-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-white .tags-block-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-white .tags-block-item {
+    @apply flex items-center gap-2;
+}
+
+.look-white .tags-block-input {
+    @apply border border-slate-300 rounded-lg px-3 py-1.5
+           bg-white outline-none
+           focus:ring-2 focus:ring-blue-500 flex-1;
+}
+
+.look-white .tags-block-remove-button {
+    @apply text-red-500 text-xs hover:text-red-600 cursor-pointer;
+}
+
+.look-white .tags-block-add-button {
+    @apply border border-dashed border-slate-300 rounded-lg py-1.5
+           hover:bg-slate-50 cursor-pointer;
+}
+
+/* KEY VALUE BLOCK */
+
+.look-white .keyvalue-block-editor {
+    @apply flex items-center gap-2;
+}
+
+.look-white .keyvalue-block-key-input {
+    @apply border border-slate-300 rounded px-2 py-1 text-sm bg-white;
+}
+
+.look-white .keyvalue-block-value-input {
+    @apply border border-slate-300 rounded px-2 py-1 text-sm bg-white;
+}
+
+/* FORM WRAPPER */
+
+.look-white .editor-form-wrapper {
+    @apply flex flex-col;
+}
 
 .look-white .editor-form {
-    @apply flex flex-col gap-2
-           border border-gray-200
-           rounded-xl p-3
-           bg-gray-50 shadow-sm;
+    @apply flex flex-col gap-2 border border-slate-200
+           rounded-xl p-2 bg-white;
 }
 
 .look-white .editor-form-header {
     @apply flex gap-2 items-center;
 }
 
-.look-white .editor-form-title {
-    @apply border border-gray-300 rounded-md px-3 py-1.5 flex-1 outline-none
-           bg-white
-           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
+.look-white .editor-form-header input {
+    @apply flex-1 border border-slate-300 rounded-lg px-2 py-1
+           bg-white outline-none
+           focus:ring-2 focus:ring-blue-500;
 }
 
-.look-white .editor-form-rows {
-    @apply flex flex-col gap-2;
+/* DELETE BUTTON */
+
+.look-white .block-delete-button {
+    @apply text-red-500 hover:text-red-600 cursor-pointer;
 }
 
-/* -----------------------------------------------------------
-   ICON BUTTON STYLE
-   ----------------------------------------------------------- */
+/* ADD BLOCK */
 
-.look-white .editor-form-collapse,
-.look-white .editor-form-delete,
-.look-white .editor-array-remove,
-.look-white .editor-row-delete {
-    @apply flex items-center justify-center
-           w-7 h-7
-           rounded-md
-           border border-gray-300
-           bg-white
-           cursor-pointer
-           transition-all
-           hover:bg-gray-100
-           active:scale-95;
+.look-white .add-block {
+    @apply flex flex-wrap gap-2 pt-2;
 }
 
-/* Delete buttons */
-
-.look-white .editor-form-delete,
-.look-white .editor-array-remove,
-.look-white .editor-row-delete {
-    @apply border-red-400/40 hover:border-red-400 hover:bg-red-50;
-}
-
-/* Collapse rotation */
-
-.look-white .editor-form-collapse.collapsed {
-    transform: rotate(-90deg);
-}
-
-/* -----------------------------------------------------------
-   ROW
-   ----------------------------------------------------------- */
-
-.look-white .editor-row {
-    @apply flex flex-wrap gap-2 items-start
-           border border-gray-200
-           rounded-xl p-2.5
-           bg-white shadow-sm
-           transition hover:shadow-md;
-}
-
-.look-white .editor-row-name {
-    @apply border border-gray-300 rounded-lg px-3 py-1.5 outline-none
-           bg-white
-           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
-    width: 120px;
-    flex-shrink: 0;
-}
-
-.look-white .editor-row-value-area {
-    @apply flex gap-2 items-center flex-wrap flex-1 min-w-[130px];
-}
-
-.look-white .editor-row-type {
-    @apply border border-gray-300 rounded-lg px-2 py-1 cursor-pointer outline-none
-           bg-white
-           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400;
-}
-
-/* -----------------------------------------------------------
-   INPUTS
-   ----------------------------------------------------------- */
-
-.look-white .editor-input {
-    @apply border border-gray-300 rounded-lg px-3 py-1.5 outline-none
-           bg-white
-           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400
-           max-w-full;
-    flex: 1 1 auto;
-    min-width: 0;
-}
-
-.look-white .editor-input-number {
-    @apply text-amber-600;
-}
-
-.look-white .editor-input-string {
-    @apply text-blue-600;
-}
-
-/* -----------------------------------------------------------
-   ARRAY
-   ----------------------------------------------------------- */
-
-.look-white .editor-array {
-    @apply flex flex-col gap-2
-           border border-gray-200
-           rounded-xl p-2
-           bg-gray-50
-           min-w-[140px];
-}
-
-.look-white .editor-array-item-wrapper {
-    @apply flex items-center gap-2;
-}
-
-.look-white .editor-array-item {
-    @apply border border-gray-300 rounded-lg px-3 py-1.5
-           text-indigo-600 outline-none
-           bg-white
-           focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400
-           w-full;
-}
-
-.look-white .editor-array-add {
-    @apply border border-gray-300 rounded-lg px-2 py-1
-           text-sm cursor-pointer
-           hover:bg-gray-100 transition;
-}
-
-/* -----------------------------------------------------------
-   ADD ROW BUTTON
-   ----------------------------------------------------------- */
-
-.look-white .editor-row-add {
-    @apply border border-gray-300 rounded-lg py-1.5
-           hover:bg-gray-100 cursor-pointer
-           transition text-base font-medium text-gray-700;
-}
-
-.look-white .editor-row-add:active {
-    @apply scale-[0.97];
-}
-
-/* -----------------------------------------------------------
-   RENDER AREA
-   ----------------------------------------------------------- */
-
-.look-white #resume-render {
-    @apply bg-white;
-}
-
-.look-white .resume-page {
-    border: solid 1px #e5e7eb;
-    padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.look-white .add-block button {
+    @apply border border-dashed border-slate-300
+           rounded-lg px-2 py-1 text-xs
+           hover:bg-slate-50 cursor-pointer;
 }

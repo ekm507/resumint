@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+/* =========================================================
+   PAPER EDITOR THEME
+========================================================= */
+
+.look-paper {
+    @apply text-slate-800;
+}
+
+/* APP ROOT */
+
+.look-paper .app-root {
+    @apply flex flex-col items-center gap-6 p-6 h-screen overflow-hidden
+           bg-gradient-to-br from-amber-50 via-slate-50 to-blue-50;
+}
+
+.look-paper .app-layout {
+    @apply flex gap-8 w-full flex-1 justify-center overflow-hidden;
+}
+
+/* TOOLBAR */
+
+.look-paper .app-toolbar {
+    @apply flex gap-2 bg-white border border-slate-200
+           rounded-xl p-2 shadow-md;
+}
+
+.look-paper .toolbar-button {
+    @apply px-3 py-1.5 text-sm rounded-lg cursor-pointer transition
+           bg-indigo-600 text-white hover:bg-indigo-700
+           shadow-sm active:scale-95;
+}
+
+.look-paper .toolbar-file {
+    @apply px-3 py-1.5 text-sm border border-slate-300 rounded-lg
+           bg-slate-100 hover:bg-slate-200 cursor-pointer;
+}
+
+/* EDITOR PANEL */
+
+.look-paper .editor-panel {
+    @apply flex flex-col gap-3 bg-white
+           border border-slate-200 rounded-2xl p-4
+           shadow-lg min-w-[300px] overflow-y-auto;
+}
+
+.look-paper .editor-add-button {
+    @apply border border-dashed border-slate-300 rounded-xl py-2
+           text-slate-600 hover:bg-slate-100
+           hover:border-slate-400 cursor-pointer;
+}
+
+/* BLOCK EDITOR */
+
+.look-paper .block-editor {
+    @apply flex flex-col gap-2 p-3 rounded-xl border overflow-y-auto
+           border-slate-200 bg-slate-50 shadow-sm;
+}
+
+.look-paper .block-editor-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-paper .block-type-select {
+    @apply border border-slate-300 rounded-lg px-2 py-1
+           bg-white cursor-pointer outline-none
+           focus:ring-2 focus:ring-indigo-500;
+}
+
+/* GENERIC INPUTS */
+
+.look-paper .text-block-input,
+.look-paper .heading-block-input,
+.look-paper .image-block-src-input,
+.look-paper .image-block-alt-input,
+.look-paper .link-block-text-input,
+.look-paper .link-block-url-input {
+    @apply border border-slate-300 rounded-lg px-3 py-1.5 outline-none
+           bg-white w-full
+           focus:ring-2 focus:ring-indigo-500
+           focus:border-indigo-500;
+}
+
+.look-paper textarea.text-block-input {
+    @apply resize-none py-2;
+}
+
+.look-paper select {
+    @apply border border-slate-300 rounded-lg px-2 py-1
+           bg-white outline-none
+           focus:ring-2 focus:ring-indigo-500;
+}
+
+/* TEXT BLOCK */
+
+.look-paper .text-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-paper .text-block-controls {
+    @apply flex gap-2;
+}
+
+/* HEADING BLOCK */
+
+.look-paper .heading-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* LIST BLOCK */
+
+.look-paper .list-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-paper .list-block-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-paper .list-block-item {
+    @apply border border-slate-200 rounded-lg p-2 bg-white;
+}
+
+.look-paper .list-block-add-button {
+    @apply border border-dashed border-slate-300 rounded-lg py-1.5
+           hover:bg-slate-100 cursor-pointer;
+}
+
+/* IMAGE BLOCK */
+
+.look-paper .image-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* LINK BLOCK */
+
+.look-paper .link-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+/* DIVIDER BLOCK */
+
+.look-paper .divider-block-editor {
+    @apply flex gap-2;
+}
+
+/* TAGS BLOCK */
+
+.look-paper .tags-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-paper .tags-block-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-paper .tags-block-item {
+    @apply flex items-center gap-2;
+}
+
+.look-paper .tags-block-input {
+    @apply border border-slate-300 rounded-lg px-3 py-1.5
+           bg-white outline-none
+           focus:ring-2 focus:ring-indigo-500 flex-1;
+}
+
+.look-paper .tags-block-remove-button {
+    @apply text-rose-500 text-xs hover:text-rose-600 cursor-pointer;
+}
+
+.look-paper .tags-block-add-button {
+    @apply border border-dashed border-slate-300 rounded-lg py-1.5
+           hover:bg-slate-100 cursor-pointer;
+}
+
+/* KEY VALUE BLOCK */
+
+.look-paper .keyvalue-block-editor {
+    @apply flex items-center gap-2;
+}
+
+.look-paper .keyvalue-block-key-input {
+    @apply border border-slate-300 rounded px-2 py-1 text-sm bg-white;
+}
+
+.look-paper .keyvalue-block-value-input {
+    @apply border border-slate-300 rounded px-2 py-1 text-sm bg-white;
+}
+
+/* FORM WRAPPER */
+
+.look-paper .editor-form-wrapper {
+    @apply flex flex-col;
+}
+
+.look-paper .editor-form {
+    @apply flex flex-col gap-2 border border-slate-200
+           rounded-xl p-3 bg-white shadow-sm;
+}
+
+.look-paper .editor-form-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-paper .editor-form-header input {
+    @apply flex-1 border border-slate-300 rounded-lg px-2 py-1
+           bg-white outline-none
+           focus:ring-2 focus:ring-indigo-500;
+}
+
+/* DELETE BUTTON */
+
+.look-paper .block-delete-button {
+    @apply text-rose-500 hover:text-rose-600 cursor-pointer;
+}
+
+/* ADD BLOCK */
+
+.look-paper .add-block {
+    @apply flex flex-wrap gap-2 pt-2;
+}
+
+.look-paper .add-block button {
+    @apply border border-dashed border-slate-300
+           rounded-lg px-2 py-1 text-xs
+           hover:bg-slate-100 cursor-pointer;
+}
