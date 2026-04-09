@@ -276,6 +276,18 @@
     @apply flex flex-row items-baseline gap-1;
 }
 
+.theme-modern .divider-style-solid {
+    border-top-style: solid;
+}
+
+.theme-modern .divider-style-dashed {
+    border-top-style: dashed;
+}
+
+.theme-modern .divider-style-dotted {
+    border-top-style: dotted;
+}
+
 .theme-modern .keyvalue-block-key {
     @apply font-medium;
     color: var(--accent-700);
