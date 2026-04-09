@@ -75,6 +75,19 @@
     color: #374151;
 }
 
+/* TAGS */
+
+.theme-ledger .tags-block {
+    @apply flex flex-wrap gap-2;
+}
+
+.theme-ledger .tags-block-tag {
+    @apply px-3 py-1 rounded-md text-xs border;
+    background: var(--accent-50);
+    color: var(--accent-700);
+    border-color: var(--accent-200);
+}
+
 /* TEXT */
 
 .theme-ledger .text-block {
@@ -137,12 +150,14 @@
 .theme-ledger .list-block {
     padding-left: 20px;
 }
+
 .theme-ledger .list-style-bullet {
     list-style-type: disc;
 }
 .theme-ledger .list-style-numbered {
     list-style-type: decimal;
 }
+
 .theme-ledger .list-style-plain {
     list-style: none;
     padding-left: 0;
@@ -167,6 +182,30 @@
     border: 3px solid var(--accent-600);
 }
 
+/* image alignment */
+
+.theme-ledger .image-justify-center {
+    @apply justify-center;
+}
+.theme-ledger .image-justify-start {
+    @apply justify-start;
+}
+.theme-ledger .image-justify-end {
+    @apply justify-end;
+}
+
+/* image shapes */
+
+.theme-ledger .image-shape-solid {
+    border-radius: 0;
+}
+.theme-ledger .image-shape-rounded {
+    border-radius: 1rem;
+}
+.theme-ledger .image-shape-circle {
+    border-radius: 9999px;
+}
+
 /* LAYOUT */
 
 .theme-ledger .resume-columns {
@@ -176,6 +215,13 @@
 
 .theme-ledger .resume-column {
     @apply flex flex-col gap-6;
+}
+
+.theme-ledger .column-left {
+    @apply bg-white;
+}
+.theme-ledger .column-right {
+    @apply bg-white;
 }
 
 .theme-ledger .resume-vertical-split {
@@ -197,13 +243,46 @@
     border-left-style: dotted;
 }
 
-.theme-ledger .tags-block {
-    @apply flex flex-wrap gap-2;
+/* divider spacing */
+
+.theme-ledger .divider-spacing-sm {
+    @apply my-2;
+}
+.theme-ledger .divider-spacing-md {
+    @apply my-4;
+}
+.theme-ledger .divider-spacing-lg {
+    @apply my-6;
 }
 
-.theme-ledger .tags-block-tag {
-    @apply px-3 py-1 rounded-md text-xs border;
-    background: var(--accent-50);
+/* horizontal divider styles */
+
+.theme-ledger .divider-style-solid {
+    border-top-style: solid;
+}
+.theme-ledger .divider-style-dashed {
+    border-top-style: dashed;
+}
+.theme-ledger .divider-style-dotted {
+    border-top-style: dotted;
+}
+
+/* KEY VALUE */
+
+.theme-ledger .keyvalue-block {
+    @apply flex flex-row items-baseline gap-1;
+}
+
+.theme-ledger .keyvalue-block-key {
+    @apply font-medium;
     color: var(--accent-700);
-    border-color: var(--accent-200);
+}
+
+.theme-ledger .keyvalue-block-separator {
+    @apply px-1;
+    color: var(--accent-400);
+}
+
+.theme-ledger .keyvalue-block-value {
+    @apply text-sm;
 }
