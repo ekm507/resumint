@@ -41,7 +41,6 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
                   setIsOpen(false);
                 }}
               >
-                <span className="add-block-icon">{b.icon}</span>
                 <span className="add-block-label">{b.label}</span>
               </button>
             ))}
