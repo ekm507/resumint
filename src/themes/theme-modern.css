@@ -260,6 +260,18 @@
     border-left-style: dotted;
 }
 
+.theme-modern .divider-spacing-sm {
+    @apply my-2;
+}
+
+.theme-modern .divider-spacing-md {
+    @apply my-4;
+}
+
+.theme-modern .divider-spacing-lg {
+    @apply my-6;
+}
+
 .theme-modern .keyvalue-block {
     @apply flex flex-row items-baseline gap-1;
 }
