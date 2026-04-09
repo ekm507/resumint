@@ -73,7 +73,6 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
                       className="block-add-item"
                       onClick={() => addFirstBlock(b.type)}
                     >
-                      <span>{b.icon}</span>
                       <span>{b.label}</span>
                     </button>
                   ))}

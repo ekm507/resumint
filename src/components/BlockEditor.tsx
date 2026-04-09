@@ -89,7 +89,6 @@ export default function BlockEditor({
                     setAddOpen(false);
                   }}
                 >
-                  <span>{b.icon}</span>
                   <span>{b.label}</span>
                 </button>
               ))}
