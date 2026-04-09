@@ -16,7 +16,7 @@
 /* ROOT */
 
 .theme-ledger.resume {
-    @apply flex flex-col gap-6 p-6 bg-white text-sm min-w-[420px] text-gray-900;
+    @apply flex flex-col gap-8 p-8 bg-white text-sm min-w-[420px] text-gray-900;
 }
 
 .theme-ledger .resume-page {
@@ -30,13 +30,32 @@
 }
 
 .theme-ledger .resume-section {
-    @apply flex flex-col gap-3 pt-4;
+    @apply flex flex-col gap-3 pt-6 relative;
     border-top: 4px solid var(--accent-800);
 }
 
+/* If title is empty, remove the line and the padding */
+.theme-ledger .resume-section:has(.resume-section-title:empty) {
+    border-top-width: 0;
+    @apply pt-0;
+}
+
+/* The Title sitting ON the line */
 .theme-ledger .resume-section-title {
-    @apply text-base font-semibold;
+    @apply text-base font-bold px-2;
     color: #111827;
+    position: absolute;
+    top: 0;
+    inset-inline-start: 1rem;
+    transform: translateY(-50%); /* Centers the text on the border */
+    background-color: white; /* Cuts the line */
+    z-index: 10;
+    line-height: 1;
+}
+
+/* Completely hide element if title is empty string */
+.theme-ledger .resume-section-title:empty {
+    display: none;
 }
 
 .theme-ledger .resume-section-content {
@@ -150,7 +169,6 @@
 .theme-ledger .list-block {
     padding-left: 20px;
 }
-
 .theme-ledger .list-style-bullet {
     list-style-type: disc;
 }
@@ -182,8 +200,7 @@
     border: 3px solid var(--accent-600);
 }
 
-/* image alignment */
-
+/* Image Alignment */
 .theme-ledger .image-justify-center {
     @apply justify-center;
 }
@@ -194,8 +211,7 @@
     @apply justify-end;
 }
 
-/* image shapes */
-
+/* Image Shapes */
 .theme-ledger .image-shape-solid {
     border-radius: 0;
 }
@@ -243,8 +259,7 @@
     border-left-style: dotted;
 }
 
-/* divider spacing */
-
+/* Divider Spacing */
 .theme-ledger .divider-spacing-sm {
     @apply my-2;
 }
@@ -255,8 +270,7 @@
     @apply my-6;
 }
 
-/* horizontal divider styles */
-
+/* Horizontal Divider Styles */
 .theme-ledger .divider-style-solid {
     border-top-style: solid;
 }
