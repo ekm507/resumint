@@ -14,13 +14,15 @@ export interface Block {
   children?: Block[];
 }
 
-export interface FormStructure {
-  id: string;
-  title: string;
-  blocks: Block[];
-}
-
 export type SplitBlock = Block & {
   left: Block;
   right: Block;
 };
+
+export type BlockNode = Block | SplitBlock;
+
+export interface FormStructure {
+  id: string;
+  title: string;
+  blocks: BlockNode[];
+}
