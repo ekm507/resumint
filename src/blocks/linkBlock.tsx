@@ -2,7 +2,7 @@ import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
 
 export function LinkEditor({ block, update }: any) {
-  const { text = "", url = "", target = "_self" } = block.props || {};
+  const { text = "", url = "" } = block.props || {};
 
   const setProp = (k: string, v: any) =>
     update({
