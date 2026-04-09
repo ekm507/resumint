@@ -2,9 +2,19 @@ import { registerBlock } from "./blockRegistry";
 import BlockEditor from "../components/BlockEditor";
 import BlockRenderer from "../components/BlockRenderer";
 import type { Block } from "../utils/types";
+import { useBlockOps } from "../hooks/useBlockOps";
 
 export function ListEditor({ block, update }: any) {
   const items = block.children || [];
+  const setChildren = (children: Block[]) => update({ ...block, children });
+
+  const {
+    updateBlock: updateChild,
+    deleteBlock: deleteChild,
+    moveBlock,
+    insertBlockAfter,
+    setBlockType: setChildType,
+  } = useBlockOps(items, setChildren);
   const { style = "ul" } = block.props || {};
 
   const setProp = (k: string, v: any) =>
@@ -12,30 +22,6 @@ export function ListEditor({ block, update }: any) {
       ...block,
       props: { ...(block.props || {}), [k]: v },
     });
-  const updateChild = (id: string, newChild: Block) => {
-    update({
-      ...block,
-      children: items.map((c: Block) => (c.id === id ? newChild : c)),
-    });
-  };
-
-  const deleteChild = (id: string) => {
-    update({
-      ...block,
-      children: items.filter((c: Block) => c.id !== id),
-    });
-  };
-
-  const setChildType = (id: string, type: string) => {
-    update({
-      ...block,
-      children: items.map((c: Block) =>
-        c.id === id
-          ? { id: c.id, blockType: type, props: {}, children: [] }
-          : c,
-      ),
-    });
-  };
 
   const addItem = () => {
     update({
@@ -70,6 +56,9 @@ export function ListEditor({ block, update }: any) {
               block={child}
               updateBlock={updateChild}
               deleteBlock={deleteChild}
+              moveUp={() => moveBlock(child.id, "up")}
+              moveDown={() => moveBlock(child.id, "down")}
+              insertBlockAfter={insertBlockAfter}
               setBlockType={setChildType}
             />
           </div>
