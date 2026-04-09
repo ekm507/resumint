@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { FormStructure, Block } from "../utils/types";
 import BlockEditor from "./BlockEditor";
 import { getBlock, getAllBlocks } from "../blocks/blockRegistry";
+import { useBlockOps } from "../hooks/useBlockOps";
 
 interface Props {
   form: FormStructure;
@@ -16,77 +17,15 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
     onFormChange(form.id, { ...form, ...patch });
   };
 
-  const updateBlocks = (blocks: Block[]) => {
-    setForm({ blocks });
-  };
+  const updateBlocks = (blocks: Block[]) => setForm({ blocks });
 
-  const updateBlock = (id: string, newBlock: Block) => {
-    updateBlocks(form.blocks.map((b) => (b.id === id ? newBlock : b)));
-  };
-
-  const deleteBlock = (id: string) => {
-    updateBlocks(form.blocks.filter((b) => b.id !== id));
-  };
-
-  const moveBlock = (id: string, direction: "up" | "down") => {
-    const index = form.blocks.findIndex((b) => b.id === id);
-    if (index === -1) return;
-
-    const newBlocks = [...form.blocks];
-
-    if (direction === "up" && index > 0) {
-      [newBlocks[index - 1], newBlocks[index]] = [
-        newBlocks[index],
-        newBlocks[index - 1],
-      ];
-    }
-
-    if (direction === "down" && index < newBlocks.length - 1) {
-      [newBlocks[index + 1], newBlocks[index]] = [
-        newBlocks[index],
-        newBlocks[index + 1],
-      ];
-    }
-
-    updateBlocks(newBlocks);
-  };
-
-  const insertBlockAfter = (id: string, type: string) => {
-    const index = form.blocks.findIndex((b) => b.id === id);
-    if (index === -1) return;
-
-    const def = getBlock(type);
-    if (!def) return;
-
-    const newBlock = { ...def.create(), id: crypto.randomUUID() };
-
-    const newBlocks = [...form.blocks];
-    newBlocks.splice(index + 1, 0, newBlock);
-
-    updateBlocks(newBlocks);
-  };
-
-  const setBlockType = (id: string, type: string) => {
-    const def = getBlock(type);
-    if (!def) return;
-
-    updateBlocks(
-      form.blocks.map((b) => {
-        if (b.id !== id) return b;
-
-        const newBlock = def.create();
-
-        return {
-          ...newBlock,
-          id,
-          props: {
-            ...newBlock.props,
-            ...b.props,
-          },
-        };
-      }),
-    );
-  };
+  const {
+    updateBlock,
+    deleteBlock,
+    moveBlock,
+    insertBlockAfter,
+    setBlockType,
+  } = useBlockOps(form.blocks, updateBlocks);
 
   const addFirstBlock = (type: string) => {
     const def = getBlock(type);
