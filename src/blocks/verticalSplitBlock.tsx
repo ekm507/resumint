@@ -1,7 +1,7 @@
 import { registerBlock } from "./blockRegistry";
 import BlockEditor from "../components/BlockEditor";
 import BlockRenderer from "../components/BlockRenderer";
-import type { Block } from "../utils/types";
+import type { Block, SplitBlock } from "../utils/types";
 
 export function VerticalSplitEditor({ block, update }: any) {
   const {
@@ -156,7 +156,7 @@ registerBlock({
   type: "vertical-split",
   label: "Vertical Split",
 
-  create(): Block {
+  create(): SplitBlock {
     return {
       id: "",
       blockType: "vertical-split",

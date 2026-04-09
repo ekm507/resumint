@@ -19,3 +19,8 @@ export interface FormStructure {
   title: string;
   blocks: Block[];
 }
+
+export type SplitBlock = Block & {
+  left: Block;
+  right: Block;
+};
