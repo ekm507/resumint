@@ -102,6 +102,9 @@ export function VerticalSplitEditor({ block, update }: any) {
           block={left}
           updateBlock={updateLeft}
           deleteBlock={() => {}}
+          moveDown={() => {}}
+          moveUp={() => {}}
+          insertBlockAfter={() => {}}
           setBlockType={setLeftType}
         />
 
@@ -109,6 +112,9 @@ export function VerticalSplitEditor({ block, update }: any) {
           block={right}
           updateBlock={updateRight}
           deleteBlock={() => {}}
+          moveDown={() => {}}
+          moveUp={() => {}}
+          insertBlockAfter={() => {}}
           setBlockType={setRightType}
         />
       </div>
