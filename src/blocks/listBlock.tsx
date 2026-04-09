@@ -58,8 +58,9 @@ export function ListEditor({ block, update }: any) {
         value={style}
         onChange={(e) => setProp("style", e.target.value)}
       >
-        <option value="ul">Bullet</option>
-        <option value="ol">Numbered</option>
+        <option value="plain">Plain</option>
+        <option value="bullet">Bullet</option>
+        <option value="numbered">Numbered</option>
       </select>
 
       <div className="list-block-items">
@@ -106,7 +107,7 @@ registerBlock({
       id: "",
       blockType: "list",
       props: {
-        style: "ul",
+        style: "plain",
       },
       children: [],
     };
