@@ -125,7 +125,7 @@ export function ImageRender({ block }: any) {
   } = block.props || {};
 
   return (
-    <div className={`resume-item-image flex justify-${align}`}>
+    <div className={`resume-item-image flex image-justify-${align}`}>
       <img
         src={src}
         alt={alt}

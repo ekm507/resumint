@@ -197,6 +197,18 @@
     border-color: var(--accent-100);
 }
 
+.theme-modern .image-justify-center {
+    @apply justify-center;
+}
+
+.theme-modern .image-justify-start {
+    @apply justify-start;
+}
+
+.theme-modern .image-justify-end {
+    @apply justify-end;
+}
+
 .theme-modern .resume-item-image img {
     @apply object-cover border shadow-sm flex;
     border-color: var(--accent-200);
