@@ -239,6 +239,14 @@
     @apply flex flex-col gap-4;
 }
 
+.theme-modern .column-left {
+    @apply bg-white;
+}
+
+.theme-modern .column-right {
+    @apply bg-white;
+}
+
 .theme-modern .resume-vertical-split {
     @apply gap-6 items-stretch;
 }
