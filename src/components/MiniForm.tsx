@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { FormStructure, Block } from "../utils/types";
 import BlockEditor from "./BlockEditor";
-import { getBlock } from "../blocks/blockRegistry";
+import { getBlock, getAllBlocks } from "../blocks/blockRegistry";
 
 interface Props {
   form: FormStructure;
@@ -88,6 +88,18 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
     );
   };
 
+  const addFirstBlock = (type: string) => {
+    const def = getBlock(type);
+    if (!def) return;
+
+    const newBlock = { ...def.create(), id: crypto.randomUUID() };
+
+    updateBlocks([newBlock]);
+    setShowAdd(false);
+  };
+
+  const [showAdd, setShowAdd] = useState(false);
+
   return (
     <div className="editor-form">
       <div className="editor-form-header">
@@ -105,18 +117,44 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
 
       {!collapsed && (
         <div className="editor-form-body">
-          {form.blocks.map((block) => (
-            <BlockEditor
-              key={block.id}
-              block={block}
-              updateBlock={updateBlock}
-              deleteBlock={deleteBlock}
-              setBlockType={setBlockType}
-              moveUp={() => moveBlock(block.id, "up")}
-              moveDown={() => moveBlock(block.id, "down")}
-              insertBlockAfter={insertBlockAfter}
-            />
-          ))}
+          {form.blocks.length === 0 ? (
+            <div className="empty-block-state">
+              <button
+                className="block-add-button"
+                onClick={() => setShowAdd(!showAdd)}
+              >
+                + Add block
+              </button>
+
+              {showAdd && (
+                <div className="block-add-menu">
+                  {getAllBlocks().map((b) => (
+                    <button
+                      key={b.type}
+                      className="block-add-item"
+                      onClick={() => addFirstBlock(b.type)}
+                    >
+                      <span>{b.icon}</span>
+                      <span>{b.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : (
+            form.blocks.map((block) => (
+              <BlockEditor
+                key={block.id}
+                block={block}
+                updateBlock={updateBlock}
+                deleteBlock={deleteBlock}
+                setBlockType={setBlockType}
+                moveUp={() => moveBlock(block.id, "up")}
+                moveDown={() => moveBlock(block.id, "down")}
+                insertBlockAfter={insertBlockAfter}
+              />
+            ))
+          )}
         </div>
       )}
     </div>
