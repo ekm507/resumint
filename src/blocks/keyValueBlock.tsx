@@ -3,7 +3,7 @@ import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
 
 export function KeyValueEditor({ block, update }: any) {
-  const { key = "", value = "", emphasis = "key" } = block.props || {};
+  const { items = [], emphasis = "key" } = block.props || {};
 
   const setProp = (k: string, v: any) =>
     update({
@@ -11,27 +11,50 @@ export function KeyValueEditor({ block, update }: any) {
       props: { ...(block.props || {}), [k]: v },
     });
 
+  const updateItem = (index: number, field: "key" | "value", val: string) => {
+    const copy = [...items];
+    copy[index] = { ...copy[index], [field]: val };
+    setProp("items", copy);
+  };
+
+  const addItem = () => {
+    setProp("items", [...items, { key: "", value: "" }]);
+  };
+
+  const removeItem = (index: number) => {
+    setProp(
+      "items",
+      items.filter((_: any, i: number) => i !== index),
+    );
+  };
+
   return (
     <div className="keyvalue-block-editor">
-      {/* Basic Controls (Always Visible) */}
-      <div className="keyvalue-main-inputs">
-        <input
-          placeholder="key"
-          value={key}
-          onChange={(e) => setProp("key", e.target.value)}
-        />
-        <span className="separator">:</span>
-        <input
-          placeholder="value"
-          value={value}
-          onChange={(e) => setProp("value", e.target.value)}
-        />
+      <div className="keyvalue-list">
+        {items.map((item: any, i: number) => (
+          <div key={i} className="keyvalue-row">
+            <input
+              placeholder="key"
+              value={item.key}
+              onChange={(e) => updateItem(i, "key", e.target.value)}
+            />
+
+            <span className="separator">:</span>
+
+            <input
+              placeholder="value"
+              value={item.value}
+              onChange={(e) => updateItem(i, "value", e.target.value)}
+            />
+
+            <button onClick={() => removeItem(i)}>×</button>
+          </div>
+        ))}
+
+        <button onClick={addItem}>+ Add Row</button>
       </div>
 
-      {/* Advanced Options */}
       <AdvancedOptions block={block} update={update}>
-        <div className="advanced-group"></div>
-
         <div className="advanced-group">
           <label>Emphasis</label>
           <select
@@ -49,12 +72,17 @@ export function KeyValueEditor({ block, update }: any) {
 }
 
 export function KeyValueRender({ block }: any) {
-  const { key, value, emphasis = "key" } = block.props || {};
+  const { items = [], emphasis = "key" } = block.props || {};
+
   return (
     <div className={`keyvalue-block emphasize-${emphasis}`}>
-      <span className="keyvalue-block-key">{key}</span>
-      <span className="keyvalue-block-separator">:</span>
-      <span className="keyvalue-block-value">{value}</span>
+      {items.map((item: any, i: number) => (
+        <div key={i} className="keyvalue-row">
+          <span className="keyvalue-block-key">{item.key}</span>
+          <span className="keyvalue-block-separator">:</span>
+          <span className="keyvalue-block-value">{item.value}</span>
+        </div>
+      ))}
     </div>
   );
 }
@@ -68,8 +96,7 @@ registerBlock({
       id: "",
       blockType: "keyValue",
       props: {
-        key: "",
-        value: "",
+        items: [{ key: "", value: "" }],
         emphasis: "key",
       },
     };
