@@ -4,6 +4,7 @@ import BlockRenderer from "../components/BlockRenderer";
 import AddBlockMenu from "../components/AddBlockMenu";
 import type { Block } from "../utils/types";
 import { useBlockOps } from "../hooks/useBlockOps";
+import { Fragment } from "react/jsx-runtime";
 
 interface Column {
   id: string;
@@ -175,16 +176,19 @@ export function MultiColumnRender({ block }: any) {
   const dividerVisible = props.dividerVisible ?? true;
   const dividerWidth = props.dividerWidth ?? 2;
 
-  // Convert widths to a CSS grid template
-  const template = columns.map((c) => `${c.width}fr`).join(" ");
+  const template = columns
+    .map((c, i) =>
+      i === columns.length - 1 ? `${c.width}fr` : `${c.width}fr auto`,
+    )
+    .join(" ");
 
   return (
     <div
       className="resume-multi-column"
-      style={{ gridTemplateColumns: template }} // grid is safe
+      style={{ gridTemplateColumns: template }}
     >
       {columns.map((col: Column, idx: number) => (
-        <div key={col.id} className="resume-multi-column-item">
+        <Fragment key={col.id}>
           <div className="resume-multi-column-content">
             {col.children?.map((child: Block) => (
               <BlockRenderer key={child.id} block={child} />
@@ -197,7 +201,7 @@ export function MultiColumnRender({ block }: any) {
               style={{ borderLeftWidth: dividerWidth + "px" }}
             />
           )}
-        </div>
+        </Fragment>
       ))}
     </div>
   );

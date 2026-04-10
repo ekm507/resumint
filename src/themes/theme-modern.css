@@ -253,7 +253,7 @@
 
 .theme-modern .resume-vertical-divider {
     @apply self-stretch;
-    border-left-color: var(--accent-200);
+    border-color: var(--accent-200);
 }
 
 .theme-modern .resume-divider-solid {
@@ -326,12 +326,6 @@
     @apply flex flex-col gap-3 min-w-0 w-full wrap-break-word;
 }
 /* Divider */
-
-.theme-modern .resume-vertical-divider {
-    @apply absolute top-0 bottom-0;
-    inset-inline-end: 0; /* replaces right:0 and works for RTL */
-    border-inline-start-color: var(--accent-200);
-}
 
 /* Styles */
 
