@@ -21,7 +21,6 @@ export function MultiColumnEditor({ block, update }: any) {
   ];
 
   const dividerStyle: string = props.dividerStyle || "solid";
-  const dividerVisible: boolean = props.dividerVisible ?? true;
   const dividerWidth: number = props.dividerWidth ?? 2;
 
   const setProp = (k: string, v: any) =>
@@ -81,18 +80,9 @@ export function MultiColumnEditor({ block, update }: any) {
           <option value="dotted">dotted</option>
         </select>
 
-        <label>
-          <input
-            type="checkbox"
-            checked={dividerVisible}
-            onChange={(e) => setProp("dividerVisible", e.target.checked)}
-          />
-          divider
-        </label>
-
         <input
           type="range"
-          min={1}
+          min={0}
           max={10}
           value={dividerWidth}
           onChange={(e) => setProp("dividerWidth", Number(e.target.value))}
@@ -173,7 +163,6 @@ export function MultiColumnRender({ block }: any) {
   const columns: Column[] = props.columns || [];
 
   const dividerStyle = props.dividerStyle || "solid";
-  const dividerVisible = props.dividerVisible ?? true;
   const dividerWidth = props.dividerWidth ?? 2;
 
   const template = columns
@@ -195,7 +184,7 @@ export function MultiColumnRender({ block }: any) {
             ))}
           </div>
 
-          {dividerVisible && idx !== columns.length - 1 && (
+          {idx !== columns.length - 1 && (
             <div
               className={`resume-vertical-divider resume-divider-${dividerStyle}`}
               style={{ borderLeftWidth: dividerWidth + "px" }}
@@ -217,7 +206,6 @@ registerBlock({
       blockType: "multi-column",
       props: {
         dividerStyle: "solid",
-        dividerVisible: true,
         dividerWidth: 2,
         columns: [
           {
