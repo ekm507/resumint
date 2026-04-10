@@ -1,3 +1,4 @@
+import AdvancedOptions from "../components/AdvancedOptions";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
 
@@ -83,34 +84,42 @@ export function ImageEditor({ block, update }: any) {
         }}
       />
 
-      <input
-        placeholder="alt text"
-        value={alt}
-        onChange={(e) => setProp("alt", e.target.value)}
-      />
-
-      <div>
-        <label>Width: {width}%</label>
+      <AdvancedOptions block={block} update={update}>
         <input
-          type="range"
-          min={20}
-          max={100}
-          step={5}
-          value={width}
-          onChange={(e) => setProp("width", Number(e.target.value))}
+          placeholder="alt text"
+          value={alt}
+          onChange={(e) => setProp("alt", e.target.value)}
         />
-      </div>
+        <div>
+          <label>Width: {width}%</label>
+          <input
+            type="range"
+            min={20}
+            max={100}
+            step={5}
+            value={width}
+            onChange={(e) => setProp("width", Number(e.target.value))}
+          />
+        </div>
 
-      <select value={align} onChange={(e) => setProp("align", e.target.value)}>
-        <option value="start">start</option>
-        <option value="center">center</option>
-        <option value="end">end</option>
-      </select>
-      <select value={shape} onChange={(e) => setProp("shape", e.target.value)}>
-        <option value="solid">solid</option>
-        <option value="rounded">rounded</option>
-        <option value="circle">circle</option>
-      </select>
+        <select
+          value={align}
+          onChange={(e) => setProp("align", e.target.value)}
+        >
+          <option value="start">start</option>
+          <option value="center">center</option>
+          <option value="end">end</option>
+        </select>
+
+        <select
+          value={shape}
+          onChange={(e) => setProp("shape", e.target.value)}
+        >
+          <option value="solid">solid</option>
+          <option value="rounded">rounded</option>
+          <option value="circle">circle</option>
+        </select>
+      </AdvancedOptions>
     </div>
   );
 }
