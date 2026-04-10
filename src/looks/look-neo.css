@@ -145,6 +145,24 @@
 
 /* TAGS BLOCK */
 
+/* =========================================================
+   TAG EDITOR ENHANCEMENTS
+========================================================= */
+
+.look-neo .tag-input-row {
+    @apply flex items-center gap-2;
+}
+
+.look-neo .tag-input-row input {
+    @apply flex-1 border border-slate-600 rounded-lg px-3 py-1.5
+           bg-slate-900/40 outline-none
+           focus:ring-2 focus:ring-cyan-500;
+}
+
+.look-neo .tag-input-row button {
+    @apply text-red-400 text-xs hover:text-red-300 cursor-pointer;
+}
+
 .look-neo .tags-block-editor {
     @apply flex flex-col gap-2;
 }
@@ -438,4 +456,33 @@
 
 .look-neo .richtext-controls {
     @apply flex gap-2 mt-1;
+}
+
+/* =========================================================
+   ADVANCED OPTIONS
+========================================================= */
+
+.look-neo .block-advanced {
+    @apply flex flex-col gap-1;
+}
+
+.look-neo .block-advanced-toggle {
+    @apply mt-2 text-xs text-slate-400 hover:text-cyan-400
+           cursor-pointer transition flex items-center gap-1;
+}
+
+.look-neo .block-advanced-open {
+    @apply border-t border-slate-700/60 pt-2 mt-1;
+}
+
+.look-neo .block-advanced-controls {
+    @apply flex flex-col gap-2;
+}
+
+.look-neo .advanced-group {
+    @apply flex flex-col gap-1;
+}
+
+.look-neo .advanced-group label {
+    @apply text-xs text-slate-300;
 }

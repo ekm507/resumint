@@ -359,3 +359,54 @@
 .theme-modern .column-right {
     @apply flex flex-col gap-4;
 }
+
+/* =========================================================
+   TAGS RENDER
+========================================================= */
+
+.theme-modern .tags-render-container {
+    @apply flex flex-wrap gap-2;
+}
+
+.theme-modern .tag-item {
+    @apply inline-flex items-center font-medium
+           border transition-all duration-200;
+}
+
+/* shapes */
+
+.theme-modern .tag-shape-pill {
+    @apply rounded-full;
+}
+
+.theme-modern .tag-shape-rounded {
+    @apply rounded-md;
+}
+
+.theme-modern .tag-shape-square {
+    @apply rounded-none;
+}
+
+/* sizes */
+
+.theme-modern .tag-size-sm {
+    @apply text-xs px-1.5 py-0.5;
+}
+
+.theme-modern .tag-size-md {
+    @apply text-sm px-2 py-1;
+}
+
+.theme-modern .tag-size-lg {
+    @apply text-base px-3 py-1.5;
+}
+
+/* variants */
+
+.theme-modern .tag-variant-filled {
+    @apply bg-cyan-600 text-white border-cyan-600 shadow-md;
+}
+
+.theme-modern .tag-variant-outline {
+    @apply bg-transparent text-cyan-400 border-cyan-400;
+}
