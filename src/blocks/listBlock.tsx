@@ -3,6 +3,7 @@ import BlockEditor from "../components/BlockEditor";
 import BlockRenderer from "../components/BlockRenderer";
 import type { Block } from "../utils/types";
 import { useBlockOps } from "../hooks/useBlockOps";
+import AddBlockMenu from "../components/AddBlockMenu";
 
 export function ListEditor({ block, update }: any) {
   const items = block.children || [];
@@ -13,6 +14,7 @@ export function ListEditor({ block, update }: any) {
     deleteBlock: deleteChild,
     moveBlock,
     setBlockType: setChildType,
+    insertBlockAfter,
   } = useBlockOps(items, setChildren);
   const { style = "ul" } = block.props || {};
 
@@ -50,16 +52,23 @@ export function ListEditor({ block, update }: any) {
 
       <div className="list-block-items">
         {items.map((child: Block) => (
-          <div className="list-block-item" key={child.id}>
-            <BlockEditor
-              block={child}
-              updateBlock={updateChild}
-              deleteBlock={deleteChild}
-              moveUp={() => moveBlock(child.id, "up")}
-              moveDown={() => moveBlock(child.id, "down")}
-              setBlockType={setChildType}
+          <>
+            <div className="list-block-item" key={child.id}>
+              <BlockEditor
+                block={child}
+                updateBlock={updateChild}
+                deleteBlock={deleteChild}
+                moveUp={() => moveBlock(child.id, "up")}
+                moveDown={() => moveBlock(child.id, "down")}
+                setBlockType={setChildType}
+              />
+            </div>
+            <AddBlockMenu
+              onSelect={(type) => {
+                insertBlockAfter(child.id, type);
+              }}
             />
-          </div>
+          </>
         ))}
       </div>
 
