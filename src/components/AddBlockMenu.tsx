@@ -59,10 +59,15 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
   }
 
   function toggleMenu() {
-    if (!buttonRef.current || !editorPanel) return;
+    const button = buttonRef.current;
+    const editorPanel = document.getElementById("editor-panel");
 
-    const btn = buttonRef.current.getBoundingClientRect();
+    if (!button || !editorPanel) return;
+
+    const btn = button.getBoundingClientRect();
     const panel = editorPanel.getBoundingClientRect();
+
+    if (!buttonRef.current || !editorPanel) return;
 
     const scrollTop = editorPanel.scrollTop;
     const scrollLeft = editorPanel.scrollLeft;
