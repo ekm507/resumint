@@ -79,7 +79,7 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
                 <AddBlockMenu
                   buttonText="+ Add Block"
                   onSelect={(type) => {
-                    addFirstBlock(type);
+                    insertBlockAfter(block.id, type);
                   }}
                 />
               </>
