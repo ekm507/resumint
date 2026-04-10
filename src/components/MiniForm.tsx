@@ -55,13 +55,11 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
       {!collapsed && (
         <div className="editor-form-body">
           {form.blocks.length === 0 ? (
-            <div className="empty-block-state">
-              <AddBlockMenu
-                onSelect={(type) => {
-                  addFirstBlock(type);
-                }}
-              />
-            </div>
+            <AddBlockMenu
+              onSelect={(type) => {
+                addFirstBlock(type);
+              }}
+            />
           ) : (
             form.blocks.map((block) => (
               <Fragment key={block.id}>
