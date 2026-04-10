@@ -1,47 +1,60 @@
-// src/blocks/keyValueBlock.tsx
-import { registerBlock } from "./blockRegistry";
+import AdvancedOptions from "../components/AdvancedOptions";
 import type { Block } from "../utils/types";
+import { registerBlock } from "./blockRegistry";
 
 export function KeyValueEditor({ block, update }: any) {
-  const key = block.props?.key || "";
-  const value = block.props?.value || "";
+  const { key = "", value = "", emphasis = "key" } = block.props || {};
 
-  const setProp = (field: "key" | "value", v: string) =>
+  const setProp = (k: string, v: any) =>
     update({
       ...block,
-      props: { ...(block.props || {}), [field]: v },
+      props: { ...(block.props || {}), [k]: v },
     });
 
   return (
     <div className="keyvalue-block-editor">
-      <input
-        className="keyvalue-block-key-input"
-        placeholder="key"
-        value={key}
-        onChange={(e) => setProp("key", e.target.value)}
-      />
+      {/* Basic Controls (Always Visible) */}
+      <div className="keyvalue-main-inputs">
+        <input
+          placeholder="key"
+          value={key}
+          onChange={(e) => setProp("key", e.target.value)}
+        />
+        <span className="separator">:</span>
+        <input
+          placeholder="value"
+          value={value}
+          onChange={(e) => setProp("value", e.target.value)}
+        />
+      </div>
 
-      <span className="keyvalue-block-separator">:</span>
+      {/* Advanced Options */}
+      <AdvancedOptions block={block} update={update}>
+        <div className="advanced-group"></div>
 
-      <input
-        className="keyvalue-block-value-input"
-        placeholder="value"
-        value={value}
-        onChange={(e) => setProp("value", e.target.value)}
-      />
+        <div className="advanced-group">
+          <label>Emphasis</label>
+          <select
+            value={emphasis}
+            onChange={(e) => setProp("emphasis", e.target.value)}
+          >
+            <option value="none">Normal</option>
+            <option value="key">Bold Key</option>
+            <option value="value">Bold Value</option>
+          </select>
+        </div>
+      </AdvancedOptions>
     </div>
   );
 }
 
 export function KeyValueRender({ block }: any) {
-  const key = block.props?.key || "";
-  const value = block.props?.value || "";
-
+  const { key, value, emphasis = "key" } = block.props || {};
   return (
-    <div className="keyvalue-block">
-      <p className="keyvalue-block-key">{key}</p>
-      <div className="keyvalue-block-separator"></div>
-      <p className="keyvalue-block-value">{value}</p>
+    <div className={`keyvalue-block emphasize-${emphasis}`}>
+      <span className="keyvalue-block-key">{key}</span>
+      <span className="keyvalue-block-separator">:</span>
+      <span className="keyvalue-block-value">{value}</span>
     </div>
   );
 }
@@ -57,6 +70,7 @@ registerBlock({
       props: {
         key: "",
         value: "",
+        emphasis: "key",
       },
     };
   },
