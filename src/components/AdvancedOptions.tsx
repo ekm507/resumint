@@ -1,0 +1,32 @@
+export default function AdvancedOptions({ block, update, children }: any) {
+  const advanced = block.props?.__advanced ?? false;
+
+  const toggle = () =>
+    update({
+      ...block,
+      props: {
+        ...(block.props || {}),
+        __advanced: !advanced,
+      },
+    });
+
+  return (
+    <div className="block-advanced">
+      {!advanced && (
+        <button className="block-advanced-toggle" onClick={toggle}>
+          Advanced options ▾
+        </button>
+      )}
+
+      {advanced && (
+        <div className="block-advanced-open">
+          <div className="block-advanced-controls">{children}</div>
+
+          <button className="block-advanced-toggle" onClick={toggle}>
+            Hide advanced ▴
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
