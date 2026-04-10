@@ -35,10 +35,7 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
     const newBlock = { ...def.create(), id: crypto.randomUUID() };
 
     updateBlocks([newBlock]);
-    setShowAdd(false);
   };
-
-  const [showAdd, setShowAdd] = useState(false);
 
   return (
     <div className="editor-form">
@@ -62,7 +59,7 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
               <AddBlockMenu
                 buttonText="+ Add Block"
                 onSelect={(type) => {
-                  insertBlockAfter(block.id, type);
+                  addFirstBlock(type);
                 }}
               />
             </div>
