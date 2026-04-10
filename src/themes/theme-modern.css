@@ -50,142 +50,11 @@
    ITEMS (old renderer)
 ========================= */
 
-.theme-modern .resume-item {
-    @apply flex gap-3 items-start;
-}
-
-.theme-modern .resume-item-name {
-    @apply min-w-[100px] text-xs font-medium text-gray-500;
-}
-
-.theme-modern .resume-item-value {
-    @apply flex flex-wrap gap-2 text-gray-800;
-}
-
-.theme-modern .resume-item-string {
-    @apply text-gray-900;
-}
-
-.theme-modern .resume-item-number {
-    @apply font-medium;
-    color: var(--accent-700);
-}
-
-.theme-modern .resume-item-array {
-    @apply flex flex-wrap gap-2;
-}
-
 .theme-modern .tags-block-tag {
     @apply px-3 py-1 rounded-md text-xs border;
     background: var(--accent-50);
     color: var(--accent-700);
     border-color: var(--accent-200);
-}
-
-/* =========================
-   TEXT BLOCK
-========================= */
-
-.theme-modern .text-block {
-    white-space: pre-line; /* multiline text */
-    line-height: 1.6;
-}
-
-/* sizes */
-
-.theme-modern .text-size-sm {
-    font-size: 0.85rem;
-}
-
-.theme-modern .text-size-md {
-    font-size: 0.95rem;
-}
-
-.theme-modern .text-size-lg {
-    font-size: 1.05rem;
-    font-weight: 500;
-}
-
-.theme-modern .text-size-xl {
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-/* alignment */
-
-.theme-modern .text-align-left {
-    text-align: left;
-}
-
-.theme-modern .text-align-center {
-    text-align: center;
-}
-
-.theme-modern .text-align-right {
-    text-align: right;
-}
-
-.theme-modern .text-align-justify {
-    text-align: justify;
-}
-
-/* =========================
-   HEADING BLOCK
-========================= */
-
-.theme-modern .heading-block {
-    font-weight: 600;
-    margin-top: 6px;
-    margin-bottom: 2px;
-    color: var(--accent-800);
-}
-
-.theme-modern .heading-level-1 {
-    font-size: 1.6rem;
-}
-
-.theme-modern .heading-level-2 {
-    font-size: 1.35rem;
-}
-
-.theme-modern .heading-level-3 {
-    font-size: 1.15rem;
-}
-
-.theme-modern .heading-level-4 {
-    font-size: 1rem;
-}
-
-/* =========================
-   LIST BLOCK
-========================= */
-
-.theme-modern .list-block {
-    padding-left: 20px;
-}
-
-/* bullet */
-
-.theme-modern .list-style-bullet {
-    list-style-type: disc;
-}
-
-/* numbered */
-
-.theme-modern .list-style-numbered {
-    list-style-type: decimal;
-}
-
-/* plain */
-
-.theme-modern .list-style-plain {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.theme-modern .list-block-render-item {
-    margin-bottom: 2px;
-    line-height: 1.5;
 }
 
 /* =========================
@@ -247,10 +116,6 @@
     @apply bg-white;
 }
 
-.theme-modern .resume-vertical-split {
-    @apply gap-6 items-stretch;
-}
-
 .theme-modern .resume-vertical-divider {
     @apply self-stretch;
     border-color: var(--accent-200);
@@ -292,23 +157,6 @@
     border-top-style: dotted;
 }
 
-.theme-modern .keyvalue-block {
-    @apply flex flex-row items-baseline w-full gap-4;
-}
-
-.theme-modern .keyvalue-block-key {
-    @apply font-medium;
-    color: var(--accent-700);
-}
-
-.theme-modern .keyvalue-block-separator {
-    @apply px-1;
-    color: var(--accent-400);
-}
-
-.theme-modern .keyvalue-block-value {
-    @apply text-sm;
-}
 /* =====================================
    MULTI COLUMN BLOCK (final)
 ===================================== */
@@ -316,10 +164,6 @@
 .theme-modern .resume-multi-column {
     @apply grid gap-3 w-full items-start;
     /* column widths assigned by grid-template-columns inline */
-}
-
-.theme-modern .resume-multi-column-item {
-    @apply relative min-w-0 flex flex-row items-stretch;
 }
 
 .theme-modern .resume-multi-column-content {
@@ -484,6 +328,10 @@
     @apply flex-col items-start gap-0;
 }
 
+.theme-modern .keyvalue-block {
+    @apply flex;
+}
+
 .theme-modern .emphasize-none .keyvalue-block-key,
 .theme-modern .emphasize-none .keyvalue-block-value {
     font-weight: normal;
@@ -497,6 +345,9 @@
     font-weight: 600;
 }
 
+.theme-modern .keyvalue-block-separator {
+    @apply px-2;
+}
 /* =========================
    COLUMN LAYOUT
 ========================= */
