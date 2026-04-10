@@ -90,53 +90,11 @@
            focus:ring-2 focus:ring-cyan-500;
 }
 
-/* TEXT BLOCK */
-
-.look-neo .text-block-editor {
-    @apply flex flex-col gap-2;
-}
-
-.look-neo .text-block-controls {
-    @apply flex gap-2;
-}
-
-/* HEADING BLOCK */
-
-.look-neo .heading-block-editor {
-    @apply flex flex-col gap-2;
-}
-
-/* LIST BLOCK */
-
-.look-neo .list-block-editor {
-    @apply flex flex-col gap-2;
-}
-
-.look-neo .list-block-items {
-    @apply flex flex-col gap-2;
-}
-
-.look-neo .list-block-item {
-    @apply border border-slate-700 rounded-lg p-2;
-}
-
-.look-neo .list-block-add-button {
-    @apply border border-dashed border-slate-500 rounded-lg py-1.5
-           hover:bg-slate-700/40 cursor-pointer;
-}
-
 /* IMAGE BLOCK */
 
 .look-neo .image-block-editor {
     @apply flex flex-col gap-2;
 }
-
-/* LINK BLOCK */
-
-.look-neo .link-block-editor {
-    @apply flex flex-col gap-2;
-}
-
 /* DIVIDER BLOCK */
 
 .look-neo .divider-block-editor {
