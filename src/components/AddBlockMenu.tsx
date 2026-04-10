@@ -3,9 +3,13 @@ import { getAllBlocks } from "../blocks/blockRegistry";
 
 interface AddBlockMenuProps {
   onSelect: (type: string) => void;
+  buttonText?: string;
 }
 
-export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
+export default function AddBlockMenu({
+  buttonText = "+",
+  onSelect,
+}: AddBlockMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const blockTypes = getAllBlocks();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -26,7 +30,7 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
       <div className="add-block-line" />
 
       <button className="add-block-trigger" onClick={() => setIsOpen(!isOpen)}>
-        +
+        {buttonText}
       </button>
 
       {isOpen && (

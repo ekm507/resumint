@@ -3,6 +3,7 @@ import type { FormStructure, Block } from "../utils/types";
 import BlockEditor from "./BlockEditor";
 import { getBlock, getAllBlocks } from "../blocks/blockRegistry";
 import { useBlockOps } from "../hooks/useBlockOps";
+import AddBlockMenu from "./AddBlockMenu";
 
 interface Props {
   form: FormStructure;
@@ -58,39 +59,33 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
         <div className="editor-form-body">
           {form.blocks.length === 0 ? (
             <div className="empty-block-state">
-              <button
-                className="block-add-button"
-                onClick={() => setShowAdd(!showAdd)}
-              >
-                + Add block
-              </button>
-
-              {showAdd && (
-                <div className="block-add-menu">
-                  {getAllBlocks().map((b) => (
-                    <button
-                      key={b.type}
-                      className="block-add-item"
-                      onClick={() => addFirstBlock(b.type)}
-                    >
-                      <span>{b.label}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
+              <AddBlockMenu
+                buttonText="+ Add Block"
+                onSelect={(type) => {
+                  insertBlockAfter(block.id, type);
+                }}
+              />
             </div>
           ) : (
             form.blocks.map((block) => (
-              <BlockEditor
-                key={block.id}
-                block={block}
-                updateBlock={updateBlock}
-                deleteBlock={deleteBlock}
-                setBlockType={setBlockType}
-                moveUp={() => moveBlock(block.id, "up")}
-                moveDown={() => moveBlock(block.id, "down")}
-                insertBlockAfter={insertBlockAfter}
-              />
+              <>
+                <BlockEditor
+                  key={block.id}
+                  block={block}
+                  updateBlock={updateBlock}
+                  deleteBlock={deleteBlock}
+                  setBlockType={setBlockType}
+                  moveUp={() => moveBlock(block.id, "up")}
+                  moveDown={() => moveBlock(block.id, "down")}
+                  insertBlockAfter={insertBlockAfter}
+                />
+                <AddBlockMenu
+                  buttonText="+ Add Block"
+                  onSelect={(type) => {
+                    addFirstBlock(type);
+                  }}
+                />
+              </>
             ))
           )}
         </div>
