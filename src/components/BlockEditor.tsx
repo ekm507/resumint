@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { getBlock, getAllBlocks } from "../blocks/blockRegistry";
 import type { Block } from "../utils/types";
 
@@ -19,10 +18,7 @@ export default function BlockEditor({
   setBlockType,
   moveUp,
   moveDown,
-  insertBlockAfter,
 }: Props) {
-  const [addOpen, setAddOpen] = useState(false);
-
   if (!block) {
     return <div className="block-editor-error">Missing block</div>;
   }
@@ -64,37 +60,11 @@ export default function BlockEditor({
         </button>
 
         <button
-          className="block-hover-button"
-          onClick={() => setAddOpen(!addOpen)}
-        >
-          +
-        </button>
-
-        <button
           className="block-hover-button text-red-400"
           onClick={() => deleteBlock(block.id)}
         >
           ✕
         </button>
-
-        {addOpen && (
-          <div className="block-add-menu">
-            <div className="block-add-grid">
-              {blocks.map((b) => (
-                <button
-                  key={b.type}
-                  className="block-add-item"
-                  onClick={() => {
-                    insertBlockAfter(block.id, b.type);
-                    setAddOpen(false);
-                  }}
-                >
-                  <span>{b.label}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
 
       <Editor

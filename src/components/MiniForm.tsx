@@ -73,7 +73,6 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
                   setBlockType={setBlockType}
                   moveUp={() => moveBlock(block.id, "up")}
                   moveDown={() => moveBlock(block.id, "down")}
-                  insertBlockAfter={insertBlockAfter}
                 />
                 <AddBlockMenu
                   onSelect={(type) => {
