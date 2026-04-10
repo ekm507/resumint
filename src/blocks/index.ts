@@ -1,5 +1,4 @@
 import "./textBlock";
-import "./listBlock";
 import "./headingBlock";
 import "./imageBlock";
 import "./linkBlock";
