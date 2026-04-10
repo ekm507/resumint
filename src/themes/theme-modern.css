@@ -349,3 +349,55 @@
     border-inline-start-style: dotted;
     border-inline-start-width: 1px;
 }
+
+/* =========================
+   RICH TEXT BLOCK
+========================= */
+
+.theme-modern .richtext-block {
+    @apply leading-relaxed;
+}
+
+/* paragraphs */
+
+.theme-modern .richtext-block p {
+    @apply mb-1;
+}
+
+/* headings */
+
+.theme-modern .richtext-block h1 {
+    @apply text-xl font-semibold mt-2;
+    color: var(--accent-800);
+}
+
+.theme-modern .richtext-block h2 {
+    @apply text-lg font-semibold mt-2;
+    color: var(--accent-800);
+}
+
+.theme-modern .richtext-block h3 {
+    @apply text-base font-semibold;
+    color: var(--accent-700);
+}
+
+/* lists */
+
+.theme-modern .richtext-block ul {
+    @apply list-disc pl-5;
+}
+
+.theme-modern .richtext-block ol {
+    @apply list-decimal pl-5;
+}
+
+.theme-modern .richtext-block li {
+    @apply leading-relaxed;
+}
+
+/* links */
+
+.theme-modern .richtext-block a {
+    color: var(--accent-700);
+    text-decoration: underline;
+}

@@ -370,3 +370,55 @@
 .look-neo .multi-slider input[type="range"] {
     flex: 1;
 }
+
+/* =========================
+   RICH TEXT EDITOR
+========================= */
+
+.look-neo .richtext-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-neo .richtext-toolbar {
+    @apply flex flex-wrap gap-1 border border-slate-700 rounded-lg p-1 bg-slate-900/50;
+}
+
+.look-neo .richtext-button {
+    @apply px-2 py-1 text-xs rounded-md
+           bg-slate-800 border border-slate-700
+           hover:bg-cyan-600 hover:border-cyan-500
+           cursor-pointer transition;
+}
+
+.look-neo .richtext-editor-surface {
+    @apply border border-slate-700 rounded-lg
+           bg-slate-900/40 p-2 min-h-[90px];
+}
+
+.look-neo .richtext-editor-surface .ProseMirror {
+    @apply outline-none text-sm leading-relaxed;
+}
+
+.look-neo .richtext-editor-surface h1 {
+    @apply text-lg font-semibold;
+}
+
+.look-neo .richtext-editor-surface h2 {
+    @apply text-base font-semibold;
+}
+
+.look-neo .richtext-editor-surface ul {
+    @apply list-disc pl-5;
+}
+
+.look-neo .richtext-editor-surface ol {
+    @apply list-decimal pl-5;
+}
+
+.look-neo .richtext-editor-surface a {
+    @apply text-cyan-400 underline;
+}
+
+.look-neo .richtext-controls {
+    @apply flex gap-2;
+}
