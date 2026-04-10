@@ -371,54 +371,71 @@
     flex: 1;
 }
 
-/* =========================
-   RICH TEXT EDITOR
-========================= */
+/* =========================================================
+   RICH TEXT EDITOR (NEO LOOK)
+========================================================= */
 
 .look-neo .richtext-block-editor {
     @apply flex flex-col gap-2;
 }
 
 .look-neo .richtext-toolbar {
-    @apply flex flex-wrap gap-1 border border-slate-700 rounded-lg p-1 bg-slate-900/50;
+    @apply flex flex-wrap gap-1 border border-slate-700/60 rounded-xl p-1 bg-slate-900/60 backdrop-blur-md;
+}
+
+.look-neo .richtext-divider-v {
+    @apply w-px h-4 bg-slate-700 my-auto mx-1;
 }
 
 .look-neo .richtext-button {
-    @apply px-2 py-1 text-xs rounded-md
-           bg-slate-800 border border-slate-700
-           hover:bg-cyan-600 hover:border-cyan-500
-           cursor-pointer transition;
+    @apply px-2 py-1 text-[10px] font-medium rounded-lg
+           bg-slate-800 border border-slate-700/50 text-slate-300
+           hover:bg-slate-700 hover:text-white
+           cursor-pointer transition active:scale-95;
+}
+
+.look-neo .richtext-button.is-active {
+    @apply bg-cyan-600 border-cyan-500 text-white shadow-[0_0_10px_rgba(8,145,178,0.3)];
 }
 
 .look-neo .richtext-editor-surface {
-    @apply border border-slate-700 rounded-lg
-           bg-slate-900/40 p-2 min-h-[90px];
+    @apply border border-slate-700 rounded-xl
+           bg-slate-900/60 p-4 min-h-[120px] shadow-inner;
 }
 
+/* TipTap ProseMirror content styling */
 .look-neo .richtext-editor-surface .ProseMirror {
-    @apply outline-none text-sm leading-relaxed;
+    @apply outline-none text-sm leading-relaxed text-slate-200;
 }
 
-.look-neo .richtext-editor-surface h1 {
-    @apply text-lg font-semibold;
+.look-neo .richtext-editor-surface .ProseMirror h1 {
+    @apply text-xl font-bold mb-2 text-white;
+}
+.look-neo .richtext-editor-surface .ProseMirror h2 {
+    @apply text-lg font-bold mb-2 text-slate-100;
+}
+.look-neo .richtext-editor-surface .ProseMirror h3 {
+    @apply text-base font-semibold mb-1 text-slate-200;
+}
+.look-neo .richtext-editor-surface .ProseMirror h4 {
+    @apply text-sm font-semibold mb-1 text-slate-300;
 }
 
-.look-neo .richtext-editor-surface h2 {
-    @apply text-base font-semibold;
+.look-neo .richtext-editor-surface .ProseMirror ul {
+    @apply list-disc pl-5 mb-2 space-y-1;
+}
+.look-neo .richtext-editor-surface .ProseMirror ol {
+    @apply list-decimal pl-5 mb-2 space-y-1;
 }
 
-.look-neo .richtext-editor-surface ul {
-    @apply list-disc pl-5;
+.look-neo .richtext-editor-surface .ProseMirror hr {
+    @apply my-4 border-1 border-slate-600 border-dashed;
 }
 
-.look-neo .richtext-editor-surface ol {
-    @apply list-decimal pl-5;
-}
-
-.look-neo .richtext-editor-surface a {
-    @apply text-cyan-400 underline;
+.look-neo .richtext-editor-surface .ProseMirror a {
+    @apply text-cyan-400 underline decoration-cyan-400/30;
 }
 
 .look-neo .richtext-controls {
-    @apply flex gap-2;
+    @apply flex gap-2 mt-1;
 }
