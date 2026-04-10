@@ -312,3 +312,61 @@
            text-sm rounded-lg cursor-pointer
            hover:bg-slate-700/60 transition;
 }
+
+/* =========================================================
+   MULTI COLUMN BLOCK
+========================================================= */
+
+.look-neo .multi-column-editor {
+    @apply flex flex-col gap-3;
+}
+
+.look-neo .multi-column-toolbar {
+    @apply flex gap-2 flex-wrap items-center;
+}
+
+.look-neo .multi-column-toolbar button {
+    @apply px-2 py-1 text-xs rounded-lg
+           border border-slate-600
+           bg-slate-800/60 hover:bg-cyan-600
+           cursor-pointer;
+}
+
+.look-neo .multi-column-grid {
+    @apply flex gap-3;
+}
+
+.look-neo .multi-column-column {
+    @apply flex flex-col gap-2
+           border border-slate-700
+           rounded-lg p-2
+           bg-slate-900/40 flex-1;
+}
+
+.look-neo .multi-column-column-header {
+    @apply flex justify-between items-center
+           text-xs text-slate-300;
+}
+
+.look-neo .multi-column-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-neo .multi-column-add-block {
+    @apply border border-dashed border-slate-500
+           rounded-lg py-1 text-xs
+           hover:bg-slate-700/40 cursor-pointer;
+}
+
+.look-neo .multi-slider {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.look-neo .multi-slider input[type="range"] {
+    flex: 1;
+}

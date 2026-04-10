@@ -309,3 +309,43 @@
 .theme-modern .keyvalue-block-value {
     @apply text-sm;
 }
+/* =====================================
+   MULTI COLUMN BLOCK (final)
+===================================== */
+
+.theme-modern .resume-multi-column {
+    @apply grid gap-3 w-full items-start;
+    /* column widths assigned by grid-template-columns inline */
+}
+
+.theme-modern .resume-multi-column-item {
+    @apply relative min-w-0 flex flex-row items-stretch;
+}
+
+.theme-modern .resume-multi-column-content {
+    @apply flex flex-col gap-3 min-w-0 w-full wrap-break-word;
+}
+/* Divider */
+
+.theme-modern .resume-vertical-divider {
+    @apply absolute top-0 bottom-0;
+    inset-inline-end: 0; /* replaces right:0 and works for RTL */
+    border-inline-start-color: var(--accent-200);
+}
+
+/* Styles */
+
+.theme-modern .resume-divider-solid {
+    border-inline-start-style: solid;
+    border-inline-start-width: 1px;
+}
+
+.theme-modern .resume-divider-dashed {
+    border-inline-start-style: dashed;
+    border-inline-start-width: 1px;
+}
+
+.theme-modern .resume-divider-dotted {
+    border-inline-start-style: dotted;
+    border-inline-start-width: 1px;
+}
