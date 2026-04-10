@@ -1,4 +1,5 @@
 import { registerBlock } from "./blockRegistry";
+import AdvancedOptions from "../components/AdvancedOptions";
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -140,22 +141,28 @@ export function RichTextEditor({ block, update }: any) {
       </div>
 
       {/* Layout Controls */}
-      <div className="richtext-controls">
-        <select value={size} onChange={(e) => setProp("size", e.target.value)}>
-          <option value="md">midsize</option>
-          <option value="lg">big</option>
-          <option value="xl">bigger</option>
-        </select>
 
-        <select
-          value={align}
-          onChange={(e) => setProp("align", e.target.value)}
-        >
-          <option value="start">start</option>
-          <option value="center">center</option>
-          <option value="end">end</option>
-          <option value="justify">justify</option>
-        </select>
+      <div className="richtext-controls">
+        <AdvancedOptions block={block} update={update}>
+          <select
+            value={size}
+            onChange={(e) => setProp("size", e.target.value)}
+          >
+            <option value="md">midsize</option>
+            <option value="lg">big</option>
+            <option value="xl">bigger</option>
+          </select>
+
+          <select
+            value={align}
+            onChange={(e) => setProp("align", e.target.value)}
+          >
+            <option value="start">start</option>
+            <option value="center">center</option>
+            <option value="end">end</option>
+            <option value="justify">justify</option>
+          </select>
+        </AdvancedOptions>
       </div>
     </div>
   );
