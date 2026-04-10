@@ -1,5 +1,6 @@
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
+import AdvancedOptions from "../components/AdvancedOptions";
 
 export function DividerEditor({ block, update }: any) {
   const { style = "solid", spacing = "md" } = block.props || {};
@@ -11,25 +12,25 @@ export function DividerEditor({ block, update }: any) {
     });
   return (
     <div className="divider-block-editor">
-      <select
-        className="divider-block-style-select"
-        value={style}
-        onChange={(e) => setProp("style", e.target.value)}
-      >
-        <option value="solid">solid</option>
-        <option value="dashed">dashed</option>
-        <option value="dotted">dotted</option>
-      </select>
+      <AdvancedOptions block={block} update={update}>
+        <select
+          value={style}
+          onChange={(e) => setProp("style", e.target.value)}
+        >
+          <option value="solid">solid</option>
+          <option value="dashed">dashed</option>
+          <option value="dotted">dotted</option>
+        </select>
 
-      <select
-        className="divider-block-spacing-select"
-        value={spacing}
-        onChange={(e) => setProp("spacing", e.target.value)}
-      >
-        <option value="sm">small</option>
-        <option value="md">medium</option>
-        <option value="lg">large</option>
-      </select>
+        <select
+          value={spacing}
+          onChange={(e) => setProp("spacing", e.target.value)}
+        >
+          <option value="sm">small</option>
+          <option value="md">medium</option>
+          <option value="lg">large</option>
+        </select>
+      </AdvancedOptions>
     </div>
   );
 }
