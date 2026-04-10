@@ -40,7 +40,7 @@
 /* EDITOR PANEL */
 
 .look-slate .editor-panel {
-    @apply flex flex-col gap-2 bg-slate-500
+    @apply flex flex-col gap-2 bg-slate-800
            border border-slate-700 rounded-md p-2
            shadow-sm min-w-[260px] overflow-y-auto;
 }
@@ -55,7 +55,7 @@
 
 .look-slate .block-editor {
     @apply flex flex-col gap-1 p-2 rounded border overflow-y-auto
-           border-slate-700 bg-slate-800 shadow-sm;
+           border-slate-700 bg-slate-800 shadow-sm relative;
 }
 
 .look-slate .block-editor-header {
@@ -78,8 +78,7 @@
 .look-slate .link-block-url-input {
     @apply border border-slate-600 rounded px-2 py-1 outline-none
            bg-slate-900 w-full text-sm
-           focus:ring-1 focus:ring-sky-500
-           focus:border-sky-500;
+           focus:ring-1 focus:ring-sky-500;
 }
 
 .look-slate textarea.text-block-input {
@@ -92,50 +91,9 @@
            focus:ring-1 focus:ring-sky-500;
 }
 
-/* TEXT BLOCK */
-
-.look-slate .text-block-editor {
-    @apply flex flex-col gap-1;
-}
-
-.look-slate .text-block-controls {
-    @apply flex gap-1;
-}
-
-/* HEADING BLOCK */
-
-.look-slate .heading-block-editor {
-    @apply flex flex-col gap-1;
-}
-
-/* LIST BLOCK */
-
-.look-slate .list-block-editor {
-    @apply flex flex-col gap-1;
-}
-
-.look-slate .list-block-items {
-    @apply flex flex-col gap-1;
-}
-
-.look-slate .list-block-item {
-    @apply border border-slate-700 rounded p-1.5 bg-slate-800;
-}
-
-.look-slate .list-block-add-button {
-    @apply border border-dashed border-slate-600 rounded
-           py-1 hover:bg-slate-700 cursor-pointer text-xs;
-}
-
 /* IMAGE BLOCK */
 
 .look-slate .image-block-editor {
-    @apply flex flex-col gap-1;
-}
-
-/* LINK BLOCK */
-
-.look-slate .link-block-editor {
     @apply flex flex-col gap-1;
 }
 
@@ -145,7 +103,23 @@
     @apply flex gap-1;
 }
 
-/* TAGS BLOCK */
+/* =========================================================
+   TAG EDITOR ENHANCEMENTS
+========================================================= */
+
+.look-slate .tag-input-row {
+    @apply flex items-center gap-1;
+}
+
+.look-slate .tag-input-row input {
+    @apply flex-1 border border-slate-600 rounded px-2 py-1
+           bg-slate-900 outline-none text-sm
+           focus:ring-1 focus:ring-sky-500;
+}
+
+.look-slate .tag-input-row button {
+    @apply text-rose-400 text-xs hover:text-rose-300 cursor-pointer;
+}
 
 .look-slate .tags-block-editor {
     @apply flex flex-col gap-1;
@@ -225,4 +199,247 @@
     @apply border border-dashed border-slate-600
            rounded px-1.5 py-0.5 text-[11px]
            hover:bg-slate-700 cursor-pointer;
+}
+
+/* =========================================================
+   INSERT BLOCK (+) MENU
+========================================================= */
+
+.look-slate .add-block-container {
+    @apply relative flex justify-center py-1;
+}
+
+.look-slate .add-block-line {
+    @apply absolute top-1/2 left-0 right-0 h-px bg-slate-700 opacity-0 transition;
+}
+
+.look-slate .add-block-container:hover .add-block-line {
+    @apply opacity-100;
+}
+
+.look-slate .add-block-trigger {
+    @apply relative z-10 flex items-center justify-center
+           rounded text-xs px-1.5 py-0.5
+           bg-slate-700 border border-slate-600
+           hover:bg-sky-600 hover:border-sky-500
+           transition cursor-pointer;
+}
+
+.look-slate .add-block-menu {
+    @apply absolute top-6 z-20 w-56 p-1
+           bg-slate-800 border border-slate-700
+           rounded shadow-lg;
+}
+
+.look-slate .add-block-grid {
+    @apply grid grid-cols-2 gap-1;
+}
+
+.look-slate .add-block-item {
+    @apply flex items-center gap-1 px-1.5 py-1
+           text-xs rounded cursor-pointer
+           hover:bg-slate-700 transition;
+}
+
+.look-slate .add-block-icon {
+    @apply text-sm opacity-80;
+}
+
+.look-slate .add-block-label {
+    @apply text-slate-200 text-[11px];
+}
+
+/* =========================================================
+   BLOCK HOVER CONTROLS
+========================================================= */
+
+.look-slate .block-hover-controls {
+    @apply absolute right-1 top-1 flex gap-1
+           opacity-0 transition-opacity;
+}
+
+.look-slate .block-editor:hover .block-hover-controls {
+    @apply opacity-100;
+}
+
+.look-slate .block-hover-button {
+    @apply w-5 h-5 flex items-center justify-center
+           rounded text-[10px]
+           bg-slate-800 border border-slate-600
+           hover:bg-sky-600 hover:border-sky-500
+           cursor-pointer transition;
+}
+
+/* dropdown */
+
+.look-slate .block-add-menu {
+    @apply absolute right-0 top-7 z-20 w-48 p-1
+           bg-slate-800 border border-slate-700
+           rounded shadow-lg;
+}
+
+.look-slate .block-add-grid {
+    @apply grid grid-cols-2 gap-1;
+}
+
+.look-slate .block-add-item {
+    @apply flex items-center gap-1 px-1.5 py-1
+           text-xs rounded cursor-pointer
+           hover:bg-slate-700 transition;
+}
+
+/* =========================================================
+   MULTI COLUMN BLOCK
+========================================================= */
+
+.look-slate .multi-column-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-slate .multi-column-toolbar {
+    @apply flex gap-1 flex-wrap items-center;
+}
+
+.look-slate .multi-column-toolbar button {
+    @apply px-1.5 py-0.5 text-[11px] rounded
+           border border-slate-600
+           bg-slate-800 hover:bg-sky-600
+           cursor-pointer;
+}
+
+.look-slate .multi-column-grid {
+    @apply flex gap-2;
+}
+
+.look-slate .multi-column-column {
+    @apply flex flex-col gap-1
+           border border-slate-700
+           rounded p-1.5
+           bg-slate-900 flex-1;
+}
+
+.look-slate .multi-column-column-header {
+    @apply flex justify-between items-center
+           text-[11px] text-slate-300;
+}
+
+.look-slate .multi-column-items {
+    @apply flex flex-col gap-1;
+}
+
+.look-slate .multi-column-add-block {
+    @apply border border-dashed border-slate-600
+           rounded py-0.5 text-[11px]
+           hover:bg-slate-700 cursor-pointer;
+}
+
+.look-slate .multi-slider {
+    position: relative;
+    width: 100%;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.look-slate .multi-slider input[type="range"] {
+    flex: 1;
+}
+
+/* =========================================================
+   RICH TEXT EDITOR
+========================================================= */
+
+.look-slate .richtext-block-editor {
+    @apply flex flex-col gap-1;
+}
+
+.look-slate .richtext-toolbar {
+    @apply flex flex-wrap gap-1 border border-slate-700
+           rounded p-1 bg-slate-900;
+}
+
+.look-slate .richtext-divider-v {
+    @apply w-px h-3 bg-slate-700 my-auto mx-1;
+}
+
+.look-slate .richtext-button {
+    @apply px-1.5 py-0.5 text-[10px] rounded
+           bg-slate-800 border border-slate-700 text-slate-300
+           hover:bg-slate-700 hover:text-white
+           cursor-pointer transition;
+}
+
+.look-slate .richtext-button.is-active {
+    @apply bg-sky-600 border-sky-500 text-white;
+}
+
+.look-slate .richtext-editor-surface {
+    @apply border border-slate-700 rounded
+           bg-slate-900 p-3 min-h-[110px];
+}
+
+.look-slate .richtext-editor-surface .ProseMirror {
+    @apply outline-none text-sm leading-relaxed text-slate-200;
+}
+
+.look-slate .richtext-editor-surface .ProseMirror h1 {
+    @apply text-xl font-bold mb-2 text-slate-100;
+}
+
+.look-slate .richtext-editor-surface .ProseMirror h2 {
+    @apply text-lg font-bold mb-2 text-slate-200;
+}
+
+.look-slate .richtext-editor-surface .ProseMirror h3 {
+    @apply text-base font-semibold mb-1 text-slate-300;
+}
+
+.look-slate .richtext-editor-surface .ProseMirror h4 {
+    @apply text-sm font-semibold mb-1 text-slate-400;
+}
+
+.look-slate .richtext-editor-surface .ProseMirror ul {
+    @apply list-disc pl-5 mb-2 space-y-1 text-slate-200;
+}
+
+.look-slate .richtext-editor-surface .ProseMirror ol {
+    @apply list-decimal pl-5 mb-2 space-y-1 text-slate-200;
+}
+
+.look-slate .richtext-editor-surface .ProseMirror hr {
+    @apply my-4 border border-slate-600 border-dashed;
+}
+
+.look-slate .richtext-editor-surface .ProseMirror a {
+    @apply text-sky-400 underline decoration-sky-400/30 hover:text-sky-300;
+}
+
+/* =========================================================
+   ADVANCED OPTIONS
+========================================================= */
+
+.look-slate .block-advanced {
+    @apply flex flex-col gap-1;
+}
+
+.look-slate .block-advanced-toggle {
+    @apply mt-1 text-[11px] text-slate-400 hover:text-sky-400
+           cursor-pointer transition flex items-center gap-1;
+}
+
+.look-slate .block-advanced-open {
+    @apply border-t border-slate-700 pt-1 mt-1;
+}
+
+.look-slate .block-advanced-controls {
+    @apply flex flex-col gap-1;
+}
+
+.look-slate .advanced-group {
+    @apply flex flex-col gap-1;
+}
+
+.look-slate .advanced-group label {
+    @apply text-[11px] text-slate-300;
 }
