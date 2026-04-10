@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import type { FormStructure, Block } from "../utils/types";
 import BlockEditor from "./BlockEditor";
 import { getBlock } from "../blocks/blockRegistry";
@@ -64,9 +64,8 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
             </div>
           ) : (
             form.blocks.map((block) => (
-              <>
+              <Fragment key={block.id}>
                 <BlockEditor
-                  key={block.id}
                   block={block}
                   updateBlock={updateBlock}
                   deleteBlock={deleteBlock}
@@ -79,7 +78,7 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
                     insertBlockAfter(block.id, type);
                   }}
                 />
-              </>
+              </Fragment>
             ))
           )}
         </div>
