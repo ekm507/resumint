@@ -52,21 +52,20 @@ export function KeyValueEditor({ block, update }: any) {
         ))}
 
         <button onClick={addItem}>+ Add Row</button>
+        <AdvancedOptions block={block} update={update}>
+          <div className="advanced-group">
+            <label>Emphasis</label>
+            <select
+              value={emphasis}
+              onChange={(e) => setProp("emphasis", e.target.value)}
+            >
+              <option value="none">Normal</option>
+              <option value="key">Bold Key</option>
+              <option value="value">Bold Value</option>
+            </select>
+          </div>
+        </AdvancedOptions>
       </div>
-
-      <AdvancedOptions block={block} update={update}>
-        <div className="advanced-group">
-          <label>Emphasis</label>
-          <select
-            value={emphasis}
-            onChange={(e) => setProp("emphasis", e.target.value)}
-          >
-            <option value="none">Normal</option>
-            <option value="key">Bold Key</option>
-            <option value="value">Bold Value</option>
-          </select>
-        </div>
-      </AdvancedOptions>
     </div>
   );
 }
