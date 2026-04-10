@@ -280,10 +280,6 @@
     @apply my-6;
 }
 
-.theme-modern .keyvalue-block {
-    @apply flex flex-row items-baseline gap-1;
-}
-
 .theme-modern .divider-style-solid {
     border-top-style: solid;
 }
@@ -294,6 +290,10 @@
 
 .theme-modern .divider-style-dotted {
     border-top-style: dotted;
+}
+
+.theme-modern .keyvalue-block {
+    @apply flex flex-row items-baseline w-full gap-4;
 }
 
 .theme-modern .keyvalue-block-key {
@@ -396,4 +396,115 @@
 .theme-modern .richtext-block a {
     color: var(--accent-700);
     text-decoration: underline;
+}
+
+/* =========================
+   DIVIDER BLOCK
+========================= */
+
+.theme-modern .divider-block {
+    @apply w-full border-t;
+    border-color: var(--accent-200);
+}
+
+/* =========================
+   IMAGE BLOCK
+========================= */
+
+.theme-modern .resume-item-image {
+    @apply flex w-full;
+}
+
+/* =========================
+   TAGS BLOCK
+========================= */
+
+.theme-modern .tags-block {
+    @apply flex flex-wrap gap-2;
+}
+
+.theme-modern .align-start {
+    @apply justify-start;
+}
+
+/* tag shapes */
+
+.theme-modern .tag-shape-pill {
+    border-radius: 9999px;
+}
+
+.theme-modern .tag-shape-rounded {
+    border-radius: 0.5rem;
+}
+
+.theme-modern .tag-shape-square {
+    border-radius: 0.125rem;
+}
+
+/* tag sizes */
+
+.theme-modern .tag-size-sm {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+}
+
+.theme-modern .tag-size-md {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+}
+
+.theme-modern .tag-size-lg {
+    font-size: 0.85rem;
+    padding: 6px 14px;
+}
+
+/* tag variants */
+
+.theme-modern .tag-variant-filled {
+    background: var(--accent-50);
+    color: var(--accent-700);
+    border-color: var(--accent-200);
+}
+
+.theme-modern .tag-variant-outline {
+    background: transparent;
+    color: var(--accent-700);
+    border-color: var(--accent-400);
+}
+
+/* =========================
+   KEY VALUE BLOCK VARIANTS
+========================= */
+
+.theme-modern .layout-row {
+    @apply flex-row items-baseline;
+}
+
+.theme-modern .layout-column {
+    @apply flex-col items-start gap-0;
+}
+
+.theme-modern .emphasize-none .keyvalue-block-key,
+.theme-modern .emphasize-none .keyvalue-block-value {
+    font-weight: normal;
+}
+
+.theme-modern .emphasize-key .keyvalue-block-key {
+    font-weight: 600;
+}
+
+.theme-modern .emphasize-value .keyvalue-block-value {
+    font-weight: 600;
+}
+
+/* =========================
+   COLUMN LAYOUT
+========================= */
+
+.theme-modern .column-left {
+    @apply flex flex-col gap-4;
+}
+
+.theme-modern .column-right {
+    @apply flex flex-col gap-4;
 }
