@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from "react";
+import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { getAllBlocks } from "../blocks/blockRegistry";
 
@@ -16,15 +16,56 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const editorPanelRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    editorPanelRef.current = document.getElementById("editor-panel");
+  }, []);
 
   const blockTypes = getAllBlocks();
-  const editorPanel = document.getElementById("editor-panel");
+
+  useLayoutEffect(() => {
+    editorPanelRef.current = document.getElementById("editor-panel");
+  }, []);
+
+  function calculatePosition() {
+    const button = buttonRef.current;
+    const panel = editorPanelRef.current;
+
+    if (!button || !panel) return;
+
+    const btn = button.getBoundingClientRect();
+    const panelRect = panel.getBoundingClientRect();
+
+    const spaceBelow = panelRect.bottom - btn.bottom;
+    const spaceAbove = btn.top - panelRect.top;
+
+    const direction =
+      spaceBelow < 220 && spaceAbove > spaceBelow ? "up" : "down";
+
+    setMenuPos({
+      left: btn.left - panelRect.left + btn.width / 2,
+      top:
+        direction === "down"
+          ? btn.bottom - panelRect.top
+          : btn.top - panelRect.top,
+      direction,
+    });
+  }
+
+  function openMenu() {
+    calculatePosition();
+    setIsOpen(true);
+  }
 
   function toggleMenu() {
     if (!buttonRef.current || !editorPanel) return;
 
     const btn = buttonRef.current.getBoundingClientRect();
     const panel = editorPanel.getBoundingClientRect();
+
+    const scrollTop = editorPanel.scrollTop;
+    const scrollLeft = editorPanel.scrollLeft;
 
     const spaceBelow = panel.bottom - btn.bottom;
     const spaceAbove = btn.top - panel.top;
@@ -33,8 +74,10 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
       spaceBelow < 220 && spaceAbove > spaceBelow ? "up" : "down";
 
     setMenuPos({
-      left: btn.left - panel.left + btn.width / 2,
-      top: direction === "down" ? btn.bottom - panel.top : btn.top - panel.top,
+      left: btn.left - panel.left + scrollLeft + btn.width / 2,
+      top:
+        (direction === "down" ? btn.bottom - panel.top : btn.top - panel.top) +
+        scrollTop,
       direction,
     });
 
@@ -56,6 +99,22 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const reposition = () => calculatePosition();
+
+    window.addEventListener("resize", reposition);
+    window.addEventListener("scroll", reposition, true);
+
+    return () => {
+      window.removeEventListener("resize", reposition);
+      window.removeEventListener("scroll", reposition, true);
+    };
+  }, [isOpen]);
+
+  const editorPanel = editorPanelRef.current;
 
   return (
     <>
