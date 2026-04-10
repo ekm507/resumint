@@ -12,7 +12,6 @@ export function ListEditor({ block, update }: any) {
     updateBlock: updateChild,
     deleteBlock: deleteChild,
     moveBlock,
-    insertBlockAfter,
     setBlockType: setChildType,
   } = useBlockOps(items, setChildren);
   const { style = "ul" } = block.props || {};
@@ -58,7 +57,6 @@ export function ListEditor({ block, update }: any) {
               deleteBlock={deleteChild}
               moveUp={() => moveBlock(child.id, "up")}
               moveDown={() => moveBlock(child.id, "down")}
-              insertBlockAfter={insertBlockAfter}
               setBlockType={setChildType}
             />
           </div>

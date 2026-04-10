@@ -8,7 +8,6 @@ interface Props {
   setBlockType: (id: string, type: string) => void;
   moveUp: () => void;
   moveDown: () => void;
-  insertBlockAfter: (id: string, type: string) => void;
 }
 
 export default function BlockEditor({

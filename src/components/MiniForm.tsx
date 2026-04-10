@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { FormStructure, Block } from "../utils/types";
 import BlockEditor from "./BlockEditor";
-import { getBlock, getAllBlocks } from "../blocks/blockRegistry";
+import { getBlock } from "../blocks/blockRegistry";
 import { useBlockOps } from "../hooks/useBlockOps";
 import AddBlockMenu from "./AddBlockMenu";
 
