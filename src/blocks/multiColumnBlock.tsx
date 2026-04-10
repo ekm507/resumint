@@ -144,7 +144,7 @@ export function MultiColumnEditor({ block, update }: any) {
                       ...col.children,
                       {
                         id: crypto.randomUUID(),
-                        blockType: "text",
+                        blockType: "richtext",
                         props: { text: "" },
                       },
                     ],
