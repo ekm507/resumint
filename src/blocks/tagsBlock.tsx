@@ -1,65 +1,107 @@
-// src/blocks/tagsBlock.tsx
-import { registerBlock } from "./blockRegistry";
+import AdvancedOptions from "../components/AdvancedOptions";
 import type { Block } from "../utils/types";
+import { registerBlock } from "./blockRegistry";
 
 export function TagsEditor({ block, update }: any) {
-  const items: string[] = block.props?.items || [];
+  const {
+    items = [],
+    shape = "pill", // pill, rounded, square
+    size = "md", // sm, md, lg
+    variant = "filled", // filled, outline
+  } = block.props || {};
 
-  const setItems = (newItems: string[]) =>
+  const setProp = (k: string, v: any) =>
     update({
       ...block,
-      props: { ...(block.props || {}), items: newItems },
+      props: { ...(block.props || {}), [k]: v },
     });
 
-  const updateItem = (i: number, value: string) => {
+  const updateItem = (i: number, val: string) => {
     const copy = [...items];
-    copy[i] = value;
-    setItems(copy);
-  };
-
-  const deleteItem = (i: number) => {
-    const copy = items.filter((_, idx) => idx !== i);
-    setItems(copy);
-  };
-
-  const addItem = () => {
-    setItems([...(items || []), ""]);
+    copy[i] = val;
+    setProp("items", copy);
   };
 
   return (
     <div className="tags-block-editor">
-      <div className="tags-block-items">
-        {items.map((tag, i) => (
-          <div key={i} className="tags-block-item">
+      <div className="tags-list">
+        {items.map((tag: string, i: number) => (
+          <div key={i} className="tag-input-row">
             <input
-              className="tags-block-input"
               value={tag}
               onChange={(e) => updateItem(i, e.target.value)}
             />
             <button
-              className="tags-block-remove-button"
-              onClick={() => deleteItem(i)}
+              onClick={() =>
+                setProp(
+                  "items",
+                  items.filter((_: any, idx: number) => idx !== i),
+                )
+              }
             >
-              remove
+              ×
             </button>
           </div>
         ))}
+        <button onClick={() => setProp("items", [...items, ""])}>
+          + Add Tag
+        </button>
       </div>
 
-      <button className="tags-block-add-button" onClick={addItem}>
-        + add tag
-      </button>
+      <AdvancedOptions block={block} update={update}>
+        <div className="advanced-group">
+          <label>Shape</label>
+          <select
+            value={shape}
+            onChange={(e) => setProp("shape", e.target.value)}
+          >
+            <option value="pill">Pill</option>
+            <option value="rounded">Rounded</option>
+            <option value="square">Square</option>
+          </select>
+        </div>
+
+        <div className="advanced-group">
+          <label>Size</label>
+          <select
+            value={size}
+            onChange={(e) => setProp("size", e.target.value)}
+          >
+            <option value="sm">Small</option>
+            <option value="md">Medium</option>
+            <option value="lg">Large</option>
+          </select>
+        </div>
+
+        <div className="advanced-group">
+          <label>Style</label>
+          <select
+            value={variant}
+            onChange={(e) => setProp("variant", e.target.value)}
+          >
+            <option value="filled">Filled Background</option>
+            <option value="outline">Outline Only</option>
+          </select>
+        </div>
+      </AdvancedOptions>
     </div>
   );
 }
 
 export function TagsRender({ block }: any) {
-  const items: string[] = block.props?.items || [];
-
+  const {
+    items = [],
+    shape = "pill",
+    size = "md",
+    variant = "filled",
+  } = block.props || {};
   return (
-    <div className="tags-block">
-      {items.map((tag, i) => (
-        <span key={i} className="tags-block-tag">
+    <div className={`tags-block align-start`}>
+      {items.map((tag: string, i: number) => (
+        <span
+          key={i}
+          className={`tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant}`}
+        >
           {tag}
         </span>
       ))}
@@ -77,6 +119,9 @@ registerBlock({
       blockType: "tags",
       props: {
         items: [""],
+        shape: "pill",
+        size: "md",
+        variant: "filled",
       },
     };
   },
