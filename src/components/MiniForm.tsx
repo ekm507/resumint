@@ -57,7 +57,6 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
           {form.blocks.length === 0 ? (
             <div className="empty-block-state">
               <AddBlockMenu
-                buttonText="+ Add Block"
                 onSelect={(type) => {
                   addFirstBlock(type);
                 }}
@@ -77,7 +76,6 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
                   insertBlockAfter={insertBlockAfter}
                 />
                 <AddBlockMenu
-                  buttonText="+ Add Block"
                   onSelect={(type) => {
                     insertBlockAfter(block.id, type);
                   }}
