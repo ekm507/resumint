@@ -22,10 +22,15 @@ export function RichTextEditor({ block, update }: any) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: { levels: [1, 2, 3] },
+        // Enable levels 1 through 4
+        heading: { levels: [1, 2, 3, 4] },
+        // HorizontalRule is included in StarterKit
       }),
       Link.configure({
         openOnClick: false,
+        HTMLAttributes: {
+          class: "richtext-link",
+        },
       }),
     ],
     content,
@@ -39,59 +44,90 @@ export function RichTextEditor({ block, update }: any) {
   return (
     <div className="richtext-block-editor">
       {/* toolbar */}
-
       <div className="richtext-toolbar">
+        {/* Bold/Italic */}
         <button
-          className="richtext-button"
+          className={`richtext-button ${editor.isActive("bold") ? "is-active" : ""}`}
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
           B
         </button>
-
         <button
-          className="richtext-button"
+          className={`richtext-button ${editor.isActive("italic") ? "is-active" : ""}`}
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
           I
         </button>
 
+        <div className="richtext-divider-v" />
+
+        {/* Headings */}
         <button
-          className="richtext-button"
+          className={`richtext-button ${editor.isActive("heading", { level: 1 }) ? "is-active" : ""}`}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
         >
           H1
         </button>
-
         <button
-          className="richtext-button"
+          className={`richtext-button ${editor.isActive("heading", { level: 2 }) ? "is-active" : ""}`}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
         >
           H2
         </button>
-
         <button
-          className="richtext-button"
+          className={`richtext-button ${editor.isActive("heading", { level: 3 }) ? "is-active" : ""}`}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 3 }).run()
+          }
+        >
+          H3
+        </button>
+        <button
+          className={`richtext-button ${editor.isActive("heading", { level: 4 }) ? "is-active" : ""}`}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 4 }).run()
+          }
+        >
+          H4
+        </button>
+
+        <div className="richtext-divider-v" />
+
+        {/* Lists & HR */}
+        <button
+          className={`richtext-button ${editor.isActive("bulletList") ? "is-active" : ""}`}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
           • List
         </button>
-
         <button
-          className="richtext-button"
+          className={`richtext-button ${editor.isActive("orderedList") ? "is-active" : ""}`}
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
         >
           1. List
         </button>
-
         <button
           className="richtext-button"
+          onClick={() => editor.chain().focus().setHorizontalRule().run()}
+        >
+          — Line
+        </button>
+
+        <div className="richtext-divider-v" />
+
+        <button
+          className={`richtext-button ${editor.isActive("link") ? "is-active" : ""}`}
           onClick={() => {
-            const url = prompt("Enter URL");
-            if (!url) return;
+            const url = prompt("Enter URL", editor.getAttributes("link").href);
+            if (url === null) return;
+            if (url === "") {
+              editor.chain().focus().unsetLink().run();
+              return;
+            }
             editor.chain().focus().setLink({ href: url }).run();
           }}
         >
@@ -99,14 +135,12 @@ export function RichTextEditor({ block, update }: any) {
         </button>
       </div>
 
-      {/* editor */}
-
+      {/* editor surface */}
       <div className="richtext-editor-surface">
         <EditorContent editor={editor} />
       </div>
 
-      {/* controls */}
-
+      {/* Layout Controls */}
       <div className="richtext-controls">
         <select value={size} onChange={(e) => setProp("size", e.target.value)}>
           <option value="md">midsize</option>
@@ -134,9 +168,9 @@ export function RichTextEditor({ block, update }: any) {
 
 export function RichTextRender({ block }: any) {
   const { content, size = "md", align = "start" } = block.props || {};
-
   if (!content) return null;
 
+  // We re-use the same extensions to generate the HTML
   const html = generateHTML(content, [StarterKit, Link]);
 
   return (
@@ -147,26 +181,14 @@ export function RichTextRender({ block }: any) {
   );
 }
 
-/* =========================
-   REGISTER BLOCK
-========================= */
-
 registerBlock({
   type: "richtext",
   label: "Rich Text",
-
-  create(): Block {
-    return {
-      id: "",
-      blockType: "richtext",
-      props: {
-        content: null,
-        size: "md",
-        align: "start",
-      },
-    };
-  },
-
+  create: () => ({
+    id: "",
+    blockType: "richtext",
+    props: { content: null, size: "md", align: "start" },
+  }),
   Editor: RichTextEditor,
   Render: RichTextRender,
 });
