@@ -1,5 +1,4 @@
 import { registerBlock } from "./blockRegistry";
-import type { Block } from "../utils/types";
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
