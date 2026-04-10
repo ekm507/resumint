@@ -5,6 +5,7 @@ import AddBlockMenu from "../components/AddBlockMenu";
 import type { Block } from "../utils/types";
 import { useBlockOps } from "../hooks/useBlockOps";
 import { Fragment } from "react/jsx-runtime";
+import AdvancedOptions from "../components/AdvancedOptions";
 
 interface Column {
   id: string;
@@ -68,26 +69,28 @@ export function MultiColumnEditor({ block, update }: any) {
 
   return (
     <div className="multi-column-editor">
-      <div className="multi-column-toolbar">
-        <button onClick={addColumn}>+ column</button>
+      <AdvancedOptions block={block} update={update}>
+        <div className="multi-column-toolbar">
+          <button onClick={addColumn}>+ column</button>
 
-        <select
-          value={dividerStyle}
-          onChange={(e) => setProp("dividerStyle", e.target.value)}
-        >
-          <option value="solid">solid</option>
-          <option value="dashed">dashed</option>
-          <option value="dotted">dotted</option>
-        </select>
+          <select
+            value={dividerStyle}
+            onChange={(e) => setProp("dividerStyle", e.target.value)}
+          >
+            <option value="solid">solid</option>
+            <option value="dashed">dashed</option>
+            <option value="dotted">dotted</option>
+          </select>
 
-        <input
-          type="range"
-          min={0}
-          max={10}
-          value={dividerWidth}
-          onChange={(e) => setProp("dividerWidth", Number(e.target.value))}
-        />
-      </div>
+          <input
+            type="range"
+            min={0}
+            max={10}
+            value={dividerWidth}
+            onChange={(e) => setProp("dividerWidth", Number(e.target.value))}
+          />
+        </div>
+      </AdvancedOptions>
 
       <div className="multi-column-grid">
         {columns.map((col: Column, idx: number) => {
