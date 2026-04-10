@@ -218,6 +218,18 @@
     @apply text-justify;
 }
 
+.theme-modern .text-size-md {
+    @apply text-sm;
+}
+
+.theme-modern .text-size-lg {
+    @apply text-lg;
+}
+
+.theme-modern .text-size-xl {
+    @apply text-xl;
+}
+
 /* headings */
 
 .theme-modern .richtext-block h1 {
