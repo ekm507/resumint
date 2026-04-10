@@ -1,4 +1,3 @@
-import "./textBlock";
 import "./imageBlock";
 import "./dividerBlock";
 import "./multiColumnBlock";
