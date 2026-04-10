@@ -202,6 +202,22 @@
     @apply mb-1;
 }
 
+.theme-modern .text-align-start {
+    @apply text-start;
+}
+
+.theme-modern .text-align-center {
+    @apply text-center;
+}
+
+.theme-modern .text-align-end {
+    @apply text-end;
+}
+
+.theme-modern .text-align-justify {
+    @apply text-justify;
+}
+
 /* headings */
 
 .theme-modern .richtext-block h1 {
