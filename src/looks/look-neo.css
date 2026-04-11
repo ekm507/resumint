@@ -482,5 +482,5 @@
 }
 
 .look-neo .options-grid {
-    @apply flex flex-row flex-wrap;
+    @apply flex flex-row flex-wrap gap-3;
 }
