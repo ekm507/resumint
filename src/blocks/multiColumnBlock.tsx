@@ -6,6 +6,7 @@ import type { Block } from "../utils/types";
 import { useBlockOps } from "../hooks/useBlockOps";
 import { Fragment } from "react/jsx-runtime";
 import AdvancedOptions from "../components/AdvancedOptions";
+import ToggleButton from "../components/ToggleButton";
 
 interface Column {
   id: string;
@@ -73,14 +74,17 @@ export function MultiColumnEditor({ block, update }: any) {
         <div className="multi-column-toolbar">
           <button onClick={addColumn}>+ column</button>
 
-          <select
-            value={dividerStyle}
-            onChange={(e) => setProp("dividerStyle", e.target.value)}
-          >
-            <option value="solid">solid</option>
-            <option value="dashed">dashed</option>
-            <option value="dotted">dotted</option>
-          </select>
+          <div className="advanced-group">
+            <ToggleButton
+              value={dividerStyle}
+              onChange={(v) => setProp("dividerStyle", v)}
+              options={[
+                { value: "solid", label: "solid" },
+                { value: "dashed", label: "dashed" },
+                { value: "dotted", label: "dotted" },
+              ]}
+            />
+          </div>
 
           <input
             type="range"
