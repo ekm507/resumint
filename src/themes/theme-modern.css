@@ -215,10 +215,10 @@
 }
 
 .theme-modern .richtext-block ul {
-    @apply list-disc pl-5;
+    @apply list-disc ps-5;
 }
 .theme-modern .richtext-block ol {
-    @apply list-decimal pl-5;
+    @apply list-decimal ps-5;
 }
 
 .theme-modern .richtext-block li {
@@ -281,6 +281,14 @@
     border-color: var(--accent-400);
 }
 
+.theme-modern .layout-row {
+    @apply flex-row items-baseline;
+}
+
+.theme-modern .layout-column {
+    @apply flex-col items-start gap-0;
+}
+
 /* =========================
    KEY VALUE BLOCK
 ========================= */
@@ -289,12 +297,12 @@
     @apply flex flex-col;
 }
 
-.theme-modern .layout-row {
-    @apply flex-row items-baseline;
+.theme-modern .keyvalue-row {
+    @apply flex;
 }
 
-.theme-modern .layout-column {
-    @apply flex-col items-start gap-0;
+.theme-modern .keyvalue-block-key {
+    color: var(--accent-600);
 }
 
 .theme-modern .emphasize-none .keyvalue-block-key,
