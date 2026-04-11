@@ -4,7 +4,7 @@ import { registerBlock } from "./blockRegistry";
 
 export function TagsEditor({ block, update }: any) {
   const {
-    items = [],
+    tags = [],
     shape = "pill", // pill, rounded, square
     size = "md", // sm, md, lg
     variant = "filled", // filled, outline
@@ -17,15 +17,15 @@ export function TagsEditor({ block, update }: any) {
     });
 
   const updateItem = (i: number, val: string) => {
-    const copy = [...items];
+    const copy = [...tags];
     copy[i] = val;
-    setProp("items", copy);
+    setProp("tags", copy);
   };
 
   return (
     <div className="tags-block-editor">
       <div className="tags-list">
-        {items.map((tag: string, i: number) => (
+        {tags.map((tag: string, i: number) => (
           <div key={i} className="tag-input-row">
             <input
               value={tag}
@@ -35,8 +35,8 @@ export function TagsEditor({ block, update }: any) {
               className="item-remove-button"
               onClick={() =>
                 setProp(
-                  "items",
-                  items.filter((_: any, idx: number) => idx !== i),
+                  "tags",
+                  tags.filter((_: any, idx: number) => idx !== i),
                 )
               }
             >
@@ -44,7 +44,7 @@ export function TagsEditor({ block, update }: any) {
             </button>
           </div>
         ))}
-        <button onClick={() => setProp("items", [...items, ""])}>
+        <button onClick={() => setProp("tags", [...tags, ""])}>
           + Add Tag
         </button>
       </div>
@@ -91,14 +91,14 @@ export function TagsEditor({ block, update }: any) {
 
 export function TagsRender({ block }: any) {
   const {
-    items = [],
+    tags = [],
     shape = "pill",
     size = "md",
     variant = "filled",
   } = block.props || {};
   return (
     <div className={`tags-block align-start`}>
-      {items.map((tag: string, i: number) => (
+      {tags.map((tag: string, i: number) => (
         <span
           key={i}
           className={`tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant}`}
@@ -119,7 +119,7 @@ registerBlock({
       id: "",
       blockType: "tags",
       props: {
-        items: [""],
+        tags: [""],
         shape: "pill",
         size: "md",
         variant: "filled",
