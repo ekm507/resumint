@@ -97,6 +97,18 @@
     @apply flex flex-col gap-1;
 }
 
+.look-slate .image-editor-preview {
+    @apply w-24 h-24 border border-slate-300  overflow-hidden flex items-center justify-center bg-slate-50;
+}
+
+.look-slate .image-editor-preview img {
+    @apply max-w-full max-h-full object-cover block;
+}
+
+.look-slate .image-editor-preview span {
+    @apply text-xs text-gray-500 text-center p-2;
+}
+
 /* DIVIDER BLOCK */
 
 .look-slate .divider-block-editor {
@@ -446,4 +458,12 @@
 
 .look-slate .advanced-group label {
     @apply text-[11px] text-slate-300;
+}
+
+.look-slate .toggle-button {
+    @apply px-2 py-1 border border-gray-400 w-max hover:cursor-pointer hover:bg-blue-500;
+}
+
+.look-slate .options-grid {
+    @apply flex flex-row flex-wrap gap-3;
 }

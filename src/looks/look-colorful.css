@@ -80,6 +80,17 @@
            focus:ring-2 focus:ring-indigo-500;
 }
 
+.look-colorful .image-editor-preview {
+    @apply w-24 h-24 border border-indigo-300 rounded-xl overflow-hidden flex items-center justify-center bg-gray-50;
+}
+
+.look-colorful .image-editor-preview img {
+    @apply max-w-full max-h-full object-cover block;
+}
+
+.look-colorful .image-editor-preview span {
+    @apply text-xs text-gray-500 text-center p-2;
+}
 .look-colorful textarea.text-block-input {
     @apply resize-none py-2;
 }
@@ -412,4 +423,12 @@
 
 .look-colorful .advanced-group label {
     @apply text-xs text-indigo-600;
+}
+
+.look-colorful .toggle-button {
+    @apply p-2 rounded-xl border-2 border-indigo-400 w-max hover:cursor-pointer hover:bg-indigo-400;
+}
+
+.look-colorful .options-grid {
+    @apply flex flex-row flex-wrap gap-3;
 }

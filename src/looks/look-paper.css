@@ -123,6 +123,18 @@
     @apply flex flex-col gap-2;
 }
 
+.look-paper .image-editor-preview {
+    @apply w-24 h-24 border border-gray-300 rounded-lg overflow-hidden flex items-center justify-center bg-gray-50;
+}
+
+.look-paper .image-editor-preview img {
+    @apply max-w-full max-h-full object-cover block;
+}
+
+.look-paper .image-editor-preview span {
+    @apply text-xs text-gray-500 text-center p-2;
+}
+
 .look-paper .divider-block-editor {
     @apply flex gap-2;
 }
@@ -409,4 +421,12 @@
 
 .look-paper .advanced-group label {
     @apply text-xs text-slate-600;
+}
+
+.look-paper .toggle-button {
+    @apply p-2 rounded-xl border border-gray-400 w-max hover:cursor-pointer hover:bg-blue-400;
+}
+
+.look-paper .options-grid {
+    @apply flex flex-row flex-wrap gap-3;
 }
