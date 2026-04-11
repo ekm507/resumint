@@ -53,6 +53,24 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
     setForm({ background: next });
   };
 
+  const handleFile = async (file: File) => {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      const base64 = reader.result;
+      if (typeof base64 === "string") {
+        setForm({ icon: base64 });
+      }
+    };
+
+    reader.onerror = (error) => {
+      console.error("Error converting file to base64:", error);
+    };
+  };
+
   const current = form.background ?? "transparent";
 
   return (
@@ -67,6 +85,14 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
         <input
           value={form.title}
           onChange={(e) => setForm({ title: e.target.value })}
+        />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) handleFile(file);
+          }}
         />
         <button
           type="button"

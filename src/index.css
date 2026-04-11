@@ -79,3 +79,7 @@
         @apply border-0;
     }
 }
+
+.resume-section-header {
+    @apply flex gap-4 items-center;
+}

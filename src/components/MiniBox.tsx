@@ -17,7 +17,10 @@ export default function MiniBox({ form, dir = "auto" }: Prop) {
       dir={dir}
       style={{ backgroundColor: bg }}
     >
-      {form.title && <h1 className="resume-section-title">{form.title}</h1>}
+      <div className="resume-section-header">
+        {form.icon && <img className="resume-section-icon" src={form.icon} />}
+        {form.title && <h1 className="resume-section-title">{form.title}</h1>}
+      </div>
 
       <div className="resume-section-content">
         {form.blocks?.map((block) => (
