@@ -143,7 +143,6 @@
 .theme-ledger .resume-image {
     @apply object-cover border-4 shadow-sm;
     border-color: var(--accent-600);
-    border-radius: 1rem;
 }
 
 .theme-ledger .resume-item-image {
@@ -153,7 +152,6 @@
 .theme-ledger .resume-item-image img {
     @apply object-cover border shadow-sm;
     border-color: var(--accent-300);
-    border-radius: 0.75rem;
 }
 
 .theme-ledger .image-justify-start {

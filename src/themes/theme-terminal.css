@@ -101,7 +101,7 @@
 /* IMAGES */
 
 .theme-terminal .resume-image {
-    @apply rounded-full object-cover border;
+    @apply object-cover border;
     border-color: var(--accent-700);
 }
 
@@ -110,8 +110,18 @@
 }
 
 .theme-terminal .resume-item-image img {
-    @apply rounded-full object-cover border;
+    @apply object-cover border;
     border-color: var(--accent-700);
+}
+
+.theme-terminal .image-shape-solid {
+    border-radius: 0;
+}
+.theme-terminal .image-shape-rounded {
+    border-radius: 1rem;
+}
+.theme-terminal .image-shape-circle {
+    border-radius: 9999px;
 }
 
 /* RICH TEXT */

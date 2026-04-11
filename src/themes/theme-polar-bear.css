@@ -113,7 +113,7 @@
 /* IMAGES */
 
 .theme-polar-bear .resume-image {
-    @apply object-cover rounded-xl;
+    @apply object-cover;
 }
 
 .theme-polar-bear .resume-item-image {
@@ -121,7 +121,7 @@
 }
 
 .theme-polar-bear .resume-item-image img {
-    @apply object-cover rounded-xl;
+    @apply object-cover;
 }
 
 .theme-polar-bear .image-justify-start {
