@@ -1,4 +1,5 @@
 import AdvancedOptions from "../components/AdvancedOptions";
+import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
 import { useMemo, useState } from "react";
@@ -145,43 +146,11 @@ export function ImageEditor({ block, update }: any) {
         </div>
 
         {/* Thumbnail preview */}
-        <div
-          className="image-editor-preview"
-          style={{
-            width: 96,
-            height: 96,
-            border: "1px solid #ddd",
-            borderRadius: 8,
-            overflow: "hidden",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "#fafafa",
-          }}
-          title={srcLabel}
-        >
+        <div className="image-editor-preview" title={srcLabel}>
           {canPreview ? (
-            <img
-              src={src}
-              alt={alt || "image preview"}
-              style={{
-                maxWidth: "100%",
-                maxHeight: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-            />
+            <img src={src} alt={alt || "image preview"} />
           ) : (
-            <span
-              style={{
-                fontSize: 12,
-                color: "#888",
-                textAlign: "center",
-                padding: 8,
-              }}
-            >
-              No preview
-            </span>
+            <span>No preview</span>
           )}
         </div>
       </div>
@@ -204,23 +173,33 @@ export function ImageEditor({ block, update }: any) {
           />
         </div>
 
-        <select
-          value={align}
-          onChange={(e) => setProp("align", e.target.value)}
-        >
-          <option value="start">start</option>
-          <option value="center">center</option>
-          <option value="end">end</option>
-        </select>
+        <div className="options-grid">
+          <div className="advanced-group">
+            <label>align</label>
+            <ToggleButton
+              value={align}
+              onChange={(v) => setProp("align", v)}
+              options={[
+                { value: "start", label: "start" },
+                { value: "center", label: "center" },
+                { value: "end", label: "end" },
+              ]}
+            />
+          </div>
 
-        <select
-          value={shape}
-          onChange={(e) => setProp("shape", e.target.value)}
-        >
-          <option value="solid">solid</option>
-          <option value="rounded">rounded</option>
-          <option value="circle">circle</option>
-        </select>
+          <div className="advanced-group">
+            <label>shape</label>
+            <ToggleButton
+              value={shape}
+              onChange={(v) => setProp("shape", v)}
+              options={[
+                { value: "solid", label: "solid" },
+                { value: "rounded", label: "rounded" },
+                { value: "circle", label: "circle" },
+              ]}
+            />
+          </div>
+        </div>
       </AdvancedOptions>
     </div>
   );

@@ -95,6 +95,19 @@
 .look-neo .image-block-editor {
     @apply flex flex-col gap-2;
 }
+
+.look-neo .image-editor-preview {
+    @apply w-24 h-24 border border-gray-300 rounded-lg overflow-hidden flex items-center justify-center bg-gray-50;
+}
+
+.look-neo .image-editor-preview img {
+    @apply max-w-full max-h-full object-cover block;
+}
+
+.look-neo .image-editor-preview span {
+    @apply text-xs text-gray-500 text-center p-2;
+}
+
 /* DIVIDER BLOCK */
 
 .look-neo .divider-block-editor {
