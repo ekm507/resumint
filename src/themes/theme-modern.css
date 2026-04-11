@@ -13,10 +13,12 @@
     --accent-900: #1e3a8a;
 }
 
-/* ROOT */
+/* =========================
+   ROOT
+========================= */
 
 .theme-modern.resume {
-    @apply flex flex-col gap-6 p-6 bg-white text-sm min-w-[420px] text-gray-800;
+    @apply flex flex-col gap-6 p-6 bg-white text-sm text-gray-800 min-w-[420px];
 }
 
 .theme-modern .resume-page {
@@ -47,14 +49,76 @@
 }
 
 /* =========================
-   ITEMS (old renderer)
+   LAYOUT
 ========================= */
 
-.theme-modern .tags-block-tag {
-    @apply px-3 py-1 rounded-md text-xs border;
-    background: var(--accent-50);
-    color: var(--accent-700);
+.theme-modern .resume-columns {
+    @apply grid gap-6;
+    grid-template-columns: 2fr 1fr;
+}
+
+.theme-modern .resume-column,
+.theme-modern .column-left,
+.theme-modern .column-right {
+    @apply flex flex-col gap-4;
+}
+
+/* =========================
+   MULTI COLUMN BLOCK
+========================= */
+
+.theme-modern .resume-multi-column {
+    @apply grid gap-3 w-full items-start;
+}
+
+.theme-modern .resume-multi-column-content {
+    @apply flex flex-col gap-3 min-w-0 w-full wrap-break-word;
+}
+
+/* =========================
+   DIVIDERS
+========================= */
+
+.theme-modern .resume-vertical-divider {
+    @apply self-stretch;
     border-color: var(--accent-200);
+}
+
+.theme-modern .resume-divider-solid {
+    border-inline-start: 1px solid var(--accent-200);
+}
+
+.theme-modern .resume-divider-dashed {
+    border-inline-start: 1px dashed var(--accent-200);
+}
+
+.theme-modern .resume-divider-dotted {
+    border-inline-start: 1px dotted var(--accent-200);
+}
+
+.theme-modern .divider-block {
+    @apply w-full border-t;
+    border-color: var(--accent-200);
+}
+
+.theme-modern .divider-spacing-sm {
+    @apply my-2;
+}
+.theme-modern .divider-spacing-md {
+    @apply my-4;
+}
+.theme-modern .divider-spacing-lg {
+    @apply my-6;
+}
+
+.theme-modern .divider-style-solid {
+    border-top-style: solid;
+}
+.theme-modern .divider-style-dashed {
+    border-top-style: dashed;
+}
+.theme-modern .divider-style-dotted {
+    border-top-style: dotted;
 }
 
 /* =========================
@@ -66,137 +130,42 @@
     border-color: var(--accent-100);
 }
 
-.theme-modern .image-justify-center {
-    @apply justify-center;
+.theme-modern .resume-item-image {
+    @apply flex w-full;
+}
+
+.theme-modern .resume-item-image img {
+    @apply object-cover border shadow-sm;
+    border-color: var(--accent-200);
 }
 
 .theme-modern .image-justify-start {
     @apply justify-start;
 }
-
+.theme-modern .image-justify-center {
+    @apply justify-center;
+}
 .theme-modern .image-justify-end {
     @apply justify-end;
-}
-
-.theme-modern .resume-item-image img {
-    @apply object-cover border shadow-sm flex;
-    border-color: var(--accent-200);
 }
 
 .theme-modern .image-shape-solid {
     border-radius: 0;
 }
-
 .theme-modern .image-shape-rounded {
     border-radius: 1rem;
 }
-
 .theme-modern .image-shape-circle {
     border-radius: 9999px;
 }
 
 /* =========================
-   LAYOUT
-========================= */
-
-.theme-modern .resume-columns {
-    grid-template-columns: 2fr 1fr;
-    @apply grid gap-6;
-}
-
-.theme-modern .resume-column {
-    @apply flex flex-col gap-4;
-}
-
-.theme-modern .column-left {
-    @apply bg-white;
-}
-
-.theme-modern .column-right {
-    @apply bg-white;
-}
-
-.theme-modern .resume-vertical-divider {
-    @apply self-stretch;
-    border-color: var(--accent-200);
-}
-
-.theme-modern .resume-divider-solid {
-    border-left-style: solid;
-}
-
-.theme-modern .resume-divider-dashed {
-    border-left-style: dashed;
-}
-
-.theme-modern .resume-divider-dotted {
-    border-left-style: dotted;
-}
-
-.theme-modern .divider-spacing-sm {
-    @apply my-2;
-}
-
-.theme-modern .divider-spacing-md {
-    @apply my-4;
-}
-
-.theme-modern .divider-spacing-lg {
-    @apply my-6;
-}
-
-.theme-modern .divider-style-solid {
-    border-top-style: solid;
-}
-
-.theme-modern .divider-style-dashed {
-    border-top-style: dashed;
-}
-
-.theme-modern .divider-style-dotted {
-    border-top-style: dotted;
-}
-
-/* =====================================
-   MULTI COLUMN BLOCK (final)
-===================================== */
-
-.theme-modern .resume-multi-column {
-    @apply grid gap-3 w-full items-start;
-    /* column widths assigned by grid-template-columns inline */
-}
-
-.theme-modern .resume-multi-column-content {
-    @apply flex flex-col gap-3 min-w-0 w-full wrap-break-word;
-}
-/* Divider */
-
-/* Styles */
-
-.theme-modern .resume-divider-solid {
-    border-inline-start-style: solid;
-    border-inline-start-width: 1px;
-}
-
-.theme-modern .resume-divider-dashed {
-    border-inline-start-style: dashed;
-    border-inline-start-width: 1px;
-}
-
-.theme-modern .resume-divider-dotted {
-    border-inline-start-style: dotted;
-    border-inline-start-width: 1px;
-}
-
-/* =========================
-   RICH TEXT BLOCK
+   RICH TEXT
 ========================= */
 
 .theme-modern .richtext-block {
     @apply leading-relaxed;
 }
-
-/* paragraphs */
 
 .theme-modern .richtext-block p {
     @apply mb-1;
@@ -205,15 +174,12 @@
 .theme-modern .text-align-start {
     @apply text-start;
 }
-
 .theme-modern .text-align-center {
     @apply text-center;
 }
-
 .theme-modern .text-align-end {
     @apply text-end;
 }
-
 .theme-modern .text-align-justify {
     @apply text-justify;
 }
@@ -221,40 +187,36 @@
 .theme-modern .text-size-md {
     @apply text-sm;
 }
-
 .theme-modern .text-size-lg {
     @apply text-lg;
 }
-
 .theme-modern .text-size-xl {
     @apply text-xl;
 }
-
-/* headings */
 
 .theme-modern .richtext-block h1 {
     @apply text-2xl font-bold mt-4 mb-2;
     color: var(--accent-800);
 }
+
 .theme-modern .richtext-block h2 {
     @apply text-xl font-bold mt-4 mb-2;
     color: var(--accent-800);
 }
+
 .theme-modern .richtext-block h3 {
     @apply text-lg font-semibold mt-3 mb-1;
     color: var(--accent-700);
 }
+
 .theme-modern .richtext-block h4 {
     @apply text-base font-semibold mt-2 mb-1;
     color: var(--accent-700);
 }
 
-/* lists */
-
 .theme-modern .richtext-block ul {
     @apply list-disc pl-5;
 }
-
 .theme-modern .richtext-block ol {
     @apply list-decimal pl-5;
 }
@@ -263,74 +225,49 @@
     @apply leading-relaxed;
 }
 
-/* links */
-
 .theme-modern .richtext-block a {
     color: var(--accent-700);
     text-decoration: underline;
 }
 
 /* =========================
-   DIVIDER BLOCK
+   TAGS
 ========================= */
 
-.theme-modern .divider-block {
-    @apply w-full border-t;
-    border-color: var(--accent-200);
-}
-
-/* =========================
-   IMAGE BLOCK
-========================= */
-
-.theme-modern .resume-item-image {
-    @apply flex w-full;
-}
-
-/* =========================
-   TAGS BLOCK
-========================= */
-
+.theme-modern .tags-render-container,
 .theme-modern .tags-block {
     @apply flex flex-wrap gap-2;
 }
 
-.theme-modern .align-start {
-    @apply justify-start;
+.theme-modern .tag-item {
+    @apply inline-flex items-center font-medium border transition-all duration-200;
 }
 
-/* tag shapes */
+/* shapes */
 
 .theme-modern .tag-shape-pill {
-    border-radius: 9999px;
+    @apply rounded-full;
 }
-
 .theme-modern .tag-shape-rounded {
-    border-radius: 0.5rem;
+    @apply rounded-md;
 }
-
 .theme-modern .tag-shape-square {
-    border-radius: 0.125rem;
+    @apply rounded-none;
 }
 
-/* tag sizes */
+/* sizes */
 
 .theme-modern .tag-size-sm {
-    font-size: 0.65rem;
-    padding: 2px 6px;
+    @apply text-xs px-1.5 py-0.5;
 }
-
 .theme-modern .tag-size-md {
-    font-size: 0.75rem;
-    padding: 4px 10px;
+    @apply text-sm px-2 py-1;
 }
-
 .theme-modern .tag-size-lg {
-    font-size: 0.85rem;
-    padding: 6px 14px;
+    @apply text-base px-3 py-1.5;
 }
 
-/* tag variants */
+/* variants */
 
 .theme-modern .tag-variant-filled {
     background: var(--accent-50);
@@ -345,8 +282,12 @@
 }
 
 /* =========================
-   KEY VALUE BLOCK VARIANTS
+   KEY VALUE BLOCK
 ========================= */
+
+.theme-modern .keyvalue-block {
+    @apply flex flex-col;
+}
 
 .theme-modern .layout-row {
     @apply flex-row items-baseline;
@@ -354,10 +295,6 @@
 
 .theme-modern .layout-column {
     @apply flex-col items-start gap-0;
-}
-
-.theme-modern .keyvalue-block {
-    @apply flex;
 }
 
 .theme-modern .emphasize-none .keyvalue-block-key,
@@ -375,66 +312,4 @@
 
 .theme-modern .keyvalue-block-separator {
     @apply px-2;
-}
-/* =========================
-   COLUMN LAYOUT
-========================= */
-
-.theme-modern .column-left {
-    @apply flex flex-col gap-4;
-}
-
-.theme-modern .column-right {
-    @apply flex flex-col gap-4;
-}
-
-/* =========================================================
-   TAGS RENDER
-========================================================= */
-
-.theme-modern .tags-render-container {
-    @apply flex flex-wrap gap-2;
-}
-
-.theme-modern .tag-item {
-    @apply inline-flex items-center font-medium
-           border transition-all duration-200;
-}
-
-/* shapes */
-
-.theme-modern .tag-shape-pill {
-    @apply rounded-full;
-}
-
-.theme-modern .tag-shape-rounded {
-    @apply rounded-md;
-}
-
-.theme-modern .tag-shape-square {
-    @apply rounded-none;
-}
-
-/* sizes */
-
-.theme-modern .tag-size-sm {
-    @apply text-xs px-1.5 py-0.5;
-}
-
-.theme-modern .tag-size-md {
-    @apply text-sm px-2 py-1;
-}
-
-.theme-modern .tag-size-lg {
-    @apply text-base px-3 py-1.5;
-}
-
-/* variants */
-
-.theme-modern .tag-variant-filled {
-    @apply bg-cyan-600 text-white border-cyan-600 shadow-md;
-}
-
-.theme-modern .tag-variant-outline {
-    @apply bg-transparent text-cyan-400 border-cyan-400;
 }
