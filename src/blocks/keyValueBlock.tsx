@@ -1,4 +1,5 @@
 import AdvancedOptions from "../components/AdvancedOptions";
+import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
 
@@ -65,14 +66,15 @@ export function KeyValueEditor({ block, update }: any) {
         <AdvancedOptions block={block} update={update}>
           <div className="advanced-group">
             <label>Emphasis</label>
-            <select
+            <ToggleButton
               value={emphasis}
-              onChange={(e) => setProp("emphasis", e.target.value)}
-            >
-              <option value="none">Normal</option>
-              <option value="key">Bold Key</option>
-              <option value="value">Bold Value</option>
-            </select>
+              onChange={(v) => setProp("emphasis", v)}
+              options={[
+                { value: "none", label: "Normal" },
+                { value: "key", label: "Bold Key" },
+                { value: "value", label: "Bold Value" },
+              ]}
+            />
           </div>
         </AdvancedOptions>
       </div>
