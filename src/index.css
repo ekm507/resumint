@@ -14,7 +14,7 @@
 /* EDITOR */
 
 .editor-panel {
-    @apply flex flex-col gap-3 overflow-y-auto;
+    @apply flex flex-col gap-3 overflow-y-auto max-w-[760px];
     min-width: 280px;
 }
 
