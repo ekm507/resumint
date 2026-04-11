@@ -1,10 +1,41 @@
 import { registerBlock } from "./blockRegistry";
 import AdvancedOptions from "../components/AdvancedOptions";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import { generateHTML } from "@tiptap/html";
+
+import {
+  Bold,
+  Italic,
+  Heading1,
+  Heading2,
+  Heading3,
+  Heading4,
+  List,
+  ListOrdered,
+  Minus,
+  Link as LinkIcon,
+} from "lucide-react";
+
+/* =========================
+   TOOLBAR BUTTON
+========================= */
+
+function ToolbarButton({ active, onClick, children }: any) {
+  return (
+    <button
+      className={`richtext-button ${active ? "is-active" : ""}`}
+      onMouseDown={(e) => {
+        e.preventDefault();
+        onClick();
+      }}
+    >
+      {children}
+    </button>
+  );
+}
 
 /* =========================
    EDITOR
@@ -22,9 +53,7 @@ export function RichTextEditor({ block, update }: any) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        // Enable levels 1 through 4
         heading: { levels: [1, 2, 3, 4] },
-        // HorizontalRule is included in StarterKit
       }),
       Link.configure({
         openOnClick: false,
@@ -39,100 +68,121 @@ export function RichTextEditor({ block, update }: any) {
     },
   });
 
+  const state = useEditorState({
+    editor,
+    selector: ({ editor }) => ({
+      bold: editor.isActive("bold"),
+      italic: editor.isActive("italic"),
+      h1: editor.isActive("heading", { level: 1 }),
+      h2: editor.isActive("heading", { level: 2 }),
+      h3: editor.isActive("heading", { level: 3 }),
+      h4: editor.isActive("heading", { level: 4 }),
+      bullet: editor.isActive("bulletList"),
+      ordered: editor.isActive("orderedList"),
+      link: editor.isActive("link"),
+    }),
+  });
+
   if (!editor) return null;
 
   return (
     <div className="richtext-block-editor">
       {/* toolbar */}
       <div className="richtext-toolbar">
-        {/* Bold/Italic */}
-        <button
-          className={`richtext-button ${editor.isActive("bold") ? "is-active" : ""}`}
+        <ToolbarButton
+          active={state.bold}
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
-          B
-        </button>
-        <button
-          className={`richtext-button ${editor.isActive("italic") ? "is-active" : ""}`}
+          <Bold size={14} />
+        </ToolbarButton>
+
+        <ToolbarButton
+          active={state.italic}
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
-          I
-        </button>
+          <Italic size={14} />
+        </ToolbarButton>
 
         <div className="richtext-divider-v" />
 
-        {/* Headings */}
-        <button
-          className={`richtext-button ${editor.isActive("heading", { level: 1 }) ? "is-active" : ""}`}
+        <ToolbarButton
+          active={state.h1}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
         >
-          H1
-        </button>
-        <button
-          className={`richtext-button ${editor.isActive("heading", { level: 2 }) ? "is-active" : ""}`}
+          <Heading1 size={14} />
+        </ToolbarButton>
+
+        <ToolbarButton
+          active={state.h2}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
         >
-          H2
-        </button>
-        <button
-          className={`richtext-button ${editor.isActive("heading", { level: 3 }) ? "is-active" : ""}`}
+          <Heading2 size={14} />
+        </ToolbarButton>
+
+        <ToolbarButton
+          active={state.h3}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
         >
-          H3
-        </button>
-        <button
-          className={`richtext-button ${editor.isActive("heading", { level: 4 }) ? "is-active" : ""}`}
+          <Heading3 size={14} />
+        </ToolbarButton>
+
+        <ToolbarButton
+          active={state.h4}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
         >
-          H4
-        </button>
+          <Heading4 size={14} />
+        </ToolbarButton>
 
         <div className="richtext-divider-v" />
 
-        {/* Lists & HR */}
-        <button
-          className={`richtext-button ${editor.isActive("bulletList") ? "is-active" : ""}`}
+        <ToolbarButton
+          active={state.bullet}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
         >
-          • List
-        </button>
-        <button
-          className={`richtext-button ${editor.isActive("orderedList") ? "is-active" : ""}`}
+          <List size={14} />
+        </ToolbarButton>
+
+        <ToolbarButton
+          active={state.ordered}
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
         >
-          1. List
-        </button>
-        <button
-          className="richtext-button"
+          <ListOrdered size={14} />
+        </ToolbarButton>
+
+        <ToolbarButton
+          active={false}
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
         >
-          — Line
-        </button>
+          <Minus size={14} />
+        </ToolbarButton>
 
         <div className="richtext-divider-v" />
 
-        <button
-          className={`richtext-button ${editor.isActive("link") ? "is-active" : ""}`}
+        <ToolbarButton
+          active={state.link}
           onClick={() => {
             const url = prompt("Enter URL", editor.getAttributes("link").href);
+
             if (url === null) return;
+
             if (url === "") {
               editor.chain().focus().unsetLink().run();
               return;
             }
+
             editor.chain().focus().setLink({ href: url }).run();
           }}
         >
-          Link
-        </button>
+          <LinkIcon size={14} />
+        </ToolbarButton>
       </div>
 
       {/* editor surface */}
@@ -141,7 +191,6 @@ export function RichTextEditor({ block, update }: any) {
       </div>
 
       {/* Layout Controls */}
-
       <div className="richtext-controls">
         <AdvancedOptions block={block} update={update}>
           <select
@@ -176,7 +225,6 @@ export function RichTextRender({ block }: any) {
   const { content, size = "md", align = "start" } = block.props || {};
   if (!content) return null;
 
-  // We re-use the same extensions to generate the HTML
   const html = generateHTML(content, [StarterKit, Link]);
 
   return (
@@ -186,6 +234,10 @@ export function RichTextRender({ block }: any) {
     />
   );
 }
+
+/* =========================
+   BLOCK REGISTRATION
+========================= */
 
 registerBlock({
   type: "richtext",
