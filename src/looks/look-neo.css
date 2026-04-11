@@ -476,3 +476,7 @@
 .look-neo .advanced-group label {
     @apply text-xs text-slate-300;
 }
+
+.look-neo .toggle-button {
+    @apply p-2 rounded-xl bg-slate-600 border border-slate-900 w-max hover:cursor-pointer;
+}
