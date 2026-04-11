@@ -34,12 +34,11 @@
 }
 
 .theme-modern .resume-section {
-    @apply flex flex-col gap-3 p-4 rounded-xl border bg-white shadow-sm;
-    border-color: var(--accent-100);
+    @apply flex flex-col gap-3 p-4 rounded-xl  bg-white shadow-sm;
 }
 
 .theme-modern .resume-section-title {
-    @apply text-sm font-semibold pb-1 border-b;
+    @apply text-sm font-semibold border py-1 px-4 rounded-xl w-max;
     color: var(--accent-800);
     border-color: var(--accent-200);
 }
@@ -276,6 +275,7 @@
 }
 
 .theme-modern .tag-variant-outline {
+    @apply border border-dashed;
     background: transparent;
     color: var(--accent-700);
     border-color: var(--accent-400);
