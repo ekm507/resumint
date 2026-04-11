@@ -51,38 +51,45 @@ export function TagsEditor({ block, update }: any) {
       </div>
 
       <AdvancedOptions block={block} update={update}>
-        <div className="advanced-group">
-          <label>Shape</label>
-          <ToggleButton
-            value={shape}
-            onChange={(v) => setProp("shape", v)}
-            options={[
-              { value: "pill", label: "Pill" },
-              { value: "rounded", label: "Rounded" },
-              { value: "square", label: "Square" },
-            ]}
-          />
-          <label>Size</label>
-          <ToggleButton
-            value={size}
-            onChange={(v) => setProp("size", v)}
-            options={[
-              { value: "sm", label: "Small" },
-              { value: "md", label: "Medium" },
-              { value: "lg", label: "Large" },
-            ]}
-          />
-        </div>
-        <label>Style</label>
+        <div className="options-grid">
+          <div className="advanced-group">
+            <label>Shape</label>
+            <ToggleButton
+              value={shape}
+              onChange={(v) => setProp("shape", v)}
+              options={[
+                { value: "pill", label: "Pill" },
+                { value: "rounded", label: "Rounded" },
+                { value: "square", label: "Square" },
+              ]}
+            />
+          </div>
+          <div className="advanced-group">
+            <label>Size</label>
+            <ToggleButton
+              value={size}
+              onChange={(v) => setProp("size", v)}
+              options={[
+                { value: "sm", label: "Small" },
+                { value: "md", label: "Medium" },
+                { value: "lg", label: "Large" },
+              ]}
+            />
+          </div>
 
-        <ToggleButton
-          value={variant}
-          onChange={(v) => setProp("variant", v)}
-          options={[
-            { value: "filled", label: "Filled Background" },
-            { value: "outline", label: "Outline Only" },
-          ]}
-        />
+          <div className="advanced-group">
+            <label>Style</label>
+
+            <ToggleButton
+              value={variant}
+              onChange={(v) => setProp("variant", v)}
+              options={[
+                { value: "filled", label: "Filled Background" },
+                { value: "outline", label: "Outline Only" },
+              ]}
+            />
+          </div>
+        </div>
       </AdvancedOptions>
     </div>
   );

@@ -480,3 +480,7 @@
 .look-neo .toggle-button {
     @apply p-2 rounded-xl bg-slate-600 border border-slate-900 w-max hover:cursor-pointer;
 }
+
+.look-neo .options-grid {
+    @apply flex flex-row flex-wrap;
+}
