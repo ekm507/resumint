@@ -18,15 +18,17 @@ import {
   Minus,
   Link as LinkIcon,
 } from "lucide-react";
+import Heading from "@tiptap/extension-link";
 
 /* =========================
    TOOLBAR BUTTON
 ========================= */
 
-function ToolbarButton({ active, onClick, children }: any) {
+function ToolbarButton({ active, onClick, title, children }: any) {
   return (
     <button
       className={`richtext-button ${active ? "is-active" : ""}`}
+      title={title}
       onMouseDown={(e) => {
         e.preventDefault();
         onClick();
@@ -54,6 +56,17 @@ export function RichTextEditor({ block, update }: any) {
     extensions: [
       StarterKit.configure({
         heading: { levels: [1, 2, 3, 4] },
+      }),
+      Heading.extend({
+        addKeyboardShortcuts() {
+          return {
+            "Ctrl-1": () => this.editor.commands.toggleHeading({ level: 1 }),
+            "Ctrl-2": () => this.editor.commands.toggleHeading({ level: 2 }),
+            "Ctrl-3": () => this.editor.commands.toggleHeading({ level: 3 }),
+            "Ctrl-4": () => this.editor.commands.toggleHeading({ level: 4 }),
+            "Ctrl-0": () => this.editor.commands.setParagraph(),
+          };
+        },
       }),
       Link.configure({
         openOnClick: false,
@@ -91,6 +104,7 @@ export function RichTextEditor({ block, update }: any) {
       <div className="richtext-toolbar">
         <ToolbarButton
           active={state.bold}
+          title="Bold (Ctrl+B)"
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
           <Bold size={14} />
@@ -98,6 +112,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.italic}
+          title="Italic (Ctrl+I)"
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
           <Italic size={14} />
@@ -107,6 +122,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.h1}
+          title="Heading 1 (Ctrl+1)"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
@@ -116,6 +132,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.h2}
+          title="Heading 2 (Ctrl+2)"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
@@ -125,6 +142,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.h3}
+          title="Heading 3 (Ctrl+3)"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
@@ -134,6 +152,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.h4}
+          title="Heading 4 (Ctrl+4)"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
