@@ -1,6 +1,7 @@
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
 import AdvancedOptions from "../components/AdvancedOptions";
+import ToggleButton from "../components/ToggleButton";
 
 export function DividerEditor({ block, update }: any) {
   const { style = "solid", spacing = "md" } = block.props || {};
@@ -13,23 +14,33 @@ export function DividerEditor({ block, update }: any) {
   return (
     <div className="divider-block-editor">
       <AdvancedOptions block={block} update={update}>
-        <select
-          value={style}
-          onChange={(e) => setProp("style", e.target.value)}
-        >
-          <option value="solid">solid</option>
-          <option value="dashed">dashed</option>
-          <option value="dotted">dotted</option>
-        </select>
+        <div className="options-grid">
+          <div className="advanced-group">
+            <label>style</label>
+            <ToggleButton
+              value={style}
+              onChange={(v) => setProp("style", v)}
+              options={[
+                { value: "solid", label: "solid" },
+                { value: "dashed", label: "dashed" },
+                { value: "dotted", label: "dotted" },
+              ]}
+            />
+          </div>
 
-        <select
-          value={spacing}
-          onChange={(e) => setProp("spacing", e.target.value)}
-        >
-          <option value="sm">small</option>
-          <option value="md">medium</option>
-          <option value="lg">large</option>
-        </select>
+          <div className="advanced-group">
+            <label>spacing</label>
+            <ToggleButton
+              value={spacing}
+              onChange={(v) => setProp("spacing", v)}
+              options={[
+                { value: "sm", label: "small" },
+                { value: "md", label: "medium" },
+                { value: "lg", label: "large" },
+              ]}
+            />
+          </div>
+        </div>
       </AdvancedOptions>
     </div>
   );
