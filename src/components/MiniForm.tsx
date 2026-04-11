@@ -55,11 +55,6 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
 
   const current = form.background ?? "transparent";
 
-  const bg =
-    current === "transparent"
-      ? "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 8px 8px"
-      : `var(--${current})`;
-
   return (
     <div className="editor-form">
       <div className="editor-form-header">

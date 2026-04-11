@@ -53,11 +53,6 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
     });
   }
 
-  function openMenu() {
-    calculatePosition();
-    setIsOpen(true);
-  }
-
   function toggleMenu() {
     const button = buttonRef.current;
     const editorPanel = document.getElementById("editor-panel");
