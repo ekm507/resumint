@@ -19,6 +19,7 @@ import {
   Link as LinkIcon,
 } from "lucide-react";
 import Heading from "@tiptap/extension-link";
+import ToggleButton from "../components/ToggleButton";
 
 /* =========================
    TOOLBAR BUTTON
@@ -212,24 +213,34 @@ export function RichTextEditor({ block, update }: any) {
       {/* Layout Controls */}
       <div className="richtext-controls">
         <AdvancedOptions block={block} update={update}>
-          <select
-            value={size}
-            onChange={(e) => setProp("size", e.target.value)}
-          >
-            <option value="md">midsize</option>
-            <option value="lg">big</option>
-            <option value="xl">bigger</option>
-          </select>
+          <div className="options-grid">
+            <div className="advanced-group">
+              <label>size</label>
+              <ToggleButton
+                value={size}
+                onChange={(v) => setProp("size", v)}
+                options={[
+                  { value: "md", label: "midsize" },
+                  { value: "lg", label: "big" },
+                  { value: "xl", label: "bigger" },
+                ]}
+              />
+            </div>
 
-          <select
-            value={align}
-            onChange={(e) => setProp("align", e.target.value)}
-          >
-            <option value="start">start</option>
-            <option value="center">center</option>
-            <option value="end">end</option>
-            <option value="justify">justify</option>
-          </select>
+            <div className="advanced-group">
+              <label>align</label>
+              <ToggleButton
+                value={align}
+                onChange={(v) => setProp("align", v)}
+                options={[
+                  { value: "start", label: "start" },
+                  { value: "center", label: "center" },
+                  { value: "end", label: "end" },
+                  { value: "justify", label: "justify" },
+                ]}
+              />
+            </div>
+          </div>
         </AdvancedOptions>
       </div>
     </div>
