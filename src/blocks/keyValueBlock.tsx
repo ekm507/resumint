@@ -34,24 +34,34 @@ export function KeyValueEditor({ block, update }: any) {
         {items.map((item: any, i: number) => (
           <div key={i} className="keyvalue-row">
             <input
+              className="keyvalue-block-key-input"
               placeholder="key"
               value={item.key}
               onChange={(e) => updateItem(i, "key", e.target.value)}
             />
 
-            <span className="separator">:</span>
+            <span className="keyvalue-block-separator">:</span>
 
             <input
+              className="keyvalue-block-value-input"
               placeholder="value"
               value={item.value}
               onChange={(e) => updateItem(i, "value", e.target.value)}
             />
 
-            <button onClick={() => removeItem(i)}>×</button>
+            <button
+              className="keyvalue-remove-button"
+              onClick={() => removeItem(i)}
+            >
+              ×
+            </button>
           </div>
         ))}
 
-        <button onClick={addItem}>+ Add Row</button>
+        <button className="keyvalue-add-button" onClick={addItem}>
+          + Add Row
+        </button>
+
         <AdvancedOptions block={block} update={update}>
           <div className="advanced-group">
             <label>Emphasis</label>

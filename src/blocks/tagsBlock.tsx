@@ -32,6 +32,7 @@ export function TagsEditor({ block, update }: any) {
               onChange={(e) => updateItem(i, e.target.value)}
             />
             <button
+              className="item-remove-button"
               onClick={() =>
                 setProp(
                   "items",
