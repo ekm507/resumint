@@ -41,7 +41,7 @@
 .look-neo .editor-panel {
     @apply flex flex-col gap-3 bg-slate-800/50 backdrop-blur-xl
            border border-slate-700/60 rounded-2xl p-3 shadow-xl
-           min-w-[280px] overflow-y-auto;
+           min-w-[280px] max-w-[760px] overflow-y-auto;
 }
 
 .look-neo .editor-add-button {
