@@ -50,7 +50,7 @@ export function KeyValueEditor({ block, update }: any) {
             />
 
             <button
-              className="keyvalue-remove-button"
+              className="item-remove-button"
               onClick={() => removeItem(i)}
             >
               ×
