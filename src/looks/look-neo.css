@@ -177,10 +177,6 @@
     @apply flex flex-col gap-2;
 }
 
-.look-neo .keyvalue-row {
-    @apply flex items-center gap-2 outline-none;
-}
-
 .look-neo .keyvalue-block-separator {
     @apply text-slate-400;
 }
