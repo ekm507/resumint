@@ -114,6 +114,16 @@
     border-color: var(--accent-700);
 }
 
+.theme-terminal .image-justify-start {
+    @apply justify-start;
+}
+.theme-terminal .image-justify-center {
+    @apply justify-center;
+}
+.theme-terminal .image-justify-end {
+    @apply justify-end;
+}
+
 .theme-terminal .image-shape-solid {
     border-radius: 0;
 }
