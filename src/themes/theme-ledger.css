@@ -13,17 +13,21 @@
     --accent-900: #14532d;
 }
 
-/* ROOT */
+/* =========================
+   ROOT
+========================= */
 
 .theme-ledger.resume {
-    @apply flex flex-col gap-8 p-8 bg-white text-sm min-w-[420px] text-gray-900;
+    @apply flex flex-col gap-8 p-8 bg-white text-sm text-gray-900 min-w-[420px];
 }
 
 .theme-ledger .resume-page {
     @apply bg-white;
 }
 
-/* SECTIONS */
+/* =========================
+   SECTIONS
+========================= */
 
 .theme-ledger .resume-section-wrapper {
     @apply w-full;
@@ -34,26 +38,23 @@
     border-top: 4px solid var(--accent-800);
 }
 
-/* If title is empty, remove the line and the padding */
 .theme-ledger .resume-section:has(.resume-section-title:empty) {
     border-top-width: 0;
     @apply pt-0;
 }
 
-/* The Title sitting ON the line */
 .theme-ledger .resume-section-title {
     @apply text-base font-bold px-2;
     color: #111827;
     position: absolute;
     top: 0;
     inset-inline-start: 1rem;
-    transform: translateY(-50%); /* Centers the text on the border */
-    background-color: white; /* Cuts the line */
+    transform: translateY(-50%);
+    background-color: white;
     z-index: 10;
     line-height: 1;
 }
 
-/* Completely hide element if title is empty string */
 .theme-ledger .resume-section-title:empty {
     display: none;
 }
@@ -62,204 +63,59 @@
     @apply flex flex-col gap-2;
 }
 
-/* ITEMS */
-
-.theme-ledger .resume-item {
-    @apply flex gap-3 items-start;
-}
-
-.theme-ledger .resume-item-name {
-    @apply text-xs uppercase tracking-wide text-gray-500 min-w-[100px];
-}
-
-.theme-ledger .resume-item-value {
-    @apply flex flex-wrap gap-2;
-}
-
-.theme-ledger .resume-item-string {
-    color: #111827;
-}
-
-.theme-ledger .resume-item-number {
-    color: var(--accent-600);
-}
-
-.theme-ledger .resume-item-array {
-    @apply flex flex-wrap gap-2;
-}
-
-.theme-ledger .resume-array-item {
-    @apply text-xs;
-    border-bottom: 2px solid var(--accent-500);
-    color: #374151;
-}
-
-/* TAGS */
-
-.theme-ledger .tags-block {
-    @apply flex flex-wrap gap-2;
-}
-
-.theme-ledger .tags-block-tag {
-    @apply px-3 py-1 rounded-md text-xs border;
-    background: var(--accent-50);
-    color: var(--accent-700);
-    border-color: var(--accent-200);
-}
-
-/* TEXT */
-
-.theme-ledger .text-block {
-    white-space: pre-line;
-    line-height: 1.6;
-}
-
-.theme-ledger .text-size-sm {
-    font-size: 0.85rem;
-}
-.theme-ledger .text-size-md {
-    font-size: 0.95rem;
-}
-.theme-ledger .text-size-lg {
-    font-size: 1.05rem;
-    font-weight: 500;
-}
-.theme-ledger .text-size-xl {
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-.theme-ledger .text-align-left {
-    text-align: left;
-}
-.theme-ledger .text-align-center {
-    text-align: center;
-}
-.theme-ledger .text-align-right {
-    text-align: right;
-}
-.theme-ledger .text-align-justify {
-    text-align: justify;
-}
-
-/* HEADINGS */
-
-.theme-ledger .heading-block {
-    font-weight: 600;
-    margin-top: 6px;
-    margin-bottom: 2px;
-    color: var(--accent-800);
-}
-
-.theme-ledger .heading-level-1 {
-    font-size: 1.6rem;
-}
-.theme-ledger .heading-level-2 {
-    font-size: 1.35rem;
-}
-.theme-ledger .heading-level-3 {
-    font-size: 1.15rem;
-}
-.theme-ledger .heading-level-4 {
-    font-size: 1rem;
-}
-
-/* LISTS */
-
-.theme-ledger .list-block {
-    padding-left: 20px;
-}
-.theme-ledger .list-style-bullet {
-    list-style-type: disc;
-}
-.theme-ledger .list-style-numbered {
-    list-style-type: decimal;
-}
-
-.theme-ledger .list-style-plain {
-    list-style: none;
-    padding-left: 0;
-}
-
-.theme-ledger .list-block-render-item {
-    margin-bottom: 2px;
-    line-height: 1.5;
-}
-
-/* IMAGES */
-
-.theme-ledger .resume-image {
-    @apply object-cover;
-    border-radius: 1rem;
-    border: 4px solid var(--accent-600);
-}
-
-.theme-ledger .resume-item-image img {
-    @apply object-cover;
-    border-radius: 1rem;
-    border: 3px solid var(--accent-600);
-}
-
-/* Image Alignment */
-.theme-ledger .image-justify-center {
-    @apply justify-center;
-}
-.theme-ledger .image-justify-start {
-    @apply justify-start;
-}
-.theme-ledger .image-justify-end {
-    @apply justify-end;
-}
-
-/* Image Shapes */
-.theme-ledger .image-shape-solid {
-    border-radius: 0;
-}
-.theme-ledger .image-shape-rounded {
-    border-radius: 1rem;
-}
-.theme-ledger .image-shape-circle {
-    border-radius: 9999px;
-}
-
-/* LAYOUT */
+/* =========================
+   LAYOUT
+========================= */
 
 .theme-ledger .resume-columns {
-    grid-template-columns: 2fr 1fr;
     @apply grid gap-6;
+    grid-template-columns: 2fr 1fr;
 }
 
-.theme-ledger .resume-column {
+.theme-ledger .resume-column,
+.theme-ledger .column-left,
+.theme-ledger .column-right {
     @apply flex flex-col gap-6;
 }
 
-.theme-ledger .column-left {
-    @apply bg-white;
-}
-.theme-ledger .column-right {
-    @apply bg-white;
+/* =========================
+   MULTI COLUMN BLOCK
+========================= */
+
+.theme-ledger .resume-multi-column {
+    @apply grid gap-3 w-full items-start;
 }
 
-.theme-ledger .resume-vertical-split {
-    @apply gap-6 items-stretch;
+.theme-ledger .resume-multi-column-content {
+    @apply flex flex-col gap-3 min-w-0 w-full wrap-break-word;
 }
+
+/* =========================
+   DIVIDERS
+========================= */
 
 .theme-ledger .resume-vertical-divider {
     @apply self-stretch;
-    border-left-color: var(--accent-200);
+    border-color: var(--accent-200);
 }
 
 .theme-ledger .resume-divider-solid {
-    border-left-style: solid;
-}
-.theme-ledger .resume-divider-dashed {
-    border-left-style: dashed;
-}
-.theme-ledger .resume-divider-dotted {
-    border-left-style: dotted;
+    border-inline-start: 1px solid var(--accent-200);
 }
 
-/* Divider Spacing */
+.theme-ledger .resume-divider-dashed {
+    border-inline-start: 1px dashed var(--accent-200);
+}
+
+.theme-ledger .resume-divider-dotted {
+    border-inline-start: 1px dotted var(--accent-200);
+}
+
+.theme-ledger .divider-block {
+    @apply w-full border-t;
+    border-color: var(--accent-200);
+}
+
 .theme-ledger .divider-spacing-sm {
     @apply my-2;
 }
@@ -270,7 +126,6 @@
     @apply my-6;
 }
 
-/* Horizontal Divider Styles */
 .theme-ledger .divider-style-solid {
     border-top-style: solid;
 }
@@ -281,22 +136,199 @@
     border-top-style: dotted;
 }
 
-/* KEY VALUE */
+/* =========================
+   IMAGES
+========================= */
 
-.theme-ledger .keyvalue-block {
-    @apply flex flex-row items-baseline gap-1;
+.theme-ledger .resume-image {
+    @apply object-cover border-4 shadow-sm;
+    border-color: var(--accent-600);
+    border-radius: 1rem;
 }
 
-.theme-ledger .keyvalue-block-key {
-    @apply font-medium;
+.theme-ledger .resume-item-image {
+    @apply flex w-full;
+}
+
+.theme-ledger .resume-item-image img {
+    @apply object-cover border shadow-sm;
+    border-color: var(--accent-300);
+    border-radius: 0.75rem;
+}
+
+.theme-ledger .image-justify-start {
+    @apply justify-start;
+}
+.theme-ledger .image-justify-center {
+    @apply justify-center;
+}
+.theme-ledger .image-justify-end {
+    @apply justify-end;
+}
+
+.theme-ledger .image-shape-solid {
+    border-radius: 0;
+}
+.theme-ledger .image-shape-rounded {
+    border-radius: 1rem;
+}
+.theme-ledger .image-shape-circle {
+    border-radius: 9999px;
+}
+
+/* =========================
+   RICH TEXT
+========================= */
+
+.theme-ledger .richtext-block {
+    @apply leading-relaxed;
+}
+
+.theme-ledger .richtext-block p {
+    @apply mb-1;
+}
+
+.theme-ledger .text-align-start {
+    @apply text-start;
+}
+.theme-ledger .text-align-center {
+    @apply text-center;
+}
+.theme-ledger .text-align-end {
+    @apply text-end;
+}
+.theme-ledger .text-align-justify {
+    @apply text-justify;
+}
+
+.theme-ledger .text-size-md {
+    @apply text-sm;
+}
+.theme-ledger .text-size-lg {
+    @apply text-lg;
+}
+.theme-ledger .text-size-xl {
+    @apply text-xl;
+}
+
+.theme-ledger .richtext-block h1 {
+    @apply text-2xl font-bold mt-4 mb-2;
+    color: var(--accent-800);
+}
+
+.theme-ledger .richtext-block h2 {
+    @apply text-xl font-bold mt-4 mb-2;
+    color: var(--accent-800);
+}
+
+.theme-ledger .richtext-block h3 {
+    @apply text-lg font-semibold mt-3 mb-1;
     color: var(--accent-700);
 }
 
-.theme-ledger .keyvalue-block-separator {
-    @apply px-1;
-    color: var(--accent-400);
+.theme-ledger .richtext-block h4 {
+    @apply text-base font-semibold mt-2 mb-1;
+    color: var(--accent-700);
 }
 
-.theme-ledger .keyvalue-block-value {
-    @apply text-sm;
+.theme-ledger .richtext-block ul {
+    @apply list-disc ps-5;
+}
+.theme-ledger .richtext-block ol {
+    @apply list-decimal ps-5;
+}
+
+.theme-ledger .richtext-block li {
+    @apply leading-relaxed;
+}
+
+.theme-ledger .richtext-block a {
+    color: var(--accent-700);
+    text-decoration: underline;
+}
+
+/* =========================
+   TAGS
+========================= */
+
+.theme-ledger .tags-render-container,
+.theme-ledger .tags-block {
+    @apply flex flex-wrap gap-2;
+}
+
+.theme-ledger .tag-item {
+    @apply inline-flex items-center font-medium border transition-all duration-200;
+}
+
+.theme-ledger .tag-shape-pill {
+    @apply rounded-full;
+}
+.theme-ledger .tag-shape-rounded {
+    @apply rounded-md;
+}
+.theme-ledger .tag-shape-square {
+    @apply rounded-none;
+}
+
+.theme-ledger .tag-size-sm {
+    @apply text-xs px-1.5 py-0.5;
+}
+.theme-ledger .tag-size-md {
+    @apply text-sm px-2 py-1;
+}
+.theme-ledger .tag-size-lg {
+    @apply text-base px-3 py-1.5;
+}
+
+.theme-ledger .tag-variant-filled {
+    background: var(--accent-50);
+    color: var(--accent-700);
+    border-color: var(--accent-200);
+}
+
+.theme-ledger .tag-variant-outline {
+    background: transparent;
+    color: var(--accent-700);
+    border-color: var(--accent-400);
+}
+
+.theme-ledger .layout-row {
+    @apply flex-row items-baseline;
+}
+
+.theme-ledger .layout-column {
+    @apply flex-col items-start gap-0;
+}
+
+/* =========================
+   KEY VALUE BLOCK
+========================= */
+
+.theme-ledger .keyvalue-block {
+    @apply flex flex-col;
+}
+
+.theme-ledger .keyvalue-row {
+    @apply flex;
+}
+
+.theme-ledger .keyvalue-block-key {
+    color: var(--accent-700);
+}
+
+.theme-ledger .emphasize-none .keyvalue-block-key,
+.theme-ledger .emphasize-none .keyvalue-block-value {
+    font-weight: normal;
+}
+
+.theme-ledger .emphasize-key .keyvalue-block-key {
+    font-weight: 600;
+}
+
+.theme-ledger .emphasize-value .keyvalue-block-value {
+    font-weight: 600;
+}
+
+.theme-ledger .keyvalue-block-separator {
+    @apply px-2;
 }
