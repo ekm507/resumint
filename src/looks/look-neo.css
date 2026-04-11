@@ -436,6 +436,8 @@
 
 .look-neo .richtext-editor-surface .ProseMirror a {
     @apply text-cyan-400 underline decoration-cyan-400/30;
+    pointer-events: none;
+    cursor: default;
 }
 
 .look-neo .richtext-controls {
