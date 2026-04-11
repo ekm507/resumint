@@ -16,7 +16,7 @@ export default function App() {
     useResumeData();
 
   const [theme, setTheme] = useState("modern");
-  const [lookName, setLookName] = useState("neo");
+  const [lookName, setLookName] = useState("colorful");
   const [accentColor, setAccentColor] = useState<string | null>(null);
   const accentPalette = accentColor
     ? generateAccentPalette(accentColor)
@@ -67,14 +67,6 @@ export default function App() {
           className="toolbar-file"
           onChange={handleImport}
         />
-
-        <select value={lookName} onChange={(e) => setLookName(e.target.value)}>
-          {lookNames.map((name) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
-        </select>
 
         <input
           type="color"
