@@ -189,16 +189,16 @@
 }
 
 .theme-terminal .keyvalue-row {
-    @apply flex;
+    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-terminal .keyvalue-block-key {
-    @apply text-xs min-w-[95px];
-    color: var(--accent-200);
+    @apply min-w-0;
+    color: var(--accent-600);
 }
 
 .theme-terminal .keyvalue-block-value {
-    @apply flex flex-wrap gap-1.5;
+    @apply min-w-0;
 }
 
 .theme-terminal .keyvalue-block-separator {

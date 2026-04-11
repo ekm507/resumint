@@ -240,15 +240,16 @@
 }
 
 .theme-polar-bear .keyvalue-row {
-    @apply flex;
+    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-polar-bear .keyvalue-block-key {
-    @apply uppercase tracking-wide text-xs text-slate-500 min-w-[100px];
+    @apply min-w-0;
+    color: var(--accent-600);
 }
 
 .theme-polar-bear .keyvalue-block-value {
-    @apply flex flex-wrap gap-2;
+    @apply min-w-0;
 }
 
 .theme-polar-bear .keyvalue-block-separator {

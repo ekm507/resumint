@@ -298,11 +298,16 @@
 }
 
 .theme-modern .keyvalue-row {
-    @apply flex;
+    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-modern .keyvalue-block-key {
+    @apply min-w-0;
     color: var(--accent-600);
+}
+
+.theme-modern .keyvalue-block-value {
+    @apply min-w-0;
 }
 
 .theme-modern .emphasize-none .keyvalue-block-key,

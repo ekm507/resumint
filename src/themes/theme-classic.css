@@ -271,11 +271,16 @@
 }
 
 .theme-classic .keyvalue-row {
-    @apply flex;
+    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-classic .keyvalue-block-key {
-    color: var(--accent-700);
+    @apply min-w-0;
+    color: var(--accent-600);
+}
+
+.theme-classic .keyvalue-block-value {
+    @apply min-w-0;
 }
 
 .theme-classic .emphasize-key .keyvalue-block-key {

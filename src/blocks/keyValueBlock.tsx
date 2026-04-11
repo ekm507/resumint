@@ -89,9 +89,8 @@ export function KeyValueRender({ block }: any) {
     <div className={`keyvalue-block emphasize-${emphasis}`}>
       {items.map((item: any, i: number) => (
         <div key={i} className="keyvalue-row">
-          <span className="keyvalue-block-key">{item.key}</span>
-          <span className="keyvalue-block-separator">:</span>
-          <span className="keyvalue-block-value">{item.value}</span>
+          <div className="keyvalue-block-key">{item.key}</div>
+          <div className="keyvalue-block-value">{item.value}</div>
         </div>
       ))}
     </div>
