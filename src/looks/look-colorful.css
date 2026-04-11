@@ -198,6 +198,9 @@
            bg-white outline-none focus:ring-2 focus:ring-purple-500;
 }
 
+.look-colorful .background-toggle-button {
+    @apply w-7 h-7 rounded-md border hover:scale-105 transition;
+}
 /* DELETE */
 
 .look-colorful .block-delete-button {

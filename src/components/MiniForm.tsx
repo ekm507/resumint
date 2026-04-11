@@ -37,6 +37,29 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
     updateBlocks([newBlock]);
   };
 
+  const backgrounds = [
+    "transparent",
+    "accent-50",
+    "accent-100",
+    "accent-200",
+    "accent-300",
+  ];
+
+  const cycleBackground = () => {
+    const current = form.background ?? "transparent";
+    const index = backgrounds.indexOf(current);
+    const next = backgrounds[(index + 1) % backgrounds.length];
+
+    setForm({ background: next });
+  };
+
+  const current = form.background ?? "transparent";
+
+  const bg =
+    current === "transparent"
+      ? "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 50% / 8px 8px"
+      : `var(--${current})`;
+
   return (
     <div className="editor-form">
       <div className="editor-form-header">
@@ -50,6 +73,12 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
           value={form.title}
           onChange={(e) => setForm({ title: e.target.value })}
         />
+        <button
+          type="button"
+          onClick={cycleBackground}
+          title={`Background: ${current}`}
+          className="background-toggle-button"
+        ></button>
       </div>
 
       {!collapsed && (

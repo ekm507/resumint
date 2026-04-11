@@ -25,4 +25,5 @@ export interface FormStructure {
   id: string;
   title: string;
   blocks: BlockNode[];
+  background?: string | null;
 }

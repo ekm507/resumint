@@ -183,6 +183,10 @@
            focus:ring-1 focus:ring-sky-500;
 }
 
+.background-toggle-button {
+    @apply w-5 h-5 border hover:cursor-pointer;
+}
+
 /* DELETE BUTTON */
 
 .look-slate .block-delete-button {

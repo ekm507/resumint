@@ -5,17 +5,24 @@ interface Prop {
   form: FormStructure;
   dir?: DirTypeNames;
 }
-
 export default function MiniBox({ form, dir = "auto" }: Prop) {
+  const bg =
+    !form.background || form.background === "transparent"
+      ? "transparent"
+      : `var(--${form.background})`;
+
   return (
-    <section className="resume-section" dir={dir}>
+    <section
+      className="resume-section"
+      dir={dir}
+      style={{ backgroundColor: bg }}
+    >
       {form.title && <h1 className="resume-section-title">{form.title}</h1>}
 
       <div className="resume-section-content">
-        {form.blocks &&
-          form.blocks.map((block) => (
-            <BlockRenderer key={block.id} block={block} />
-          ))}
+        {form.blocks?.map((block) => (
+          <BlockRenderer key={block.id} block={block} />
+        ))}
       </div>
     </section>
   );

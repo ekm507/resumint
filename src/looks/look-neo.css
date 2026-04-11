@@ -206,6 +206,10 @@
          bg-slate-900/40 outline-none;
 }
 
+.look-neo .background-toggle-button {
+    @apply w-7 h-7 rounded-md border hover:scale-105 transition;
+}
+
 /* DELETE BUTTON */
 
 .look-neo .block-delete-button {
