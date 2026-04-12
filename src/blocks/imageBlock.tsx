@@ -2,7 +2,7 @@ import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export function ImageEditor({ block, update }: any) {
   const {
@@ -12,8 +12,6 @@ export function ImageEditor({ block, update }: any) {
     align = "center",
     shape = "rounded",
   } = block.props || {};
-
-  const [showUrlField, setShowUrlField] = useState(false);
 
   const setProp = (k: string, v: any) =>
     update({
@@ -117,24 +115,11 @@ export function ImageEditor({ block, update }: any) {
             }}
           >
             <strong>Image</strong>
-            <button type="button" onClick={() => setShowUrlField((v) => !v)}>
-              {showUrlField ? "Hide URL" : "Edit URL"}
-            </button>
           </div>
-          {!showUrlField ? (
-            <div style={{ fontSize: 12, color: "#555", marginTop: 6 }}>
-              {srcLabel}
-            </div>
-          ) : (
-            <input
-              placeholder="https://example.com/image.jpg or data URL"
-              value={src}
-              onChange={(e) => setProp("src", e.target.value)}
-              style={{ width: "100%" }}
-            />
-          )}
+
           <div style={{ marginTop: 8 }}>
             <input
+              className="image-upload"
               type="file"
               accept="image/*"
               onChange={(e) => {
@@ -145,7 +130,6 @@ export function ImageEditor({ block, update }: any) {
           </div>
         </div>
 
-        {/* Thumbnail preview */}
         <div className="image-editor-preview" title={srcLabel}>
           {canPreview ? (
             <img src={src} alt={alt || "image preview"} />
@@ -162,31 +146,20 @@ export function ImageEditor({ block, update }: any) {
           onChange={(e) => setProp("alt", e.target.value)}
         />
         <div>
-          <label>Width: {width}%</label>
-          <input
-            type="range"
-            min={20}
-            max={100}
-            step={5}
-            value={width}
-            onChange={(e) => setProp("width", Number(e.target.value))}
-          />
+          <div className="advanced-group">
+            <label>Width: {width}%</label>
+            <input
+              type="range"
+              min={20}
+              max={100}
+              step={5}
+              value={width}
+              onChange={(e) => setProp("width", Number(e.target.value))}
+            />
+          </div>
         </div>
 
         <div className="options-grid">
-          <div className="advanced-group">
-            <label>align</label>
-            <ToggleButton
-              value={align}
-              onChange={(v) => setProp("align", v)}
-              options={[
-                { value: "start", label: "start" },
-                { value: "center", label: "center" },
-                { value: "end", label: "end" },
-              ]}
-            />
-          </div>
-
           <div className="advanced-group">
             <label>shape</label>
             <ToggleButton
@@ -206,16 +179,10 @@ export function ImageEditor({ block, update }: any) {
 }
 
 export function ImageRender({ block }: any) {
-  const {
-    src,
-    alt = "",
-    width = 40,
-    align = "center",
-    shape = "rounded",
-  } = block.props || {};
+  const { src, alt = "", width = 40, shape = "rounded" } = block.props || {};
 
   return (
-    <div className={`resume-item-image flex image-justify-${align}`}>
+    <div className={`resume-item-image flex image-justify-center`}>
       <img
         src={src}
         alt={alt}
@@ -238,7 +205,6 @@ registerBlock({
         src: "https://",
         alt: "",
         width: 100,
-        align: "center",
         shape: "rounded",
       },
     };
