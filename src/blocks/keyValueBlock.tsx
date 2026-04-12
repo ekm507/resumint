@@ -12,14 +12,18 @@ export function KeyValueEditor({ block, update }: any) {
       props: { ...(block.props || {}), [k]: v },
     });
 
-  const updateItem = (index: number, field: "key" | "value", val: string) => {
+  const updateItem = (
+    index: number,
+    field: "key" | "value" | "icon",
+    val: any,
+  ) => {
     const copy = [...items];
     copy[index] = { ...copy[index], [field]: val };
     setProp("items", copy);
   };
 
   const addItem = () => {
-    setProp("items", [...items, { key: "", value: "" }]);
+    setProp("items", [...items, { key: "", value: "", icon: null }]);
   };
 
   const removeItem = (index: number) => {
@@ -29,27 +33,58 @@ export function KeyValueEditor({ block, update }: any) {
     );
   };
 
+  const onUploadIcon = (index: number, file: File | null) => {
+    if (!file) {
+      updateItem(index, "icon", null);
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      updateItem(index, "icon", reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="keyvalue-block-editor">
       <div className="keyvalue-list">
         {items.map((item: any, i: number) => (
           <div key={i} className="keyvalue-row">
+            {/* Icon Upload */}
+            <div className="keyvalue-icon-column">
+              {item.icon ? (
+                <div className="keyvalue-icon-preview">
+                  <img src={item.icon} alt="icon" className="kv-icon-img" />
+                  <button
+                    className="kv-icon-remove"
+                    onClick={() => updateItem(i, "icon", null)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="keyvalue-icon-input"
+                  onChange={(e) => onUploadIcon(i, e.target.files?.[0] || null)}
+                />
+              )}
+            </div>
             <input
               className="keyvalue-block-key-input"
               placeholder="key"
               value={item.key}
               onChange={(e) => updateItem(i, "key", e.target.value)}
             />
-
             <span className="keyvalue-block-separator">:</span>
-
             <input
               className="keyvalue-block-value-input"
               placeholder="value"
               value={item.value}
               onChange={(e) => updateItem(i, "value", e.target.value)}
             />
-
             <button
               className="item-remove-button"
               onClick={() => removeItem(i)}
@@ -89,6 +124,11 @@ export function KeyValueRender({ block }: any) {
     <div className={`keyvalue-block emphasize-${emphasis}`}>
       {items.map((item: any, i: number) => (
         <div key={i} className="keyvalue-row">
+          {/* Optional icon */}
+          {item.icon ? (
+            <img src={item.icon} alt="" className="kv-render-icon" />
+          ) : null}
+
           <div className="keyvalue-block-key">{item.key}</div>
           <div className="keyvalue-block-value">{item.value}</div>
         </div>
@@ -106,7 +146,7 @@ registerBlock({
       id: "",
       blockType: "keyValue",
       props: {
-        items: [{ key: "", value: "" }],
+        items: [{ key: "", value: "", icon: null }],
         emphasis: "key",
       },
     };

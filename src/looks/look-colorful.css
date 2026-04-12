@@ -418,7 +418,7 @@
 }
 
 .look-colorful .advanced-group {
-    @apply flex flex-col gap-1;
+    @apply flex flex-col gap-1 bg-indigo-100 p-2 rounded-xl;
 }
 
 .look-colorful .advanced-group label {
@@ -440,6 +440,72 @@
     @apply p-2 rounded-xl border-2 border-indigo-400 w-max hover:cursor-pointer hover:bg-indigo-400;
 }
 
-.look-colorful .options-grid {
-    @apply flex flex-row flex-wrap gap-3;
+/* --- Compact File Upload Button --- */
+
+.look-colorful .keyvalue-icon-input {
+    position: relative;
+    width: 70px; /* small */
+    height: 26px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f2f2f2;
+    border: 1px solid #d0d0d0;
+    font-size: 11px;
+    color: #333;
+    cursor: pointer;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* hide actual file input */
+.look-colorful .keyvalue-icon-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.look-colorful .keyvalue-icon-input::before {
+    content: "Upload";
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 4px;
+    cursor: pointer;
+    color: #444;
+}
+
+.look-colorful .keyvalue-icon-input:hover {
+    background: #e6e6e6;
+    border-color: #bcbcbc;
+}
+
+.look-colorful .keyvalue-icon-input:active {
+    background: #dcdcdc;
+}
+
+/* Icon preview block */
+.look-colorful .kv-icon-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.look-colorful .kv-icon-img {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    object-fit: cover;
+}
+
+.look-colorful .kv-icon-remove {
+    background: none;
+    border: none;
+    font-size: 10px;
+    color: #888;
+    cursor: pointer;
+    padding: 0;
+}
+
+.look-colorful .kv-icon-remove:hover {
+    color: #e00;
 }
