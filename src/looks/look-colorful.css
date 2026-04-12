@@ -510,3 +510,7 @@
     padding: 0;
     color: #e00;
 }
+
+.look-colorful .image-upload {
+    @apply px-2 border border-indigo-500 bg-indigo-200 rounded-xl hover:cursor-pointer hover:bg-indigo-400 items-center py-1;
+}
