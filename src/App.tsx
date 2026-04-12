@@ -5,7 +5,6 @@ import { useReactToPrint } from "react-to-print";
 import { useResumeData } from "./hooks/useResumeData";
 import { exportResumeData, importResumeData } from "./utils/storage";
 
-import { lookNames } from "./looks";
 import { themeNames } from "./themes";
 import { generateAccentPalette } from "./utils/theming";
 
@@ -16,7 +15,7 @@ export default function App() {
     useResumeData();
 
   const [theme, setTheme] = useState("modern");
-  const [lookName, setLookName] = useState("colorful");
+  const lookName = "colorful";
   const [accentColor, setAccentColor] = useState<string | null>(null);
   const accentPalette = accentColor
     ? generateAccentPalette(accentColor)
