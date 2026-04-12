@@ -14,20 +14,23 @@ interface Props {
 }
 
 export default function ToggleButton({ value, onChange, options }: Props) {
-  const [index, setIndex] = useState(
-    options.findIndex((x) => x.value == value) || 0,
-  );
-
-  const cycleOption = () => {
-    const next = (index + 1) % options.length;
-    setIndex(next);
-    onChange(options[next].value);
-  };
+  const [current, setCurrent] = useState(value);
 
   return (
-    <button className={`toggle-button`} onClick={cycleOption} type="button">
-      {options[index]?.icon}
-      {options[index].label}
-    </button>
+    <div className="toggle-button-container">
+      {options.map((o) => (
+        <button
+          className={`toggle-button ${o.value === current && "toggle-button-active"}`}
+          key={o.value}
+          onClick={() => {
+            onChange(o.value);
+            setCurrent(o.value);
+          }}
+        >
+          {o?.icon}
+          {o.label}
+        </button>
+      ))}
+    </div>
   );
 }
