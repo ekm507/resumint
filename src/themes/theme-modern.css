@@ -298,8 +298,10 @@
 }
 
 .theme-modern .keyvalue-row {
-    @apply grid grid-cols-2 gap-4 py-1;
-    grid: 10 auto;
+    @apply grid grid-cols-2 gap-4 py-1 w-full;
+    grid-template-columns: 5fr 7fr;
+    align-items: start;
+    justify-items: center;
 }
 
 .theme-modern .keyvalue-block-render-icon {
@@ -307,7 +309,7 @@
 }
 
 .theme-modern .keyvalue-block-key-icon-container {
-    @apply flex gap-4;
+    @apply flex gap-4 items-start justify-start w-full;
 }
 
 .theme-modern .keyvalue-block-key {
@@ -316,7 +318,7 @@
 }
 
 .theme-modern .keyvalue-block-value {
-    @apply min-w-0;
+    @apply min-w-0 w-full;
 }
 
 .theme-modern .emphasize-none .keyvalue-block-key,
