@@ -133,8 +133,8 @@ export function KeyValueRender({ block }: any) {
             ) : null}
 
             <div className="keyvalue-block-key">{item.key}</div>
-            <div className="keyvalue-block-value">{item.value}</div>
           </div>
+          <div className="keyvalue-block-value">{item.value}</div>
         </div>
       ))}
     </div>
