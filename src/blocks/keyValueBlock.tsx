@@ -50,8 +50,7 @@ export function KeyValueEditor({ block, update }: any) {
     <div className="keyvalue-block-editor">
       <div className="keyvalue-list">
         {items.map((item: any, i: number) => (
-          <div key={i} className="keyvalue-row">
-            {/* Icon Upload */}
+          <div key={i} className="keyvalue-input-row">
             <div className="keyvalue-icon-column">
               {item.icon ? (
                 <div className="keyvalue-icon-preview">
@@ -82,7 +81,7 @@ export function KeyValueEditor({ block, update }: any) {
               value={item.key}
               onChange={(e) => updateItem(i, "key", e.target.value)}
             />
-            <span className="keyvalue-block-separator">:</span>
+
             <input
               className="keyvalue-block-value-input"
               placeholder="value"

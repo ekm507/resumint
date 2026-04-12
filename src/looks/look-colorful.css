@@ -442,10 +442,14 @@
 
 /* --- Compact File Upload Button --- */
 
+.look-colorful .keyvalue-input-row {
+    @apply flex gap-3;
+}
+
 .look-colorful .keyvalue-icon-input {
     position: relative;
-    width: 70px; /* small */
-    height: 26px;
+    width: 35px;
+    height: 22px;
     overflow: hidden;
     border-radius: 4px;
     background: #f2f2f2;
