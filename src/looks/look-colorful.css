@@ -483,29 +483,26 @@
 }
 
 /* Icon preview block */
-.look-colorful .kv-icon-preview {
+.look-colorful .keyvalue-icon-preview {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2px;
 }
 
-.look-colorful .kv-icon-img {
+.look-colorful .keyvalue-icon-img {
     width: 22px;
     height: 22px;
     border-radius: 3px;
     object-fit: cover;
 }
 
-.look-colorful .kv-icon-remove {
+.look-colorful .keyvalue-icon-remove {
     background: none;
     border: none;
     font-size: 10px;
     color: #888;
     cursor: pointer;
     padding: 0;
-}
-
-.look-colorful .kv-icon-remove:hover {
     color: #e00;
 }

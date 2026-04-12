@@ -55,9 +55,13 @@ export function KeyValueEditor({ block, update }: any) {
             <div className="keyvalue-icon-column">
               {item.icon ? (
                 <div className="keyvalue-icon-preview">
-                  <img src={item.icon} alt="icon" className="kv-icon-img" />
+                  <img
+                    src={item.icon}
+                    alt="icon"
+                    className="keyvalue-icon-img"
+                  />
                   <button
-                    className="kv-icon-remove"
+                    className="keyvalue-icon-remove"
                     onClick={() => updateItem(i, "icon", null)}
                   >
                     Remove
