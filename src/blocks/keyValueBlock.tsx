@@ -48,10 +48,10 @@ export function KeyValueEditor({ block, update }: any) {
 
   return (
     <div className="keyvalue-block-editor">
-      <div className="keyvalue-list">
+      <div className="input-list">
         {items.map((item: any, i: number) => (
-          <div key={i} className="keyvalue-input-row">
-            <div className="keyvalue-icon-column">
+          <div key={i} className="input-row">
+            <div className="icon-column">
               {item.icon ? (
                 <div className="keyvalue-icon-preview">
                   <img
@@ -70,20 +70,20 @@ export function KeyValueEditor({ block, update }: any) {
                 <input
                   type="file"
                   accept="image/*"
-                  className="keyvalue-icon-input"
+                  className="file-upload"
                   onChange={(e) => onUploadIcon(i, e.target.files?.[0] || null)}
                 />
               )}
             </div>
             <input
-              className="keyvalue-block-key-input"
+              className="text-input"
               placeholder="key"
               value={item.key}
               onChange={(e) => updateItem(i, "key", e.target.value)}
             />
 
             <input
-              className="keyvalue-block-value-input"
+              className="text-input"
               placeholder="value"
               value={item.value}
               onChange={(e) => updateItem(i, "value", e.target.value)}
@@ -97,12 +97,12 @@ export function KeyValueEditor({ block, update }: any) {
           </div>
         ))}
 
-        <button className="keyvalue-add-button" onClick={addItem}>
+        <button className="item-add-button" onClick={addItem}>
           + Add Row
         </button>
 
         <AdvancedOptions block={block} update={update}>
-          <div className="advanced-group">
+          <div className="option-group">
             <label>Emphasis</label>
             <ToggleButton
               value={emphasis}

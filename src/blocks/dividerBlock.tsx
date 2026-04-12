@@ -15,7 +15,7 @@ export function DividerEditor({ block, update }: any) {
     <div className="divider-block-editor">
       <AdvancedOptions block={block} update={update}>
         <div className="options-grid">
-          <div className="advanced-group">
+          <div className="option-group">
             <label>style</label>
             <ToggleButton
               value={style}
@@ -28,7 +28,7 @@ export function DividerEditor({ block, update }: any) {
             />
           </div>
 
-          <div className="advanced-group">
+          <div className="option-group">
             <label>spacing</label>
             <ToggleButton
               value={spacing}

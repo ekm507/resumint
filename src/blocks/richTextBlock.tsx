@@ -214,7 +214,7 @@ export function RichTextEditor({ block, update }: any) {
       <div className="richtext-controls">
         <AdvancedOptions block={block} update={update}>
           <div className="options-grid">
-            <div className="advanced-group">
+            <div className="option-group">
               <label>size</label>
               <ToggleButton
                 value={size}
@@ -227,7 +227,7 @@ export function RichTextEditor({ block, update }: any) {
               />
             </div>
 
-            <div className="advanced-group">
+            <div className="option-group">
               <label>align</label>
               <ToggleButton
                 value={align}

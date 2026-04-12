@@ -52,7 +52,7 @@ export function TagsEditor({ block, update }: any) {
 
       <AdvancedOptions block={block} update={update}>
         <div className="options-grid">
-          <div className="advanced-group">
+          <div className="option-group">
             <label>Shape</label>
             <ToggleButton
               value={shape}
@@ -64,7 +64,7 @@ export function TagsEditor({ block, update }: any) {
               ]}
             />
           </div>
-          <div className="advanced-group">
+          <div className="option-group">
             <label>Size</label>
             <ToggleButton
               value={size}
@@ -77,7 +77,7 @@ export function TagsEditor({ block, update }: any) {
             />
           </div>
 
-          <div className="advanced-group">
+          <div className="option-group">
             <label>Style</label>
 
             <ToggleButton

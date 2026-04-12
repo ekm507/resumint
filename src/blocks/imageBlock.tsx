@@ -101,11 +101,8 @@ export function ImageEditor({ block, update }: any) {
   }, [src]);
 
   return (
-    <div className="image-block-editor">
-      <div
-        className="image-editor-row"
-        style={{ display: "flex", gap: 12, alignItems: "center" }}
-      >
+    <div className="block-editor">
+      <div className="editor-row">
         <div style={{ flex: 1 }}>
           <div
             style={{
@@ -119,7 +116,7 @@ export function ImageEditor({ block, update }: any) {
 
           <div style={{ marginTop: 8 }}>
             <input
-              className="image-upload"
+              className="file-upload"
               type="file"
               accept="image/*"
               onChange={(e) => {
@@ -146,7 +143,7 @@ export function ImageEditor({ block, update }: any) {
           onChange={(e) => setProp("alt", e.target.value)}
         />
         <div>
-          <div className="advanced-group">
+          <div className="option-group">
             <label>Width: {width}%</label>
             <input
               type="range"
@@ -160,7 +157,7 @@ export function ImageEditor({ block, update }: any) {
         </div>
 
         <div className="options-grid">
-          <div className="advanced-group">
+          <div className="option-group">
             <label>shape</label>
             <ToggleButton
               value={shape}

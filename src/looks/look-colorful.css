@@ -12,7 +12,7 @@
 
 .look-colorful .app-root {
     @apply flex flex-col items-center gap-4 p-4 h-screen overflow-hidden
-           bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100;
+           bg-linear-to-br from-purple-100 via-pink-100 to-blue-100;
 }
 
 .look-colorful .app-layout {
@@ -53,8 +53,11 @@
 /* BLOCK EDITOR */
 
 .look-colorful .block-editor {
-    @apply flex flex-col gap-2 p-3 rounded-xl border overflow-y-auto
-           border-indigo-200 bg-indigo-50 shadow-sm relative;
+    @apply flex flex-col gap-2 relative border-b border-indigo-200;
+}
+
+.look-colorful .editor-row {
+    @apply flex gap-12 items-center;
 }
 
 .look-colorful .block-editor-header {
@@ -69,17 +72,6 @@
 
 /* GENERIC INPUTS */
 
-.look-colorful .text-block-input,
-.look-colorful .heading-block-input,
-.look-colorful .image-block-src-input,
-.look-colorful .image-block-alt-input,
-.look-colorful .link-block-text-input,
-.look-colorful .link-block-url-input {
-    @apply border border-blue-300 rounded-lg px-3 py-1.5 outline-none
-           bg-white w-full
-           focus:ring-2 focus:ring-indigo-500;
-}
-
 .look-colorful .image-editor-preview {
     @apply w-24 h-24 border border-indigo-300 rounded-xl overflow-hidden flex items-center justify-center bg-gray-50;
 }
@@ -90,9 +82,6 @@
 
 .look-colorful .image-editor-preview span {
     @apply text-xs text-gray-500 text-center p-2;
-}
-.look-colorful textarea.text-block-input {
-    @apply resize-none py-2;
 }
 
 .look-colorful select {
@@ -169,13 +158,30 @@
            bg-white outline-none focus:ring-2 focus:ring-green-500 flex-1;
 }
 
-.look-colorful .tags-block-remove-button {
-    @apply text-rose-500 text-xs hover:text-rose-600 cursor-pointer;
+.look-colorful .input-list {
+    @apply flex flex-col gap-0;
+}
+
+.look-colorful .input-row {
+    @apply flex gap-3 bg-indigo-100 px-2 py-1 rounded-xl border border-indigo-200;
+}
+
+.look-colorful .item-remove-button {
+    @apply text-white bg-gray-400 h-5 w-5 rounded-full text-lg cursor-pointer;
+}
+
+.look-colorful .input-row:hover .item-remove-button {
+    @apply bg-rose-400 hover:bg-rose-600;
 }
 
 .look-colorful .tags-block-add-button {
     @apply border border-dashed border-green-300 rounded-lg py-1.5
            hover:bg-green-50 cursor-pointer;
+}
+
+.look-colorful .item-add-button {
+    @apply border border-green-600 rounded-lg py-1.5 w-max
+           bg-green-200 hover:bg-green-300 cursor-pointer;
 }
 
 /* KEY VALUE */
@@ -184,8 +190,7 @@
     @apply flex items-center gap-2;
 }
 
-.look-colorful .keyvalue-block-key-input,
-.look-colorful .keyvalue-block-value-input {
+.look-colorful .text-input {
     @apply border border-amber-300 rounded px-2 py-1 text-sm bg-white;
 }
 
@@ -417,11 +422,11 @@
     @apply flex flex-col gap-2;
 }
 
-.look-colorful .advanced-group {
+.look-colorful .option-group {
     @apply flex flex-col gap-1 bg-indigo-100 p-2 rounded-xl;
 }
 
-.look-colorful .advanced-group label {
+.look-colorful .option-group label {
     @apply text-xs text-indigo-600;
 }
 
@@ -442,8 +447,8 @@
 
 /* --- Compact File Upload Button --- */
 
-.look-colorful .keyvalue-input-row {
-    @apply flex gap-3;
+.look-colorful .icon-column {
+    @apply w-10 px-2 overflow-hidden;
 }
 
 .look-colorful .keyvalue-icon-input {
@@ -511,6 +516,6 @@
     color: #e00;
 }
 
-.look-colorful .image-upload {
+.look-colorful .file-upload {
     @apply px-2 border border-indigo-500 bg-indigo-200 rounded-xl hover:cursor-pointer hover:bg-indigo-400 items-center py-1;
 }

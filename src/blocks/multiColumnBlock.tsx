@@ -74,7 +74,7 @@ export function MultiColumnEditor({ block, update }: any) {
         <div className="multi-column-toolbar">
           <button onClick={addColumn}>+ column</button>
 
-          <div className="advanced-group">
+          <div className="option-group">
             <ToggleButton
               value={dividerStyle}
               onChange={(v) => setProp("dividerStyle", v)}
