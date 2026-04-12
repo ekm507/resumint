@@ -298,7 +298,16 @@
 }
 
 .theme-modern .keyvalue-row {
-    @apply grid grid-cols-2 gap-4;
+    @apply grid grid-cols-2 gap-4 py-1;
+    grid: 10 auto;
+}
+
+.theme-modern .keyvalue-block-render-icon {
+    @apply w-5;
+}
+
+.theme-modern .keyvalue-block-key-icon-container {
+    @apply flex gap-4;
 }
 
 .theme-modern .keyvalue-block-key {

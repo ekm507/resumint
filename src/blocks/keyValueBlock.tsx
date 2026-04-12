@@ -124,13 +124,14 @@ export function KeyValueRender({ block }: any) {
     <div className={`keyvalue-block emphasize-${emphasis}`}>
       {items.map((item: any, i: number) => (
         <div key={i} className="keyvalue-row">
-          {/* Optional icon */}
-          {item.icon ? (
-            <img src={item.icon} alt="" className="kv-render-icon" />
-          ) : null}
+          <div className="keyvalue-block-key-icon-container">
+            {item.icon ? (
+              <img src={item.icon} className="keyvalue-block-render-icon" />
+            ) : null}
 
-          <div className="keyvalue-block-key">{item.key}</div>
-          <div className="keyvalue-block-value">{item.value}</div>
+            <div className="keyvalue-block-key">{item.key}</div>
+            <div className="keyvalue-block-value">{item.value}</div>
+          </div>
         </div>
       ))}
     </div>
