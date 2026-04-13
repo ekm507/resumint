@@ -29,10 +29,6 @@
    SECTIONS
 ========================= */
 
-.theme-modern .resume-section-wrapper {
-    @apply w-full;
-}
-
 .theme-modern .resume-section {
     @apply flex flex-col gap-3 p-4 rounded-xl  bg-white shadow-sm;
 }

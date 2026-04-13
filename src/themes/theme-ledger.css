@@ -29,10 +29,6 @@
    SECTIONS
 ========================= */
 
-.theme-ledger .resume-section-wrapper {
-    @apply w-full;
-}
-
 .theme-ledger .resume-section {
     @apply flex flex-col gap-3 pt-6 relative;
     border-top: 4px solid var(--accent-800);

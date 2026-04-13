@@ -25,10 +25,6 @@
 
 /* SECTIONS */
 
-.theme-polar-bear .resume-section-wrapper {
-    @apply w-full;
-}
-
 .theme-polar-bear .resume-section {
     @apply flex flex-col gap-3 p-4 rounded-2xl bg-white border shadow-sm;
     border-color: var(--accent-100);

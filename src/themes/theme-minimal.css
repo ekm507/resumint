@@ -25,10 +25,6 @@
 
 /* SECTIONS */
 
-.theme-minimal .resume-section-wrapper {
-    @apply w-full;
-}
-
 .theme-minimal .resume-section {
     @apply flex flex-col gap-3;
 }
