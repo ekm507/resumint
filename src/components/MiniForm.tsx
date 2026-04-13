@@ -68,7 +68,7 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
           onChange={(e) => setForm({ title: e.target.value })}
         />
         <IconSelect
-          dir="social"
+          dir="form"
           value={form.icon}
           onSelect={(i) => setForm({ icon: i })}
         />
