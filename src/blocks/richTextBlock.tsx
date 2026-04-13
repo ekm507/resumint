@@ -1,5 +1,4 @@
 import { registerBlock } from "./blockRegistry";
-import AdvancedOptions from "../components/AdvancedOptions";
 
 import { useEditor, EditorContent, useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -17,9 +16,14 @@ import {
   ListOrdered,
   Minus,
   Link as LinkIcon,
+  TextAlignStart,
+  TextAlignCenter,
+  TextAlignEnd,
+  TextAlignJustify,
 } from "lucide-react";
 import Heading from "@tiptap/extension-link";
-import ToggleButton from "../components/ToggleButton";
+import TextAlign from "@tiptap/extension-text-align";
+import { useState } from "react";
 
 /* =========================
    TOOLBAR BUTTON
@@ -45,7 +49,7 @@ function ToolbarButton({ active, onClick, title, children }: any) {
 ========================= */
 
 export function RichTextEditor({ block, update }: any) {
-  const { content = null, size = "md", align = "start" } = block.props || {};
+  const { content = null } = block.props || {};
 
   const setProp = (k: string, v: any) =>
     update({
@@ -75,6 +79,9 @@ export function RichTextEditor({ block, update }: any) {
           class: "richtext-link",
         },
       }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
     ],
     content,
     onUpdate({ editor }) {
@@ -98,6 +105,82 @@ export function RichTextEditor({ block, update }: any) {
   });
 
   if (!editor) return null;
+
+  function AlignDropdown({ editor }) {
+    const [open, setOpen] = useState(false);
+
+    const current = editor.getAttributes("paragraph").textAlign || "left";
+
+    return (
+      <div className="richtext-dropdown">
+        <button
+          className="richtext-button"
+          title="set alignment"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            setOpen(!open);
+          }}
+        >
+          {current === "left" && <TextAlignStart size={14} />}
+          {current === "center" && <TextAlignCenter size={14} />}
+          {current === "right" && <TextAlignEnd size={14} />}
+          {current === "justify" && <TextAlignJustify size={14} />}
+        </button>
+
+        {open && (
+          <div className="richtext-menu">
+            <button
+              className="richtext-item richtext-button"
+              title="Left"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                editor.chain().focus().setTextAlign("left").run();
+                setOpen(false);
+              }}
+            >
+              <TextAlignStart size={14} />
+            </button>
+
+            <button
+              className="richtext-item richtext-button"
+              title="Center"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                editor.chain().focus().setTextAlign("center").run();
+                setOpen(false);
+              }}
+            >
+              <TextAlignCenter size={14} />
+            </button>
+
+            <button
+              className="richtext-item richtext-button"
+              title="right"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                editor.chain().focus().setTextAlign("right").run();
+                setOpen(false);
+              }}
+            >
+              <TextAlignEnd size={14} />
+            </button>
+
+            <button
+              className="richtext-item richtext-button"
+              title="Justify"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                editor.chain().focus().setTextAlign("justify").run();
+                setOpen(false);
+              }}
+            >
+              <TextAlignJustify size={14} />
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="richtext-block-editor">
@@ -203,45 +286,14 @@ export function RichTextEditor({ block, update }: any) {
         >
           <LinkIcon size={14} />
         </ToolbarButton>
+        <div className="richtext-divider-v" />
+
+        <AlignDropdown editor={editor} />
       </div>
 
       {/* editor surface */}
       <div className="richtext-editor-surface">
         <EditorContent editor={editor} />
-      </div>
-
-      {/* Layout Controls */}
-      <div className="richtext-controls">
-        <AdvancedOptions block={block} update={update}>
-          <div className="options-grid">
-            <div className="option-group">
-              <label>size</label>
-              <ToggleButton
-                value={size}
-                onChange={(v) => setProp("size", v)}
-                options={[
-                  { value: "md", label: "midsize" },
-                  { value: "lg", label: "big" },
-                  { value: "xl", label: "bigger" },
-                ]}
-              />
-            </div>
-
-            <div className="option-group">
-              <label>align</label>
-              <ToggleButton
-                value={align}
-                onChange={(v) => setProp("align", v)}
-                options={[
-                  { value: "start", label: "start" },
-                  { value: "center", label: "center" },
-                  { value: "end", label: "end" },
-                  { value: "justify", label: "justify" },
-                ]}
-              />
-            </div>
-          </div>
-        </AdvancedOptions>
       </div>
     </div>
   );
@@ -255,11 +307,15 @@ export function RichTextRender({ block }: any) {
   const { content, size = "md", align = "start" } = block.props || {};
   if (!content) return null;
 
-  const html = generateHTML(content, [StarterKit, Link]);
+  const html = generateHTML(content, [
+    StarterKit,
+    Link,
+    TextAlign.configure({ types: ["heading", "paragraph"] }),
+  ]);
 
   return (
     <div
-      className={`richtext-block text-size-${size} text-align-${align}`}
+      className={`richtext-block text-size-${size}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );
@@ -275,7 +331,7 @@ registerBlock({
   create: () => ({
     id: "",
     blockType: "richtext",
-    props: { content: null, size: "md", align: "start" },
+    props: { content: null },
   }),
   Editor: RichTextEditor,
   Render: RichTextRender,
