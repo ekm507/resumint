@@ -46,7 +46,10 @@ export function TagsEditor({ block, update }: any) {
             </button>
           </div>
         ))}
-        <button onClick={() => setProp("tags", [...tags, ""])}>
+        <button
+          className="item-add-button"
+          onClick={() => setProp("tags", [...tags, ""])}
+        >
           + Add Tag
         </button>
       </div>
