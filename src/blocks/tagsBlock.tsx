@@ -27,8 +27,9 @@ export function TagsEditor({ block, update }: any) {
     <div className="tags-block-editor">
       <div className="tags-list">
         {tags.map((tag: string, i: number) => (
-          <div key={i} className="tag-input-row">
+          <div key={i} className="input-row">
             <input
+              className="text-input"
               value={tag}
               onChange={(e) => updateItem(i, e.target.value)}
             />

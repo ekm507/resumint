@@ -163,37 +163,7 @@
            focus:ring-2 focus:ring-purple-500;
 }
 
-/* TEXT / HEADING / LIST */
-
-.look-colorful .text-block-editor,
-.look-colorful .heading-block-editor,
-.look-colorful .list-block-editor {
-    @apply flex flex-col gap-2;
-}
-
-.look-colorful .text-block-controls {
-    @apply flex gap-2;
-}
-
-.look-colorful .list-block-items {
-    @apply flex flex-col gap-2;
-}
-
-.look-colorful .list-block-item {
-    @apply border border-pink-200 rounded-lg p-2 bg-pink-50;
-}
-
-.look-colorful .list-block-add-button {
-    @apply border border-dashed border-pink-300 rounded-lg py-1.5
-           hover:bg-pink-100 cursor-pointer;
-}
-
 /* IMAGE / LINK / DIVIDER */
-
-.look-colorful .image-block-editor,
-.look-colorful .link-block-editor {
-    @apply flex flex-col gap-2;
-}
 
 .look-colorful .divider-block-editor {
     @apply flex gap-2;
@@ -201,12 +171,16 @@
 
 /* TAGS */
 
+.look-colorful .tags-list {
+    @apply flex flex-col gap-2;
+}
+
 .look-colorful .tag-input-row {
     @apply flex items-center gap-2;
 }
 
 .look-colorful .tag-input-row input {
-    @apply flex-1 border border-green-300 rounded-lg px-3 py-1.5
+    @apply flex-1 border border-green-300 rounded-lg px-3 py-1.5 w-full mx-1
            bg-white outline-none focus:ring-2 focus:ring-green-500;
 }
 
@@ -240,7 +214,7 @@
 }
 
 .look-colorful .item-remove-button {
-    @apply text-white bg-gray-400 h-5 w-5 rounded-full text-lg cursor-pointer;
+    @apply text-white bg-gray-400 h-5 w-5 rounded-full text-lg cursor-pointer flex-shrink-0;
 }
 
 .look-colorful .input-row:hover .item-remove-button {
@@ -264,7 +238,7 @@
 }
 
 .look-colorful .text-input {
-    @apply border border-amber-300 rounded px-2 py-1 text-sm bg-white;
+    @apply border border-amber-300 rounded px-2 py-1 text-sm bg-white w-full;
 }
 
 /* FORM */
