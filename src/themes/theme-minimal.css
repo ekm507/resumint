@@ -264,20 +264,16 @@
 /* KEY VALUE */
 
 .theme-minimal .keyvalue-block {
-    @apply flex flex-col;
 }
 
 .theme-minimal .keyvalue-row {
-    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-minimal .keyvalue-block-key {
-    @apply min-w-0;
     color: var(--accent-600);
 }
 
 .theme-minimal .keyvalue-block-value {
-    @apply min-w-0;
 }
 
 .theme-minimal .emphasize-key .keyvalue-block-key {
@@ -288,5 +284,4 @@
 }
 
 .theme-minimal .keyvalue-block-separator {
-    @apply px-2;
 }

@@ -185,22 +185,17 @@
 /* KEY VALUE */
 
 .theme-terminal .keyvalue-block {
-    @apply flex flex-col;
 }
 
 .theme-terminal .keyvalue-row {
-    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-terminal .keyvalue-block-key {
-    @apply min-w-0;
     color: var(--accent-600);
 }
 
 .theme-terminal .keyvalue-block-value {
-    @apply min-w-0;
 }
 
 .theme-terminal .keyvalue-block-separator {
-    @apply px-2;
 }

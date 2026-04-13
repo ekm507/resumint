@@ -267,20 +267,16 @@
 /* KEY VALUE */
 
 .theme-classic .keyvalue-block {
-    @apply flex flex-col;
 }
 
 .theme-classic .keyvalue-row {
-    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-classic .keyvalue-block-key {
-    @apply min-w-0;
     color: var(--accent-600);
 }
 
 .theme-classic .keyvalue-block-value {
-    @apply min-w-0;
 }
 
 .theme-classic .emphasize-key .keyvalue-block-key {
@@ -291,5 +287,4 @@
 }
 
 .theme-classic .keyvalue-block-separator {
-    @apply px-2;
 }

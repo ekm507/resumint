@@ -294,31 +294,22 @@
 ========================= */
 
 .theme-modern .keyvalue-block {
-    @apply flex flex-col;
 }
 
 .theme-modern .keyvalue-row {
-    @apply grid grid-cols-2 gap-4 py-1 w-full;
-    grid-template-columns: 5fr 7fr;
-    align-items: start;
-    justify-items: center;
 }
 
 .theme-modern .keyvalue-block-render-icon {
-    @apply w-5;
 }
 
 .theme-modern .keyvalue-block-key-icon-container {
-    @apply flex gap-4 items-start justify-start w-full;
 }
 
 .theme-modern .keyvalue-block-key {
-    @apply min-w-0;
     color: var(--accent-600);
 }
 
 .theme-modern .keyvalue-block-value {
-    @apply min-w-0 w-full;
 }
 
 .theme-modern .emphasize-none .keyvalue-block-key,
@@ -332,8 +323,4 @@
 
 .theme-modern .emphasize-value .keyvalue-block-value {
     font-weight: 600;
-}
-
-.theme-modern .keyvalue-block-separator {
-    @apply px-2;
 }

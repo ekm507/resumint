@@ -236,22 +236,17 @@
 /* KEY VALUE */
 
 .theme-polar-bear .keyvalue-block {
-    @apply flex flex-col;
 }
 
 .theme-polar-bear .keyvalue-row {
-    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-polar-bear .keyvalue-block-key {
-    @apply min-w-0;
     color: var(--accent-600);
 }
 
 .theme-polar-bear .keyvalue-block-value {
-    @apply min-w-0;
 }
 
 .theme-polar-bear .keyvalue-block-separator {
-    @apply px-2;
 }

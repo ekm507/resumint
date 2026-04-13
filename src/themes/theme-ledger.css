@@ -303,20 +303,16 @@
 ========================= */
 
 .theme-ledger .keyvalue-block {
-    @apply flex flex-col;
 }
 
 .theme-ledger .keyvalue-row {
-    @apply grid grid-cols-2 gap-4;
 }
 
 .theme-ledger .keyvalue-block-key {
-    @apply min-w-0;
     color: var(--accent-600);
 }
 
 .theme-ledger .keyvalue-block-value {
-    @apply min-w-0;
 }
 
 .theme-ledger .emphasize-none .keyvalue-block-key,
@@ -330,8 +326,4 @@
 
 .theme-ledger .emphasize-value .keyvalue-block-value {
     font-weight: 600;
-}
-
-.theme-ledger .keyvalue-block-separator {
-    @apply px-2;
 }
