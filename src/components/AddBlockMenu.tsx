@@ -30,59 +30,36 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
 
   function calculatePosition() {
     const button = buttonRef.current;
-    const panel = editorPanelRef.current;
-
-    if (!button || !panel) return;
+    if (!button) return;
 
     const btn = button.getBoundingClientRect();
-    const panelRect = panel.getBoundingClientRect();
 
-    const spaceBelow = panelRect.bottom - btn.bottom;
-    const spaceAbove = btn.top - panelRect.top;
+    const spaceBelow = window.innerHeight - btn.bottom;
+    const spaceAbove = btn.top;
 
     const direction =
       spaceBelow < 220 && spaceAbove > spaceBelow ? "up" : "down";
 
     setMenuPos({
-      left: btn.left - panelRect.left + btn.width / 2,
-      top:
-        direction === "down"
-          ? btn.bottom - panelRect.top
-          : btn.top - panelRect.top,
+      left: btn.left + btn.width / 2,
+      top: direction === "down" ? btn.bottom : btn.top,
       direction,
     });
   }
 
   function toggleMenu() {
-    const button = buttonRef.current;
-    const editorPanel = document.getElementById("editor-panel");
-
-    if (!button || !editorPanel) return;
-
-    const btn = button.getBoundingClientRect();
-    const panel = editorPanel.getBoundingClientRect();
-
-    if (!buttonRef.current || !editorPanel) return;
-
-    const scrollTop = editorPanel.scrollTop;
-    const scrollLeft = editorPanel.scrollLeft;
-
-    const spaceBelow = panel.bottom - btn.bottom;
-    const spaceAbove = btn.top - panel.top;
-
-    const direction =
-      spaceBelow < 220 && spaceAbove > spaceBelow ? "up" : "down";
-
-    setMenuPos({
-      left: btn.left - panel.left + scrollLeft + btn.width / 2,
-      top:
-        (direction === "down" ? btn.bottom - panel.top : btn.top - panel.top) +
-        scrollTop,
-      direction,
-    });
-
+    calculatePosition();
     setIsOpen((v) => !v);
   }
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleResize = () => calculatePosition();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [isOpen]);
 
   useLayoutEffect(() => {
     if (!isOpen) return;
@@ -134,7 +111,7 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
             ref={menuRef}
             className={`add-block-menu add-block-menu-${menuPos.direction}`}
             style={{
-              position: "absolute",
+              position: "fixed",
               left: menuPos.left,
               top: menuPos.top,
               transform:
