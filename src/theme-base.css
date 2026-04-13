@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+.resume-section {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
 .resume-section-header {
     @apply flex gap-4 items-center;
 }
