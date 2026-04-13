@@ -293,23 +293,8 @@
    KEY VALUE BLOCK
 ========================= */
 
-.theme-modern .keyvalue-block {
-}
-
-.theme-modern .keyvalue-row {
-}
-
-.theme-modern .keyvalue-block-render-icon {
-}
-
-.theme-modern .keyvalue-block-key-icon-container {
-}
-
 .theme-modern .keyvalue-block-key {
     color: var(--accent-600);
-}
-
-.theme-modern .keyvalue-block-value {
 }
 
 .theme-modern .emphasize-none .keyvalue-block-key,

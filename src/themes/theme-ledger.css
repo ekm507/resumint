@@ -302,17 +302,8 @@
    KEY VALUE BLOCK
 ========================= */
 
-.theme-ledger .keyvalue-block {
-}
-
-.theme-ledger .keyvalue-row {
-}
-
 .theme-ledger .keyvalue-block-key {
     color: var(--accent-600);
-}
-
-.theme-ledger .keyvalue-block-value {
 }
 
 .theme-ledger .emphasize-none .keyvalue-block-key,

@@ -184,18 +184,6 @@
 
 /* KEY VALUE */
 
-.theme-terminal .keyvalue-block {
-}
-
-.theme-terminal .keyvalue-row {
-}
-
 .theme-terminal .keyvalue-block-key {
     color: var(--accent-600);
-}
-
-.theme-terminal .keyvalue-block-value {
-}
-
-.theme-terminal .keyvalue-block-separator {
 }

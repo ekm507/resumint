@@ -263,17 +263,8 @@
 
 /* KEY VALUE */
 
-.theme-minimal .keyvalue-block {
-}
-
-.theme-minimal .keyvalue-row {
-}
-
 .theme-minimal .keyvalue-block-key {
     color: var(--accent-600);
-}
-
-.theme-minimal .keyvalue-block-value {
 }
 
 .theme-minimal .emphasize-key .keyvalue-block-key {
@@ -281,7 +272,4 @@
 }
 .theme-minimal .emphasize-value .keyvalue-block-value {
     font-weight: 600;
-}
-
-.theme-minimal .keyvalue-block-separator {
 }

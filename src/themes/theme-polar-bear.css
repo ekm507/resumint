@@ -235,18 +235,6 @@
 
 /* KEY VALUE */
 
-.theme-polar-bear .keyvalue-block {
-}
-
-.theme-polar-bear .keyvalue-row {
-}
-
 .theme-polar-bear .keyvalue-block-key {
     color: var(--accent-600);
-}
-
-.theme-polar-bear .keyvalue-block-value {
-}
-
-.theme-polar-bear .keyvalue-block-separator {
 }
