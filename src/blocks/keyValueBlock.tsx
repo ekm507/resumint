@@ -34,19 +34,6 @@ export function KeyValueEditor({ block, update }: any) {
     );
   };
 
-  const onUploadIcon = (index: number, file: File | null) => {
-    if (!file) {
-      updateItem(index, "icon", null);
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      updateItem(index, "icon", reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
-
   return (
     <div className="keyvalue-block-editor">
       <div className="input-list">

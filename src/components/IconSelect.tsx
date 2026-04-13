@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { loadAllIcons } from "../utils/loadIcons";
 
 interface IconSelectProps {
-  value: string | null; // icon src URL
+  value?: string | null; // icon src URL
   onSelect: (iconSrc: string | null) => void;
   dir?: string | null; // optional filter by directory
 }
