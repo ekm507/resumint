@@ -115,15 +115,19 @@ export function ImageEditor({ block, update }: any) {
           </div>
 
           <div style={{ marginTop: 8 }}>
-            <input
-              className="file-upload"
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) handleFile(file);
-              }}
-            />
+            <label className="file-upload">
+              <input
+                className="file-upload"
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleFile(file);
+                }}
+              />
+              Upload Image
+            </label>
           </div>
         </div>
 

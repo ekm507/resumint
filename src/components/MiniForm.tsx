@@ -77,23 +77,25 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
     <div className="editor-form">
       <div className="editor-form-header">
         <button onClick={() => onDelete(form.id)}>❌</button>
-
         <button onClick={() => setCollapsed(!collapsed)}>
           {collapsed ? "▶" : "▼"}
         </button>
-
         <input
           value={form.title}
           onChange={(e) => setForm({ title: e.target.value })}
         />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) handleFile(file);
-          }}
-        />
+        <label className="file-upload">
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFile(file);
+            }}
+          />
+          set Icon
+        </label>
         <button
           type="button"
           onClick={cycleBackground}

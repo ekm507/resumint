@@ -54,6 +54,47 @@ export default function App() {
       <div className="app-toolbar">
         <button
           className="toolbar-button"
+          onClick={() => exportResumeData(forms, layout)}
+        >
+          Export
+        </button>
+
+        <label className="toolbar-button">
+          Import
+          <input
+            type="file"
+            accept="application/json"
+            onChange={handleImport}
+            hidden
+          />
+        </label>
+        <div className="vdivider" />
+
+        <label className="toolbar-color">
+          <span>Accent:</span>
+          <input
+            type="color"
+            value={accentColor ?? "#F0F0F0"}
+            onChange={(e) => setAccentColor(e.target.value)}
+          />
+        </label>
+
+        <button className="toolbar-reset" onClick={() => setAccentColor(null)}>
+          Reset
+        </button>
+
+        <div className="vdivider" />
+
+        <label>theme</label>
+        <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+          {themeNames.map((name) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
+        <button
+          className="toolbar-button"
           onClick={() => {
             const panel = document.getElementById("editor-panel");
             if (panel) panel.style.display = "none";
@@ -63,36 +104,6 @@ export default function App() {
         >
           Print
         </button>
-
-        <button
-          className="toolbar-button"
-          onClick={() => exportResumeData(forms, layout)}
-        >
-          export data
-        </button>
-
-        <input
-          type="file"
-          accept="application/json"
-          className="toolbar-file"
-          onChange={handleImport}
-        />
-
-        <input
-          type="color"
-          value={accentColor ?? "#F0F0F0"}
-          onChange={(e) => setAccentColor(e.target.value)}
-        />
-
-        <button onClick={() => setAccentColor(null)}>Theme default</button>
-
-        <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-          {themeNames.map((name) => (
-            <option key={name} value={name}>
-              {name}
-            </option>
-          ))}
-        </select>
       </div>
 
       <div className="app-layout">

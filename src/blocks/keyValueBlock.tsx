@@ -51,30 +51,28 @@ export function KeyValueEditor({ block, update }: any) {
       <div className="input-list">
         {items.map((item: any, i: number) => (
           <div key={i} className="input-row">
-            <div className="icon-column">
-              {item.icon ? (
-                <div className="keyvalue-icon-preview">
-                  <img
-                    src={item.icon}
-                    alt="icon"
-                    className="keyvalue-icon-img"
-                  />
-                  <button
-                    className="keyvalue-icon-remove"
-                    onClick={() => updateItem(i, "icon", null)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              ) : (
+            {item.icon ? (
+              <div className="keyvalue-icon-preview">
+                <img src={item.icon} alt="icon" className="keyvalue-icon-img" />
+                <button
+                  className="item-remove-text"
+                  onClick={() => updateItem(i, "icon", null)}
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <label className="file-upload">
                 <input
                   type="file"
                   accept="image/*"
                   className="file-upload"
+                  hidden
                   onChange={(e) => onUploadIcon(i, e.target.files?.[0] || null)}
                 />
-              )}
-            </div>
+                Icon
+              </label>
+            )}
             <input
               className="text-input"
               placeholder="key"
