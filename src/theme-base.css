@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+.resume {
+    @apply flex flex-col;
+}
+
 .resume-section {
     overflow-wrap: break-word;
     word-break: break-word;

@@ -16,11 +16,7 @@
 /* ROOT */
 
 .theme-polar-bear.resume {
-    @apply flex flex-col gap-5 p-6 bg-slate-50 text-sm min-w-[420px] text-slate-800;
-}
-
-.theme-polar-bear .resume-page {
-    @apply bg-slate-50;
+    @apply gap-5 p-6 bg-slate-50 text-sm min-w-[420px] text-slate-800;
 }
 
 /* SECTIONS */

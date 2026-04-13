@@ -17,12 +17,8 @@
    ROOT
 ========================= */
 
-.theme-modern.resume {
-    @apply flex flex-col gap-6 p-6 bg-white text-sm text-gray-800 min-w-[420px];
-}
-
-.theme-modern .resume-page {
-    @apply bg-white;
+.theme-modern .resume {
+    @apply gap-6 p-6 bg-white text-sm text-gray-800 min-w-[420px];
 }
 
 /* =========================

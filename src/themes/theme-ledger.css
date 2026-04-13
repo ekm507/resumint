@@ -17,12 +17,8 @@
    ROOT
 ========================= */
 
-.theme-ledger.resume {
-    @apply flex flex-col gap-8 p-8 bg-white text-sm text-gray-900 min-w-[420px];
-}
-
-.theme-ledger .resume-page {
-    @apply bg-white;
+.resume {
+    @apply gap-8 p-8 bg-white text-sm text-gray-900 min-w-[420px];
 }
 
 /* =========================

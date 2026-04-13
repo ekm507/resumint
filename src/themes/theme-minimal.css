@@ -16,11 +16,7 @@
 /* ROOT */
 
 .theme-minimal.resume {
-    @apply flex flex-col gap-6 p-6 bg-white text-sm text-gray-900 min-w-[420px];
-}
-
-.theme-minimal .resume-page {
-    @apply bg-white;
+    @apply gap-6 p-6 bg-white text-sm text-gray-900 min-w-[420px];
 }
 
 /* SECTIONS */
