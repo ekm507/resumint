@@ -86,13 +86,15 @@ export function MultiColumnEditor({ block, update }: any) {
             />
           </div>
 
-          <input
-            type="range"
-            min={0}
-            max={10}
-            value={dividerWidth}
-            onChange={(e) => setProp("dividerWidth", Number(e.target.value))}
-          />
+          <div className="option-group">
+            <input
+              type="range"
+              min={0}
+              max={10}
+              value={dividerWidth}
+              onChange={(e) => setProp("dividerWidth", Number(e.target.value))}
+            />
+          </div>
         </div>
       </AdvancedOptions>
 
