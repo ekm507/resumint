@@ -4,6 +4,7 @@ import BlockEditor from "./BlockEditor";
 import { getBlock } from "../blocks/blockRegistry";
 import { useBlockOps } from "../hooks/useBlockOps";
 import AddBlockMenu from "./AddBlockMenu";
+import IconSelect from "./IconSelect";
 
 interface Props {
   form: FormStructure;
@@ -53,24 +54,6 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
     setForm({ background: next });
   };
 
-  const handleFile = async (file: File) => {
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = () => {
-      const base64 = reader.result;
-      if (typeof base64 === "string") {
-        setForm({ icon: base64 });
-      }
-    };
-
-    reader.onerror = (error) => {
-      console.error("Error converting file to base64:", error);
-    };
-  };
-
   const current = form.background ?? "transparent";
 
   return (
@@ -84,18 +67,12 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
           value={form.title}
           onChange={(e) => setForm({ title: e.target.value })}
         />
-        <label className="file-upload">
-          <input
-            type="file"
-            accept="image/*"
-            hidden
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handleFile(file);
-            }}
-          />
-          set Icon
-        </label>
+        <IconSelect
+          dir="social"
+          value={form.icon}
+          onSelect={(i) => setForm({ icon: i })}
+        />
+
         <button
           type="button"
           onClick={cycleBackground}
