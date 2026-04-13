@@ -2,6 +2,7 @@ import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
+import IconSelect from "../components/IconSelect";
 
 export function KeyValueEditor({ block, update }: any) {
   const { items = [], emphasis = "key" } = block.props || {};
@@ -51,28 +52,11 @@ export function KeyValueEditor({ block, update }: any) {
       <div className="input-list">
         {items.map((item: any, i: number) => (
           <div key={i} className="input-row">
-            {item.icon ? (
-              <div className="keyvalue-icon-preview">
-                <img src={item.icon} alt="icon" className="keyvalue-icon-img" />
-                <button
-                  className="item-remove-text"
-                  onClick={() => updateItem(i, "icon", null)}
-                >
-                  Remove
-                </button>
-              </div>
-            ) : (
-              <label className="file-upload">
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="file-upload"
-                  hidden
-                  onChange={(e) => onUploadIcon(i, e.target.files?.[0] || null)}
-                />
-                Icon
-              </label>
-            )}
+            <IconSelect
+              value={item.icon}
+              onSelect={(icon) => updateItem(i, "icon", icon)}
+            />
+
             <input
               className="text-input"
               placeholder="key"
