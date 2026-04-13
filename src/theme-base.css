@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+.resume-section-header {
+    @apply flex gap-4 items-center;
+}
+
 .keyvalue-block {
     @apply flex flex-col;
 }

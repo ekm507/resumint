@@ -38,12 +38,11 @@
     border-top: 4px solid var(--accent-800);
 }
 
-.theme-ledger .resume-section:has(.resume-section-title:empty) {
-    border-top-width: 0;
-    @apply pt-0;
+.theme-ledger .resume-section:not(:has(.resume-section-title)) {
+    @apply border-none;
 }
 
-.theme-ledger .resume-section-title {
+.theme-ledger .resume-section-header {
     @apply text-base font-bold px-2;
     color: #111827;
     position: absolute;
@@ -53,10 +52,6 @@
     background-color: white;
     z-index: 10;
     line-height: 1;
-}
-
-.theme-ledger .resume-section-title:empty {
-    display: none;
 }
 
 .theme-ledger .resume-section-content {
