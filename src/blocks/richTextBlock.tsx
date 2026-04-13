@@ -106,7 +106,7 @@ export function RichTextEditor({ block, update }: any) {
 
   if (!editor) return null;
 
-  function AlignDropdown({ editor }) {
+  function AlignDropdown({ editor }: { editor: any }) {
     const [open, setOpen] = useState(false);
 
     const current = editor.getAttributes("paragraph").textAlign || "left";
@@ -304,7 +304,7 @@ export function RichTextEditor({ block, update }: any) {
 ========================= */
 
 export function RichTextRender({ block }: any) {
-  const { content, size = "md", align = "start" } = block.props || {};
+  const { content, size = "md" } = block.props || {};
   if (!content) return null;
 
   const html = generateHTML(content, [

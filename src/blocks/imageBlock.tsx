@@ -9,7 +9,6 @@ export function ImageEditor({ block, update }: any) {
     src = "",
     alt = "",
     width = 100,
-    align = "center",
     shape = "rounded",
   } = block.props || {};
 
