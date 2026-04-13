@@ -121,7 +121,11 @@ export default function IconSelect({ value, onSelect }: IconSelectProps) {
     <>
       <div className="icon-select-box">
         <button ref={buttonRef} onClick={toggleMenu} className="icon-preview">
-          {value ? <img src={value} className="icon-img" /> : "Select icon"}
+          {value ? (
+            <img src={value} className="icon-img" />
+          ) : (
+            <label className="icon-select-label">Select icon</label>
+          )}
         </button>
         {value ? (
           <button

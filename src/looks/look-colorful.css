@@ -576,19 +576,6 @@
 }
 
 /* Icon preview block */
-.look-colorful .keyvalue-icon-preview {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-}
-
-.look-colorful .keyvalue-icon-img {
-    width: 22px;
-    height: 22px;
-    border-radius: 3px;
-    object-fit: cover;
-}
 
 .look-colorful .item-remove-text {
     @apply text-white bg-gray-400 p-1 rounded cursor-pointer h-4 items-center;
@@ -598,7 +585,51 @@
 .look-colorful .input-row:hover .item-remove-text {
     @apply bg-rose-400 hover:bg-rose-600;
 }
+/* =========================================================
+   ICON SELECT COMPONENT
+========================================================= */
 
-.look-colorful .file-upload {
-    @apply px-2 border border-indigo-500 bg-indigo-200 rounded-xl hover:cursor-pointer hover:bg-indigo-400 items-center py-1;
+.look-colorful .icon-select-box {
+    @apply flex flex-col items-center;
+}
+
+.look-colorful .icon-select-trigger {
+    @apply flex items-center gap-2 p-1 text-xs font-medium
+           rounded-lg bg-white border border-indigo-300 shadow
+           hover:bg-indigo-500 hover:text-white transition cursor-pointer;
+}
+
+.look-colorful .icon-preview {
+    @apply flex items-center gap-2 p-1 text-xs font-medium
+           rounded-lg bg-white border border-indigo-300 shadow
+           hover:bg-indigo-500 hover:text-white transition cursor-pointer;
+}
+
+.look-colorful .icon-img {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    object-fit: cover;
+}
+
+.look-colorful .icon-select-menu {
+    @apply absolute z-30 p-2 min-w-45 bg-white border border-indigo-200 rounded-xl shadow-lg backdrop-blur-xl;
+}
+
+/* the grid of icons */
+.look-colorful .grid-menu {
+    @apply grid grid-cols-4 gap-2 p-1;
+}
+
+/* button for each icon */
+.look-colorful .icon-item {
+    @apply flex items-center justify-center
+           rounded-lg border border-indigo-200 bg-white
+           hover:bg-indigo-100 hover:border-indigo-300
+           transition cursor-pointer p-1;
+}
+
+/* the icon image itself */
+.look-colorful .icon-box {
+    @apply w-6 h-6 object-contain opacity-80;
 }
