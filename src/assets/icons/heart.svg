@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="8.4666672mm"
+   height="7.6729131mm"
+   viewBox="0 0 8.4666672 7.6729131"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   sodipodi:docname="heart.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="3.9710672"
+     inkscape:cx="34.751363"
+     inkscape:cy="59.178046"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-99.483333,-94.985417)">red d=&quot;M23 0c-3 0-5 2-7 4C14 2 12 0 9 0 4 0 0 4 0 9c0 9 16 20 16 20s16-11 16-20c0-5-4-9-9-9z&quot;/&gt;red d=&quot;M23 0c-3 0-5 2-7 4C14 2 12 0 9 0 4 0 0 4 0 9c0 9 16 20 16 20s16-11 16-20c0-5-4-9-9-9z&quot;/&gt;<path
+   d="m 105.56875,94.985417 c -0.79375,0 -1.32292,0.529166 -1.85208,1.058333 -0.52917,-0.529167 -1.05834,-1.058333 -1.85209,-1.058333 -1.32291,0 -2.381247,1.058333 -2.381247,2.38125 0,2.38125 4.233337,5.291663 4.233337,5.291663 0,0 4.23333,-2.910413 4.23333,-5.291663 0,-1.322917 -1.05833,-2.38125 -2.38125,-2.38125 z"
+   fill="#ff0000"
+   id="path1"
+   style="stroke-width:0.264583" />
+</g>
+</svg>
