@@ -3,11 +3,12 @@ import { createPortal } from "react-dom";
 import { loadAllIcons } from "../utils/loadIcons";
 
 interface IconSelectProps {
-  value: string | null; // icon name OR icon URL
-  onSelect: (iconName: string | null) => void;
+  value: string | null; // icon src URL
+  onSelect: (iconSrc: string | null) => void;
+  dir?: string | null; // optional filter by directory
 }
 
-export default function IconSelect({ value, onSelect }: IconSelectProps) {
+export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPos, setMenuPos] = useState<{
     top: number;
@@ -15,20 +16,28 @@ export default function IconSelect({ value, onSelect }: IconSelectProps) {
     direction: "up" | "down";
   } | null>(null);
 
-  const [icons, setIcons] = useState<{ name: string; src: string }[]>([]);
+  const [icons, setIcons] = useState<
+    { name: string; path: string; src: string }[]
+  >([]);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement | null>(null);
 
-  // load icons once
+  // Load all icons once
   useEffect(() => {
     loadAllIcons().then(setIcons);
   }, []);
 
+  // Portal target
   useEffect(() => {
     panelRef.current = document.getElementById("editor-panel");
   }, []);
+
+  // Filter icons by directory if dir prop is provided
+  const filteredIcons = dir
+    ? icons.filter((i) => i.path === dir || i.path.startsWith(dir + "/"))
+    : icons;
 
   function calculatePosition() {
     const btn = buttonRef.current?.getBoundingClientRect();
@@ -55,27 +64,23 @@ export default function IconSelect({ value, onSelect }: IconSelectProps) {
     let left = menuPos.left;
     let top = menuPos.top;
 
-    const margin = 8; // padding from screen edges
+    const margin = 8;
 
     const minLeft = margin + menuEl.width / 2;
     const maxLeft = window.innerWidth - margin - menuEl.width / 2;
 
-    // clamp horizontally
     left = Math.min(Math.max(left, minLeft), maxLeft);
 
     if (menuPos.direction === "down") {
-      // clamp down direction
       if (top + menuEl.height > window.innerHeight - margin) {
         top = window.innerHeight - margin - menuEl.height;
       }
     } else {
-      // clamp up direction
       if (top - menuEl.height < margin) {
         top = margin + menuEl.height;
       }
     }
 
-    // Write back adjusted values
     menuRef.current.style.left = left + "px";
     menuRef.current.style.top = top + "px";
   }, [isOpen, menuPos]);
@@ -127,7 +132,8 @@ export default function IconSelect({ value, onSelect }: IconSelectProps) {
             <label className="icon-select-label">Select icon</label>
           )}
         </button>
-        {value ? (
+
+        {value && (
           <button
             className="item-remove-text"
             onClick={() => {
@@ -137,7 +143,7 @@ export default function IconSelect({ value, onSelect }: IconSelectProps) {
           >
             Remove
           </button>
-        ) : null}
+        )}
       </div>
 
       {isOpen &&
@@ -158,9 +164,9 @@ export default function IconSelect({ value, onSelect }: IconSelectProps) {
             }}
           >
             <div className="grid-menu">
-              {icons.map((ic) => (
+              {filteredIcons.map((ic) => (
                 <button
-                  key={ic.name}
+                  key={ic.path}
                   className="icon-item"
                   onClick={() => {
                     onSelect(ic.src);

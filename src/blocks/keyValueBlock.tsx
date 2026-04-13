@@ -53,6 +53,7 @@ export function KeyValueEditor({ block, update }: any) {
         {items.map((item: any, i: number) => (
           <div key={i} className="input-row">
             <IconSelect
+              dir="social"
               value={item.icon}
               onSelect={(icon) => updateItem(i, "icon", icon)}
             />
