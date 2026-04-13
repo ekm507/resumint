@@ -1,4 +1,4 @@
-import { useState, useRef, type ChangeEvent } from "react";
+import { useState, useRef, type ChangeEvent, useEffect } from "react";
 import MiniForm from "./components/MiniForm";
 import DraggableLayout from "./components/DraggableLayout";
 import { useReactToPrint } from "react-to-print";
@@ -28,6 +28,17 @@ export default function App() {
     documentTitle: "resume",
   });
 
+  useEffect(() => {
+    document.body.classList.remove(
+      ...Array.from(document.body.classList).filter((c) =>
+        c.startsWith("look-"),
+      ),
+    );
+    document.body.classList.add("look-" + lookName);
+
+    return () => document.body.classList.remove("look-" + lookName);
+  }, [lookName]);
+
   async function handleImport(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -39,7 +50,7 @@ export default function App() {
   }
 
   return (
-    <div className={"app-root look-" + lookName}>
+    <div className="app-root">
       <div className="app-toolbar">
         <button
           className="toolbar-button"
