@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+.keyvalue-block {
+    @apply flex flex-col;
+}
+
+.keyvalue-row {
+    @apply grid grid-cols-3 gap-1 py-1 w-full;
+    grid-template-columns: 2fr 5fr 7fr;
+    align-items: start;
+    justify-items: start;
+}
+
+.keyvalue-block-render-icon {
+    @apply w-max;
+}
+
+.keyvalue-block-key-icon-container {
+    @apply flex gap-2 items-start justify-start w-full;
+}
+
+.keyvalue-block-key {
+    @apply min-w-0;
+    color: var(--accent-600);
+}
+
+.keyvalue-block-value {
+    @apply min-w-0 w-full;
+}
