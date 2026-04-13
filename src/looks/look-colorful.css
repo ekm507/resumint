@@ -552,6 +552,11 @@
     justify-content: center;
 }
 
+.look-colorful .file-upload {
+    @apply text-sm px-3 py-1.5 rounded-lg border border-indigo-300
+           bg-indigo-50 hover:bg-indigo-100 cursor-pointer;
+}
+
 /* hide actual file input */
 .look-colorful .keyvalue-icon-input::-webkit-file-upload-button {
     visibility: hidden;
