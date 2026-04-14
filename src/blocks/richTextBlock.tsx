@@ -3,6 +3,8 @@ import { registerBlock } from "./blockRegistry";
 import { useEditor, EditorContent, useEditorState } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
+import Heading from "@tiptap/extension-heading";
+import TextAlign from "@tiptap/extension-text-align";
 import { generateHTML } from "@tiptap/html";
 
 import {
@@ -21,8 +23,7 @@ import {
   TextAlignEnd,
   TextAlignJustify,
 } from "lucide-react";
-import Heading from "@tiptap/extension-link";
-import TextAlign from "@tiptap/extension-text-align";
+
 import { useState } from "react";
 
 /* =========================
@@ -59,9 +60,12 @@ export function RichTextEditor({ block, update }: any) {
 
   const editor = useEditor({
     extensions: [
+      // Disable heading & link from StarterKit to avoid duplicates
       StarterKit.configure({
-        heading: { levels: [1, 2, 3, 4] },
+        heading: false,
+        link: false,
       }),
+
       Heading.extend({
         addKeyboardShortcuts() {
           return {
@@ -72,13 +76,17 @@ export function RichTextEditor({ block, update }: any) {
             "Ctrl-0": () => this.editor.commands.setParagraph(),
           };
         },
+      }).configure({
+        levels: [1, 2, 3, 4],
       }),
+
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
           class: "richtext-link",
         },
       }),
+
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
@@ -286,6 +294,7 @@ export function RichTextEditor({ block, update }: any) {
         >
           <LinkIcon size={14} />
         </ToolbarButton>
+
         <div className="richtext-divider-v" />
 
         <AlignDropdown editor={editor} />
@@ -308,7 +317,8 @@ export function RichTextRender({ block }: any) {
   if (!content) return null;
 
   const html = generateHTML(content, [
-    StarterKit,
+    StarterKit.configure({ heading: false, link: false }),
+    Heading.configure({ levels: [1, 2, 3, 4] }),
     Link,
     TextAlign.configure({ types: ["heading", "paragraph"] }),
   ]);
