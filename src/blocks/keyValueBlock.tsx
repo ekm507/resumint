@@ -38,7 +38,7 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
   };
 
   const addItem = () => {
-    setProp("items", [...items, { key: "", value: "", icon: null }]);
+    setProp("items", [...items, { key: "", value: "", link: "", icon: null }]);
   };
 
   const removeItem = (index: number) => {
@@ -83,13 +83,13 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
               </button>
             )}
 
-            {item.link != "" ? (
+            {item.link != "" && (
               <input
                 className="text-input"
                 placeholder="link"
                 onChange={(e) => updateItem(i, "link", e.target.value)}
               ></input>
-            ) : null}
+            )}
             <button
               className="item-remove-button"
               onClick={() => removeItem(i)}
@@ -122,7 +122,7 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
   );
 }
 
-export function KeyValueRender({ block }: any) {
+export function KeyValueRender({ block }: KeyValueProps) {
   const { items = [], emphasis = "key" } = block.props || {};
 
   return (
