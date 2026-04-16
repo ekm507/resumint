@@ -52,6 +52,24 @@ export default function App() {
     setLayout(data.layout);
   }
 
+  useEffect(() => {
+    const saved = localStorage.getItem("currentResume");
+    if (!saved) return;
+
+    try {
+      const data = JSON.parse(saved);
+      setForms(data.forms);
+      setLayout(data.layout);
+    } catch (err) {
+      console.error("Cannot load autosave:", err);
+    }
+  }, []);
+
+  useEffect(() => {
+    const data = { forms, layout };
+    localStorage.setItem("currentResume", JSON.stringify(data));
+  }, [forms, layout]);
+
   return (
     <div className="app-root">
       <div className="app-toolbar">
