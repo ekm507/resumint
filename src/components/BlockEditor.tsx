@@ -36,45 +36,48 @@ export default function BlockEditor({
   return (
     <div className="block-editor">
       <div className="block-editor-header">
-        <select
-          className="block-type-select"
-          value={block.blockType}
-          onChange={(e) => setBlockType(block.id, e.target.value)}
-        >
-          {blocks.map((b) => (
-            <option key={b.type} value={b.type}>
-              {b.label}
-            </option>
-          ))}
-        </select>
+        {!block.isTemplate && (
+          <select
+            className="block-type-select"
+            value={block.blockType}
+            onChange={(e) => setBlockType(block.id, e.target.value)}
+          >
+            {blocks.map((b) => (
+              <option key={b.type} value={b.type}>
+                {b.label}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
-      <div className="block-hover-controls">
-        <button
-          className="block-hover-button"
-          onClick={moveUp}
-          title="move block up"
-        >
-          ↑
-        </button>
+      {!block.isTemplate && (
+        <div className="block-hover-controls">
+          <button
+            className="block-hover-button"
+            onClick={moveUp}
+            title="move block up"
+          >
+            ↑
+          </button>
 
-        <button
-          className="block-hover-button"
-          onClick={moveDown}
-          title="move block down"
-        >
-          ↓
-        </button>
+          <button
+            className="block-hover-button"
+            onClick={moveDown}
+            title="move block down"
+          >
+            ↓
+          </button>
 
-        <button
-          className="block-hover-button text-red-400"
-          title="remove block"
-          onClick={() => deleteBlock(block.id)}
-        >
-          ✕
-        </button>
-      </div>
-
+          <button
+            className="block-hover-button text-red-400"
+            title="remove block"
+            onClick={() => deleteBlock(block.id)}
+          >
+            ✕
+          </button>
+        </div>
+      )}
       <Editor
         block={block}
         update={(newBlock: Block) => updateBlock(block.id, newBlock)}

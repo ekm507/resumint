@@ -12,6 +12,7 @@ export interface Block {
   blockType: BlockType;
   props?: Record<string, any>;
   children?: Block[];
+  isTemplate?: boolean;
 }
 
 export type SplitBlock = Block & {

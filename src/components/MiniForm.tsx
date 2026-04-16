@@ -79,11 +79,13 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
           value={form.title}
           onChange={(e) => setForm({ title: e.target.value })}
         />
-        <IconSelect
-          dir="form"
-          value={form.icon}
-          onSelect={(i) => setForm({ icon: i })}
-        />
+        {!form.isTemplate && (
+          <IconSelect
+            dir="form"
+            value={form.icon}
+            onSelect={(i) => setForm({ icon: i })}
+          />
+        )}
 
         <button
           type="button"
@@ -95,7 +97,7 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
 
       {!collapsed && (
         <div className="editor-form-body">
-          {form.blocks.length === 0 ? (
+          {form.blocks.length === 0 && !form.isTemplate ? (
             <AddBlockMenu
               onSelect={(type) => {
                 addFirstBlock(type);
@@ -105,19 +107,21 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
             form.blocks.map((block) => (
               <Fragment key={block.id}>
                 <BlockEditor
-                  block={block}
+                  block={{ ...block, isTemplate: form.isTemplate }}
                   updateBlock={updateBlock}
                   deleteBlock={deleteBlock}
                   setBlockType={setBlockType}
                   moveUp={() => moveBlock(block.id, "up")}
                   moveDown={() => moveBlock(block.id, "down")}
                 />
-                <AddBlockMenu
-                  key={"menu-" + block.id}
-                  onSelect={(type) => {
-                    insertBlockAfter(block.id, type);
-                  }}
-                />
+                {!form.isTemplate && (
+                  <AddBlockMenu
+                    key={"menu-" + block.id}
+                    onSelect={(type) => {
+                      insertBlockAfter(block.id, type);
+                    }}
+                  />
+                )}
               </Fragment>
             ))
           )}
