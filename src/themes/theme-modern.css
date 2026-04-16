@@ -47,11 +47,6 @@
    LAYOUT
 ========================= */
 
-.theme-modern .resume-columns {
-    @apply grid gap-6;
-    grid-template-columns: 2fr 1fr;
-}
-
 .theme-modern .resume-column,
 .theme-modern .column-left,
 .theme-modern .column-right {
