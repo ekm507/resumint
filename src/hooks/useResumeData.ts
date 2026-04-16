@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormStructure, LayoutItem } from "../utils/types";
 import { initialForms, initialLayout } from "../data/initialData";
 
@@ -16,17 +16,19 @@ export function useResumeData() {
   }
 
   function addForm(template?: FormStructure, layout?: "left" | "right") {
-    const last = forms[forms.length - 1];
-    const lastID = last ? +last.id : -1;
-    const newID = String(lastID + 1);
+    const newID = crypto.randomUUID();
 
-    if (template) template.id = newID;
-
-    const newForm: FormStructure = template || {
-      id: newID,
-      title: "",
-      blocks: [],
-    };
+    const newForm: FormStructure = template
+      ? {
+          ...template,
+          id: newID,
+          blocks: template.blocks ? [...template.blocks] : [],
+        }
+      : {
+          id: newID,
+          title: "",
+          blocks: [],
+        };
 
     const formLayout = layout || "left";
     setForms((prev) => [...prev, newForm]);
