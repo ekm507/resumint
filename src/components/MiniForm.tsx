@@ -59,8 +59,18 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
   return (
     <div className="editor-form">
       <div className="editor-form-header">
-        <button onClick={() => onDelete(form.id)}>❌</button>
-        <button onClick={() => setCollapsed(!collapsed)}>
+        <button
+          onClick={() => onDelete(form.id)}
+          className="form-remove-button"
+          title="remove form"
+        >
+          ×
+        </button>
+        <button
+          className="form-collapse-button"
+          onClick={() => setCollapsed(!collapsed)}
+          title={collapsed ? "open form" : "close form"}
+        >
           {collapsed ? "▶" : "▼"}
         </button>
         <input

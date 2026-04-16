@@ -125,6 +125,14 @@
 
 /* BLOCK EDITOR */
 
+.look-colorful .form-remove-button {
+    @apply bg-rose-200 border border-rose-400 w-8 h-8 rounded text-3xl text-white hover:shadow hover:bg-rose-400;
+}
+
+.look-colorful .form-collapse-button {
+    @apply border border-yellow-300 bg-yellow-50 w-8 h-8 rounded hover:shadow hover:bg-yellow-300;
+}
+
 .look-colorful .block-editor {
     @apply flex flex-col gap-2 relative border-b border-indigo-200;
 }
