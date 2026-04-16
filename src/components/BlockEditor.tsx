@@ -50,16 +50,25 @@ export default function BlockEditor({
       </div>
 
       <div className="block-hover-controls">
-        <button className="block-hover-button" onClick={moveUp}>
+        <button
+          className="block-hover-button"
+          onClick={moveUp}
+          title="move block up"
+        >
           ↑
         </button>
 
-        <button className="block-hover-button" onClick={moveDown}>
+        <button
+          className="block-hover-button"
+          onClick={moveDown}
+          title="move block down"
+        >
           ↓
         </button>
 
         <button
           className="block-hover-button text-red-400"
+          title="remove block"
           onClick={() => deleteBlock(block.id)}
         >
           ✕

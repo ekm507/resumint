@@ -74,6 +74,8 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
           {collapsed ? "▶" : "▼"}
         </button>
         <input
+          placeholder="title"
+          title="form title"
           value={form.title}
           onChange={(e) => setForm({ title: e.target.value })}
         />

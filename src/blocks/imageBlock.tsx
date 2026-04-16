@@ -130,7 +130,7 @@ export function ImageEditor({ block, update }: any) {
           </div>
         </div>
 
-        <div className="image-editor-preview" title={srcLabel}>
+        <div className="image-editor-preview" title="image thumbnail preview">
           {canPreview ? (
             <img src={src} alt={alt || "image preview"} />
           ) : (

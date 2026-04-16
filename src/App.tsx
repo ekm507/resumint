@@ -118,7 +118,11 @@ export default function App() {
             </div>
           ))}
 
-          <button className="editor-add-button" onClick={addForm}>
+          <button
+            className="editor-add-button"
+            onClick={addForm}
+            title="add form"
+          >
             +
           </button>
         </div>

@@ -13,7 +13,11 @@ export default function AdvancedOptions({ block, update, children }: any) {
   return (
     <div className="block-advanced">
       {!advanced && (
-        <button className="block-advanced-toggle" onClick={toggle}>
+        <button
+          className="block-advanced-toggle"
+          onClick={toggle}
+          title="show advanced options"
+        >
           Advanced options ▾
         </button>
       )}
@@ -22,7 +26,11 @@ export default function AdvancedOptions({ block, update, children }: any) {
         <div className="block-advanced-open">
           <div className="block-advanced-controls">{children}</div>
 
-          <button className="block-advanced-toggle" onClick={toggle}>
+          <button
+            className="block-advanced-toggle"
+            onClick={toggle}
+            title="hide advanced options"
+          >
             Hide advanced ▴
           </button>
         </div>

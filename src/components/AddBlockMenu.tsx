@@ -98,6 +98,7 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
       <button
         ref={buttonRef}
         className="add-block-trigger"
+        title="create a new block here"
         onClick={toggleMenu}
       >
         +
