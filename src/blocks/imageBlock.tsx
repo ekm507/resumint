@@ -81,24 +81,6 @@ export function ImageEditor({ block, update }: any) {
     }
   }, [src]);
 
-  // A short label for the current src to avoid showing entire base64
-  const srcLabel = useMemo(() => {
-    if (!src) return "No image selected";
-    if (src.startsWith("data:image/")) {
-      const type = src.slice(5, src.indexOf(";")) || "image";
-      return `Embedded ${type}`;
-    }
-    try {
-      const u = new URL(src);
-      // show origin + last path part
-      const parts = u.pathname.split("/").filter(Boolean);
-      const tail = parts.length ? parts[parts.length - 1] : "";
-      return `${u.host}${tail ? " / " + decodeURIComponent(tail) : ""}`;
-    } catch {
-      return "Custom URL";
-    }
-  }, [src]);
-
   return (
     <div className="block-editor">
       <div className="editor-row">
