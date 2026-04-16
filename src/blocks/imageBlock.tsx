@@ -123,6 +123,7 @@ export function ImageEditor({ block, update }: any) {
 
       <AdvancedOptions block={block} update={update}>
         <input
+          className="text-input"
           placeholder="alt text"
           value={alt}
           onChange={(e) => setProp("alt", e.target.value)}
