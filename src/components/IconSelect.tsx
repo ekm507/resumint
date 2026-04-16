@@ -174,6 +174,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
                 <button
                   key={ic.path}
                   className="icon-item"
+                  title={ic.name}
                   onClick={() => {
                     onSelect(ic.src);
                     setIsOpen(false);
