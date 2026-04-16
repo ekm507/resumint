@@ -87,6 +87,7 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
               <input
                 className="text-input"
                 placeholder="link"
+                value={item.link === "https://" ? "" : item.link}
                 onChange={(e) => updateItem(i, "link", e.target.value)}
               ></input>
             )}
@@ -158,7 +159,14 @@ registerBlock({
       id: "",
       blockType: "keyValue",
       props: {
-        items: [{ key: "", value: "", icon: null, link: "" }],
+        items: [
+          {
+            key: "",
+            value: "",
+            icon: null,
+            link: "",
+          },
+        ],
         emphasis: "key",
       },
     };
