@@ -72,6 +72,11 @@ const formTemplates: Record<string, FormStructure> = {
       },
     ],
   },
+  custom: {
+    id: "",
+    title: "",
+    blocks: [],
+  },
 };
 
 export const formTemplateOptions: DropdownOption<FormStructure>[] =
