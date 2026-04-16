@@ -331,6 +331,10 @@
     @apply text-base opacity-80;
 }
 
+.look-colorful .icon-remove-text {
+    @apply hover:bg-rose-400;
+}
+
 .look-colorful .add-block-label {
     @apply text-xs;
 }

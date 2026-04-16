@@ -125,7 +125,12 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
   return (
     <>
       <div className="icon-select-box">
-        <button ref={buttonRef} onClick={toggleMenu} className="icon-preview">
+        <button
+          ref={buttonRef}
+          onClick={toggleMenu}
+          className="icon-preview"
+          title="select icon"
+        >
           {value ? (
             <img src={value} className="icon-img" />
           ) : (
@@ -135,7 +140,8 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
 
         {value && (
           <button
-            className="item-remove-text"
+            className="item-remove-text icon-remove-text"
+            title="remove icon"
             onClick={() => {
               onSelect(null);
               setIsOpen(false);
