@@ -4,8 +4,9 @@ import DraggableLayout from "./components/DraggableLayout";
 import { useReactToPrint } from "react-to-print";
 import { useResumeData } from "./hooks/useResumeData";
 import { exportResumeData, importResumeData } from "./utils/storage";
-
 import { themeNames } from "./themes";
+import { DropdownMenu } from "./components/DropDownMenu";
+import { formTemplateOptions } from "./data/formTemplates";
 import { generateAccentPalette } from "./utils/theming";
 
 import "./blocks";
@@ -15,7 +16,9 @@ export default function App() {
     useResumeData();
 
   const [theme, setTheme] = useState("modern");
+
   const lookName = "colorful";
+
   const [accentColor, setAccentColor] = useState<string | null>(null);
   const accentPalette = accentColor
     ? generateAccentPalette(accentColor)
@@ -93,6 +96,7 @@ export default function App() {
             </option>
           ))}
         </select>
+
         <button
           className="toolbar-button"
           onClick={() => {
@@ -118,13 +122,13 @@ export default function App() {
             </div>
           ))}
 
-          <button
-            className="editor-add-button"
-            onClick={addForm}
-            title="add form"
-          >
-            +
-          </button>
+          <div className="editor-add-button" title="add form">
+            <DropdownMenu
+              options={formTemplateOptions}
+              onChange={(template) => addForm(template)}
+              text="add form"
+            />
+          </div>
         </div>
 
         <div

@@ -15,19 +15,22 @@ export function useResumeData() {
     setLayout((prev) => prev.filter((l) => l.id !== id));
   }
 
-  function addForm() {
+  function addForm(template?: FormStructure, layout?: "left" | "right") {
     const last = forms[forms.length - 1];
     const lastID = last ? +last.id : -1;
     const newID = String(lastID + 1);
 
-    const newForm: FormStructure = {
+    if (template) template.id = newID;
+
+    const newForm: FormStructure = template || {
       id: newID,
       title: "",
       blocks: [],
     };
 
+    const formLayout = layout || "left";
     setForms((prev) => [...prev, newForm]);
-    setLayout((prev) => [...prev, { id: newID, column: "left" }]);
+    setLayout((prev) => [...prev, { id: newID, column: formLayout }]);
   }
 
   return {
