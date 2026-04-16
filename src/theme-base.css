@@ -4,6 +4,14 @@
     @apply flex flex-col;
 }
 
+.theme-modern .resume-columns {
+    --grid-template-columns: 3fr 2fr;
+
+    @apply grid gap-3;
+    direction: ltr;
+    grid-template-columns: var(--grid-template-columns);
+}
+
 .resume-section {
     overflow-wrap: break-word;
     word-break: break-word;
