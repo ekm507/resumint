@@ -5,6 +5,7 @@ const icons = category_icons("form");
 
 const formTemplates: Record<string, FormStructure> = {
   profile: {
+    isTemplate: true,
     id: "",
     title: "",
     blocks: [
@@ -48,6 +49,7 @@ const formTemplates: Record<string, FormStructure> = {
   },
 
   summary: {
+    isTemplate: true,
     id: "",
     title: "خلاصه‌ی رزومه",
     icon: icons["cv"],
@@ -76,6 +78,7 @@ const formTemplates: Record<string, FormStructure> = {
   },
 
   languages: {
+    isTemplate: true,
     id: "",
     title: "زبان‌ها",
     icon: icons["language"],
@@ -95,6 +98,7 @@ const formTemplates: Record<string, FormStructure> = {
   },
 
   contact: {
+    isTemplate: true,
     id: "",
     title: "ارتباط",
     icon: icons["contact"],
@@ -114,6 +118,7 @@ const formTemplates: Record<string, FormStructure> = {
   },
 
   skills: {
+    isTemplate: true,
     id: "",
     title: "مهارت‌ها",
     icon: icons["tools"],
@@ -132,6 +137,7 @@ const formTemplates: Record<string, FormStructure> = {
   },
 
   experience: {
+    isTemplate: true,
     id: "",
     title: "سابقه‌ی شغلی",
     icon: icons["work"],
@@ -196,6 +202,7 @@ const formTemplates: Record<string, FormStructure> = {
   },
 
   projects: {
+    isTemplate: true,
     id: "",
     title: "پروژه‌ها",
     icon: icons["project"],
@@ -244,11 +251,18 @@ const formTemplates: Record<string, FormStructure> = {
       },
     ],
   },
+  custom: {
+    isTemplate: false,
+    id: "",
+    title: "",
+    blocks: [],
+  },
 };
 
 export const formTemplateOptions: DropdownOption<FormStructure>[] =
   Object.entries(formTemplates).map(([name, form]) => ({
     value: form,
     label: form.title || name,
+    key: name,
     icon: form.icon ? <img src={form.icon} /> : null,
   }));

@@ -15,15 +15,22 @@ export function useResumeData() {
     setLayout((prev) => prev.filter((l) => l.id !== id));
   }
 
+  function cloneFormTemplate(template: FormStructure): FormStructure {
+    return {
+      ...template,
+      id: crypto.randomUUID(),
+      blocks: template.blocks.map((block) => ({
+        ...block,
+        id: crypto.randomUUID(),
+      })),
+    };
+  }
+
   function addForm(template?: FormStructure, layout?: "left" | "right") {
     const newID = crypto.randomUUID();
 
-    const newForm: FormStructure = template
-      ? {
-          ...template,
-          id: newID,
-          blocks: template.blocks ? [...template.blocks] : [],
-        }
+    const newForm = template
+      ? cloneFormTemplate(template)
       : {
           id: newID,
           title: "",
@@ -32,7 +39,7 @@ export function useResumeData() {
 
     const formLayout = layout || "left";
     setForms((prev) => [...prev, newForm]);
-    setLayout((prev) => [...prev, { id: newID, column: formLayout }]);
+    setLayout((prev) => [...prev, { id: newForm.id, column: formLayout }]);
   }
 
   return {

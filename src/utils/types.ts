@@ -27,10 +27,12 @@ export interface FormStructure {
   blocks: BlockNode[];
   background?: string | null;
   icon?: string | null;
+  isTemplate?: boolean;
 }
 
 export interface DropdownOption<T> {
   value: T;
   label?: string;
   icon?: React.ReactNode; // SVG or any JSX
+  key: string;
 }

@@ -47,7 +47,7 @@ export function DropdownMenu<T>({
         <div className="dropdown-list">
           {options.map((opt) => (
             <div
-              key={String(opt.label)}
+              key={opt.key}
               className="dropdown-item"
               onClick={() => {
                 onChange(opt.value);
