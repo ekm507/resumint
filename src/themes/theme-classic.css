@@ -17,6 +17,7 @@
 
 .theme-classic.resume {
     @apply gap-5 p-6 bg-white text-sm text-gray-900 font-serif min-w-[420px];
+    font-family: "Parastoo";
 }
 
 /* SECTIONS */

@@ -17,8 +17,9 @@
    ROOT
 ========================= */
 
-.theme-modern .resume {
+.theme-modern.resume {
     @apply gap-6 p-6 bg-white text-sm text-gray-800 min-w-[420px];
+    font-family: "Vazirmatn";
 }
 
 /* =========================

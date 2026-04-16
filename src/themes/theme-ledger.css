@@ -19,6 +19,7 @@
 
 .resume {
     @apply gap-8 p-8 bg-white text-sm text-gray-900 min-w-[420px];
+    font-family: "Sahel";
 }
 
 /* =========================
