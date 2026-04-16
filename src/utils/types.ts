@@ -28,3 +28,9 @@ export interface FormStructure {
   background?: string | null;
   icon?: string | null;
 }
+
+export interface DropdownOption<T> {
+  value: T;
+  label?: string;
+  icon?: React.ReactNode; // SVG or any JSX
+}
