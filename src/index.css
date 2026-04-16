@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: "Sahel";
+    src: url("assets/fonts/Sahel.woff2") format("woff2");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Vazirmatn";
+    src: url("assets/fonts/Vazirmatn.woff2") format("woff2");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Parastoo";
+    src: url("assets/fonts/Parastoo.woff2") format("woff2");
+    font-display: swap;
+}
+
 /* ROOT LAYOUT */
 
 .app-root {
