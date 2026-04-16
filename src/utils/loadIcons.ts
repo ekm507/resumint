@@ -1,4 +1,4 @@
-export async function loadAllIcons() {
+export function loadAllIcons() {
   // Recursively load all SVG icons from any subfolder
   const modules = import.meta.glob("/src/assets/icons/**/*.svg", {
     eager: true,
@@ -17,4 +17,19 @@ export async function loadAllIcons() {
       src: (mod as any).default,
     };
   });
+}
+
+export function category_icons(category: string) {
+  const loadedIcons = loadAllIcons();
+
+  const filteredIcons = category
+    ? loadedIcons.filter(
+        (i) => i.path === category || i.path.startsWith(category + "/"),
+      )
+    : loadedIcons;
+
+  const icons = Object.fromEntries(
+    filteredIcons.map((icon) => [icon.name, icon.src]),
+  );
+  return icons;
 }

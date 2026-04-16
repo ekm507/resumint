@@ -26,7 +26,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
 
   // Load all icons once
   useEffect(() => {
-    loadAllIcons().then(setIcons);
+    setIcons(loadAllIcons());
   }, []);
 
   // Portal target

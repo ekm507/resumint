@@ -1,15 +1,7 @@
 import type { DropdownOption, FormStructure } from "../utils/types";
-import { loadAllIcons } from "../utils/loadIcons";
+import { category_icons } from "../utils/loadIcons";
 
-const loadedIcons = await loadAllIcons();
-const dir = "form";
-const filteredIcons = dir
-  ? loadedIcons.filter((i) => i.path === dir || i.path.startsWith(dir + "/"))
-  : loadedIcons;
-
-const icons = Object.fromEntries(
-  filteredIcons.map((icon) => [icon.name, icon.src]),
-);
+const icons = category_icons("form");
 
 const formTemplates: Record<string, FormStructure> = {
   profile: {
