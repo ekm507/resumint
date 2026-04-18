@@ -60,7 +60,9 @@ export function DropdownMenu<T>({
           ))}
         </div>
       ) : (
-        <button onClick={() => setOpen(!open)}>{text || "Open Menu"}</button>
+        <button className="dropdown-menu-open" onClick={() => setOpen(!open)}>
+          {text || "Open Menu"}
+        </button>
       )}
     </div>
   );

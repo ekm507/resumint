@@ -651,6 +651,10 @@
     @apply w-6 h-6 object-contain opacity-80;
 }
 
+.look-colorful .dropdown-menu-open {
+    @apply w-full h-full hover:cursor-pointer;
+}
+
 .look-colorful .dropdown-list {
     @apply flex flex-col gap-1 bg-white border border-gray-400 min-w-40 w-max p-2 rounded-xl;
 }
