@@ -305,7 +305,7 @@
 }
 
 .look-colorful .add-block-trigger {
-    @apply relative z-10 flex items-center justify-center
+    @apply relative flex items-center justify-center
            rounded-full text-sm px-2 py-1
            bg-white border border-indigo-300
            hover:bg-indigo-500 hover:text-white
@@ -652,7 +652,7 @@
 }
 
 .look-colorful .dropdown-menu-open {
-    @apply w-full h-full hover:cursor-pointer;
+    @apply hover:cursor-pointer;
 }
 
 .look-colorful .dropdown-list {
@@ -660,5 +660,5 @@
 }
 
 .look-colorful .dropdown-item {
-    @apply flex flex-row gap-2 items-center bg-white shadow hover:bg-indigo-50 hover:shadow-2xl border rounded-xl border-indigo-100 p-2;
+    @apply flex flex-row gap-2 items-center bg-white shadow hover:bg-indigo-50 hover:shadow-2xl border rounded-xl border-indigo-100 p-2 cursor-pointer;
 }

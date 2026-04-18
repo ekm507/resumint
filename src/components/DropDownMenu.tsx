@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
+import { createPortal } from "react-dom";
 import { type DropdownOption } from "../utils/types";
 
 interface DropdownMenuProps<T> {
@@ -15,55 +16,128 @@ export function DropdownMenu<T>({
   text,
 }: DropdownMenuProps<T>) {
   const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [menuPos, setMenuPos] = useState<{
+    top: number;
+    left: number;
+    direction: "up" | "down";
+  } | null>(null);
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const editorPanelRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    editorPanelRef.current = document.getElementById("editor-panel");
+  }, []);
 
   const selected = value ? options.find((o) => o.value === value) : null;
 
+  // Position calculation (copied from AddBlockMenu and adapted)
+  function calculatePosition() {
+    const button = buttonRef.current;
+    if (!button) return;
+
+    const btn = button.getBoundingClientRect();
+    const spaceBelow = window.innerHeight - btn.bottom;
+    const spaceAbove = btn.top;
+
+    const direction =
+      spaceBelow < 220 && spaceAbove > spaceBelow ? "up" : "down";
+
+    setMenuPos({
+      left: btn.left + btn.width / 2,
+      top: direction === "down" ? btn.bottom : btn.top,
+      direction,
+    });
+  }
+
+  function toggleMenu() {
+    calculatePosition();
+    setOpen((o) => !o);
+  }
+
   // Close on outside click
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (!containerRef.current?.contains(e.target as Node)) {
+  useLayoutEffect(() => {
+    if (!open) return;
+
+    const close = (e: MouseEvent) => {
+      if (
+        !menuRef.current?.contains(e.target as Node) &&
+        !buttonRef.current?.contains(e.target as Node)
+      ) {
         setOpen(false);
       }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+    };
+
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, [open]);
+
+  // Reposition on resize / scroll
+  useEffect(() => {
+    if (!open) return;
+
+    const reposition = () => calculatePosition();
+    window.addEventListener("resize", reposition);
+    window.addEventListener("scroll", reposition, true);
+
+    return () => {
+      window.removeEventListener("resize", reposition);
+      window.removeEventListener("scroll", reposition, true);
+    };
+  }, [open]);
+
+  const editorPanel = editorPanelRef.current;
 
   return (
-    <div className="dropdown-menu" ref={containerRef}>
-      {selected && (
-        <div className="dropdown-selected" onClick={() => setOpen((o) => !o)}>
-          {selected?.icon && (
-            <span className="dropdown-icon">{selected.icon}</span>
-          )}
-          {selected?.label && (
-            <span className="dropdown-label">{selected.label}</span>
-          )}
-        </div>
-      )}
+    <>
+      <button
+        ref={buttonRef}
+        className="dropdown-menu-open editor-add-button"
+        onClick={toggleMenu}
+      >
+        {selected?.label || text || "Open Menu"}
+      </button>
 
-      {open ? (
-        <div className="dropdown-list">
-          {options.map((opt) => (
-            <div
-              key={opt.key}
-              className="dropdown-item"
-              onClick={() => {
-                onChange(opt.value);
-                setOpen(false);
-              }}
-            >
-              {opt.icon && <span className="dropdown-icon">{opt.icon}</span>}
-              {opt.label && <span className="dropdown-label">{opt.label}</span>}
+      {open &&
+        menuPos &&
+        editorPanel &&
+        createPortal(
+          <div
+            ref={menuRef}
+            className={`dropdown-menu dropdown-${menuPos.direction}`}
+            style={{
+              position: "fixed",
+              left: menuPos.left,
+              top: menuPos.top,
+              transform:
+                menuPos.direction === "down"
+                  ? "translateX(-50%)"
+                  : "translate(-50%, -100%)",
+            }}
+          >
+            <div className="dropdown-list">
+              {options.map((opt) => (
+                <div
+                  key={opt.key}
+                  className="dropdown-item"
+                  onClick={() => {
+                    onChange(opt.value);
+                    setOpen(false);
+                  }}
+                >
+                  {opt.icon && (
+                    <span className="dropdown-icon">{opt.icon}</span>
+                  )}
+                  {opt.label && (
+                    <span className="dropdown-label">{opt.label}</span>
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <button className="dropdown-menu-open" onClick={() => setOpen(!open)}>
-          {text || "Open Menu"}
-        </button>
-      )}
-    </div>
+          </div>,
+          editorPanel,
+        )}
+    </>
   );
 }

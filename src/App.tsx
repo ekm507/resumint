@@ -140,13 +140,11 @@ export default function App() {
             </div>
           ))}
 
-          <div className="editor-add-button" title="add form">
-            <DropdownMenu
-              options={formTemplateOptions}
-              onChange={(template) => addForm(template)}
-              text="add form"
-            />
-          </div>
+          <DropdownMenu
+            options={formTemplateOptions}
+            onChange={(template) => addForm(template)}
+            text="add form"
+          />
         </div>
 
         <div
