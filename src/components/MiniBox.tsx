@@ -37,6 +37,18 @@ export default function MiniBox({
     onEditingChange?.(selectedBlockId !== null);
   }, [selectedBlockId, onEditingChange]);
 
+  useEffect(() => {
+    if (selectedBlockId !== null) return;
+    // close any advanced options when editor closes
+    if (form.blocks.some((b: any) => b?.props?.__advanced)) {
+      setForm({
+        blocks: form.blocks.map((b: any) => ({
+          ...b,
+          props: { ...(b.props || {}), __advanced: false },
+        })),
+      });
+    }
+  }, [selectedBlockId]);
   const setForm = (patch: Partial<FormStructure>) => {
     if (!onFormChange) return;
     onFormChange(form.id, { ...form, ...patch });
@@ -104,6 +116,18 @@ export default function MiniBox({
       className="resume-section"
       dir={dir}
       style={{ backgroundColor: bg }}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          if (form.blocks.some((b: any) => b?.props?.__advanced)) {
+            setForm({
+              blocks: form.blocks.map((b: any) => ({
+                ...b,
+                props: { ...(b.props || {}), __advanced: false },
+              })),
+            });
+          }
+        }
+      }}
     >
       <div className="resume-section-header">
         {!isTemplate && (

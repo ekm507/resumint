@@ -158,6 +158,26 @@ export function ImageEditor({ block, update }: any) {
 export function ImageRender({ block }: any) {
   const { src, alt = "", width = 40, shape = "rounded" } = block.props || {};
 
+  const canPreview = src && (
+    src.startsWith("data:image/") ||
+    (() => {
+      try {
+        const u = new URL(src);
+        return /^https?:$/.test(u.protocol);
+      } catch {
+        return false;
+      }
+    })()
+  );
+
+  if (!canPreview) {
+    return (
+      <div className="resume-item-image flex image-justify-center">
+        <div className="image-placeholder">Image placeholder</div>
+      </div>
+    );
+  }
+
   return (
     <div className={`resume-item-image flex image-justify-center`}>
       <img

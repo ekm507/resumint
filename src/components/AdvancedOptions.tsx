@@ -1,6 +1,7 @@
+import { useRef, useState, useLayoutEffect } from "react";
+
 export default function AdvancedOptions({ block, update, children }: any) {
   const advanced = block.props?.__advanced ?? false;
-
   const toggle = () =>
     update({
       ...block,
@@ -10,8 +11,30 @@ export default function AdvancedOptions({ block, update, children }: any) {
       },
     });
 
+  const anchorRef = useRef<HTMLDivElement | null>(null);
+  const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
+
+  useLayoutEffect(() => {
+    if (!advanced || !anchorRef.current) return;
+
+    const updatePos = () => {
+      if (!anchorRef.current) return;
+      const rect = anchorRef.current.getBoundingClientRect();
+      setPos({ top: rect.bottom + 6, left: rect.left });
+    };
+
+    updatePos();
+    window.addEventListener("resize", updatePos);
+    window.addEventListener("scroll", updatePos, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePos);
+      window.removeEventListener("scroll", updatePos, true);
+    };
+  }, [advanced]);
+
   return (
-    <div className="block-advanced" style={{ position: "relative" }}>
+    <div ref={anchorRef} className="block-advanced" style={{ position: "relative" }}>
       {!advanced && (
         <button
           className="block-advanced-toggle"
@@ -23,7 +46,18 @@ export default function AdvancedOptions({ block, update, children }: any) {
       )}
 
       {advanced && (
-        <div className="block-advanced-open block-advanced-floating">
+        <div
+          className="block-advanced-open block-advanced-floating"
+          style={
+            pos
+              ? {
+                  position: "fixed",
+                  top: pos.top,
+                  left: pos.left,
+                }
+              : undefined
+          }
+        >
           <div className="block-advanced-controls">{children}</div>
 
           <button
