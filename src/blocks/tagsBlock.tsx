@@ -1,8 +1,73 @@
-import { useState } from "react";
 import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
+import {
+  DndContext,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  arrayMove,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+
+
+function SortableTag({
+  id,
+  tag,
+  tagClass,
+  updateTag,
+  removeTag,
+}: {
+  id: string;
+  tag: string;
+  tagClass: string;
+  updateTag: (value: string) => void;
+  removeTag: () => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition: "none",
+    opacity: isDragging ? 0.85 : 1,
+  };
+
+  return (
+    <span ref={setNodeRef} style={style} className={tagClass + " flex items-center gap-1"}>
+      <span
+        className="tag-drag-handle"
+        {...attributes}
+        {...listeners}
+        title="drag to reorder"
+        style={{ cursor: "grab" }}
+      >
+        ☰
+      </span>
+      <input
+        className="bg-transparent border-0 outline-none text-inherit min-w-[3ch]"
+        style={{ width: `${Math.max(3, tag.length + 1)}ch` }}
+        value={tag}
+        onChange={(e) => updateTag(e.target.value)}
+      />
+      <button className="item-remove-text" onClick={removeTag}>
+        ×
+      </button>
+    </span>
+  );
+}
 
 export function TagsEditor({ block, update }: any) {
   const {
@@ -26,67 +91,55 @@ export function TagsEditor({ block, update }: any) {
 
   const tagClass = `tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant}`;
 
-  const [dragIndex, setDragIndex] = useState<number | null>(null);
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+  );
 
   const reorderTags = (from: number, to: number) => {
     if (from === to) return;
-    const copy = [...tags];
-    const [moved] = copy.splice(from, 1);
-    copy.splice(to, 0, moved);
-    setProp("tags", copy);
+    setProp("tags", arrayMove([...tags], from, to));
   };
 
   return (
     <div className="tags-block-editor">
-      <div className="tags-block">
-        {tags.map((tag: string, i: number) => (
-          <span
-            key={i}
-            className={tagClass + " flex items-center gap-1"}
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={() => {
-              if (dragIndex !== null) reorderTags(dragIndex, i);
-              setDragIndex(null);
-            }}
-          >
-            <span
-              className="tag-drag-handle"
-              draggable
-              onDragStart={(e) => {
-                e.dataTransfer.effectAllowed = "move";
-                setDragIndex(i);
-              }}
-              onDragEnd={() => setDragIndex(null)}
-              title="drag to reorder"
-            >
-              ☰
-            </span>
-            <input
-              className="bg-transparent border-0 outline-none text-inherit min-w-[3ch]"
-              style={{ width: `${Math.max(3, tag.length + 1)}ch` }}
-              value={tag}
-              onChange={(e) => updateItem(i, e.target.value)}
-            />
-            <button
-              className="item-remove-text"
-              onClick={() =>
-                setProp(
-                  "tags",
-                  tags.filter((_: any, idx: number) => idx !== i),
-                )
-              }
-            >
-              ×
-            </button>
-          </span>
-        ))}
-        <button
-          className={tagClass + " cursor-pointer"}
-          onClick={() => setProp("tags", [...tags, ""])}
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        onDragEnd={(event) => {
+          const { active, over } = event;
+          if (!over || active.id === over.id) return;
+          reorderTags(Number(active.id), Number(over.id));
+        }}
+      >
+        <SortableContext
+          items={tags.map((_: string, i: number) => String(i))}
+          strategy={rectSortingStrategy}
         >
-          + Add Tag
-        </button>
-      </div>
+          <div className="tags-block">
+            {tags.map((tag: string, i: number) => (
+              <SortableTag
+                key={i}
+                id={String(i)}
+                tag={tag}
+                tagClass={tagClass}
+                updateTag={(value: string) => updateItem(i, value)}
+                removeTag={() =>
+                  setProp(
+                    "tags",
+                    tags.filter((_: any, idx: number) => idx !== i),
+                  )
+                }
+              />
+            ))}
+            <button
+              className={tagClass + " cursor-pointer"}
+              onClick={() => setProp("tags", [...tags, ""])}
+            >
+              + Add Tag
+            </button>
+          </div>
+        </SortableContext>
+      </DndContext>
 
       <AdvancedOptions block={block} update={update}>
         <div className="options-grid">

@@ -3,6 +3,20 @@ import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { useState } from "react";
 import { registerBlock } from "./blockRegistry";
+import {
+  DndContext,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  useSortable,
+  arrayMove,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import IconSelect from "../components/IconSelect";
 
 type FieldType = "key" | "value" | "icon" | "link";
@@ -50,106 +64,39 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
     );
   };
 
-  const [dragIndex, setDragIndex] = useState<number | null>(null);
-
-  const reorderItems = (from: number, to: number) => {
-    if (from === to) return;
-    const copy = [...items];
-    const [moved] = copy.splice(from, 1);
-    copy.splice(to, 0, moved);
-    setProp("items", copy);
-  };
-
   return (
     <div className="keyvalue-block-editor">
-      <div className="keyvalue-block">
-        {items.map((item: ItemType, i: number) => (
-          <div
-            key={i}
-            className="keyvalue-edit-row group relative"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={() => {
-              if (dragIndex !== null) reorderItems(dragIndex, i);
-              setDragIndex(null);
-            }}
-          >
-            <span
-              className="kv-drag-handle"
-              draggable
-              onDragStart={(e) => {
-                e.dataTransfer.effectAllowed = "move";
-                setDragIndex(i);
-              }}
-              onDragEnd={() => setDragIndex(null)}
-              title="drag to reorder"
-            >
-              ☰
-            </span>
-            <IconSelect
-              dir="social"
-              value={item.icon}
-              onSelect={(icon) => updateItem(i, "icon", icon)}
-            />
-
-            <button
-              className="opacity-0 group-hover:opacity-100 transition text-rose-600"
-              title="remove item"
-              onClick={() => removeItem(i)}
-            >
-              ×
-            </button>
-
-            <input
-              className="keyvalue-block-key bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1 min-w-0 flex-1"
-              placeholder="key"
-              value={item.key}
-              onChange={(e) => updateItem(i, "key", e.target.value)}
-            />
-
-            <button
-              className="opacity-0 group-hover:opacity-100 transition text-indigo-500"
-              title="set link"
-              onClick={() =>
-                setLinkOpen((cur) => (cur === i ? null : i))
-              }
-            >
-              🔗
-            </button>
-
-            <input
-              className="keyvalue-block-value bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1 min-w-0 flex-1"
-              placeholder="value"
-              value={item.value}
-              onChange={(e) => updateItem(i, "value", e.target.value)}
-            />
-
-            {linkOpen === i && (
-              <div className="absolute left-0 top-full mt-1 z-20 flex items-center gap-2 bg-white border border-indigo-200 rounded-lg shadow p-2">
-                <input
-                  className="text-input"
-                  placeholder="link"
-                  value={item.link === "https://" ? "" : item.link}
-                  onChange={(e) =>
-                    updateItem(i, "link", e.target.value)
-                  }
-                />
-                {item.link ? (
-                  <button
-                    className="item-remove-text"
-                    onClick={() => updateItem(i, "link", "")}
-                  >
-                    clear
-                  </button>
-                ) : null}
-              </div>
-            )}
+      <DndContext
+        sensors={useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))}
+        collisionDetection={closestCenter}
+        onDragEnd={(event) => {
+          const { active, over } = event;
+          if (!over || active.id === over.id) return;
+          setProp("items", arrayMove([...items], Number(active.id), Number(over.id)));
+        }}
+      >
+        <SortableContext
+          items={items.map((_: ItemType, i: number) => String(i))}
+          strategy={verticalListSortingStrategy}
+        >
+          <div className="keyvalue-block">
+            {items.map((item: ItemType, i: number) => (
+              <SortableKeyValueRow
+                key={i}
+                id={String(i)}
+                item={item}
+                isLinkOpen={linkOpen === i}
+                toggleLink={() => setLinkOpen((cur) => (cur === i ? null : i))}
+                updateItem={(field, value) => updateItem(i, field, value)}
+                removeItem={() => removeItem(i)}
+              />
+            ))}
           </div>
-        ))}
-
+        </SortableContext>
+      </DndContext>
         <button className="item-add-button" onClick={addItem}>
           + Add Row
         </button>
-      </div>
 
       <AdvancedOptions block={block} update={update}>
         <div className="option-group">
@@ -165,6 +112,108 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
           />
         </div>
       </AdvancedOptions>
+    </div>
+  );
+}
+
+
+function SortableKeyValueRow({
+  id,
+  item,
+  isLinkOpen,
+  toggleLink,
+  updateItem,
+  removeItem,
+}: {
+  id: string;
+  item: ItemType;
+  isLinkOpen: boolean;
+  toggleLink: () => void;
+  updateItem: (field: FieldType, value: any) => void;
+  removeItem: () => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition: "none",
+    opacity: isDragging ? 0.85 : 1,
+  };
+
+  return (
+    <div className="keyvalue-edit-row group relative" style={style} ref={setNodeRef}>
+      <span
+        className="kv-drag-handle"
+        {...attributes}
+        {...listeners}
+        title="drag to reorder"
+        style={{ cursor: "grab" }}
+      >
+        ☰
+      </span>
+
+      <IconSelect
+        dir="social"
+        value={item.icon}
+        onSelect={(icon) => updateItem("icon", icon)}
+      />
+
+      <button
+        className="opacity-0 group-hover:opacity-100 transition text-rose-600"
+        title="remove item"
+        onClick={removeItem}
+      >
+        ×
+      </button>
+
+      <input
+        className="keyvalue-block-key bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1 min-w-0 flex-1"
+        placeholder="key"
+        value={item.key}
+        onChange={(e) => updateItem("key", e.target.value)}
+      />
+
+      <button
+        className="opacity-0 group-hover:opacity-100 transition text-indigo-500"
+        title="set link"
+        onClick={toggleLink}
+      >
+        🔗
+      </button>
+
+      <input
+        className="keyvalue-block-value bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1 min-w-0 flex-1"
+        placeholder="value"
+        value={item.value}
+        onChange={(e) => updateItem("value", e.target.value)}
+      />
+
+      {isLinkOpen && (
+        <div className="absolute left-0 top-full mt-1 z-20 flex items-center gap-2 bg-white border border-indigo-200 rounded-lg shadow p-2">
+          <input
+            className="text-input"
+            placeholder="link"
+            value={item.link === "https://" ? "" : item.link}
+            onChange={(e) =>
+              updateItem("link", e.target.value)
+            }
+          />
+          {item.link ? (
+            <button
+              className="item-remove-text"
+              onClick={() => updateItem("link", "")}
+            >
+              clear
+            </button>
+          ) : null}
+        </div>
+      )}
     </div>
   );
 }
