@@ -131,7 +131,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
 
   return (
     <>
-      <div className="icon-select-box">
+      <div className="icon-select-box" style={{ position: "relative", zIndex: 30 }}>
         <button
           ref={buttonRef}
           onClick={toggleMenu}
@@ -141,7 +141,17 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
           {value ? (
             <img src={value} className="icon-img" />
           ) : (
-            <label className="icon-select-label">Select icon</label>
+            <span
+              className="icon-empty-rectangle"
+              style={{
+                display: "inline-block",
+                width: "22px",
+                height: "22px",
+                border: "1px solid #94a3b8",
+                borderRadius: "4px",
+                background: "transparent",
+              }}
+            />
           )}
         </button>
 

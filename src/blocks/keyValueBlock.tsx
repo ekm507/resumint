@@ -105,7 +105,7 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
               onChange={(e) => updateItem(i, "value", e.target.value)}
             />
 
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition">
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition" style={{ zIndex: 10 }}>
               <button
                 className="text-indigo-500"
                 title="set link"
