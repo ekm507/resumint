@@ -607,7 +607,7 @@
 ========================================================= */
 
 .look-colorful .icon-select-box {
-    @apply flex flex-col items-center;
+    @apply flex flex-col items-center relative z-30;
 }
 
 .look-colorful .icon-select-trigger {

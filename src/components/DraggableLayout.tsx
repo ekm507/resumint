@@ -2,7 +2,6 @@ import {
   DndContext,
   DragOverlay,
   closestCorners,
-  KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
@@ -16,7 +15,6 @@ import type {
 import {
   SortableContext,
   arrayMove,
-  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
   useSortable,
 } from "@dnd-kit/sortable";
@@ -54,7 +52,7 @@ function SortableMiniBox({
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.4 : 1,
-    cursor: "grab",
+    cursor: "auto",
   };
 
   return (
@@ -139,9 +137,6 @@ export default function DraggableLayout({
   /** sensors for pointer + keyboard interaction */
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
   );
 
   const findColumn = (id: string): "left" | "right" | null => {

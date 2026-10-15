@@ -28,6 +28,21 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
     setIcons(loadAllIcons());
   }, []);
 
+  // Let parents know when this menu is open so outside clicks/focus
+  // (e.g. parent component closing) do not dismiss the icon picker.
+  useEffect(() => {
+    (window as any).__iconSelectOpen = isOpen;
+    return () => {
+      (window as any).__iconSelectOpen = false;
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    return () => {
+      (window as any).__iconSelectOpen = false;
+    };
+  }, []);
+
   // Filter icons by directory if dir prop is provided
   const filteredIcons = dir
     ? icons.filter((i) => i.path === dir || i.path.startsWith(dir + "/"))
@@ -130,18 +145,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
           )}
         </button>
 
-        {value && (
-          <button
-            className="item-remove-text icon-remove-text"
-            title="remove icon"
-            onClick={() => {
-              onSelect(null);
-              setIsOpen(false);
-            }}
-          >
-            Remove
-          </button>
-        )}
+
       </div>
 
       {isOpen &&
@@ -161,6 +165,28 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
             }}
           >
             <div className="grid-menu">
+              <button
+                key="__remove__"
+                className="icon-item icon-item-empty"
+                title="remove icon"
+                onClick={() => {
+                  onSelect(null);
+                  setIsOpen(false);
+                }}
+              >
+                <span
+                  className="icon-empty-rectangle"
+                  style={{
+                    display: "inline-block",
+                    width: "22px",
+                    height: "22px",
+                    border: "1px solid #94a3b8",
+                    borderRadius: "4px",
+                    background: "transparent",
+                  }}
+                />
+              </button>
+
               {filteredIcons.map((ic) => (
                 <button
                   key={ic.path}

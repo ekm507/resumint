@@ -27,6 +27,52 @@ export default function MiniBox({
   const isTemplate = Boolean(form.isTemplate);
   const canEdit = editable && Boolean(onFormChange) && Boolean(onDelete);
 
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [titleFocused, setTitleFocused] = useState(false);
+
+  const scanText = [
+    form.title || "",
+    ...(form.blocks || []).flatMap((b: any) => {
+      const props = b?.props || {};
+      const values: string[] = [];
+      if (typeof props.text === "string") values.push(props.text);
+      if (Array.isArray(props.items)) {
+        for (const item of props.items) {
+          if (item && typeof item.key === "string") values.push(item.key);
+          if (item && typeof item.value === "string") values.push(item.value);
+        }
+      }
+      if (Array.isArray(props.columns)) {
+        for (const col of props.columns) {
+          if (Array.isArray(col?.children)) values.push(...collectBlockText(col.children));
+        }
+      }
+      values.push(...Object.values(props).filter((v) => typeof v === "string") as string[]);
+      return values;
+    }),
+  ].join(" ");
+
+  function collectBlockText(blocks: any[]): string[] {
+    const out: string[] = [];
+    for (const b of blocks || []) {
+      const props = b?.props || {};
+      if (typeof props.text === "string") out.push(props.text);
+      if (Array.isArray(props.items)) {
+        for (const item of props.items) {
+          if (item && typeof item.key === "string") out.push(item.key);
+          if (item && typeof item.value === "string") out.push(item.value);
+        }
+      }
+      out.push(...Object.values(props).filter((v) => typeof v === "string") as string[]);
+    }
+    return out;
+  }
+
+  const firstStrongChar = scanText.match(/[\p{L}]/u)?.[0];
+  const isTitleRtl =
+    !!firstStrongChar && /[\u0600-\u06FF\u0750-\u077F]/.test(firstStrongChar);
+  const resolvedDir =
+    firstStrongChar ? (isTitleRtl ? "rtl" : "ltr") : dir === "auto" ? "ltr" : dir;
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const wrapperRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -38,6 +84,22 @@ export default function MiniBox({
   useEffect(() => {
     onEditingChange?.(selectedBlockId !== null);
   }, [selectedBlockId, onEditingChange]);
+
+  useEffect(() => {
+    if (!isFocused) return;
+    const handler = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      if (!target) return;
+      if (target instanceof Element && target.closest(".icon-select-menu, .icon-select-box")) {
+        return;
+      }
+      if (sectionRef.current && sectionRef.current.contains(target)) return;
+      setIsFocused(false);
+      setTitleFocused(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [isFocused]);
 
   useEffect(() => {
     if (selectedBlockId !== null) return;
@@ -92,7 +154,7 @@ export default function MiniBox({
   useEffect(() => {
     if (selectedBlockId === null) return;
     const handler = (event: MouseEvent) => {
-      if ((window as any).__imageFileDialogOpen) return;
+      if ((window as any).__imageFileDialogOpen || (window as any).__iconSelectOpen) return;
       const el = wrapperRefs.current[selectedBlockId];
       if (el && !el.contains(event.target as Node)) {
         setSelectedBlockId(null);
@@ -106,14 +168,17 @@ export default function MiniBox({
   if (!canEdit) {
     return (
       <section
+        ref={sectionRef as any}
         className="resume-section"
-        dir={dir}
+        dir={resolvedDir}
         style={{ backgroundColor: bg }}
       >
-        <div className="resume-section-header">
-          {form.icon && <img className="resume-section-icon" src={form.icon} />}
-          {form.title && <h1 className="resume-section-title">{form.title}</h1>}
-        </div>
+        {(form.icon || form.title) && (
+          <div className="resume-section-header">
+            {form.icon && <img className="resume-section-icon" src={form.icon} />}
+            {form.title && <h1 className="resume-section-title">{form.title}</h1>}
+          </div>
+        )}
 
         <div className="resume-section-content">
           {form.blocks?.map((block) => (
@@ -128,11 +193,13 @@ export default function MiniBox({
 
   return (
     <section
+      ref={sectionRef as any}
       className="resume-section"
-      dir={dir}
+      dir={resolvedDir}
       style={{ backgroundColor: bg }}
       onFocus={() => setIsFocused(true)}
       onBlur={(e) => {
+        if ((window as any).__iconSelectOpen) return;
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
           setIsFocused(false);
           if (form.blocks.some((b: any) => b?.props?.__advanced)) {
@@ -147,17 +214,37 @@ export default function MiniBox({
       }}
     >
       <div className="resume-section-header">
-        {form.icon && <img className="resume-section-icon" src={form.icon} />}
+        {(isFocused || titleFocused) && !isTemplate ? (
+          <IconSelect
+            dir="form"
+            value={form.icon}
+            onSelect={(i) => setForm({ icon: i })}
+          />
+        ) : (
+          form.icon && <img className="resume-section-icon" src={form.icon} />
+        )}
         <h1
-          className="resume-section-title"
+          className={`resume-section-title ${
+            (isFocused || titleFocused) && !(form.title || "").trim() ? "title-placeholder-active" : ""
+          }`}
           tabIndex={0}
-          contentEditable={isFocused}
+          contentEditable={isFocused || titleFocused}
           suppressContentEditableWarning
-          onFocus={() => setIsFocused(true)}
-          onBlur={(e) => {
-            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-              setForm({ title: e.currentTarget.textContent || "" });
+          onFocus={() => {
+            setIsFocused(true);
+            setTitleFocused(true);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              e.preventDefault();
+              e.currentTarget.blur();
+              setTitleFocused(false);
             }
+          }}
+          onBlur={(e) => {
+            if (e.currentTarget.contains(e.relatedTarget as Node | null)) return;
+            setForm({ title: e.currentTarget.textContent || "" });
+            setTitleFocused(false);
           }}
         >
           {form.title}
@@ -165,13 +252,6 @@ export default function MiniBox({
       </div>
 
       <div className="section-floating-controls">
-        {isFocused && !isTemplate && (
-          <IconSelect
-            dir="form"
-            value={form.icon}
-            onSelect={(i) => setForm({ icon: i })}
-          />
-        )}
         <button
           type="button"
           onClick={cycleBackground}
@@ -207,7 +287,7 @@ export default function MiniBox({
                 }
               }}
               onBlur={(e) => {
-                if ((window as any).__imageFileDialogOpen) return;
+                if ((window as any).__imageFileDialogOpen || (window as any).__iconSelectOpen) return;
                 if (e.currentTarget.contains(e.relatedTarget as Node | null)) return;
                 const active = document.activeElement;
                 if (active === null || active === document.body) return;
