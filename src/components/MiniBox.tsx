@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import BlockRenderer from "./BlockRenderer";
 import BlockEditor from "./BlockEditor";
 import AddBlockMenu from "./AddBlockMenu";
@@ -29,6 +29,7 @@ export default function MiniBox({
 
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [isFocused, setIsFocused] = useState(false);
+  const wrapperRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
     if (!canEdit) setSelectedBlockId(null);
@@ -88,6 +89,18 @@ export default function MiniBox({
       ? "transparent"
       : `var(--${form.background})`;
 
+  useEffect(() => {
+    if (selectedBlockId === null) return;
+    const handler = (event: MouseEvent) => {
+      const el = wrapperRefs.current[selectedBlockId];
+      if (el && !el.contains(event.target as Node)) {
+        setSelectedBlockId(null);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [selectedBlockId]);
+
   // Read-only render (used in drag overlays / print)
   if (!canEdit) {
     return (
@@ -133,46 +146,31 @@ export default function MiniBox({
       }}
     >
       <div className="resume-section-header">
-        {!isFocused && (
-          <>
-            {form.icon && <img className="resume-section-icon" src={form.icon} />}
-            {form.title && (
-              <h1
-                className="resume-section-title"
-                tabIndex={0}
-              >
-                {form.title}
-              </h1>
-            )}
-            {!form.title && <h1 className="resume-section-title" tabIndex={0} />}
-          </>
-        )}
-
-        {isFocused && (
-          <>
-            {!isTemplate && (
-              <IconSelect
-                dir="form"
-                value={form.icon}
-                onSelect={(i) => setForm({ icon: i })}
-              />
-            )}
-            {isTemplate && form.icon && (
-              <img className="resume-section-icon" src={form.icon} />
-            )}
-            <input
-              className="resume-section-title bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
-              placeholder="title"
-              title="form title"
-              value={form.title}
-              onChange={(e) => setForm({ title: e.target.value })}
-              autoFocus
-            />
-          </>
-        )}
+        {form.icon && <img className="resume-section-icon" src={form.icon} />}
+        <h1
+          className="resume-section-title"
+          tabIndex={0}
+          contentEditable={isFocused}
+          suppressContentEditableWarning
+          onFocus={() => setIsFocused(true)}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+              setForm({ title: e.currentTarget.textContent || "" });
+            }
+          }}
+        >
+          {form.title}
+        </h1>
       </div>
 
       <div className="section-floating-controls">
+        {isFocused && !isTemplate && (
+          <IconSelect
+            dir="form"
+            value={form.icon}
+            onSelect={(i) => setForm({ icon: i })}
+          />
+        )}
         <button
           type="button"
           onClick={cycleBackground}
@@ -197,6 +195,9 @@ export default function MiniBox({
             <div
               key={block.id}
               className="resume-block-wrapper"
+              ref={(el) => {
+                wrapperRefs.current[block.id] = el;
+              }}
               tabIndex={-1}
               onKeyDown={(e) => {
                 if (e.key === "Escape") {
@@ -232,7 +233,7 @@ export default function MiniBox({
                 </>
               ) : (
                 <div
-                  onClick={() => setSelectedBlockId(block.id)}
+                  onClickCapture={() => setSelectedBlockId(block.id)}
                   style={{ cursor: "pointer" }}
                 >
                   <BlockRenderer block={block} />

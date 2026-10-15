@@ -78,6 +78,10 @@
     @apply flex-1 flex flex-col gap-2;
 }
 
+.resume-section-title[contenteditable="true"]:focus {
+  outline: 1px dashed #94a3b8;
+}
+
 /* FLOATING SECTION CONTROLS */
 .resume-section {
   position: relative;
