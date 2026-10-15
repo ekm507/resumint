@@ -2,7 +2,6 @@ import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
-import { useMemo } from "react";
 
 export function ImageEditor({ block, update }: any) {
   const {
@@ -67,58 +66,56 @@ export function ImageEditor({ block, update }: any) {
     }
   };
 
-  // Decide if we can preview
-  const canPreview = useMemo(() => {
-    if (!src) return false;
-    // data URL
-    if (src.startsWith("data:image/")) return true;
-    // common remote URL patterns
-    try {
-      const u = new URL(src);
-      return /^https?:$/.test(u.protocol);
-    } catch {
-      return false;
-    }
-  }, [src]);
+  const canPreview = src && (
+    src.startsWith("data:image/") ||
+    (() => {
+      try {
+        const u = new URL(src);
+        return /^https?:$/.test(u.protocol);
+      } catch {
+        return false;
+      }
+    })()
+  );
 
   return (
-    <div className="block-editor">
-      <div className="editor-row">
-        <div style={{ flex: 1 }}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+    <div className="image-block-editor">
+      <div className="resume-item-image flex image-justify-center">
+        {canPreview ? (
+          <img
+            src={src}
+            alt={alt || "image"}
+            style={{ width: `${width}%` }}
+            className={`resume-image image-shape-${shape}`}
+          />
+        ) : (
+          <div className="image-editor-preview">
+            <span>No image</span>
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-2 mt-2">
+        <label className="file-upload">
+          <input
+            type="file"
+            accept="image/*"
+            hidden
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) handleFile(file);
             }}
+          />
+          Upload Image
+        </label>
+        {src && (
+          <button
+            className="item-remove-text"
+            onClick={() => setProp("src", "")}
           >
-            <strong>Image</strong>
-          </div>
-
-          <div style={{ marginTop: 8 }}>
-            <label className="file-upload">
-              <input
-                className="file-upload"
-                type="file"
-                accept="image/*"
-                hidden
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleFile(file);
-                }}
-              />
-              Upload Image
-            </label>
-          </div>
-        </div>
-
-        <div className="image-editor-preview" title="image thumbnail preview">
-          {canPreview ? (
-            <img src={src} alt={alt || "image preview"} />
-          ) : (
-            <span>No preview</span>
-          )}
-        </div>
+            Remove
+          </button>
+        )}
       </div>
 
       <AdvancedOptions block={block} update={update}>
@@ -128,20 +125,17 @@ export function ImageEditor({ block, update }: any) {
           value={alt}
           onChange={(e) => setProp("alt", e.target.value)}
         />
-        <div>
-          <div className="option-group">
-            <label>Width: {width}%</label>
-            <input
-              type="range"
-              min={20}
-              max={100}
-              step={5}
-              value={width}
-              onChange={(e) => setProp("width", Number(e.target.value))}
-            />
-          </div>
+        <div className="option-group">
+          <label>Width: {width}%</label>
+          <input
+            type="range"
+            min={20}
+            max={100}
+            step={5}
+            value={width}
+            onChange={(e) => setProp("width", Number(e.target.value))}
+          />
         </div>
-
         <div className="options-grid">
           <div className="option-group">
             <label>shape</label>

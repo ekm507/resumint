@@ -16,17 +16,8 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const editorPanelRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    editorPanelRef.current = document.getElementById("editor-panel");
-  }, []);
 
   const blockTypes = getAllBlocks();
-
-  useLayoutEffect(() => {
-    editorPanelRef.current = document.getElementById("editor-panel");
-  }, []);
 
   function calculatePosition() {
     const button = buttonRef.current;
@@ -91,8 +82,6 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
     };
   }, [isOpen]);
 
-  const editorPanel = editorPanelRef.current;
-
   return (
     <>
       <button
@@ -106,7 +95,6 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
 
       {isOpen &&
         menuPos &&
-        editorPanel &&
         createPortal(
           <div
             ref={menuRef}
@@ -136,7 +124,7 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
               ))}
             </div>
           </div>,
-          editorPanel,
+          document.body,
         )}
     </>
   );

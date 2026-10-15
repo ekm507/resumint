@@ -26,7 +26,21 @@ import MiniBox from "./MiniBox";
 import type { FormStructure, LayoutItem } from "../utils/types";
 
 /* ------------------------- Sortable box for each form ------------------------ */
-function SortableMiniBox({ id, form }: { id: string; form: FormStructure }) {
+function SortableMiniBox({
+  id,
+  form,
+  onFormChange,
+  onDelete,
+  editable,
+}: {
+  id: string;
+  form: FormStructure;
+  onFormChange?: (id: string, form: FormStructure) => void;
+  onDelete?: (id: string) => void;
+  editable?: boolean;
+}) {
+  const [isEditing, setIsEditing] = useState(false);
+
   const {
     attributes,
     listeners,
@@ -34,7 +48,7 @@ function SortableMiniBox({ id, form }: { id: string; form: FormStructure }) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id });
+  } = useSortable({ id, disabled: isEditing });
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -45,7 +59,13 @@ function SortableMiniBox({ id, form }: { id: string; form: FormStructure }) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <MiniBox form={form} />
+      <MiniBox
+        form={form}
+        onFormChange={onFormChange}
+        onDelete={onDelete}
+        editable={editable}
+        onEditingChange={setIsEditing}
+      />
     </div>
   );
 }
@@ -55,10 +75,16 @@ function DroppableColumn({
   id,
   itemIds,
   forms,
+  onFormChange,
+  onDelete,
+  editable,
 }: {
   id: "left" | "right";
   itemIds: string[];
   forms: FormStructure[];
+  onFormChange?: (id: string, form: FormStructure) => void;
+  onDelete?: (id: string) => void;
+  editable?: boolean;
 }) {
   const { setNodeRef } = useDroppable({ id });
 
@@ -68,7 +94,16 @@ function DroppableColumn({
         {itemIds.map((formId) => {
           const form = forms.find((f) => f.id === formId);
           if (!form) return null;
-          return <SortableMiniBox key={formId} id={formId} form={form} />;
+          return (
+            <SortableMiniBox
+              key={formId}
+              id={formId}
+              form={form}
+              onFormChange={onFormChange}
+              onDelete={onDelete}
+              editable={editable}
+            />
+          );
         })}
       </SortableContext>
     </div>
@@ -80,12 +115,18 @@ export interface DraggableLayoutProps {
   layout: LayoutItem[];
   setLayout: React.Dispatch<React.SetStateAction<LayoutItem[]>>;
   forms: FormStructure[];
+  setForm?: (id: string, form: FormStructure) => void;
+  deleteForm?: (id: string) => void;
+  editable?: boolean;
 }
 
 export default function DraggableLayout({
   layout,
   setLayout,
   forms,
+  setForm,
+  deleteForm,
+  editable,
 }: DraggableLayoutProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -97,7 +138,7 @@ export default function DraggableLayout({
 
   /** sensors for pointer + keyboard interaction */
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
@@ -191,14 +232,28 @@ export default function DraggableLayout({
       onDragEnd={onDragEnd}
     >
       <div className="resume-columns">
-        <DroppableColumn id="left" itemIds={columns.left} forms={forms} />
-        <DroppableColumn id="right" itemIds={columns.right} forms={forms} />
+        <DroppableColumn
+          id="left"
+          itemIds={columns.left}
+          forms={forms}
+          onFormChange={setForm}
+          onDelete={deleteForm}
+          editable={editable}
+        />
+        <DroppableColumn
+          id="right"
+          itemIds={columns.right}
+          forms={forms}
+          onFormChange={setForm}
+          onDelete={deleteForm}
+          editable={editable}
+        />
       </div>
 
       <DragOverlay>
         {activeForm ? (
           <div style={{ opacity: 0.8, cursor: "grabbing" }}>
-            <MiniBox form={activeForm} />
+            <MiniBox form={activeForm} editable={false} />
           </div>
         ) : null}
       </DragOverlay>

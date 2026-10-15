@@ -24,11 +24,6 @@ export function DropdownMenu<T>({
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const editorPanelRef = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    editorPanelRef.current = document.getElementById("editor-panel");
-  }, []);
 
   const selected = value ? options.find((o) => o.value === value) : null;
 
@@ -87,8 +82,6 @@ export function DropdownMenu<T>({
     };
   }, [open]);
 
-  const editorPanel = editorPanelRef.current;
-
   return (
     <>
       <button
@@ -101,7 +94,6 @@ export function DropdownMenu<T>({
 
       {open &&
         menuPos &&
-        editorPanel &&
         createPortal(
           <div
             ref={menuRef}
@@ -136,7 +128,7 @@ export function DropdownMenu<T>({
               ))}
             </div>
           </div>,
-          editorPanel,
+          document.body,
         )}
     </>
   );

@@ -22,16 +22,10 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLElement | null>(null);
 
   // Load all icons once
   useEffect(() => {
     setIcons(loadAllIcons());
-  }, []);
-
-  // Portal target
-  useEffect(() => {
-    panelRef.current = document.getElementById("editor-panel");
   }, []);
 
   // Filter icons by directory if dir prop is provided
@@ -120,8 +114,6 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
     };
   }, [isOpen]);
 
-  const editorPanel = panelRef.current;
-
   return (
     <>
       <div className="icon-select-box">
@@ -154,7 +146,6 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
 
       {isOpen &&
         menuPos &&
-        editorPanel &&
         createPortal(
           <div
             ref={menuRef}
@@ -185,7 +176,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
               ))}
             </div>
           </div>,
-          editorPanel,
+          document.body,
         )}
     </>
   );

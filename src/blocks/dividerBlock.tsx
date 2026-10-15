@@ -11,8 +11,13 @@ export function DividerEditor({ block, update }: any) {
       ...block,
       props: { ...(block.props || {}), [k]: v },
     });
+
   return (
     <div className="divider-block-editor">
+      <hr
+        className={`divider-block divider-style-${style} divider-spacing-${spacing}`}
+      />
+
       <AdvancedOptions block={block} update={update}>
         <div className="options-grid">
           <div className="option-group">

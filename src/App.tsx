@@ -1,5 +1,4 @@
 import { useState, useRef, type ChangeEvent, useEffect } from "react";
-import MiniForm from "./components/MiniForm";
 import DraggableLayout from "./components/DraggableLayout";
 import { useReactToPrint } from "react-to-print";
 import { useResumeData } from "./hooks/useResumeData";
@@ -23,6 +22,8 @@ export default function App() {
   const accentPalette = accentColor
     ? generateAccentPalette(accentColor)
     : undefined;
+
+  const [isPrinting, setIsPrinting] = useState(false);
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
@@ -115,13 +116,20 @@ export default function App() {
           ))}
         </select>
 
+        <DropdownMenu
+          options={formTemplateOptions}
+          onChange={(template) => addForm(template)}
+          text="add form"
+        />
+
         <button
           className="toolbar-button"
           onClick={() => {
-            const panel = document.getElementById("editor-panel");
-            if (panel) panel.style.display = "none";
-            printPDF();
-            if (panel) panel.style.display = "flex";
+            setIsPrinting(true);
+            window.setTimeout(() => {
+              printPDF();
+              setIsPrinting(false);
+            }, 50);
           }}
         >
           Print
@@ -129,24 +137,6 @@ export default function App() {
       </div>
 
       <div className="app-layout">
-        <div className="editor-panel" id="editor-panel">
-          {forms.map((form) => (
-            <div key={form.id} className="editor-form-wrapper">
-              <MiniForm
-                form={form}
-                onFormChange={setForm}
-                onDelete={deleteForm}
-              />
-            </div>
-          ))}
-
-          <DropdownMenu
-            options={formTemplateOptions}
-            onChange={(template) => addForm(template)}
-            text="add form"
-          />
-        </div>
-
         <div
           id="resume-render"
           ref={resumeRef}
@@ -158,6 +148,9 @@ export default function App() {
               layout={layout}
               setLayout={setLayout}
               forms={forms}
+              setForm={setForm}
+              deleteForm={deleteForm}
+              editable={!isPrinting}
             />
           </div>
         </div>

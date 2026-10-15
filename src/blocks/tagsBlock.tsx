@@ -6,9 +6,9 @@ import { registerBlock } from "./blockRegistry";
 export function TagsEditor({ block, update }: any) {
   const {
     tags = [],
-    shape = "pill", // pill, rounded, square
-    size = "md", // sm, md, lg
-    variant = "filled", // filled, outline
+    shape = "pill",
+    size = "md",
+    variant = "filled",
   } = block.props || {};
 
   const setProp = (k: string, v: any) =>
@@ -23,18 +23,21 @@ export function TagsEditor({ block, update }: any) {
     setProp("tags", copy);
   };
 
+  const tagClass = `tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant}`;
+
   return (
     <div className="tags-block-editor">
-      <div className="tags-list">
+      <div className="tags-block">
         {tags.map((tag: string, i: number) => (
-          <div key={i} className="input-row">
+          <span key={i} className={tagClass + " flex items-center gap-1"}>
             <input
-              className="text-input"
+              className="bg-transparent border-0 outline-none text-inherit min-w-[3ch]"
+              style={{ width: `${Math.max(3, tag.length + 1)}ch` }}
               value={tag}
               onChange={(e) => updateItem(i, e.target.value)}
             />
             <button
-              className="item-remove-button"
+              className="item-remove-text"
               onClick={() =>
                 setProp(
                   "tags",
@@ -44,10 +47,10 @@ export function TagsEditor({ block, update }: any) {
             >
               ×
             </button>
-          </div>
+          </span>
         ))}
         <button
-          className="item-add-button"
+          className={tagClass + " cursor-pointer"}
           onClick={() => setProp("tags", [...tags, ""])}
         >
           + Add Tag

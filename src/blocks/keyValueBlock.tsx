@@ -1,6 +1,7 @@
 import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
+import { useState } from "react";
 import { registerBlock } from "./blockRegistry";
 import IconSelect from "../components/IconSelect";
 
@@ -23,7 +24,8 @@ interface KeyValueProps {
 }
 
 export function KeyValueEditor({ block, update }: KeyValueProps) {
-  const { items, emphasis = "key" } = block.props || {};
+  const { items = [], emphasis = "key" } = block.props || {};
+  const [linkOpen, setLinkOpen] = useState<number | null>(null);
 
   const setProp = (k: string, v: any) =>
     update({
@@ -50,9 +52,9 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
 
   return (
     <div className="keyvalue-block-editor">
-      <div className="input-list">
+      <div className="keyvalue-block">
         {items.map((item: ItemType, i: number) => (
-          <div key={i} className="input-row">
+          <div key={i} className="keyvalue-row group relative">
             <IconSelect
               dir="social"
               value={item.icon}
@@ -60,65 +62,80 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
             />
 
             <input
-              className="text-input"
+              className="keyvalue-block-key bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
               placeholder="key"
               value={item.key}
               onChange={(e) => updateItem(i, "key", e.target.value)}
             />
 
             <input
-              className="text-input"
+              className="keyvalue-block-value bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
               placeholder="value"
               value={item.value}
               onChange={(e) => updateItem(i, "value", e.target.value)}
             />
-            {item.link == "" && (
+
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition">
               <button
-                className="toggle-field"
-                onClick={() => {
-                  updateItem(i, "link", "https://");
-                }}
+                className="text-indigo-500"
+                title="set link"
+                onClick={() =>
+                  setLinkOpen((cur) => (cur === i ? null : i))
+                }
               >
                 🔗
               </button>
-            )}
 
-            {item.link != "" && (
-              <input
-                className="text-input"
-                placeholder="link"
-                value={item.link === "https://" ? "" : item.link}
-                onChange={(e) => updateItem(i, "link", e.target.value)}
-              ></input>
+              <button
+                className="item-remove-text"
+                onClick={() => removeItem(i)}
+              >
+                ×
+              </button>
+            </div>
+
+            {linkOpen === i && (
+              <div className="absolute left-0 top-full mt-1 z-20 flex items-center gap-2 bg-white border border-indigo-200 rounded-lg shadow p-2">
+                <input
+                  className="text-input"
+                  placeholder="link"
+                  value={item.link === "https://" ? "" : item.link}
+                  onChange={(e) =>
+                    updateItem(i, "link", e.target.value)
+                  }
+                />
+                {item.link ? (
+                  <button
+                    className="item-remove-text"
+                    onClick={() => updateItem(i, "link", "")}
+                  >
+                    clear
+                  </button>
+                ) : null}
+              </div>
             )}
-            <button
-              className="item-remove-button"
-              onClick={() => removeItem(i)}
-            >
-              ×
-            </button>
           </div>
         ))}
 
         <button className="item-add-button" onClick={addItem}>
           + Add Row
         </button>
-
-        <AdvancedOptions block={block} update={update}>
-          <div className="option-group">
-            <label>Emphasis</label>
-            <ToggleButton
-              value={emphasis}
-              onChange={(v) => setProp("emphasis", v)}
-              options={[
-                { value: "none", label: "Normal" },
-                { value: "key", label: "Bold Key" },
-                { value: "value", label: "Bold Value" },
-              ]}
-            />
-          </div>
-        </AdvancedOptions>
       </div>
+
+      <AdvancedOptions block={block} update={update}>
+        <div className="option-group">
+          <label>Emphasis</label>
+          <ToggleButton
+            value={emphasis}
+            onChange={(v) => setProp("emphasis", v)}
+            options={[
+              { value: "none", label: "Normal" },
+              { value: "key", label: "Bold Key" },
+              { value: "value", label: "Bold Value" },
+            ]}
+          />
+        </div>
+      </AdvancedOptions>
     </div>
   );
 }
