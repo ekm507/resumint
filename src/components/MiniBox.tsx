@@ -27,7 +27,6 @@ export default function MiniBox({
   const isTemplate = Boolean(form.isTemplate);
   const canEdit = editable && Boolean(onFormChange) && Boolean(onDelete);
 
-  const [collapsed, setCollapsed] = useState(false);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -107,30 +106,6 @@ export default function MiniBox({
       style={{ backgroundColor: bg }}
     >
       <div className="resume-section-header">
-        <button
-          onClick={() => onDelete?.(form.id)}
-          className="form-remove-button"
-          title="remove form"
-        >
-          ×
-        </button>
-
-        <button
-          className="form-collapse-button"
-          onClick={() => setCollapsed(!collapsed)}
-          title={collapsed ? "open form" : "close form"}
-        >
-          {collapsed ? "▶" : "▼"}
-        </button>
-
-        <input
-          className="resume-section-title bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
-          placeholder="title"
-          title="form title"
-          value={form.title}
-          onChange={(e) => setForm({ title: e.target.value })}
-        />
-
         {!isTemplate && (
           <IconSelect
             dir="form"
@@ -139,16 +114,36 @@ export default function MiniBox({
           />
         )}
 
+        {isTemplate && form.icon && (
+          <img className="resume-section-icon" src={form.icon} />
+        )}
+
+        <input
+          className="resume-section-title bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
+          placeholder="title"
+          title="form title"
+          value={form.title}
+          onChange={(e) => setForm({ title: e.target.value })}
+        />
+      </div>
+
+      <div className="section-floating-controls">
         <button
           type="button"
           onClick={cycleBackground}
           title={`Background: ${currentBackground}`}
           className="background-toggle-button"
         />
+        <button
+          onClick={() => onDelete?.(form.id)}
+          className="form-remove-button"
+          title="remove form"
+        >
+          ×
+        </button>
       </div>
 
-      {!collapsed && (
-        <div className="resume-section-content">
+      <div className="resume-section-content">
           {form.blocks.length === 0 && !isTemplate ? (
             <AddBlockMenu onSelect={addFirstBlock} />
           ) : null}
@@ -213,7 +208,6 @@ export default function MiniBox({
             </div>
           ))}
         </div>
-      )}
     </section>
   );
 }

@@ -50,11 +50,41 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
     );
   };
 
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+
+  const reorderItems = (from: number, to: number) => {
+    if (from === to) return;
+    const copy = [...items];
+    const [moved] = copy.splice(from, 1);
+    copy.splice(to, 0, moved);
+    setProp("items", copy);
+  };
+
   return (
     <div className="keyvalue-block-editor">
       <div className="keyvalue-block">
         {items.map((item: ItemType, i: number) => (
-          <div key={i} className="keyvalue-row group relative">
+          <div
+            key={i}
+            className="keyvalue-row group relative"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={() => {
+              if (dragIndex !== null) reorderItems(dragIndex, i);
+              setDragIndex(null);
+            }}
+          >
+            <span
+              className="kv-drag-handle"
+              draggable
+              onDragStart={(e) => {
+                e.dataTransfer.effectAllowed = "move";
+                setDragIndex(i);
+              }}
+              onDragEnd={() => setDragIndex(null)}
+              title="drag to reorder"
+            >
+              ☰
+            </span>
             <IconSelect
               dir="social"
               value={item.icon}

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
@@ -25,11 +26,41 @@ export function TagsEditor({ block, update }: any) {
 
   const tagClass = `tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant}`;
 
+  const [dragIndex, setDragIndex] = useState<number | null>(null);
+
+  const reorderTags = (from: number, to: number) => {
+    if (from === to) return;
+    const copy = [...tags];
+    const [moved] = copy.splice(from, 1);
+    copy.splice(to, 0, moved);
+    setProp("tags", copy);
+  };
+
   return (
     <div className="tags-block-editor">
       <div className="tags-block">
         {tags.map((tag: string, i: number) => (
-          <span key={i} className={tagClass + " flex items-center gap-1"}>
+          <span
+            key={i}
+            className={tagClass + " flex items-center gap-1"}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={() => {
+              if (dragIndex !== null) reorderTags(dragIndex, i);
+              setDragIndex(null);
+            }}
+          >
+            <span
+              className="tag-drag-handle"
+              draggable
+              onDragStart={(e) => {
+                e.dataTransfer.effectAllowed = "move";
+                setDragIndex(i);
+              }}
+              onDragEnd={() => setDragIndex(null)}
+              title="drag to reorder"
+            >
+              ☰
+            </span>
             <input
               className="bg-transparent border-0 outline-none text-inherit min-w-[3ch]"
               style={{ width: `${Math.max(3, tag.length + 1)}ch` }}

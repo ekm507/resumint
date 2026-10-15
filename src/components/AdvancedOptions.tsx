@@ -11,7 +11,7 @@ export default function AdvancedOptions({ block, update, children }: any) {
     });
 
   return (
-    <div className="block-advanced">
+    <div className="block-advanced" style={{ position: "relative" }}>
       {!advanced && (
         <button
           className="block-advanced-toggle"
@@ -23,7 +23,7 @@ export default function AdvancedOptions({ block, update, children }: any) {
       )}
 
       {advanced && (
-        <div className="block-advanced-open">
+        <div className="block-advanced-open block-advanced-floating">
           <div className="block-advanced-controls">{children}</div>
 
           <button

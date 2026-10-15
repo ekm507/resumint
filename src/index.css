@@ -78,6 +78,23 @@
     @apply flex-1 flex flex-col gap-2;
 }
 
+/* FLOATING SECTION CONTROLS */
+.section-floating-controls {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  z-index: 10;
+}
+
+.resume-section:hover .section-floating-controls,
+.resume-section:focus-within .section-floating-controls {
+  opacity: 1;
+}
+
 /* FLOATING BLOCK CONTROLS */
 .resume-block-wrapper {
   position: relative;
@@ -122,6 +139,89 @@
 
 .block-editor-floating-wrap {
   position: relative;
+}
+
+/* FLOATING ADVANCED OPTIONS */
+.block-advanced-floating {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  width: min(360px, 90vw);
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  padding: 10px;
+  margin-top: 6px;
+}
+
+/* IMAGE EDITOR HOVER OVERLAYS */
+.image-editor-host {
+  position: relative;
+}
+
+.image-upload-overlay,
+.image-remove-overlay {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  z-index: 10;
+}
+
+.image-upload-overlay {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.image-remove-overlay {
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 999px;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.image-editor-host:hover .image-upload-overlay,
+.image-editor-host:hover .image-remove-overlay {
+  opacity: 1;
+}
+
+/* DRAG HANDLES */
+.tag-drag-handle,
+.kv-drag-handle {
+  cursor: grab;
+  opacity: 0.5;
+  user-select: none;
+  margin-right: 4px;
+}
+
+.tag-drag-handle:hover,
+.kv-drag-handle:hover {
+  opacity: 1;
+}
+
+.kv-drag-handle {
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+}
+
+.keyvalue-editor-row:hover .kv-drag-handle {
+  opacity: 0.8;
 }
 
 /* PRINT */

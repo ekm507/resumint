@@ -80,7 +80,7 @@ export function ImageEditor({ block, update }: any) {
 
   return (
     <div className="image-block-editor">
-      <div className="resume-item-image flex image-justify-center">
+      <div className="resume-item-image flex image-justify-center image-editor-host">
         {canPreview ? (
           <img
             src={src}
@@ -93,10 +93,8 @@ export function ImageEditor({ block, update }: any) {
             <span>No image</span>
           </div>
         )}
-      </div>
 
-      <div className="flex items-center gap-2 mt-2">
-        <label className="file-upload">
+        <label className="image-upload-overlay">
           <input
             type="file"
             accept="image/*"
@@ -106,14 +104,16 @@ export function ImageEditor({ block, update }: any) {
               if (file) handleFile(file);
             }}
           />
-          Upload Image
+          Upload
         </label>
+
         {src && (
           <button
-            className="item-remove-text"
+            className="image-remove-overlay"
             onClick={() => setProp("src", "")}
+            title="remove image"
           >
-            Remove
+            ×
           </button>
         )}
       </div>
