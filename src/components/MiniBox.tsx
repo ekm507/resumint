@@ -92,6 +92,7 @@ export default function MiniBox({
   useEffect(() => {
     if (selectedBlockId === null) return;
     const handler = (event: MouseEvent) => {
+      if ((window as any).__imageFileDialogOpen) return;
       const el = wrapperRefs.current[selectedBlockId];
       if (el && !el.contains(event.target as Node)) {
         setSelectedBlockId(null);
@@ -206,9 +207,11 @@ export default function MiniBox({
                 }
               }}
               onBlur={(e) => {
-                if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-                  setSelectedBlockId(null);
-                }
+                if ((window as any).__imageFileDialogOpen) return;
+                if (e.currentTarget.contains(e.relatedTarget as Node | null)) return;
+                const active = document.activeElement;
+                if (active === null || active === document.body) return;
+                setSelectedBlockId(null);
               }}
             >
               {selectedBlockId === block.id ? (

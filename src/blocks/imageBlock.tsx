@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
@@ -18,6 +18,13 @@ export function ImageEditor({ block, update }: any) {
       props: { ...(block.props || {}), [k]: v },
     });
 
+  const updateRef = useRef(update);
+  const blockRef = useRef(block);
+  useEffect(() => {
+    updateRef.current = update;
+    blockRef.current = block;
+  });
+
   const handleFile = (file: File) => {
     if (file.size > 5_000_000) {
       alert("Image too large. Maximum size is 5MB.");
@@ -25,7 +32,17 @@ export function ImageEditor({ block, update }: any) {
     }
 
     const reader = new FileReader();
-    reader.onload = () => setProp("src", reader.result as string);
+    reader.onload = () => {
+      const currentBlock = blockRef.current || block;
+      const currentUpdate = updateRef.current || update;
+      currentUpdate({
+        ...currentBlock,
+        props: {
+          ...(currentBlock?.props || {}),
+          src: reader.result as string,
+        },
+      });
+    };
     reader.onerror = () => alert("Failed to read file.");
     reader.readAsDataURL(file);
   };
@@ -43,6 +60,20 @@ export function ImageEditor({ block, update }: any) {
   );
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const openFilePicker = () => {
+    (window as any).__imageFileDialogOpen = true;
+    fileInputRef.current?.click();
+  };
+
+  // Clear the dialog flag once the native file picker is closed.
+  useEffect(() => {
+    const clear = () => {
+      (window as any).__imageFileDialogOpen = false;
+    };
+    window.addEventListener("focus", clear);
+    return () => window.removeEventListener("focus", clear);
+  }, []);
 
   return (
     <div className="image-block-editor">
@@ -63,7 +94,7 @@ export function ImageEditor({ block, update }: any) {
         <button
           type="button"
           className="image-upload-overlay"
-          onClick={() => fileInputRef.current?.click()}
+          onClick={openFilePicker}
         >
           Upload
         </button>
