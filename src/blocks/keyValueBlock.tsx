@@ -66,7 +66,7 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
         {items.map((item: ItemType, i: number) => (
           <div
             key={i}
-            className="keyvalue-row group relative"
+            className="keyvalue-edit-row group relative"
             onDragOver={(e) => e.preventDefault()}
             onDrop={() => {
               if (dragIndex !== null) reorderItems(dragIndex, i);
@@ -91,38 +91,37 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
               onSelect={(icon) => updateItem(i, "icon", icon)}
             />
 
+            <button
+              className="opacity-0 group-hover:opacity-100 transition text-rose-600"
+              title="remove item"
+              onClick={() => removeItem(i)}
+            >
+              ×
+            </button>
+
             <input
-              className="keyvalue-block-key bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
+              className="keyvalue-block-key bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1 min-w-0 flex-1"
               placeholder="key"
               value={item.key}
               onChange={(e) => updateItem(i, "key", e.target.value)}
             />
 
+            <button
+              className="opacity-0 group-hover:opacity-100 transition text-indigo-500"
+              title="set link"
+              onClick={() =>
+                setLinkOpen((cur) => (cur === i ? null : i))
+              }
+            >
+              🔗
+            </button>
+
             <input
-              className="keyvalue-block-value bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
+              className="keyvalue-block-value bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1 min-w-0 flex-1"
               placeholder="value"
               value={item.value}
               onChange={(e) => updateItem(i, "value", e.target.value)}
             />
-
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition" style={{ zIndex: 10 }}>
-              <button
-                className="text-indigo-500"
-                title="set link"
-                onClick={() =>
-                  setLinkOpen((cur) => (cur === i ? null : i))
-                }
-              >
-                🔗
-              </button>
-
-              <button
-                className="item-remove-text"
-                onClick={() => removeItem(i)}
-              >
-                ×
-              </button>
-            </div>
 
             {linkOpen === i && (
               <div className="absolute left-0 top-full mt-1 z-20 flex items-center gap-2 bg-white border border-indigo-200 rounded-lg shadow p-2">
