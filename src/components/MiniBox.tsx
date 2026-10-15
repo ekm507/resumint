@@ -28,6 +28,7 @@ export default function MiniBox({
   const canEdit = editable && Boolean(onFormChange) && Boolean(onDelete);
 
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     if (!canEdit) setSelectedBlockId(null);
@@ -116,8 +117,10 @@ export default function MiniBox({
       className="resume-section"
       dir={dir}
       style={{ backgroundColor: bg }}
+      onFocus={() => setIsFocused(true)}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          setIsFocused(false);
           if (form.blocks.some((b: any) => b?.props?.__advanced)) {
             setForm({
               blocks: form.blocks.map((b: any) => ({
@@ -130,25 +133,43 @@ export default function MiniBox({
       }}
     >
       <div className="resume-section-header">
-        {!isTemplate && (
-          <IconSelect
-            dir="form"
-            value={form.icon}
-            onSelect={(i) => setForm({ icon: i })}
-          />
+        {!isFocused && (
+          <>
+            {form.icon && <img className="resume-section-icon" src={form.icon} />}
+            {form.title && (
+              <h1
+                className="resume-section-title"
+                tabIndex={0}
+              >
+                {form.title}
+              </h1>
+            )}
+            {!form.title && <h1 className="resume-section-title" tabIndex={0} />}
+          </>
         )}
 
-        {isTemplate && form.icon && (
-          <img className="resume-section-icon" src={form.icon} />
+        {isFocused && (
+          <>
+            {!isTemplate && (
+              <IconSelect
+                dir="form"
+                value={form.icon}
+                onSelect={(i) => setForm({ icon: i })}
+              />
+            )}
+            {isTemplate && form.icon && (
+              <img className="resume-section-icon" src={form.icon} />
+            )}
+            <input
+              className="resume-section-title bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
+              placeholder="title"
+              title="form title"
+              value={form.title}
+              onChange={(e) => setForm({ title: e.target.value })}
+              autoFocus
+            />
+          </>
         )}
-
-        <input
-          className="resume-section-title bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1"
-          placeholder="title"
-          title="form title"
-          value={form.title}
-          onChange={(e) => setForm({ title: e.target.value })}
-        />
       </div>
 
       <div className="section-floating-controls">

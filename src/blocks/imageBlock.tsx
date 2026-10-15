@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
@@ -78,6 +79,8 @@ export function ImageEditor({ block, update }: any) {
     })()
   );
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div className="image-block-editor">
       <div className="resume-item-image flex image-justify-center image-editor-host">
@@ -90,22 +93,28 @@ export function ImageEditor({ block, update }: any) {
           />
         ) : (
           <div className="image-editor-preview">
-            <span>No image</span>
+            <span>{alt || "No image"}</span>
           </div>
         )}
 
-        <label className="image-upload-overlay">
-          <input
-            type="file"
-            accept="image/*"
-            hidden
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handleFile(file);
-            }}
-          />
+        <button
+          type="button"
+          className="image-upload-overlay"
+          onClick={() => fileInputRef.current?.click()}
+        >
           Upload
-        </label>
+        </button>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) handleFile(file);
+            if (fileInputRef.current) fileInputRef.current.value = "";
+          }}
+        />
 
         {src && (
           <button
@@ -173,7 +182,7 @@ export function ImageRender({ block }: any) {
   if (!canPreview) {
     return (
       <div className="resume-item-image flex image-justify-center">
-        <div className="image-placeholder">Image placeholder</div>
+        <div className="image-placeholder">{alt || "Image"}</div>
       </div>
     );
   }

@@ -79,10 +79,14 @@
 }
 
 /* FLOATING SECTION CONTROLS */
+.resume-section {
+  position: relative;
+}
+
 .section-floating-controls {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 34px;
+  right: 8px;
   display: flex;
   gap: 4px;
   opacity: 0;
