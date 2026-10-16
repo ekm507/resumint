@@ -7,7 +7,7 @@ const formTemplates: Record<string, FormStructure> = {
   profile: {
     isTemplate: true,
     id: "",
-    title: "",
+    title: "پروفایل",
     blocks: [
       {
         id: "",

@@ -7,7 +7,7 @@ import { themeNames } from "./themes";
 import { DropdownMenu } from "./components/DropDownMenu";
 import { formTemplateOptions } from "./data/formTemplates";
 import { generateAccentPalette } from "./utils/theming";
-import { FileText, Languages } from "lucide-react";
+import { FileText, Languages, Plus } from "lucide-react";
 import TopBarMenu from "./components/TopBarMenu";
 import { I18nProvider } from "./i18nContext";
 import type { Locale } from "./i18nContext";
@@ -246,6 +246,7 @@ export default function App() {
             options={formTemplateOptions}
             onChange={(template) => addForm(template)}
             text={t("app.addForm")}
+            icon={<Plus size={16} />}
           />
 
           <button
@@ -264,7 +265,7 @@ export default function App() {
 
         <div
           className="app-layout"
-          style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}
+          style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", width: "100%", paddingTop: "12px" }}
         >
           <div
             id="resume-render"

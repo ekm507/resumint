@@ -7,6 +7,7 @@ interface DropdownMenuProps<T> {
   options: DropdownOption<T>[];
   value?: T;
   text?: string;
+  icon?: React.ReactNode;
   onChange: (v: T) => void;
 }
 
@@ -15,6 +16,7 @@ export function DropdownMenu<T>({
   value,
   onChange,
   text,
+  icon,
 }: DropdownMenuProps<T>) {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
@@ -91,6 +93,7 @@ export function DropdownMenu<T>({
         className="dropdown-menu-open editor-add-button"
         onClick={toggleMenu}
       >
+        {icon && <span className="dropdown-icon">{icon}</span>}
         {selected?.label
           ? t(selected.label)
           : text
@@ -105,6 +108,7 @@ export function DropdownMenu<T>({
             ref={menuRef}
             className={`dropdown-menu dropdown-${menuPos.direction}`}
             style={{
+              zIndex: 1002,
               position: "fixed",
               left: menuPos.left,
               top: menuPos.top,
@@ -128,7 +132,7 @@ export function DropdownMenu<T>({
                     <span className="dropdown-icon">{opt.icon}</span>
                   )}
                   {opt.label && (
-                    <span className="dropdown-label">{opt.label}</span>
+                    <span className="dropdown-label">{t(opt.label)}</span>
                   )}
                 </div>
               ))}

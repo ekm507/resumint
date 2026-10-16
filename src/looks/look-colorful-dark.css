@@ -16,8 +16,17 @@
 }
 
 .look-colorful-dark .app-layout {
-    @apply flex gap-6 w-full flex-1 justify-center items-center overflow-auto;
+    @apply flex gap-6 w-full flex-1 justify-center items-start overflow-auto;
 }
+
+.look-colorful-dark #resume-render {
+    @apply bg-slate-800/60;
+}
+
+.look-colorful-dark .resume-page {
+    @apply bg-white;
+}
+
 
 .look-colorful-dark .vdivider {
     @apply h-full border-x border-slate-600;
@@ -117,7 +126,7 @@
 }
 
 .look-colorful-dark .editor-add-button {
-    @apply border border-dashed border-slate-600 rounded-xl py-2
+    @apply border border-solid border-slate-600 rounded-xl py-2 px-4
            text-purple-400 hover:bg-purple-50
            hover:border-purple-400 cursor-pointer;
 }
@@ -660,4 +669,16 @@
 
 .look-colorful-dark .dropdown-item {
     @apply flex flex-row gap-2 items-center bg-slate-800 shadow hover:bg-indigo-900/30 hover:shadow-2xl border rounded-xl border-indigo-100 p-2 cursor-pointer;
+}
+
+.look-colorful-dark .resume-section-icon,
+.look-colorful-dark .icon-img,
+.look-colorful-dark .icon-box,
+.look-colorful-dark .keyvalue-block-render-icon {
+    @apply bg-white rounded p-0.5;
+}
+
+.look-colorful-dark .dropdown-icon img,
+.look-colorful-dark .dropdown-icon svg {
+    @apply bg-white rounded p-0.5;
 }
