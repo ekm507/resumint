@@ -281,15 +281,13 @@ export default function MiniBox({
                 </>
               ) : (
                 <div
-                  onMouseDownCapture={
-                    block.blockType === "richtext"
-                      ? () => {
-                          setTimeout(() => {
-                            setSelectedBlockId(block.id);
-                          }, 0);
-                        }
-                      : undefined
-                  }
+                  onMouseDownCapture={(event) => {
+                    if (block.blockType === "richtext" && event.button === 0) {
+                      // Keep focus-driven header changes from moving the click target.
+                      // The editor takes focus after the completed click opens it.
+                      event.preventDefault();
+                    }
+                  }}
                   onClickCapture={() => setSelectedBlockId(block.id)}
                   style={{ cursor: "pointer" }}
                 >
