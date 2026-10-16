@@ -90,7 +90,7 @@ export function DropdownMenu<T>({
     <>
       <button
         ref={buttonRef}
-        className="dropdown-menu-open editor-add-button"
+        className="dropdown-menu-open editor-add-button flex items-center justify-center gap-2"
         onClick={toggleMenu}
       >
         {icon && <span className="dropdown-icon">{icon}</span>}
@@ -122,8 +122,10 @@ export function DropdownMenu<T>({
               {options.map((opt) => (
                 <div
                   key={opt.key}
-                  className="dropdown-item"
+                  className={`dropdown-item ${opt.disabled ? "dropdown-item-disabled" : ""}`}
+                  style={opt.disabled ? { opacity: 0.45, cursor: "not-allowed" } : undefined}
                   onClick={() => {
+                    if (opt.disabled) return;
                     onChange(opt.value);
                     setOpen(false);
                   }}

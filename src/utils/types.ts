@@ -36,4 +36,5 @@ export interface DropdownOption<T> {
   label?: string;
   icon?: React.ReactNode; // SVG or any JSX
   key: string;
+  disabled?: boolean;
 }

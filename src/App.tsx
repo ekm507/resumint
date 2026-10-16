@@ -10,6 +10,7 @@ import { generateAccentPalette } from "./utils/theming";
 import { FileText, Languages, Plus } from "lucide-react";
 import TopBarMenu from "./components/TopBarMenu";
 import { I18nProvider } from "./i18nContext";
+import type { FormStructure, DropdownOption } from "./utils/types";
 import type { Locale } from "./i18nContext";
 import { translations } from "./i18n";
 
@@ -21,12 +22,7 @@ export default function App() {
 
   const [theme, setTheme] = useState("modern");
 
-  const [appLook, setAppLook] = useState<"light" | "dark" | "system">(() => {
-    const saved = localStorage.getItem("appLook");
-    if (saved === "light" || saved === "dark" || saved === "system")
-      return saved;
-    return "light";
-  });
+  const [appLook] = useState<"light">("light");
 
   useEffect(() => {
     localStorage.setItem("appLook", appLook);
@@ -35,22 +31,8 @@ export default function App() {
   const [resolvedLook, setResolvedLook] = useState<string>("colorful");
 
   useEffect(() => {
-    const resolve = () => {
-      const dark =
-        appLook === "dark" ||
-        (appLook === "system" &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches);
-      setResolvedLook(dark ? "colorful-dark" : "colorful");
-    };
-    resolve();
-    if (appLook === "system") {
-      const mq = window.matchMedia("(prefers-color-scheme: dark)");
-      const handler = () => resolve();
-      mq.addEventListener("change", handler);
-      return () => mq.removeEventListener("change", handler);
-    }
-    return;
-  }, [appLook]);
+    setResolvedLook("colorful");
+  }, []);
 
   const [accentColor, setAccentColor] = useState<string | null>(null);
   const accentPalette = accentColor
@@ -70,6 +52,15 @@ export default function App() {
 
   const t = (key: string) =>
     translations[locale]?.[key] ?? translations.en[key] ?? key;
+
+  const disabledTemplateTitles = new Set(forms.map((form: any) => form.title));
+  const formTemplateOptionsWithState: DropdownOption<FormStructure>[] =
+    formTemplateOptions.map((opt: any) => ({
+      ...opt,
+      disabled:
+        Boolean(opt.value?.title) &&
+        disabledTemplateTitles.has(opt.value.title),
+    }));
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
@@ -227,23 +218,10 @@ export default function App() {
               </div>
             </label>
 
-            <label style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-              {t("settings.appTheme")}
-              <select
-                value={appLook}
-                onChange={(e) =>
-                  setAppLook(e.target.value as "light" | "dark" | "system")
-                }
-              >
-                <option value="light">{t("theme.light")}</option>
-                <option value="dark">{t("theme.dark")}</option>
-                <option value="system">{t("theme.system")}</option>
-              </select>
-            </label>
           </TopBarMenu>
 
           <DropdownMenu
-            options={formTemplateOptions}
+            options={formTemplateOptionsWithState}
             onChange={(template) => addForm(template)}
             text={t("app.addForm")}
             icon={<Plus size={16} />}
