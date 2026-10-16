@@ -94,6 +94,7 @@ export function RichTextEditor({ block, update }: any) {
       }),
     ],
     content,
+    autofocus: true,
     onUpdate({ editor }) {
       setProp("content", editor.getJSON());
     },

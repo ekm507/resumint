@@ -281,6 +281,15 @@ export default function MiniBox({
                 </>
               ) : (
                 <div
+                  onMouseDownCapture={
+                    block.blockType === "richtext"
+                      ? () => {
+                          setTimeout(() => {
+                            setSelectedBlockId(block.id);
+                          }, 0);
+                        }
+                      : undefined
+                  }
                   onClickCapture={() => setSelectedBlockId(block.id)}
                   style={{ cursor: "pointer" }}
                 >
