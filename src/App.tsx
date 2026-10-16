@@ -114,7 +114,7 @@ export default function App() {
         <div className="app-toolbar">
           <button
             className="toolbar-button"
-            onClick={() => exportResumeData(forms, layout)}
+            onClick={() => void exportResumeData(forms, layout)}
           >
             {t("app.export")}
           </button>
@@ -123,7 +123,7 @@ export default function App() {
             {t("app.import")}
             <input
               type="file"
-              accept="application/json"
+              accept="application/json,.json,application/zip,.zip"
               onChange={handleImport}
               hidden
             />
