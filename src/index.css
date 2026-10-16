@@ -209,9 +209,8 @@
 }
 
 .resume-column {
-    @apply flex-1 flex flex-col gap-2;
+    @apply flex-1 flex flex-col gap-2 min-h-[160px];
 }
-
 .resume-section-title {
   position: relative;
 }

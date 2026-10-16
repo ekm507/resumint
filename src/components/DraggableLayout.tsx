@@ -6,11 +6,13 @@ import {
   useSensor,
   useSensors,
   useDroppable,
+  pointerWithin,
 } from "@dnd-kit/core";
 import type {
   DragStartEvent,
   DragOverEvent,
   DragEndEvent,
+  CollisionDetection,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -19,11 +21,11 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import MiniBox from "./MiniBox";
 import type { FormStructure, LayoutItem } from "../utils/types";
 
-/* ------------------------- Sortable box for each form ------------------------ */
+/* ------------------------- Sortable box ------------------------ */
 function SortableMiniBox({
   id,
   form,
@@ -68,7 +70,7 @@ function SortableMiniBox({
   );
 }
 
-/* ------------------------- Droppable column container ------------------------ */
+/* ------------------------- Droppable column ------------------------ */
 function DroppableColumn({
   id,
   itemIds,
@@ -108,7 +110,7 @@ function DroppableColumn({
   );
 }
 
-/* ------------------------------ Main component ------------------------------- */
+/* ------------------------------ Main ------------------------------- */
 export interface DraggableLayoutProps {
   layout: LayoutItem[];
   setLayout: React.Dispatch<React.SetStateAction<LayoutItem[]>>;
@@ -117,6 +119,18 @@ export interface DraggableLayoutProps {
   deleteForm?: (id: string) => void;
   editable?: boolean;
 }
+
+function findContainer(id: string, layout: LayoutItem[]): "left" | "right" | null {
+  if (id === "left" || id === "right") return id as "left" | "right";
+  const item = layout.find((entry) => entry.id === id);
+  return item?.column ?? null;
+}
+
+const collisionDetection: CollisionDetection = (args) => {
+  const pointerCollisions = pointerWithin(args);
+  if (pointerCollisions.length > 0) return pointerCollisions;
+  return closestCorners(args);
+};
 
 export default function DraggableLayout({
   layout,
@@ -128,24 +142,18 @@ export default function DraggableLayout({
 }: DraggableLayoutProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  /** derive column lists directly from layout (no redundant state) */
-  const columns = {
-    left: layout.filter((l) => l.column === "left").map((l) => l.id),
-    right: layout.filter((l) => l.column === "right").map((l) => l.id),
-  };
+  const columns = useMemo(
+    () => ({
+      left: layout.filter((l) => l.column === "left").map((l) => l.id),
+      right: layout.filter((l) => l.column === "right").map((l) => l.id),
+    }),
+    [layout],
+  );
 
-  /** sensors for pointer + keyboard interaction */
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
   );
 
-  const findColumn = (id: string): "left" | "right" | null => {
-    if (columns.left.includes(id)) return "left";
-    if (columns.right.includes(id)) return "right";
-    return null;
-  };
-
-  /* ------------------------------ DnD handlers ------------------------------ */
   const onDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id as string);
   };
@@ -154,29 +162,48 @@ export default function DraggableLayout({
     const { active, over } = event;
     if (!over) return;
 
-    const activeId = active.id as string;
-    const overId = over.id as string;
-    const activeCol = findColumn(activeId);
-    const overCol =
-      overId === "left" || overId === "right"
-        ? (overId as "left" | "right")
-        : findColumn(overId);
-    if (!activeCol || !overCol || activeCol === overCol) return; // ignore same-column drag over
+    const activeIdValue = active.id as string;
+    const overIdValue = over.id as string;
 
-    // move item to other column (append to end for now)
+    const activeContainer = findContainer(activeIdValue, layout);
+    const overContainer = findContainer(overIdValue, layout);
+
+    if (!activeContainer || !overContainer || activeContainer === overContainer) {
+      return;
+    }
+
     setLayout((prev) => {
-      const leftIds = prev.filter((i) => i.column === "left").map((i) => i.id);
-      const rightIds = prev
-        .filter((i) => i.column === "right")
-        .map((i) => i.id);
+      const prevLeft = prev
+        .filter((entry) => entry.column === "left")
+        .map((entry) => entry.id);
+      const prevRight = prev
+        .filter((entry) => entry.column === "right")
+        .map((entry) => entry.id);
 
-      const newCols = { left: leftIds, right: rightIds };
-      newCols[activeCol] = newCols[activeCol].filter((id) => id !== activeId);
-      newCols[overCol] = [...newCols[overCol], activeId];
+      const sourceItems =
+        activeContainer === "left" ? prevLeft : prevRight;
+      const targetItems =
+        overContainer === "left" ? prevLeft : prevRight;
+
+      const sourceIndex = sourceItems.indexOf(activeIdValue);
+      if (sourceIndex !== -1) sourceItems.splice(sourceIndex, 1);
+
+      let insertIndex = targetItems.length;
+      if (overIdValue !== "left" && overIdValue !== "right") {
+        const overIndex = targetItems.indexOf(overIdValue);
+        if (overIndex !== -1) insertIndex = overIndex;
+      }
+
+      targetItems.splice(insertIndex, 0, activeIdValue);
+
+      const nextLeft =
+        overContainer === "left" ? targetItems : sourceItems;
+      const nextRight =
+        overContainer === "left" ? sourceItems : targetItems;
 
       return [
-        ...newCols.left.map((id) => ({ id, column: "left" as const })),
-        ...newCols.right.map((id) => ({ id, column: "right" as const })),
+        ...nextLeft.map((id) => ({ id, column: "left" as const })),
+        ...nextRight.map((id) => ({ id, column: "right" as const })),
       ];
     });
   };
@@ -186,42 +213,59 @@ export default function DraggableLayout({
     setActiveId(null);
     if (!over) return;
 
-    const activeId = active.id as string;
-    const overId = over.id as string;
-    const activeCol = findColumn(activeId);
-    const overCol =
-      overId === "left" || overId === "right"
-        ? (overId as "left" | "right")
-        : findColumn(overId);
-    if (!activeCol || !overCol) return;
+    const activeIdValue = active.id as string;
+    const overIdValue = over.id as string;
 
-    // If dropped in same column, reorder items
-    if (activeCol === overCol) {
-      setLayout((prev) => {
-        const colItems = prev
-          .filter((x) => x.column === activeCol)
-          .map((x) => x.id);
-        const activeIndex = colItems.indexOf(activeId);
-        const overIndex = colItems.indexOf(overId);
-        if (activeIndex === overIndex || overIndex === -1) return prev;
+    const activeContainer = findContainer(activeIdValue, layout);
+    const overContainer = findContainer(overIdValue, layout);
 
-        const newIds = arrayMove(colItems, activeIndex, overIndex);
-        const otherIds = prev.filter((x) => x.column !== activeCol);
-        return [
-          ...newIds.map((id) => ({ id, column: activeCol })),
-          ...otherIds,
-        ];
-      });
+    if (!activeContainer || !overContainer) return;
+
+    if (activeContainer !== overContainer) return;
+
+    if (activeIdValue === overIdValue) return;
+
+    const columnItems =
+      activeContainer === "left" ? columns.left : columns.right;
+    const activeIndex = columnItems.indexOf(activeIdValue);
+    const overIndex = columnItems.indexOf(overIdValue);
+
+    if (activeIndex === -1 || overIndex === -1 || activeIndex === overIndex) {
+      return;
     }
+
+    setLayout((prev) => {
+      const leftIds = prev
+        .filter((entry) => entry.column === "left")
+        .map((entry) => entry.id);
+      const rightIds = prev
+        .filter((entry) => entry.column === "right")
+        .map((entry) => entry.id);
+
+      const currentIds = activeContainer === "left" ? leftIds : rightIds;
+      const otherIds = activeContainer === "left" ? rightIds : leftIds;
+      const reordered = arrayMove(currentIds, activeIndex, overIndex);
+
+      return activeContainer === "left"
+        ? [
+            ...reordered.map((id) => ({ id, column: "left" as const })),
+            ...otherIds.map((id) => ({ id, column: "right" as const })),
+          ]
+        : [
+            ...otherIds.map((id) => ({ id, column: "left" as const })),
+            ...reordered.map((id) => ({ id, column: "right" as const })),
+          ];
+    });
   };
 
-  const activeForm = activeId ? forms.find((f) => f.id === activeId) : null;
+  const activeForm = activeId
+    ? forms.find((form) => form.id === activeId)
+    : null;
 
-  /* ------------------------------ Render ------------------------------ */
   return (
     <DndContext
       sensors={sensors}
-      collisionDetection={closestCorners}
+      collisionDetection={collisionDetection}
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
