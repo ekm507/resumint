@@ -78,10 +78,22 @@ export default function TopBarMenu({ icon, label, children }: TopBarMenuProps) {
         ref={buttonRef}
         type="button"
         className="toolbar-button flex items-center gap-2"
+        style={{ display: "inline-flex", flexDirection: "row", flexWrap: "nowrap", alignItems: "center", gap: "6px", whiteSpace: "nowrap", minWidth: "max-content" }}
         onClick={() => setOpen((v) => !v)}
       >
-        {icon}
-        {label}
+        <span
+          style={{
+            display: "inline-flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            alignItems: "center",
+            gap: "6px",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {icon}
+          {label}
+        </span>
       </button>
 
       {open &&

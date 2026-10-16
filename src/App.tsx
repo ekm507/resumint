@@ -8,7 +8,16 @@ import { initialForms, initialLayout } from "./data/initialData";
 import { DropdownMenu } from "./components/DropDownMenu";
 import { formTemplateOptions } from "./data/formTemplates";
 import { generateAccentPalette } from "./utils/theming";
-import { FileText, Languages, Plus, FilePlus, Copy, Upload, Download } from "lucide-react";
+import {
+  FileText,
+  Languages,
+  Plus,
+  FilePlus,
+  Copy,
+  Upload,
+  Download,
+  GalleryHorizontal,
+} from "lucide-react";
 import TopBarMenu from "./components/TopBarMenu";
 import { I18nProvider } from "./i18nContext";
 import type { FormStructure, DropdownOption } from "./utils/types";
@@ -105,7 +114,11 @@ type StoredDocument = {
   updatedAt: number;
 };
 
-function createDocument(name: string, forms = initialForms, layout = initialLayout): StoredDocument {
+function createDocument(
+  name: string,
+  forms = initialForms,
+  layout = initialLayout,
+): StoredDocument {
   return {
     id: crypto.randomUUID(),
     name,
@@ -236,16 +249,6 @@ export default function App() {
     return () => document.body.classList.remove("look-" + resolvedLook);
   }, [resolvedLook]);
 
-  async function handleImport(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const data = await importResumeData(file);
-
-    setForms(data.forms);
-    setLayout(data.layout);
-  }
-
   useEffect(() => {
     const saved = localStorage.getItem("currentResume");
     if (!saved) return;
@@ -339,30 +342,17 @@ export default function App() {
         <div className="app-toolbar">
           <button
             className="toolbar-button"
+            style={{ display: "inline-flex", flexDirection: "row", alignItems: "center", gap: "6px", whiteSpace: "nowrap" }}
             onClick={() => setSidebarOpen((value) => !value)}
           >
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
-          <button
-            className="toolbar-button"
-            onClick={() => void exportResumeData(forms, layout)}
-          >
-            {t("app.export")}
-          </button>
-
-          <label className="toolbar-button">
-            {t("app.import")}
-            <input
-              type="file"
-              accept="application/json,.json,application/zip,.zip"
-              onChange={handleImport}
-              hidden
-            />
-          </label>
+            <GalleryHorizontal size={16} />
+            {t("sidebar.toggle")} {sidebarOpen ? "◀" : "▶"}          </button>
           <div className="vdivider" />
 
           <TopBarMenu icon={<FileText size={16} />} label={t("app.document")}>
-            <label style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <label
+              style={{ display: "flex", flexDirection: "column", gap: "6px" }}
+            >
               {t("settings.theme")}
               <select value={theme} onChange={(e) => setTheme(e.target.value)}>
                 {themeNames.map((name) => (
@@ -373,9 +363,13 @@ export default function App() {
               </select>
             </label>
 
-            <label style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+            <label
+              style={{ display: "flex", flexDirection: "column", gap: "6px" }}
+            >
               {t("settings.accent")}
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+              >
                 <button
                   type="button"
                   title={t("settings.accent")}
@@ -434,9 +428,15 @@ export default function App() {
               </svg>
             }
             label={t("app.settings")}
-          >            <label style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+          >
+            {" "}
+            <label
+              style={{ display: "flex", flexDirection: "column", gap: "6px" }}
+            >
               {t("settings.language")}
-              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "6px" }}
+              >
                 <Languages size={16} />
                 <select
                   value={locale}
@@ -448,7 +448,6 @@ export default function App() {
                 </select>
               </div>
             </label>
-
           </TopBarMenu>
 
           <DropdownMenu
@@ -472,170 +471,190 @@ export default function App() {
           </button>
         </div>
 
-        <div style={{ display: "flex", flex: 1, overflow: "hidden", width: "100%" }}>
-        {sidebarOpen && (
-          <aside className="app-sidebar">
-            <div className="sidebar-section">
-              <button className="sidebar-button flex items-center gap-2" onClick={newDocument}>
-                <FilePlus size={16} />
-                {t("sidebar.new")}
-              </button>
-            </div>
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            overflow: "hidden",
+            width: "100%",
+          }}
+        >
+          {sidebarOpen && (
+            <aside className="app-sidebar">
+              <div className="sidebar-section">
+                <button
+                  className="sidebar-button flex items-center gap-2"
+                  onClick={newDocument}
+                >
+                  <FilePlus size={16} />
+                  {t("sidebar.new")}
+                </button>
+              </div>
 
-            <div className="sidebar-title">{t("sidebar.documents")}</div>
-            <div className="sidebar-document-list">
-              {documents.map((doc) => {
-                const displayName =
-                  doc.name || firstDocumentLine(doc) || t("sidebar.untitled");
-                const isEditing = editingDocId === doc.id;
-                return (
-                  <div
-                    key={doc.id}
-                    className={`sidebar-document ${doc.id === currentId ? "sidebar-document-active" : ""}`}
-                    onClick={() => selectDocument(doc.id)}
-                  >
-                    <div className="sidebar-document-thumb">
-                      {firstDocumentImage(doc) ? (
-                        <img
-                          src={firstDocumentImage(doc)}
-                          alt=""
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      ) : (
-                        firstDocumentLine(doc) ||
-                        (doc.name ? doc.name : t("sidebar.untitled"))
-                      )}
-                    </div>
-                    <div className="sidebar-document-body">
-                      {doc.id === currentId && isEditing ? (
-                        <input
-                          className="sidebar-document-input"
-                          value={editingDocName}
-                          autoFocus
-                          onChange={(event) =>
-                            setEditingDocName(event.target.value)
-                          }
-                          onBlur={() => {
-                            const nextName = editingDocName.trim();
-                            setDocuments((prev) =>
-                              prev.map((item) =>
-                                item.id === doc.id
-                                  ? { ...item, name: nextName }
-                                  : item,
-                              ),
-                            );
-                            setEditingDocId(null);
-                          }}
-                          onKeyDown={(event) => {
-                            if (event.key === "Enter") {
-                              event.currentTarget.blur();
+              <div className="sidebar-title">{t("sidebar.documents")}</div>
+              <div className="sidebar-document-list">
+                {documents.map((doc) => {
+                  const displayName =
+                    doc.name || firstDocumentLine(doc) || t("sidebar.untitled");
+                  const isEditing = editingDocId === doc.id;
+                  return (
+                    <div
+                      key={doc.id}
+                      className={`sidebar-document ${doc.id === currentId ? "sidebar-document-active" : ""}`}
+                      onClick={() => selectDocument(doc.id)}
+                    >
+                      <div className="sidebar-document-thumb">
+                        {firstDocumentImage(doc) ? (
+                          <img
+                            src={firstDocumentImage(doc)}
+                            alt=""
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          firstDocumentLine(doc) ||
+                          (doc.name ? doc.name : t("sidebar.untitled"))
+                        )}
+                      </div>
+                      <div className="sidebar-document-body">
+                        {doc.id === currentId && isEditing ? (
+                          <input
+                            className="sidebar-document-input"
+                            value={editingDocName}
+                            autoFocus
+                            onChange={(event) =>
+                              setEditingDocName(event.target.value)
                             }
-                            if (event.key === "Escape") {
+                            onBlur={() => {
+                              const nextName = editingDocName.trim();
+                              setDocuments((prev) =>
+                                prev.map((item) =>
+                                  item.id === doc.id
+                                    ? { ...item, name: nextName }
+                                    : item,
+                                ),
+                              );
                               setEditingDocId(null);
-                            }
-                          }}
-                          onClick={(event) => event.stopPropagation()}
-                        />
-                      ) : (
-                        <span
-                          className="sidebar-document-name"
-                          onClick={(event) => {
-                            if (doc.id !== currentId) return;
-                            event.stopPropagation();
-                            setEditingDocId(doc.id);
-                            setEditingDocName(doc.name || "");
-                          }}
-                        >
-                          {displayName}
-                        </span>
-                      )}
-                      {doc.id === currentId && (
-                        <div className="sidebar-document-actions">
-                          <button
-                            className="sidebar-icon-button"
-                            title={t("sidebar.duplicate")}
+                            }}
+                            onKeyDown={(event) => {
+                              if (event.key === "Enter") {
+                                event.currentTarget.blur();
+                              }
+                              if (event.key === "Escape") {
+                                setEditingDocId(null);
+                              }
+                            }}
+                            onClick={(event) => event.stopPropagation()}
+                          />
+                        ) : (
+                          <span
+                            className="sidebar-document-name"
                             onClick={(event) => {
+                              if (doc.id !== currentId) return;
                               event.stopPropagation();
-                              duplicateDocument();
+                              setEditingDocId(doc.id);
+                              setEditingDocName(doc.name || "");
                             }}
                           >
-                            <Copy size={14} />
-                          </button>
-                        </div>
-                      )}
+                            {displayName}
+                          </span>
+                        )}
+                        {doc.id === currentId && (
+                          <div className="sidebar-document-actions">
+                            <button
+                              className="sidebar-icon-button"
+                              title={t("sidebar.duplicate")}
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                duplicateDocument();
+                              }}
+                            >
+                              <Copy size={14} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      <button
+                        className="sidebar-document-delete"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          deleteDocument(doc.id);
+                        }}
+                      >
+                        ×
+                      </button>
                     </div>
-                    <button
-                      className="sidebar-document-delete"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        deleteDocument(doc.id);
-                      }}
-                    >
-                      ×
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
 
-            <div className="sidebar-section sidebar-actions-row">
-              <button
-                className="sidebar-button flex items-center gap-2"
-                onClick={() =>
-                  document.getElementById("sidebar-import-input")?.click()
-                }
-              >
-                <Upload size={16} />
-                {t("app.import")}
-              </button>
-              <button
-                className="sidebar-button flex items-center gap-2"
-                onClick={() =>
-                  void exportResumeData(forms, layout, `${currentDocument?.name || "resume"}.zip`)
-                }
-              >
-                <Download size={16} />
-                {t("app.export")}
-              </button>
-            </div>
+              <div className="sidebar-section sidebar-actions-row">
+                <button
+                  className="sidebar-button flex items-center gap-2"
+                  onClick={() =>
+                    document.getElementById("sidebar-import-input")?.click()
+                  }
+                >
+                  <Upload size={16} />
+                  {t("app.import")}
+                </button>
+                <button
+                  className="sidebar-button flex items-center gap-2"
+                  onClick={() =>
+                    void exportResumeData(
+                      forms,
+                      layout,
+                      `${currentDocument?.name || firstDocumentLine(currentDocument) || "resume"}.zip`,
+                    )
+                  }
+                >
+                  <Download size={16} />
+                  {t("app.export")}
+                </button>
+              </div>
 
-            <input
-              id="sidebar-import-input"
-              type="file"
-              hidden
-              accept="application/json,.json,application/zip,.zip"
-              onChange={handleSidebarImport}
-            />
-          </aside>
-        )}
-
-        <div
-          className="app-layout"
-          style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", width: "100%", paddingTop: "12px" }}
-        >
-          <div
-            id="resume-render"
-            ref={resumeRef}
-            className={"resume theme-" + theme}
-            style={accentPalette as React.CSSProperties | undefined}
-          >
-            <div className="resume-page">
-              <DraggableLayout
-                layout={layout}
-                setLayout={setLayout}
-                forms={forms}
-                setForm={setForm}
-                deleteForm={deleteForm}
-                editable={!isPrinting}
+              <input
+                id="sidebar-import-input"
+                type="file"
+                hidden
+                accept="application/json,.json,application/zip,.zip"
+                onChange={handleSidebarImport}
               />
+            </aside>
+          )}
+
+          <div
+            className="app-layout"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              width: "100%",
+              paddingTop: "12px",
+            }}
+          >
+            <div
+              id="resume-render"
+              ref={resumeRef}
+              className={"resume theme-" + theme}
+              style={accentPalette as React.CSSProperties | undefined}
+            >
+              <div className="resume-page">
+                <DraggableLayout
+                  layout={layout}
+                  setLayout={setLayout}
+                  forms={forms}
+                  setForm={setForm}
+                  deleteForm={deleteForm}
+                  editable={!isPrinting}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </I18nProvider>
   );
