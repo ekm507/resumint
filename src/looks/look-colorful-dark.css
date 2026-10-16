@@ -1,0 +1,664 @@
+@import "tailwindcss";
+
+/* =========================================================
+   COLORFUL EDITOR THEME
+========================================================= */
+
+.look-colorful-dark {
+    @apply text-slate-100;
+}
+
+/* APP ROOT */
+
+.look-colorful-dark .app-root {
+    @apply flex flex-col items-center gap-4 p-4 h-screen overflow-hidden
+           bg-linear-to-br from-slate-900 via-purple-950 to-slate-900;
+}
+
+.look-colorful-dark .app-layout {
+    @apply flex gap-6 w-full flex-1 justify-center overflow-hidden;
+}
+
+.look-colorful-dark .vdivider {
+    @apply h-full border-x border-slate-600;
+}
+
+.look-colorful-dark .input-row {
+    @apply flex flex-row items-center;
+}
+
+/* TOOLBAR */
+
+/* =========================================================
+   BETTER COLORFUL TOOLBAR STYLE
+========================================================= */
+
+.look-colorful-dark .app-toolbar {
+    @apply flex items-center gap-3 px-4 py-2
+           bg-slate-900/70 backdrop-blur-xl
+           border border-purple-200 shadow-lg
+           rounded-2xl;
+
+    /* New: floating top bar feel */
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* --- Toolbar Buttons (Print, Export) --- */
+.look-colorful-dark .toolbar-button {
+    @apply px-3 py-1.5 text-sm rounded-lg cursor-pointer transition
+           bg-gradient-to-r from-indigo-500 to-purple-500
+           text-white font-medium shadow-sm
+           hover:from-indigo-600 hover:to-purple-600
+           active:scale-95;
+
+    min-width: 80px;
+}
+
+/* --- File Upload (Import) --- */
+.look-colorful-dark .toolbar-file {
+    @apply text-sm px-3 py-1.5 rounded-lg border border-slate-600
+           bg-indigo-900/30 hover:bg-indigo-900/40 cursor-pointer;
+
+    color: #333;
+    min-width: 140px;
+}
+
+/* --- Color Picker Control --- */
+.look-colorful-dark .toolbar-color {
+    @apply flex items-center gap-2 px-3 py-1 rounded-lg
+           border border-pink-300 bg-pink-100
+           cursor-pointer transition hover:bg-pink-200;
+
+    height: 36px;
+    border-radius: 10px;
+}
+
+.look-colorful-dark .toolbar-color input[type="color"] {
+    /* removes default ugly square input */
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 2px solid #fff;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px #d1a5e7;
+}
+
+.look-colorful-dark .toolbar-color input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
+
+/* --- Reset Accent Button --- */
+.look-colorful-dark .toolbar-reset {
+    @apply text-xs px-2.5 py-1 rounded-md border border-gray-300
+           bg-slate-800 hover:bg-gray-100 text-slate-300
+           cursor-pointer transition active:scale-95;
+}
+
+/* --- Theme Dropdown --- */
+.look-colorful-dark select {
+    @apply px-2 py-1.5 text-sm border border-slate-600 rounded-lg
+           bg-slate-800 outline-none cursor-pointer
+           focus:ring-2 focus:ring-purple-500;
+
+    min-width: 110px;
+}
+
+/* EDITOR PANEL */
+
+.look-colorful-dark .editor-panel {
+    @apply flex flex-col gap-3 bg-slate-800 border border-blue-200
+           rounded-2xl p-3 shadow-lg min-w-[280px] overflow-y-auto;
+}
+
+.look-colorful-dark .editor-add-button {
+    @apply border border-dashed border-slate-600 rounded-xl py-2
+           text-purple-400 hover:bg-purple-50
+           hover:border-purple-400 cursor-pointer;
+}
+
+/* BLOCK EDITOR */
+
+.look-colorful-dark .form-remove-button {
+    @apply bg-rose-200 border border-rose-400 w-8 h-8 rounded text-3xl text-white hover:shadow hover:bg-rose-500;
+}
+
+.look-colorful-dark .form-collapse-button {
+    @apply border border-yellow-300 bg-yellow-50 w-8 h-8 rounded hover:shadow hover:bg-yellow-300;
+}
+
+.look-colorful-dark .block-editor {
+    @apply flex flex-col gap-2 relative border-b border-slate-700;
+}
+
+.look-colorful-dark .editor-row {
+    @apply flex gap-12 items-center;
+}
+
+.look-colorful-dark .block-editor-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-colorful-dark .block-type-select {
+    @apply border border-slate-600 rounded-lg px-2 py-1
+           bg-slate-800 cursor-pointer outline-none
+           focus:ring-2 focus:ring-purple-500;
+}
+
+/* GENERIC INPUTS */
+
+.look-colorful-dark .image-editor-preview {
+    @apply w-24 h-24 border border-slate-600 rounded-xl overflow-hidden flex items-center justify-center bg-gray-50;
+}
+
+.look-colorful-dark .image-editor-preview img {
+    @apply max-w-full max-h-full object-cover block;
+}
+
+.look-colorful-dark .image-editor-preview span {
+    @apply text-xs text-slate-400 text-center p-2;
+}
+
+.look-colorful-dark select {
+    @apply border border-slate-600 rounded-lg px-2 py-1
+           bg-slate-800 outline-none
+           focus:ring-2 focus:ring-purple-500;
+}
+
+/* IMAGE / LINK / DIVIDER */
+
+.look-colorful-dark .divider-block-editor {
+    @apply flex gap-2;
+}
+
+/* TAGS */
+
+.look-colorful-dark .tags-list {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful-dark .tag-input-row {
+    @apply flex items-center gap-2;
+}
+
+.look-colorful-dark .tag-input-row input {
+    @apply flex-1 border border-green-700 rounded-lg px-3 py-1.5 w-full mx-1
+           bg-slate-800 outline-none focus:ring-2 focus:ring-green-500;
+}
+
+.look-colorful-dark .tag-input-row button {
+    @apply text-rose-400 text-xs hover:text-rose-400 cursor-pointer;
+}
+
+.look-colorful-dark .tags-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful-dark .tags-block-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful-dark .tags-block-item {
+    @apply flex items-center gap-2;
+}
+
+.look-colorful-dark .tags-block-input {
+    @apply border border-green-700 rounded-lg px-3 py-1.5
+           bg-slate-800 outline-none focus:ring-2 focus:ring-green-500 flex-1;
+}
+
+.look-colorful-dark .input-list {
+    @apply flex flex-col gap-0;
+}
+
+.look-colorful-dark .input-row {
+    @apply flex gap-3 bg-indigo-900/40 px-2 py-1 rounded-xl border border-slate-700;
+}
+
+.look-colorful-dark .item-remove-button {
+    @apply text-white bg-slate-600 h-5 w-5 rounded-full text-lg cursor-pointer flex-shrink-0;
+}
+
+.look-colorful-dark .input-row:hover .item-remove-button {
+    @apply bg-rose-500 hover:bg-rose-700;
+}
+
+.look-colorful-dark .tags-block-add-button {
+    @apply border border-dashed border-green-700 rounded-lg py-1.5
+           hover:bg-green-50 cursor-pointer;
+}
+
+.look-colorful-dark .item-add-button {
+    @apply border border-green-600 rounded-lg py-1.5 w-max
+           bg-green-200 hover:bg-green-300 cursor-pointer;
+}
+
+/* KEY VALUE */
+
+.look-colorful-dark .keyvalue-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful-dark .text-input {
+    @apply border border-amber-300 rounded px-2 py-1 text-sm bg-slate-800 w-full;
+}
+
+/* FORM */
+
+.look-colorful-dark .editor-form-wrapper {
+    @apply flex flex-col;
+}
+
+.look-colorful-dark .editor-form {
+    @apply flex flex-col gap-2 border border-slate-700
+           rounded-xl p-2 bg-indigo-900/30;
+}
+
+.look-colorful-dark .editor-form-header {
+    @apply flex gap-2 items-center;
+}
+
+.look-colorful-dark .editor-form-header input {
+    @apply flex-1 border border-slate-600 rounded-lg px-2 py-1
+           bg-slate-800 outline-none focus:ring-2 focus:ring-purple-500;
+}
+
+.look-colorful-dark .background-toggle-button {
+    @apply w-7 h-7 rounded-md border hover:scale-105 transition;
+}
+/* DELETE */
+
+.look-colorful-dark .block-delete-button {
+    @apply text-red-400 hover:text-red-400 cursor-pointer;
+}
+
+/* ADD BLOCK */
+
+.look-colorful-dark .add-block {
+    @apply flex flex-wrap gap-2 pt-2;
+}
+
+.look-colorful-dark .add-block button {
+    @apply border border-dashed border-slate-600
+           rounded-lg px-2 py-1 text-xs
+           hover:bg-indigo-900/40 cursor-pointer;
+}
+
+/* INSERT BLOCK (+) */
+
+.look-colorful-dark .add-block-container {
+    @apply relative flex justify-center py-1;
+}
+
+.look-colorful-dark .add-block-line {
+    @apply absolute top-1/2 left-0 right-0 h-px bg-indigo-800/50 opacity-0 transition;
+}
+
+.look-colorful-dark .add-block-container:hover .add-block-line {
+    @apply opacity-100;
+}
+
+.look-colorful-dark .add-block-trigger {
+    @apply relative flex items-center justify-center
+           rounded-full text-sm px-2 py-1
+           bg-slate-800 border border-slate-600
+           hover:bg-indigo-900/300 hover:text-white
+           transition cursor-pointer shadow;
+}
+
+.look-colorful-dark .add-block-menu {
+    @apply absolute top-7 z-20 w-64 p-2
+           bg-slate-800 border border-slate-700
+           rounded-xl shadow-lg;
+}
+
+.look-colorful-dark .add-block-grid {
+    @apply grid grid-cols-2 gap-1;
+}
+
+.look-colorful-dark .add-block-item {
+    @apply flex items-center gap-2 px-2 py-1.5 text-sm
+           rounded-lg cursor-pointer hover:bg-indigo-900/40 transition;
+}
+
+.look-colorful-dark .add-block-icon {
+    @apply text-base opacity-80;
+}
+
+.look-colorful-dark .icon-remove-text {
+    @apply hover:bg-rose-500;
+}
+
+.look-colorful-dark .add-block-label {
+    @apply text-xs;
+}
+
+/* HOVER CONTROLS */
+
+.look-colorful-dark .block-hover-controls {
+    @apply absolute right-2 top-2 flex gap-1 opacity-0 transition-opacity;
+}
+
+.look-colorful-dark .block-editor:hover .block-hover-controls {
+    @apply opacity-100;
+}
+
+.look-colorful-dark .block-hover-button {
+    @apply w-6 h-6 flex items-center justify-center rounded-md text-xs
+           bg-slate-800 border border-slate-700
+           hover:bg-indigo-900/300 hover:text-white
+           cursor-pointer transition;
+}
+
+/* MULTI COLUMN */
+
+.look-colorful-dark .multi-column-editor {
+    @apply flex flex-col gap-3;
+}
+
+.look-colorful-dark .multi-column-toolbar {
+    @apply flex gap-2 flex-wrap items-center;
+}
+
+.look-colorful-dark .multi-column-toolbar button {
+    @apply px-2 py-1 text-xs rounded-lg
+           border border-slate-600 bg-slate-800
+           hover:bg-indigo-900/300 hover:text-white
+           cursor-pointer;
+}
+
+.look-colorful-dark .multi-column-grid {
+    @apply flex gap-3;
+}
+
+.look-colorful-dark .multi-column-column {
+    @apply flex flex-col gap-2 border border-slate-700
+           rounded-lg p-2 bg-slate-800 flex-1;
+}
+
+.look-colorful-dark .multi-column-column-header {
+    @apply flex justify-between items-center text-xs text-indigo-400;
+}
+
+.look-colorful-dark .multi-column-items {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful-dark .multi-column-add-block {
+    @apply border border-dashed border-slate-600
+           rounded-lg py-1 text-xs hover:bg-indigo-900/40 cursor-pointer;
+}
+
+/* RICH TEXT */
+
+.look-colorful-dark .richtext-block-editor {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful-dark .richtext-toolbar {
+    @apply flex flex-wrap gap-1 border border-slate-700
+           rounded-xl p-1 bg-slate-800;
+}
+
+.look-colorful-dark .richtext-dropdown {
+    @apply relative;
+}
+
+/* dropdown trigger button */
+.look-colorful-dark .richtext-trigger {
+    @apply px-2 py-1 text-[10px] font-medium rounded-lg
+           bg-slate-800 border border-slate-700 text-indigo-300
+           hover:bg-indigo-900/300 hover:text-white
+           cursor-pointer transition active:scale-95
+           flex items-center justify-center gap-1;
+}
+
+/* when active */
+.look-colorful-dark .richtext-trigger.is-active {
+    @apply bg-indigo-900/300 border-indigo-400 text-white;
+}
+
+/* dropdown panel */
+.look-colorful-dark .richtext-menu {
+    @apply absolute top-7 left-0 z-20 min-w-[120px]
+           bg-slate-800 border border-slate-700 rounded-lg shadow-lg p-1
+           flex flex-col;
+}
+
+/* dropdown item */
+.look-colorful-dark .richtext-item {
+    @apply flex items-center gap-2 px-2 py-1 text-xs
+           rounded-md cursor-pointer text-indigo-300
+           hover:bg-indigo-900/40 transition;
+}
+
+/* selected item */
+.look-colorful-dark .richtext--item.is-active {
+    @apply bg-indigo-900/300 text-white;
+}
+
+.look-colorful-dark .richtext-divider-v {
+    @apply w-px h-4 bg-indigo-800/50 my-auto mx-1;
+}
+
+.look-colorful-dark .richtext-button {
+    @apply px-2 py-1 text-[10px] font-medium rounded-lg
+           bg-slate-800 border border-slate-700 text-indigo-300
+           hover:bg-indigo-900/300 hover:text-white
+           cursor-pointer transition active:scale-95;
+}
+
+.look-colorful-dark .richtext-button.is-active {
+    @apply bg-indigo-900/300 border-indigo-400 text-white;
+}
+
+.look-colorful-dark .richtext-editor-surface {
+    @apply border border-slate-700 rounded-xl
+           bg-slate-800 p-4 min-h-[120px] shadow-inner;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror {
+    @apply outline-none text-sm leading-relaxed text-slate-100;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror h1 {
+    @apply text-xl font-bold mb-2 text-indigo-300;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror h2 {
+    @apply text-lg font-bold mb-2 text-purple-300;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror h3 {
+    @apply text-base font-semibold mb-1 text-pink-300;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror h4 {
+    @apply text-sm font-semibold mb-1 text-indigo-300;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror ul {
+    @apply list-disc pl-5 mb-2 space-y-1 text-slate-200;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror ol {
+    @apply list-decimal pl-5 mb-2 space-y-1 text-slate-200;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror hr {
+    @apply my-4 border border-slate-700 border-dashed;
+}
+
+.look-colorful-dark .richtext-editor-surface .ProseMirror a {
+    @apply text-purple-400 underline decoration-purple-400/40;
+}
+
+/* ADVANCED OPTIONS */
+
+.look-colorful-dark .block-advanced {
+    @apply flex flex-col gap-1;
+}
+
+.look-colorful-dark .block-advanced-toggle {
+    @apply mt-2 text-xs text-indigo-300 hover:text-indigo-300
+           cursor-pointer transition flex items-center gap-1;
+}
+
+.look-colorful-dark .block-advanced-open {
+    @apply border-t border-slate-700 pt-2 mt-1;
+}
+
+.look-colorful-dark .block-advanced-controls {
+    @apply flex flex-col gap-2;
+}
+
+.look-colorful-dark .option-group {
+    @apply flex flex-col gap-1 bg-indigo-900/40 p-2 rounded-xl;
+}
+
+.look-colorful-dark .option-group label {
+    @apply text-xs text-indigo-400;
+}
+
+.look-colorful-dark .options-grid {
+    @apply flex flex-row flex-wrap gap-3;
+}
+
+.look-colorful-dark .toggle-button-container {
+    @apply flex flex-row gap-1;
+}
+
+.look-colorful-dark .toggle-button-active {
+    @apply bg-indigo-900/300 border-indigo-400;
+}
+.look-colorful-dark .toggle-button {
+    @apply p-2 rounded-xl border-2 border-slate-600 w-max hover:cursor-pointer hover:bg-indigo-400;
+}
+
+/* --- Compact File Upload Button --- */
+
+.look-colorful-dark .icon-column {
+    @apply px-2;
+}
+
+.look-colorful-dark .keyvalue-icon-input {
+    position: relative;
+    width: 35px;
+    height: 22px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #f2f2f2;
+    border: 1px solid #d0d0d0;
+    font-size: 11px;
+    color: #333;
+    cursor: pointer;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.look-colorful-dark .file-upload {
+    @apply text-sm px-3 py-1.5 rounded-lg border border-slate-600
+           bg-indigo-900/30 hover:bg-indigo-900/40 cursor-pointer;
+}
+
+/* hide actual file input */
+.look-colorful-dark .keyvalue-icon-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.look-colorful-dark .keyvalue-icon-input::before {
+    content: "Upload";
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 4px;
+    cursor: pointer;
+    color: #444;
+}
+
+.look-colorful-dark .keyvalue-icon-input:hover {
+    background: #e6e6e6;
+    border-color: #bcbcbc;
+}
+
+.look-colorful-dark .keyvalue-icon-input:active {
+    background: #dcdcdc;
+}
+
+/* Icon preview block */
+
+.look-colorful-dark .item-remove-text {
+    @apply text-white bg-slate-600 p-1 rounded cursor-pointer h-4 items-center;
+    font-size: 10px;
+}
+
+.look-colorful-dark .input-row:hover .item-remove-text {
+    @apply bg-rose-500 hover:bg-rose-700;
+}
+/* =========================================================
+   ICON SELECT COMPONENT
+========================================================= */
+
+.look-colorful-dark .icon-select-box {
+    @apply flex flex-col items-center relative z-30;
+}
+
+.look-colorful-dark .icon-select-trigger {
+    @apply flex items-center gap-2 p-1 text-xs font-medium
+           rounded-lg bg-slate-800 border border-slate-600 shadow
+           hover:bg-indigo-900/300 hover:text-white transition cursor-pointer;
+}
+
+.look-colorful-dark .icon-preview {
+    @apply flex items-center gap-2 p-1 text-xs font-medium
+           rounded-lg bg-slate-800 border border-slate-600 shadow
+           hover:bg-indigo-900/300 hover:text-white transition cursor-pointer;
+}
+
+.look-colorful-dark .icon-img {
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    object-fit: cover;
+}
+
+.look-colorful-dark .icon-select-menu {
+    @apply absolute z-30 p-2 min-w-45 bg-slate-800 border border-slate-700 rounded-xl shadow-lg backdrop-blur-xl;
+}
+
+/* the grid of icons */
+.look-colorful-dark .grid-menu {
+    @apply grid grid-cols-4 gap-2 p-1;
+}
+
+/* button for each icon */
+.look-colorful-dark .icon-item {
+    @apply flex items-center justify-center
+           rounded-lg border border-slate-700 bg-slate-800
+           hover:bg-indigo-900/40 hover:border-slate-600
+           transition cursor-pointer p-1;
+}
+
+/* the icon image itself */
+.look-colorful-dark .icon-box {
+    @apply w-6 h-6 object-contain opacity-80;
+}
+
+.look-colorful-dark .dropdown-menu-open {
+    @apply hover:cursor-pointer;
+}
+
+.look-colorful-dark .dropdown-list {
+    @apply flex flex-col gap-1 bg-slate-800 border border-gray-400 min-w-40 w-max p-2 rounded-xl;
+}
+
+.look-colorful-dark .dropdown-item {
+    @apply flex flex-row gap-2 items-center bg-slate-800 shadow hover:bg-indigo-900/30 hover:shadow-2xl border rounded-xl border-indigo-100 p-2 cursor-pointer;
+}
