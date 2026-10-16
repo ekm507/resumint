@@ -27,6 +27,14 @@
     border-color: var(--accent-200);
 }
 
+.theme-classic .resume-section-header {
+    @apply flex gap-4 items-center;
+}
+
+.theme-classic .resume-section-header:empty {
+    display: none;
+}
+
 .theme-classic .resume-section-title {
     @apply text-base font-bold tracking-wide pb-1;
     color: var(--accent-800);
@@ -49,7 +57,7 @@
     @apply flex flex-col gap-4;
 }
 
-/* MULTI COLUMN */
+/* MULTI COLUMN BLOCK */
 
 .theme-classic .resume-multi-column {
     @apply grid gap-3 w-full items-start;
@@ -199,6 +207,10 @@
     @apply list-decimal ps-5;
 }
 
+.theme-classic .richtext-block li {
+    @apply leading-relaxed;
+}
+
 .theme-classic .richtext-block a {
     color: var(--accent-700);
     text-decoration: underline;
@@ -211,7 +223,8 @@
     @apply flex flex-wrap gap-2;
 }
 
-.theme-classic .tag-item {
+.theme-classic .tag-item,
+.theme-classic .tags-block-tag {
     @apply inline-flex items-center font-medium border transition-all duration-200;
 }
 
@@ -242,6 +255,7 @@
 }
 
 .theme-classic .tag-variant-outline {
+    @apply border border-dashed;
     background: transparent;
     color: var(--accent-700);
     border-color: var(--accent-400);
@@ -263,9 +277,15 @@
     color: var(--accent-600);
 }
 
+.theme-classic .emphasize-none .keyvalue-block-key,
+.theme-classic .emphasize-none .keyvalue-block-value {
+    font-weight: normal;
+}
+
 .theme-classic .emphasize-key .keyvalue-block-key {
     font-weight: 600;
 }
+
 .theme-classic .emphasize-value .keyvalue-block-value {
     font-weight: 600;
 }

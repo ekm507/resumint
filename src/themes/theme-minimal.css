@@ -25,6 +25,14 @@
     @apply flex flex-col gap-3;
 }
 
+.theme-minimal .resume-section-header {
+    @apply flex gap-4 items-center;
+}
+
+.theme-minimal .resume-section-header:empty {
+    display: none;
+}
+
 .theme-minimal .resume-section-title {
     @apply text-sm font-semibold uppercase tracking-wide;
     color: var(--accent-700);
@@ -195,6 +203,10 @@
     @apply list-decimal ps-5;
 }
 
+.theme-minimal .richtext-block li {
+    @apply leading-relaxed;
+}
+
 .theme-minimal .richtext-block a {
     color: var(--accent-700);
     text-decoration: underline;
@@ -207,7 +219,8 @@
     @apply flex flex-wrap gap-2;
 }
 
-.theme-minimal .tag-item {
+.theme-minimal .tag-item,
+.theme-minimal .tags-block-tag {
     @apply inline-flex items-center font-medium border transition-all duration-200;
 }
 
@@ -238,6 +251,7 @@
 }
 
 .theme-minimal .tag-variant-outline {
+    @apply border border-dashed;
     background: transparent;
     color: var(--accent-700);
     border-color: var(--accent-400);
@@ -259,9 +273,15 @@
     color: var(--accent-600);
 }
 
+.theme-minimal .emphasize-none .keyvalue-block-key,
+.theme-minimal .emphasize-none .keyvalue-block-value {
+    font-weight: normal;
+}
+
 .theme-minimal .emphasize-key .keyvalue-block-key {
     font-weight: 600;
 }
+
 .theme-minimal .emphasize-value .keyvalue-block-value {
     font-weight: 600;
 }

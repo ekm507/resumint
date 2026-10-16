@@ -26,6 +26,14 @@
     border-color: var(--accent-100);
 }
 
+.theme-polar-bear .resume-section-header {
+    @apply flex gap-4 items-center;
+}
+
+.theme-polar-bear .resume-section-header:empty {
+    display: none;
+}
+
 .theme-polar-bear .resume-section-title {
     @apply text-sm font-semibold tracking-wide;
     color: var(--accent-800);
@@ -196,6 +204,10 @@
     @apply list-decimal ps-5;
 }
 
+.theme-polar-bear .richtext-block li {
+    @apply leading-relaxed;
+}
+
 .theme-polar-bear .richtext-block a {
     color: var(--accent-700);
     text-decoration: underline;
@@ -208,11 +220,45 @@
     @apply flex flex-wrap gap-2;
 }
 
-.theme-polar-bear .tag-item {
-    @apply inline-flex items-center font-medium border transition-all duration-200 rounded-md text-xs px-2.5 py-1;
+.theme-polar-bear .tag-item,
+.theme-polar-bear .tags-block-tag {
+    @apply inline-flex items-center font-medium border transition-all duration-200 rounded-md;
     background: var(--accent-50);
     color: var(--accent-700);
     border-color: var(--accent-200);
+}
+
+.theme-polar-bear .tag-shape-pill {
+    border-radius: 9999px;
+}
+.theme-polar-bear .tag-shape-rounded {
+    border-radius: 0.5rem;
+}
+.theme-polar-bear .tag-shape-square {
+    border-radius: 0;
+}
+
+.theme-polar-bear .tag-size-sm {
+    @apply text-xs px-1.5 py-0.5;
+}
+.theme-polar-bear .tag-size-md {
+    @apply text-sm px-2 py-1;
+}
+.theme-polar-bear .tag-size-lg {
+    @apply text-base px-3 py-1.5;
+}
+
+.theme-polar-bear .tag-variant-filled {
+    background: var(--accent-50);
+    color: var(--accent-700);
+    border-color: var(--accent-200);
+}
+
+.theme-polar-bear .tag-variant-outline {
+    @apply border border-dashed;
+    background: transparent;
+    color: var(--accent-700);
+    border-color: var(--accent-400);
 }
 
 /* LAYOUT HELPERS */
@@ -229,4 +275,17 @@
 
 .theme-polar-bear .keyvalue-block-key {
     color: var(--accent-600);
+}
+
+.theme-polar-bear .emphasize-none .keyvalue-block-key,
+.theme-polar-bear .emphasize-none .keyvalue-block-value {
+    font-weight: normal;
+}
+
+.theme-polar-bear .emphasize-key .keyvalue-block-key {
+    font-weight: 600;
+}
+
+.theme-polar-bear .emphasize-value .keyvalue-block-value {
+    font-weight: 600;
 }
