@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 
 import { useState } from "react";
+import { useI18n } from "../i18nContext";
 
 /* =========================
    TOOLBAR BUTTON
@@ -50,6 +51,7 @@ function ToolbarButton({ active, onClick, title, children }: any) {
 ========================= */
 
 export function RichTextEditor({ block, update }: any) {
+  const { t } = useI18n();
   const { content = null } = block.props || {};
 
   const setProp = (k: string, v: any) =>
@@ -123,7 +125,7 @@ export function RichTextEditor({ block, update }: any) {
       <div className="richtext-dropdown">
         <button
           className="richtext-button"
-          title="set alignment"
+          title={t("richtext.align")}
           onMouseDown={(e) => {
             e.preventDefault();
             setOpen(!open);
@@ -139,7 +141,7 @@ export function RichTextEditor({ block, update }: any) {
           <div className="richtext-menu">
             <button
               className="richtext-item richtext-button"
-              title="Left"
+              title={t("richtext.left")}
               onMouseDown={(e) => {
                 e.preventDefault();
                 editor.chain().focus().setTextAlign("left").run();
@@ -151,7 +153,7 @@ export function RichTextEditor({ block, update }: any) {
 
             <button
               className="richtext-item richtext-button"
-              title="Center"
+              title={t("richtext.center")}
               onMouseDown={(e) => {
                 e.preventDefault();
                 editor.chain().focus().setTextAlign("center").run();
@@ -163,7 +165,7 @@ export function RichTextEditor({ block, update }: any) {
 
             <button
               className="richtext-item richtext-button"
-              title="right"
+              title={t("richtext.right")}
               onMouseDown={(e) => {
                 e.preventDefault();
                 editor.chain().focus().setTextAlign("right").run();
@@ -175,7 +177,7 @@ export function RichTextEditor({ block, update }: any) {
 
             <button
               className="richtext-item richtext-button"
-              title="Justify"
+              title={t("richtext.justify")}
               onMouseDown={(e) => {
                 e.preventDefault();
                 editor.chain().focus().setTextAlign("justify").run();
@@ -196,7 +198,7 @@ export function RichTextEditor({ block, update }: any) {
       <div className="richtext-toolbar">
         <ToolbarButton
           active={state.bold}
-          title="Bold (Ctrl+B)"
+          title={t("richtext.bold")}
           onClick={() => editor.chain().focus().toggleBold().run()}
         >
           <Bold size={14} />
@@ -204,7 +206,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.italic}
-          title="Italic (Ctrl+I)"
+          title={t("richtext.italic")}
           onClick={() => editor.chain().focus().toggleItalic().run()}
         >
           <Italic size={14} />
@@ -214,7 +216,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.h1}
-          title="Heading 1 (Ctrl+1)"
+          title={t("richtext.heading1")}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
@@ -224,7 +226,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.h2}
-          title="Heading 2 (Ctrl+2)"
+          title={t("richtext.heading2")}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
@@ -234,7 +236,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.h3}
-          title="Heading 3 (Ctrl+3)"
+          title={t("richtext.heading3")}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
@@ -244,7 +246,7 @@ export function RichTextEditor({ block, update }: any) {
 
         <ToolbarButton
           active={state.h4}
-          title="Heading 4 (Ctrl+4)"
+          title={t("richtext.heading4")}
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
@@ -280,7 +282,7 @@ export function RichTextEditor({ block, update }: any) {
         <ToolbarButton
           active={state.link}
           onClick={() => {
-            const url = prompt("Enter URL", editor.getAttributes("link").href);
+            const url = prompt(t("richtext.enterUrl"), editor.getAttributes("link").href);
 
             if (url === null) return;
 
@@ -337,7 +339,7 @@ export function RichTextRender({ block }: any) {
 
 registerBlock({
   type: "richtext",
-  label: "Rich Text",
+  label: "block.richText",
   create: () => ({
     id: "",
     blockType: "richtext",

@@ -1,6 +1,9 @@
 import { useRef, useState, useLayoutEffect } from "react";
 
+import { useI18n } from "../i18nContext";
+
 export default function AdvancedOptions({ block, update, children }: any) {
+  const { t } = useI18n();
   const advanced = block.props?.__advanced ?? false;
   const toggle = () =>
     update({
@@ -39,9 +42,9 @@ export default function AdvancedOptions({ block, update, children }: any) {
         <button
           className="block-advanced-toggle"
           onClick={toggle}
-          title="show advanced options"
+          title={t("advanced.show")}
         >
-          Advanced options ▾
+          {t("advanced.show")} ▾
         </button>
       )}
 
@@ -63,9 +66,9 @@ export default function AdvancedOptions({ block, update, children }: any) {
           <button
             className="block-advanced-toggle"
             onClick={toggle}
-            title="hide advanced options"
+            title={t("advanced.hide")}
           >
-            Hide advanced ▴
+            {t("advanced.hide")} ▴
           </button>
         </div>
       )}

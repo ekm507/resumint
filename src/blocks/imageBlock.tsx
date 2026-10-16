@@ -3,8 +3,9 @@ import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
-
+import { useI18n } from "../i18nContext";
 export function ImageEditor({ block, update }: any) {
+  const { t } = useI18n();
   const {
     src = "",
     alt = "",
@@ -27,7 +28,7 @@ export function ImageEditor({ block, update }: any) {
 
   const handleFile = (file: File) => {
     if (file.size > 5_000_000) {
-      alert("Image too large. Maximum size is 5MB.");
+      alert(t("image.tooLarge"));
       return;
     }
 
@@ -43,7 +44,7 @@ export function ImageEditor({ block, update }: any) {
         },
       });
     };
-    reader.onerror = () => alert("Failed to read file.");
+    reader.onerror = () => alert(t("image.readFailed"));
     reader.readAsDataURL(file);
   };
 
@@ -81,13 +82,13 @@ export function ImageEditor({ block, update }: any) {
         {canPreview ? (
           <img
             src={src}
-            alt={alt || "image"}
+            alt={alt || t("image.image")}
             style={{ width: `${width}%` }}
             className={`resume-image image-shape-${shape}`}
           />
         ) : (
           <div className="image-editor-preview">
-            <span>{alt || "No image"}</span>
+            <span>{alt || t("image.noImage")}</span>
           </div>
         )}
 
@@ -96,7 +97,7 @@ export function ImageEditor({ block, update }: any) {
           className="image-upload-overlay"
           onClick={openFilePicker}
         >
-          Upload
+          {t("image.upload")}
         </button>
         <input
           ref={fileInputRef}
@@ -114,7 +115,7 @@ export function ImageEditor({ block, update }: any) {
           <button
             className="image-remove-overlay"
             onClick={() => setProp("src", "")}
-            title="remove image"
+            title={t("image.remove")}
           >
             ×
           </button>
@@ -124,12 +125,12 @@ export function ImageEditor({ block, update }: any) {
       <AdvancedOptions block={block} update={update}>
         <input
           className="text-input"
-          placeholder="alt text"
+          placeholder={t("image.alt")}
           value={alt}
           onChange={(e) => setProp("alt", e.target.value)}
         />
         <div className="option-group">
-          <label>Width: {width}%</label>
+          <label>{t("image.width")}: {width}%</label>
           <input
             type="range"
             min={20}
@@ -141,14 +142,14 @@ export function ImageEditor({ block, update }: any) {
         </div>
         <div className="options-grid">
           <div className="option-group">
-            <label>shape</label>
+            <label>{t("image.shape")}</label>
             <ToggleButton
               value={shape}
               onChange={(v) => setProp("shape", v)}
               options={[
-                { value: "solid", label: "solid" },
-                { value: "rounded", label: "rounded" },
-                { value: "circle", label: "circle" },
+                { value: "solid", label: t("image.solid") },
+                { value: "rounded", label: t("image.rounded") },
+                { value: "circle", label: t("image.circle") },
               ]}
             />
           </div>
@@ -159,6 +160,7 @@ export function ImageEditor({ block, update }: any) {
 }
 
 export function ImageRender({ block }: any) {
+  const { t } = useI18n();
   const { src, alt = "", width = 40, shape = "rounded" } = block.props || {};
 
   const canPreview = src && (
@@ -176,7 +178,7 @@ export function ImageRender({ block }: any) {
   if (!canPreview) {
     return (
       <div className="resume-item-image flex image-justify-center">
-        <div className="image-placeholder">{alt || "Image"}</div>
+        <div className="image-placeholder">{alt || t("image.image")}</div>
       </div>
     );
   }
@@ -195,7 +197,7 @@ export function ImageRender({ block }: any) {
 
 registerBlock({
   type: "image",
-  label: "Image",
+  label: "block.image",
 
   create(): Block {
     return {

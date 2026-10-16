@@ -7,6 +7,9 @@ import { themeNames } from "./themes";
 import { DropdownMenu } from "./components/DropDownMenu";
 import { formTemplateOptions } from "./data/formTemplates";
 import { generateAccentPalette } from "./utils/theming";
+import { I18nProvider } from "./i18nContext";
+import type { Locale } from "./i18nContext";
+import { translations } from "./i18n";
 
 import "./blocks";
 
@@ -24,6 +27,18 @@ export default function App() {
     : undefined;
 
   const [isPrinting, setIsPrinting] = useState(false);
+
+  const [locale, setLocale] = useState<Locale>(() => {
+    const saved = localStorage.getItem("locale");
+    return saved === "fa" ? "fa" : "en";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("locale", locale);
+  }, [locale]);
+
+  const t = (key: string) =>
+    translations[locale]?.[key] ?? translations.en[key] ?? key;
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
@@ -72,17 +87,18 @@ export default function App() {
   }, [forms, layout]);
 
   return (
-    <div className="app-root">
+    <I18nProvider locale={locale}>
+      <div className="app-root">
       <div className="app-toolbar">
         <button
           className="toolbar-button"
           onClick={() => exportResumeData(forms, layout)}
         >
-          Export
+          {t("app.export")}
         </button>
 
         <label className="toolbar-button">
-          Import
+          {t("app.import")}
           <input
             type="file"
             accept="application/json"
@@ -93,7 +109,7 @@ export default function App() {
         <div className="vdivider" />
 
         <label className="toolbar-color">
-          <span>Accent:</span>
+          <span>{t("settings.accent")}:</span>
           <input
             type="color"
             value={accentColor ?? "#F0F0F0"}
@@ -102,12 +118,12 @@ export default function App() {
         </label>
 
         <button className="toolbar-reset" onClick={() => setAccentColor(null)}>
-          Reset
+          {t("settings.reset")}
         </button>
 
         <div className="vdivider" />
 
-        <label>theme</label>
+        <label>{t("settings.theme")}</label>
         <select value={theme} onChange={(e) => setTheme(e.target.value)}>
           {themeNames.map((name) => (
             <option key={name} value={name}>
@@ -116,10 +132,21 @@ export default function App() {
           ))}
         </select>
 
+        <div className="vdivider" />
+
+        <label>{t("settings.language")}</label>
+        <select
+          value={locale}
+          onChange={(e) => setLocale(e.target.value as Locale)}
+        >
+          <option value="en">{t("language.english")}</option>
+          <option value="fa">{t("language.persian")}</option>
+        </select>
+
         <DropdownMenu
           options={formTemplateOptions}
           onChange={(template) => addForm(template)}
-          text="add form"
+          text={t("app.addForm")}
         />
 
         <button
@@ -132,7 +159,7 @@ export default function App() {
             }, 50);
           }}
         >
-          Print
+          {t("app.print")}
         </button>
       </div>
 
@@ -156,5 +183,6 @@ export default function App() {
         </div>
       </div>
     </div>
+    </I18nProvider>
   );
 }

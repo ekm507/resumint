@@ -262,7 +262,7 @@ const formTemplates: Record<string, FormStructure> = {
 export const formTemplateOptions: DropdownOption<FormStructure>[] =
   Object.entries(formTemplates).map(([name, form]) => ({
     value: form,
-    label: form.title || name,
+    label: `template.${name}`,
     key: name,
     icon: form.icon ? <img src={form.icon} /> : null,
   }));

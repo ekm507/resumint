@@ -7,6 +7,7 @@ import { useBlockOps } from "../hooks/useBlockOps";
 import { Fragment } from "react/jsx-runtime";
 import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
+import { useI18n } from "../i18nContext";
 
 interface Column {
   id: string;
@@ -15,6 +16,7 @@ interface Column {
 }
 
 export function MultiColumnEditor({ block, update }: any) {
+  const { t } = useI18n();
   const props = block.props || {};
 
   const columns: Column[] = props.columns || [
@@ -72,16 +74,16 @@ export function MultiColumnEditor({ block, update }: any) {
     <div className="multi-column-editor">
       <AdvancedOptions block={block} update={update}>
         <div className="multi-column-toolbar">
-          <button onClick={addColumn}>+ column</button>
+          <button onClick={addColumn}>{t("mc.addColumn")}</button>
 
           <div className="option-group">
             <ToggleButton
               value={dividerStyle}
               onChange={(v) => setProp("dividerStyle", v)}
               options={[
-                { value: "solid", label: "solid" },
-                { value: "dashed", label: "dashed" },
-                { value: "dotted", label: "dotted" },
+                { value: "solid", label: t("divider.solid") },
+                { value: "dashed", label: t("divider.dashed") },
+                { value: "dotted", label: t("divider.dotted") },
               ]}
             />
           </div>
@@ -113,10 +115,10 @@ export function MultiColumnEditor({ block, update }: any) {
           return (
             <div key={col.id} className="multi-column-column">
               <div className="multi-column-column-header">
-                <span>Column {idx + 1}</span>
+                <span>{t("mc.column")} {idx + 1}</span>
 
                 {columns.length > 1 && (
-                  <button onClick={() => removeColumn(idx)}>remove</button>
+                  <button onClick={() => removeColumn(idx)}>{t("mc.removeColumn")}</button>
                 )}
               </div>
 
@@ -157,7 +159,7 @@ export function MultiColumnEditor({ block, update }: any) {
                   })
                 }
               >
-                + add block
+                {t("mc.addBlock")}
               </button>
             </div>
           );
@@ -207,7 +209,7 @@ export function MultiColumnRender({ block }: any) {
 
 registerBlock({
   type: "multi-column",
-  label: "Multi Column",
+  label: "block.multiColumn",
 
   create(): Block {
     return {

@@ -18,6 +18,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import IconSelect from "../components/IconSelect";
+import { useI18n } from "../i18nContext";
 
 type FieldType = "key" | "value" | "icon" | "link";
 type ItemType = {
@@ -38,6 +39,7 @@ interface KeyValueProps {
 }
 
 export function KeyValueEditor({ block, update }: KeyValueProps) {
+  const { t } = useI18n();
   const { items = [], emphasis = "key" } = block.props || {};
   const [linkOpen, setLinkOpen] = useState<number | null>(null);
 
@@ -95,19 +97,19 @@ export function KeyValueEditor({ block, update }: KeyValueProps) {
         </SortableContext>
       </DndContext>
         <button className="item-add-button" onClick={addItem}>
-          + Add Row
+          {t("kv.addRow")}
         </button>
 
       <AdvancedOptions block={block} update={update}>
         <div className="option-group">
-          <label>Emphasis</label>
+          <label>{t("kv.emphasis")}</label>
           <ToggleButton
             value={emphasis}
             onChange={(v) => setProp("emphasis", v)}
             options={[
-              { value: "none", label: "Normal" },
-              { value: "key", label: "Bold Key" },
-              { value: "value", label: "Bold Value" },
+              { value: "none", label: t("kv.normal") },
+              { value: "key", label: t("kv.boldKey") },
+              { value: "value", label: t("kv.boldValue") },
             ]}
           />
         </div>
@@ -132,6 +134,7 @@ function SortableKeyValueRow({
   updateItem: (field: FieldType, value: any) => void;
   removeItem: () => void;
 }) {
+  const { t } = useI18n();
   const {
     attributes,
     listeners,
@@ -152,7 +155,7 @@ function SortableKeyValueRow({
         className="kv-drag-handle"
         {...attributes}
         {...listeners}
-        title="drag to reorder"
+        title={t("common.dragToReorder")}
         style={{ cursor: "grab" }}
       >
         ☰
@@ -166,7 +169,7 @@ function SortableKeyValueRow({
 
       <button
         className="opacity-0 group-hover:opacity-100 transition text-rose-600"
-        title="remove item"
+        title={t("common.remove")}
         onClick={removeItem}
       >
         ×
@@ -174,14 +177,14 @@ function SortableKeyValueRow({
 
       <input
         className="keyvalue-block-key bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1 min-w-0 flex-1"
-        placeholder="key"
+        placeholder={t("kv.key")}
         value={item.key}
         onChange={(e) => updateItem("key", e.target.value)}
       />
 
       <button
         className="opacity-0 group-hover:opacity-100 transition text-indigo-500"
-        title="set link"
+        title={t("common.setLink")}
         onClick={toggleLink}
       >
         🔗
@@ -189,7 +192,7 @@ function SortableKeyValueRow({
 
       <input
         className="keyvalue-block-value bg-transparent border-0 outline-none focus:ring-1 focus:ring-indigo-300 rounded px-1 min-w-0 flex-1"
-        placeholder="value"
+        placeholder={t("kv.value")}
         value={item.value}
         onChange={(e) => updateItem("value", e.target.value)}
       />
@@ -198,7 +201,7 @@ function SortableKeyValueRow({
         <div className="absolute left-0 top-full mt-1 z-20 flex items-center gap-2 bg-white border border-indigo-200 rounded-lg shadow p-2">
           <input
             className="text-input"
-            placeholder="link"
+            placeholder={t("kv.link")}
             value={item.link === "https://" ? "" : item.link}
             onChange={(e) =>
               updateItem("link", e.target.value)
@@ -209,7 +212,7 @@ function SortableKeyValueRow({
               className="item-remove-text"
               onClick={() => updateItem("link", "")}
             >
-              clear
+              {t("kv.clear")}
             </button>
           ) : null}
         </div>
@@ -247,7 +250,7 @@ export function KeyValueRender({ block }: KeyValueProps) {
 
 registerBlock({
   type: "keyValue",
-  label: "Key / Value",
+  label: "block.keyValue",
 
   create(): Block {
     return {

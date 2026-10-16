@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { type DropdownOption } from "../utils/types";
+import { useI18n } from "../i18nContext";
 
 interface DropdownMenuProps<T> {
   options: DropdownOption<T>[];
@@ -15,6 +16,7 @@ export function DropdownMenu<T>({
   onChange,
   text,
 }: DropdownMenuProps<T>) {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [menuPos, setMenuPos] = useState<{
     top: number;
@@ -89,7 +91,11 @@ export function DropdownMenu<T>({
         className="dropdown-menu-open editor-add-button"
         onClick={toggleMenu}
       >
-        {selected?.label || text || "Open Menu"}
+        {selected?.label
+          ? t(selected.label)
+          : text
+          ? t(text)
+          : t("common.openMenu")}
       </button>
 
       {open &&

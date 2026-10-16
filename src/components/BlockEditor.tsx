@@ -1,5 +1,6 @@
 import { getBlock, getAllBlocks } from "../blocks/blockRegistry";
 import type { Block } from "../utils/types";
+import { useI18n } from "../i18nContext";
 
 interface Props {
   block: Block;
@@ -18,8 +19,10 @@ export default function BlockEditor({
   moveUp,
   moveDown,
 }: Props) {
+  const { t } = useI18n();
+
   if (!block) {
-    return <div className="block-editor-error">Missing block</div>;
+    return <div className="block-editor-error">{t("block.missing")}</div>;
   }
 
   const def = getBlock(block.blockType);
@@ -27,7 +30,7 @@ export default function BlockEditor({
 
   if (!def) {
     return (
-      <div className="block-editor-error">Unknown block: {block.blockType}</div>
+      <div className="block-editor-error">{t("block.unknown")} {block.blockType}</div>
     );
   }
 
@@ -44,7 +47,7 @@ export default function BlockEditor({
           >
             {blocks.map((b) => (
               <option key={b.type} value={b.type}>
-                {b.label}
+                {t(b.label)}
               </option>
             ))}
           </select>
@@ -56,7 +59,7 @@ export default function BlockEditor({
           <button
             className="block-hover-button"
             onClick={moveUp}
-            title="move block up"
+            title={t("block.moveUp")}
           >
             ↑
           </button>
@@ -64,14 +67,14 @@ export default function BlockEditor({
           <button
             className="block-hover-button"
             onClick={moveDown}
-            title="move block down"
+            title={t("block.moveDown")}
           >
             ↓
           </button>
 
           <button
             className="block-hover-button text-red-400"
-            title="remove block"
+            title={t("block.remove")}
             onClick={() => deleteBlock(block.id)}
           >
             ✕

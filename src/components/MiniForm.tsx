@@ -5,7 +5,7 @@ import { getBlock } from "../blocks/blockRegistry";
 import { useBlockOps } from "../hooks/useBlockOps";
 import AddBlockMenu from "./AddBlockMenu";
 import IconSelect from "./IconSelect";
-
+import { useI18n } from "../i18nContext";
 interface Props {
   form: FormStructure;
   onFormChange: (id: string, newForm: FormStructure) => void;
@@ -13,6 +13,7 @@ interface Props {
 }
 
 export default function MiniForm({ form, onFormChange, onDelete }: Props) {
+  const { t } = useI18n();
   const [collapsed, setCollapsed] = useState(false);
 
   const setForm = (patch: Partial<FormStructure>) => {
@@ -62,20 +63,20 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
         <button
           onClick={() => onDelete(form.id)}
           className="form-remove-button"
-          title="remove form"
+          title={t("form.remove")}
         >
           ×
         </button>
         <button
           className="form-collapse-button"
           onClick={() => setCollapsed(!collapsed)}
-          title={collapsed ? "open form" : "close form"}
+          title={collapsed ? t("form.open") : t("form.close")}
         >
           {collapsed ? "▶" : "▼"}
         </button>
         <input
-          placeholder="title"
-          title="form title"
+           placeholder={t("placeholder.title")}
+           title={t("common.title")}
           value={form.title}
           onChange={(e) => setForm({ title: e.target.value })}
         />
@@ -90,7 +91,7 @@ export default function MiniForm({ form, onFormChange, onDelete }: Props) {
         <button
           type="button"
           onClick={cycleBackground}
-          title={`Background: ${current}`}
+          title={`${t("form.background")}: ${current}`}
           className="background-toggle-button"
         ></button>
       </div>

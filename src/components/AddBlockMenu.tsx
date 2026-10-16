@@ -1,12 +1,14 @@
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { getAllBlocks } from "../blocks/blockRegistry";
+import { useI18n } from "../i18nContext";
 
 interface AddBlockMenuProps {
   onSelect: (type: string) => void;
 }
 
 export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
+  const { t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [menuPos, setMenuPos] = useState<{
     top: number;
@@ -87,7 +89,7 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
       <button
         ref={buttonRef}
         className="add-block-trigger"
-        title="create a new block here"
+        title={t("common.createBlockHere")}
         onClick={toggleMenu}
       >
         +
@@ -119,7 +121,7 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
                     setIsOpen(false);
                   }}
                 >
-                  {b.label}
+                  {t(b.label)}
                 </button>
               ))}
             </div>

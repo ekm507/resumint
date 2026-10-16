@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { loadAllIcons } from "../utils/loadIcons";
+import { useI18n } from "../i18nContext";
 
 interface IconSelectProps {
   value?: string | null; // icon src URL
@@ -9,6 +10,7 @@ interface IconSelectProps {
 }
 
 export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
+  const { t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const [menuPos, setMenuPos] = useState<{
     top: number;
@@ -136,7 +138,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
           ref={buttonRef}
           onClick={toggleMenu}
           className="icon-preview"
-          title="select icon"
+          title={t("common.selectIcon")}
         >
           {value ? (
             <img src={value} className="icon-img" />
@@ -178,7 +180,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
               <button
                 key="__remove__"
                 className="icon-item icon-item-empty"
-                title="remove icon"
+                title={t("common.removeIcon")}
                 onClick={() => {
                   onSelect(null);
                   setIsOpen(false);

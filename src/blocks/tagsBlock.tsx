@@ -2,6 +2,7 @@ import AdvancedOptions from "../components/AdvancedOptions";
 import ToggleButton from "../components/ToggleButton";
 import type { Block } from "../utils/types";
 import { registerBlock } from "./blockRegistry";
+import { useI18n } from "../i18nContext";
 import {
   DndContext,
   PointerSensor,
@@ -31,6 +32,7 @@ function SortableTag({
   updateTag: (value: string) => void;
   removeTag: () => void;
 }) {
+  const { t } = useI18n();
   const {
     attributes,
     listeners,
@@ -51,7 +53,7 @@ function SortableTag({
         className="tag-drag-handle"
         {...attributes}
         {...listeners}
-        title="drag to reorder"
+        title={t("common.dragToReorder")}
         style={{ cursor: "grab" }}
       >
         ☰
@@ -70,6 +72,7 @@ function SortableTag({
 }
 
 export function TagsEditor({ block, update }: any) {
+  const { t } = useI18n();
   const {
     tags = [],
     shape = "pill",
@@ -135,7 +138,7 @@ export function TagsEditor({ block, update }: any) {
               className={tagClass + " cursor-pointer"}
               onClick={() => setProp("tags", [...tags, ""])}
             >
-              + Add Tag
+              {t("tags.add")}
             </button>
           </div>
         </SortableContext>
@@ -144,39 +147,39 @@ export function TagsEditor({ block, update }: any) {
       <AdvancedOptions block={block} update={update}>
         <div className="options-grid">
           <div className="option-group">
-            <label>Shape</label>
+            <label>{t("tags.shape")}</label>
             <ToggleButton
               value={shape}
               onChange={(v) => setProp("shape", v)}
               options={[
-                { value: "pill", label: "Pill" },
-                { value: "rounded", label: "Rounded" },
-                { value: "square", label: "Square" },
+                { value: "pill", label: t("tags.pill") },
+                { value: "rounded", label: t("tags.rounded") },
+                { value: "square", label: t("tags.square") },
               ]}
             />
           </div>
           <div className="option-group">
-            <label>Size</label>
+            <label>{t("tags.size")}</label>
             <ToggleButton
               value={size}
               onChange={(v) => setProp("size", v)}
               options={[
-                { value: "sm", label: "Small" },
-                { value: "md", label: "Medium" },
-                { value: "lg", label: "Large" },
+                { value: "sm", label: t("tags.small") },
+                { value: "md", label: t("tags.medium") },
+                { value: "lg", label: t("tags.large") },
               ]}
             />
           </div>
 
           <div className="option-group">
-            <label>Style</label>
+            <label>{t("tags.style")}</label>
 
             <ToggleButton
               value={variant}
               onChange={(v) => setProp("variant", v)}
               options={[
-                { value: "filled", label: "Filled Background" },
-                { value: "outline", label: "Outline Only" },
+                { value: "filled", label: t("tags.filled") },
+                { value: "outline", label: t("tags.outline") },
               ]}
             />
           </div>
@@ -209,7 +212,7 @@ export function TagsRender({ block }: any) {
 
 registerBlock({
   type: "tags",
-  label: "Tags",
+  label: "block.tags",
 
   create(): Block {
     return {

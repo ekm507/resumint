@@ -6,6 +6,7 @@ import IconSelect from "./IconSelect";
 import { useBlockOps } from "../hooks/useBlockOps";
 import { getBlock } from "../blocks/blockRegistry";
 import type { FormStructure, DirTypeNames } from "../utils/types";
+import { useI18n } from "../i18nContext";
 
 interface Prop {
   form: FormStructure;
@@ -26,6 +27,7 @@ export default function MiniBox({
 }: Prop) {
   const isTemplate = Boolean(form.isTemplate);
   const canEdit = editable && Boolean(onFormChange) && Boolean(onDelete);
+  const { t } = useI18n();
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const [titleFocused, setTitleFocused] = useState(false);
@@ -255,13 +257,13 @@ export default function MiniBox({
         <button
           type="button"
           onClick={cycleBackground}
-          title={`Background: ${currentBackground}`}
+          title={`${t("form.background")}: ${currentBackground}`}
           className="background-toggle-button"
         />
         <button
           onClick={() => onDelete?.(form.id)}
           className="form-remove-button"
-          title="remove form"
+          title={t("form.remove")}
         >
           ×
         </button>
@@ -307,7 +309,7 @@ export default function MiniBox({
                     />
                     <button
                       className="block-done-button"
-                      title="finish editing"
+                      title={t("block.finishEditing")}
                       onClick={() => setSelectedBlockId(null)}
                     >
                       ✓
