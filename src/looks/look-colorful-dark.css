@@ -11,12 +11,12 @@
 /* APP ROOT */
 
 .look-colorful-dark .app-root {
-    @apply flex flex-col items-center gap-4 p-4 h-screen overflow-hidden
+    @apply flex flex-col items-center gap-2 p-0 h-screen overflow-hidden
            bg-linear-to-br from-slate-900 via-purple-950 to-slate-900;
 }
 
 .look-colorful-dark .app-layout {
-    @apply flex gap-6 w-full flex-1 justify-center overflow-hidden;
+    @apply flex gap-6 w-full flex-1 justify-center items-center overflow-auto;
 }
 
 .look-colorful-dark .vdivider {
@@ -53,7 +53,6 @@
            hover:from-indigo-600 hover:to-purple-600
            active:scale-95;
 
-    min-width: 80px;
 }
 
 /* --- File Upload (Import) --- */

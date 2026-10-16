@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .resume {
-    @apply flex flex-col;
+    @apply flex flex-col items-center;
 }
 
 .theme-modern .resume-columns {
