@@ -4,6 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { useResumeData } from "./hooks/useResumeData";
 import { exportResumeData, importResumeData } from "./utils/storage";
 import { themeNames } from "./themes";
+import { initialForms, initialLayout } from "./data/initialData";
 import { DropdownMenu } from "./components/DropDownMenu";
 import { formTemplateOptions } from "./data/formTemplates";
 import { generateAccentPalette } from "./utils/theming";
@@ -16,9 +17,63 @@ import { translations } from "./i18n";
 
 import "./blocks";
 
+type StoredDocument = {
+  id: string;
+  name: string;
+  forms: any;
+  layout: any;
+  updatedAt: number;
+};
+
+function createDocument(name: string, forms = initialForms, layout = initialLayout): StoredDocument {
+  return {
+    id: crypto.randomUUID(),
+    name,
+    forms: JSON.parse(JSON.stringify(forms)),
+    layout: JSON.parse(JSON.stringify(layout)),
+    updatedAt: Date.now(),
+  };
+}
+
+function loadStoredDocuments(): StoredDocument[] {
+  try {
+    const raw = localStorage.getItem("documents");
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length) return parsed;
+    }
+    const legacy = localStorage.getItem("currentResume");
+    if (legacy) {
+      const data = JSON.parse(legacy);
+      return [createDocument("My Resume", data.forms, data.layout)];
+    }
+  } catch {
+    // Fall back to a fresh document below.
+  }
+  return [createDocument("My Resume")];
+}
+
 export default function App() {
+  const [documents, setDocuments] = useState<StoredDocument[]>(() =>
+    loadStoredDocuments(),
+  );
+  const [currentId, setCurrentId] = useState<string>(
+    () => loadStoredDocuments()[0].id,
+  );
+  // Keep currentId aligned with loaded docs on first render.
+  const currentDocument =
+    documents.find((doc) => doc.id === currentId) || documents[0];
+
   const { forms, layout, setLayout, setForm, deleteForm, addForm, setForms } =
     useResumeData();
+
+  useEffect(() => {
+    if (currentDocument) {
+      setForms(currentDocument.forms);
+      setLayout(currentDocument.layout);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [theme, setTheme] = useState("modern");
 
@@ -40,6 +95,7 @@ export default function App() {
     : undefined;
 
   const [isPrinting, setIsPrinting] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const [locale, setLocale] = useState<Locale>(() => {
     const saved = localStorage.getItem("locale");
@@ -52,6 +108,24 @@ export default function App() {
 
   const t = (key: string) =>
     translations[locale]?.[key] ?? translations.en[key] ?? key;
+
+  useEffect(() => {
+    setDocuments((prev) =>
+      prev.map((doc) =>
+        doc.id === currentId
+          ? { ...doc, forms, layout, updatedAt: Date.now() }
+          : doc,
+      ),
+    );
+  }, [forms, layout, currentId]);
+
+  useEffect(() => {
+    localStorage.setItem("documents", JSON.stringify(documents));
+  }, [documents]);
+
+  useEffect(() => {
+    localStorage.setItem("currentDocumentId", currentId);
+  }, [currentId]);
 
   const disabledTemplateTitles = new Set(forms.map((form: any) => form.title));
   const formTemplateOptionsWithState: DropdownOption<FormStructure>[] =
@@ -108,10 +182,94 @@ export default function App() {
     localStorage.setItem("currentResume", JSON.stringify(data));
   }, [forms, layout]);
 
+  const selectDocument = (id: string) => {
+    const doc = documents.find((item) => item.id === id);
+    if (!doc) return;
+    setCurrentId(id);
+    setForms(doc.forms);
+    setLayout(doc.layout);
+  };
+
+  const newDocument = () => {
+    const doc = createDocument(t("sidebar.newDocument") || "New document");
+    setDocuments((prev) => [doc, ...prev]);
+    setCurrentId(doc.id);
+    setForms(doc.forms);
+    setLayout(doc.layout);
+  };
+
+  const duplicateDocument = () => {
+    const current = documents.find((doc) => doc.id === currentId);
+    if (!current) return;
+    const doc = createDocument(
+      `${current.name} (copy)`,
+      current.forms,
+      current.layout,
+    );
+    setDocuments((prev) => [doc, ...prev]);
+    setCurrentId(doc.id);
+    setForms(doc.forms);
+    setLayout(doc.layout);
+  };
+
+  const deleteDocument = (id: string) => {
+    setDocuments((prev) => {
+      const remaining = prev.filter((doc) => doc.id !== id);
+      if (remaining.length === 0) {
+        const replacement = createDocument("My Resume");
+        remaining.push(replacement);
+      }
+      if (id === currentId) {
+        const next = remaining[0];
+        setCurrentId(next.id);
+        setForms(next.forms);
+        setLayout(next.layout);
+      }
+      return remaining;
+    });
+  };
+
+  const renameDocument = () => {
+    const current = documents.find((doc) => doc.id === currentId);
+    if (!current) return;
+    const nextName = window.prompt("Document name", current.name);
+    if (!nextName) return;
+    setDocuments((prev) =>
+      prev.map((doc) =>
+        doc.id === currentId ? { ...doc, name: nextName } : doc,
+      ),
+    );
+  };
+
+  const importDocument = async (file: File) => {
+    const data = await importResumeData(file);
+    const doc = createDocument(
+      file.name.replace(/\\.[^.]+$/, "") || "Imported document",
+      data.forms,
+      data.layout,
+    );
+    setDocuments((prev) => [doc, ...prev]);
+    setCurrentId(doc.id);
+    setForms(doc.forms);
+    setLayout(doc.layout);
+  };
+
+  const handleSidebarImport = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) await importDocument(file);
+    if (event.target) event.target.value = "";
+  };
+
   return (
     <I18nProvider locale={locale}>
       <div className="app-root">
         <div className="app-toolbar">
+          <button
+            className="toolbar-button"
+            onClick={() => setSidebarOpen((value) => !value)}
+          >
+            {sidebarOpen ? "◀" : "▶"}
+          </button>
           <button
             className="toolbar-button"
             onClick={() => void exportResumeData(forms, layout)}
@@ -241,6 +399,65 @@ export default function App() {
           </button>
         </div>
 
+        <div style={{ display: "flex", flex: 1, overflow: "hidden", width: "100%" }}>
+        {sidebarOpen && (
+          <aside className="app-sidebar">
+            <div className="sidebar-section">
+              <button className="sidebar-button" onClick={newDocument}>
+                {t("sidebar.new")}
+              </button>
+              <button className="sidebar-button" onClick={duplicateDocument} disabled={!currentDocument}>
+                {t("sidebar.duplicate")}
+              </button>
+              <button className="sidebar-button" onClick={renameDocument} disabled={!currentDocument}>
+                {t("sidebar.rename")}
+              </button>
+            </div>
+
+            <div className="sidebar-title">{t("sidebar.documents")}</div>
+            <div className="sidebar-document-list">
+              {documents.map((doc) => (
+                <div
+                  key={doc.id}
+                  className={`sidebar-document ${doc.id === currentId ? "sidebar-document-active" : ""}`}
+                  onClick={() => selectDocument(doc.id)}
+                >
+                  <span className="sidebar-document-name">{doc.name}</span>
+                  <button
+                    className="sidebar-document-delete"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      deleteDocument(doc.id);
+                    }}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className="sidebar-section">
+              <button className="sidebar-button" onClick={() => document.getElementById("sidebar-import-input")?.click()}>
+                {t("app.import")}
+              </button>
+              <button
+                className="sidebar-button"
+                onClick={() => void exportResumeData(forms, layout, `${currentDocument?.name || "resume"}.zip`)}
+              >
+                {t("app.export")}
+              </button>
+            </div>
+
+            <input
+              id="sidebar-import-input"
+              type="file"
+              hidden
+              accept="application/json,.json,application/zip,.zip"
+              onChange={handleSidebarImport}
+            />
+          </aside>
+        )}
+
         <div
           className="app-layout"
           style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", width: "100%", paddingTop: "12px" }}
@@ -263,6 +480,7 @@ export default function App() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </I18nProvider>
   );

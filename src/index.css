@@ -68,6 +68,74 @@
   color: #94a3b8;
 }
 
+.app-sidebar {
+  width: 260px;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  overflow: auto;
+}
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sidebar-button {
+  cursor: pointer;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  text-align: left;
+}
+.sidebar-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+}
+.sidebar-document-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  overflow: auto;
+}
+.sidebar-document {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  background: #ffffff;
+}
+.sidebar-document-active {
+  border-color: #6366f1;
+  background: #eef2ff;
+}
+.sidebar-document-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sidebar-document-delete {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: #94a3b8;
+}
+.sidebar-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 /* PAGE */
 
 .resume-page {
