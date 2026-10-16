@@ -222,28 +222,45 @@ function SortableKeyValueRow({
 }
 
 export function KeyValueRender({ block }: KeyValueProps) {
+  const { t } = useI18n();
   const { items = [], emphasis = "key" } = block.props || {};
+
+  const hasItem =
+    Array.isArray(items) &&
+    items.some(
+      (item: ItemType) =>
+        String(item?.key ?? "").trim() !== "" ||
+        String(item?.value ?? "").trim() !== "",
+    );
 
   return (
     <div className={`keyvalue-block emphasize-${emphasis}`}>
-      {items.map((item, i: number) => (
-        <div key={i} className="keyvalue-row">
-          {item.icon ? (
-            <img src={item.icon} className="keyvalue-block-render-icon" />
-          ) : (
-            <div></div>
-          )}
-
-          <div className="keyvalue-block-key">{item.key}</div>
-          <div className="keyvalue-block-value">
-            {item.link != "" ? (
-              <a href={item.link}>{item.value}</a>
+      {hasItem ? (
+        items.map((item, i: number) => (
+          <div key={i} className="keyvalue-row">
+            {item.icon ? (
+              <img src={item.icon} className="keyvalue-block-render-icon" />
             ) : (
-              item.value
+              <div></div>
             )}
+
+            <div className="keyvalue-block-key">{item.key}</div>
+            <div className="keyvalue-block-value">
+              {item.link != "" ? (
+                <a href={item.link}>{item.value}</a>
+              ) : (
+                item.value
+              )}
+            </div>
           </div>
+        ))
+      ) : (
+        <div className="keyvalue-row keyvalue-placeholder">
+          <div></div>
+          <div className="keyvalue-block-key">{t("kv.key")}</div>
+          <div className="keyvalue-block-value">{t("kv.value")}</div>
         </div>
-      ))}
+      )}
     </div>
   );
 }

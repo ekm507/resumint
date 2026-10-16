@@ -56,9 +56,14 @@ export function DividerRender({ block }: any) {
   const { style = "solid", spacing = "md" } = block.props || {};
 
   return (
-    <hr
-      className={`divider-block divider-style-${style} divider-spacing-${spacing}`}
-    />
+    <div
+      className="divider-block-render"
+      style={{ padding: "0.75rem 0", cursor: "pointer" }}
+    >
+      <hr
+        className={`divider-block divider-style-${style} divider-spacing-${spacing}`}
+      />
+    </div>
   );
 }
 

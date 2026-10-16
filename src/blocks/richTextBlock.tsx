@@ -315,8 +315,24 @@ export function RichTextEditor({ block, update }: any) {
 ========================= */
 
 export function RichTextRender({ block }: any) {
+  const { t } = useI18n();
   const { content, size = "md" } = block.props || {};
-  if (!content) return null;
+
+  const hasText = (node: any): boolean => {
+    if (!node) return false;
+    if (typeof node.text === "string" && node.text.trim() !== "") return true;
+    if (Array.isArray(node.content))
+      return node.content.some((child: any) => hasText(child));
+    return false;
+  };
+
+  if (!hasText(content)) {
+    return (
+      <div className={`richtext-block text-size-${size} richtext-placeholder`}>
+        {t("placeholder.text")}
+      </div>
+    );
+  }
 
   const html = generateHTML(content, [
     StarterKit.configure({ heading: false, link: false }),

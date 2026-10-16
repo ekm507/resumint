@@ -190,22 +190,34 @@ export function TagsEditor({ block, update }: any) {
 }
 
 export function TagsRender({ block }: any) {
+  const { t } = useI18n();
   const {
     tags = [],
     shape = "pill",
     size = "md",
     variant = "filled",
   } = block.props || {};
+
+  const hasTag = Array.isArray(tags) && tags.some((tag: string) => String(tag ?? "").trim() !== "");
+
   return (
     <div className={`tags-block align-start`}>
-      {tags.map((tag: string, i: number) => (
+      {hasTag ? (
+        tags.map((tag: string, i: number) => (
+          <span
+            key={i}
+            className={`tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant}`}
+          >
+            {tag}
+          </span>
+        ))
+      ) : (
         <span
-          key={i}
-          className={`tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant}`}
+          className={`tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant} tags-placeholder`}
         >
-          {tag}
+          {t("tags.placeholder")}
         </span>
-      ))}
+      )}
     </div>
   );
 }
