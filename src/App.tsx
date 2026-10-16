@@ -8,7 +8,7 @@ import { initialForms, initialLayout } from "./data/initialData";
 import { DropdownMenu } from "./components/DropDownMenu";
 import { formTemplateOptions } from "./data/formTemplates";
 import { generateAccentPalette } from "./utils/theming";
-import { FileText, Languages, Plus } from "lucide-react";
+import { FileText, Languages, Plus, FilePlus, Copy, Upload, Download } from "lucide-react";
 import TopBarMenu from "./components/TopBarMenu";
 import { I18nProvider } from "./i18nContext";
 import type { FormStructure, DropdownOption } from "./utils/types";
@@ -16,6 +16,54 @@ import type { Locale } from "./i18nContext";
 import { translations } from "./i18n";
 
 import "./blocks";
+
+function firstDocumentLine(document: any): string {
+  for (const form of document?.forms || []) {
+    for (const block of form?.blocks || []) {
+      const text = firstBlockText(block);
+      if (text) return text;
+    }
+  }
+  return "";
+}
+
+function firstBlockText(block: any): string {
+  if (!block) return "";
+  if (block.blockType === "richtext") {
+    const content = block.props?.content;
+    const found = findFirstText(content);
+    if (found) return found;
+  }
+  if (Array.isArray(block.props?.columns)) {
+    for (const column of block.props.columns) {
+      for (const child of column?.children || []) {
+        const text = firstBlockText(child);
+        if (text) return text;
+      }
+    }
+  }
+  if (Array.isArray(block.children)) {
+    for (const child of block.children) {
+      const text = firstBlockText(child);
+      if (text) return text;
+    }
+  }
+  return "";
+}
+
+function findFirstText(node: any): string {
+  if (!node) return "";
+  if (typeof node.text === "string" && node.text.trim()) {
+    return node.text.trim().split("\\n")[0];
+  }
+  if (Array.isArray(node.content)) {
+    for (const child of node.content) {
+      const text = findFirstText(child);
+      if (text) return text;
+    }
+  }
+  return "";
+}
 
 type StoredDocument = {
   id: string;
@@ -45,12 +93,12 @@ function loadStoredDocuments(): StoredDocument[] {
     const legacy = localStorage.getItem("currentResume");
     if (legacy) {
       const data = JSON.parse(legacy);
-      return [createDocument("My Resume", data.forms, data.layout)];
+      return [createDocument("", data.forms, data.layout)];
     }
   } catch {
     // Fall back to a fresh document below.
   }
-  return [createDocument("My Resume")];
+  return [createDocument("")];
 }
 
 export default function App() {
@@ -96,6 +144,8 @@ export default function App() {
 
   const [isPrinting, setIsPrinting] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [editingDocId, setEditingDocId] = useState<string | null>(null);
+  const [editingDocName, setEditingDocName] = useState("");
 
   const [locale, setLocale] = useState<Locale>(() => {
     const saved = localStorage.getItem("locale");
@@ -185,13 +235,14 @@ export default function App() {
   const selectDocument = (id: string) => {
     const doc = documents.find((item) => item.id === id);
     if (!doc) return;
+    setEditingDocId(null);
     setCurrentId(id);
     setForms(doc.forms);
     setLayout(doc.layout);
   };
 
   const newDocument = () => {
-    const doc = createDocument(t("sidebar.newDocument") || "New document");
+    const doc = createDocument("");
     setDocuments((prev) => [doc, ...prev]);
     setCurrentId(doc.id);
     setForms(doc.forms);
@@ -201,8 +252,10 @@ export default function App() {
   const duplicateDocument = () => {
     const current = documents.find((doc) => doc.id === currentId);
     if (!current) return;
+    const baseName =
+      current.name || firstDocumentLine(current) || t("sidebar.untitled");
     const doc = createDocument(
-      `${current.name} (copy)`,
+      `${baseName} (copy)`,
       current.forms,
       current.layout,
     );
@@ -216,7 +269,7 @@ export default function App() {
     setDocuments((prev) => {
       const remaining = prev.filter((doc) => doc.id !== id);
       if (remaining.length === 0) {
-        const replacement = createDocument("My Resume");
+        const replacement = createDocument("");
         remaining.push(replacement);
       }
       if (id === currentId) {
@@ -227,18 +280,6 @@ export default function App() {
       }
       return remaining;
     });
-  };
-
-  const renameDocument = () => {
-    const current = documents.find((doc) => doc.id === currentId);
-    if (!current) return;
-    const nextName = window.prompt("Document name", current.name);
-    if (!nextName) return;
-    setDocuments((prev) =>
-      prev.map((doc) =>
-        doc.id === currentId ? { ...doc, name: nextName } : doc,
-      ),
-    );
   };
 
   const importDocument = async (file: File) => {
@@ -403,47 +444,117 @@ export default function App() {
         {sidebarOpen && (
           <aside className="app-sidebar">
             <div className="sidebar-section">
-              <button className="sidebar-button" onClick={newDocument}>
+              <button className="sidebar-button flex items-center gap-2" onClick={newDocument}>
+                <FilePlus size={16} />
                 {t("sidebar.new")}
-              </button>
-              <button className="sidebar-button" onClick={duplicateDocument} disabled={!currentDocument}>
-                {t("sidebar.duplicate")}
-              </button>
-              <button className="sidebar-button" onClick={renameDocument} disabled={!currentDocument}>
-                {t("sidebar.rename")}
               </button>
             </div>
 
             <div className="sidebar-title">{t("sidebar.documents")}</div>
             <div className="sidebar-document-list">
-              {documents.map((doc) => (
-                <div
-                  key={doc.id}
-                  className={`sidebar-document ${doc.id === currentId ? "sidebar-document-active" : ""}`}
-                  onClick={() => selectDocument(doc.id)}
-                >
-                  <span className="sidebar-document-name">{doc.name}</span>
-                  <button
-                    className="sidebar-document-delete"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      deleteDocument(doc.id);
-                    }}
+              {documents.map((doc) => {
+                const displayName =
+                  doc.name || firstDocumentLine(doc) || t("sidebar.untitled");
+                const isEditing = editingDocId === doc.id;
+                return (
+                  <div
+                    key={doc.id}
+                    className={`sidebar-document ${doc.id === currentId ? "sidebar-document-active" : ""}`}
+                    onClick={() => selectDocument(doc.id)}
                   >
-                    ×
-                  </button>
-                </div>
-              ))}
+                    <div className="sidebar-document-thumb">
+                      {firstDocumentLine(doc) ||
+                        (doc.name ? doc.name : t("sidebar.untitled"))}
+                    </div>
+                    <div className="sidebar-document-body">
+                      {doc.id === currentId && isEditing ? (
+                        <input
+                          className="sidebar-document-input"
+                          value={editingDocName}
+                          autoFocus
+                          onChange={(event) =>
+                            setEditingDocName(event.target.value)
+                          }
+                          onBlur={() => {
+                            const nextName = editingDocName.trim();
+                            setDocuments((prev) =>
+                              prev.map((item) =>
+                                item.id === doc.id
+                                  ? { ...item, name: nextName }
+                                  : item,
+                              ),
+                            );
+                            setEditingDocId(null);
+                          }}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter") {
+                              event.currentTarget.blur();
+                            }
+                            if (event.key === "Escape") {
+                              setEditingDocId(null);
+                            }
+                          }}
+                          onClick={(event) => event.stopPropagation()}
+                        />
+                      ) : (
+                        <span
+                          className="sidebar-document-name"
+                          onClick={(event) => {
+                            if (doc.id !== currentId) return;
+                            event.stopPropagation();
+                            setEditingDocId(doc.id);
+                            setEditingDocName(doc.name || "");
+                          }}
+                        >
+                          {displayName}
+                        </span>
+                      )}
+                      {doc.id === currentId && (
+                        <div className="sidebar-document-actions">
+                          <button
+                            className="sidebar-icon-button"
+                            title={t("sidebar.duplicate")}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              duplicateDocument();
+                            }}
+                          >
+                            <Copy size={14} />
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <button
+                      className="sidebar-document-delete"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        deleteDocument(doc.id);
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="sidebar-section">
-              <button className="sidebar-button" onClick={() => document.getElementById("sidebar-import-input")?.click()}>
+            <div className="sidebar-section sidebar-actions-row">
+              <button
+                className="sidebar-button flex items-center gap-2"
+                onClick={() =>
+                  document.getElementById("sidebar-import-input")?.click()
+                }
+              >
+                <Upload size={16} />
                 {t("app.import")}
               </button>
               <button
-                className="sidebar-button"
-                onClick={() => void exportResumeData(forms, layout, `${currentDocument?.name || "resume"}.zip`)}
+                className="sidebar-button flex items-center gap-2"
+                onClick={() =>
+                  void exportResumeData(forms, layout, `${currentDocument?.name || "resume"}.zip`)
+                }
               >
+                <Download size={16} />
                 {t("app.export")}
               </button>
             </div>
