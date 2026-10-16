@@ -159,7 +159,7 @@ export function ImageEditor({ block, update }: any) {
   );
 }
 
-export function ImageRender({ block }: any) {
+export function ImageRender({ block, editable = true }: any) {
   const { t } = useI18n();
   const { src, alt = "", width = 40, shape = "rounded" } = block.props || {};
 
@@ -176,6 +176,7 @@ export function ImageRender({ block }: any) {
   );
 
   if (!canPreview) {
+    if (!editable) return null;
     return (
       <div className="resume-item-image flex image-justify-center">
         <div className="image-placeholder">{alt || t("image.image")}</div>

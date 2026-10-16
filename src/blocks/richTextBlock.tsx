@@ -303,7 +303,7 @@ export function RichTextEditor({ block, update }: any) {
       </div>
 
       {/* editor surface */}
-      <div className="richtext-editor-surface">
+      <div className="richtext-editor-surface" dir="auto">
         <EditorContent editor={editor} />
       </div>
     </div>
@@ -314,7 +314,7 @@ export function RichTextEditor({ block, update }: any) {
    RENDER
 ========================= */
 
-export function RichTextRender({ block }: any) {
+export function RichTextRender({ block, editable = true }: any) {
   const { t } = useI18n();
   const { content, size = "md" } = block.props || {};
 
@@ -327,8 +327,9 @@ export function RichTextRender({ block }: any) {
   };
 
   if (!hasText(content)) {
+    if (!editable) return null;
     return (
-      <div className={`richtext-block text-size-${size} richtext-placeholder`}>
+      <div className={`richtext-block text-size-${size} richtext-placeholder`} dir="auto">
         {t("placeholder.text")}
       </div>
     );
@@ -344,6 +345,7 @@ export function RichTextRender({ block }: any) {
   return (
     <div
       className={`richtext-block text-size-${size}`}
+      dir="auto"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

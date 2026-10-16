@@ -36,6 +36,7 @@ interface KeyValueProps {
     };
   };
   update: (newBlock: any) => void;
+  editable?: boolean;
 }
 
 export function KeyValueEditor({ block, update }: KeyValueProps) {
@@ -221,7 +222,7 @@ function SortableKeyValueRow({
   );
 }
 
-export function KeyValueRender({ block }: KeyValueProps) {
+export function KeyValueRender({ block, editable = true }: any) {
   const { t } = useI18n();
   const { items = [], emphasis = "key" } = block.props || {};
 
@@ -234,7 +235,7 @@ export function KeyValueRender({ block }: KeyValueProps) {
     );
 
   return (
-    <div className={`keyvalue-block emphasize-${emphasis}`}>
+    <div className={`keyvalue-block emphasize-${emphasis}`} dir="auto">
       {hasItem ? (
         items.map((item, i: number) => (
           <div key={i} className="keyvalue-row">
@@ -254,13 +255,13 @@ export function KeyValueRender({ block }: KeyValueProps) {
             </div>
           </div>
         ))
-      ) : (
+      ) : editable ? (
         <div className="keyvalue-row keyvalue-placeholder">
           <div></div>
           <div className="keyvalue-block-key">{t("kv.key")}</div>
           <div className="keyvalue-block-value">{t("kv.value")}</div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

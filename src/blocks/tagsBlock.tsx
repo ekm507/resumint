@@ -189,7 +189,7 @@ export function TagsEditor({ block, update }: any) {
   );
 }
 
-export function TagsRender({ block }: any) {
+export function TagsRender({ block, editable = true }: any) {
   const { t } = useI18n();
   const {
     tags = [],
@@ -201,7 +201,7 @@ export function TagsRender({ block }: any) {
   const hasTag = Array.isArray(tags) && tags.some((tag: string) => String(tag ?? "").trim() !== "");
 
   return (
-    <div className={`tags-block align-start`}>
+    <div className={`tags-block align-start`} dir="auto">
       {hasTag ? (
         tags.map((tag: string, i: number) => (
           <span
@@ -211,13 +211,13 @@ export function TagsRender({ block }: any) {
             {tag}
           </span>
         ))
-      ) : (
+      ) : editable ? (
         <span
           className={`tags-block-tag tag-shape-${shape} tag-size-${size} tag-variant-${variant} tags-placeholder`}
         >
           {t("tags.placeholder")}
         </span>
-      )}
+      ) : null}
     </div>
   );
 }

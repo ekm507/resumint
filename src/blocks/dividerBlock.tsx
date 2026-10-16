@@ -58,6 +58,7 @@ export function DividerRender({ block }: any) {
   return (
     <div
       className="divider-block-render"
+      dir="auto"
       style={{ padding: "0.75rem 0", cursor: "pointer" }}
     >
       <hr

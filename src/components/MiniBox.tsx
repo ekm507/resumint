@@ -31,50 +31,8 @@ export default function MiniBox({
 
   const sectionRef = useRef<HTMLElement | null>(null);
   const [titleFocused, setTitleFocused] = useState(false);
+  void dir;
 
-  const scanText = [
-    form.title || "",
-    ...(form.blocks || []).flatMap((b: any) => {
-      const props = b?.props || {};
-      const values: string[] = [];
-      if (typeof props.text === "string") values.push(props.text);
-      if (Array.isArray(props.items)) {
-        for (const item of props.items) {
-          if (item && typeof item.key === "string") values.push(item.key);
-          if (item && typeof item.value === "string") values.push(item.value);
-        }
-      }
-      if (Array.isArray(props.columns)) {
-        for (const col of props.columns) {
-          if (Array.isArray(col?.children)) values.push(...collectBlockText(col.children));
-        }
-      }
-      values.push(...Object.values(props).filter((v) => typeof v === "string") as string[]);
-      return values;
-    }),
-  ].join(" ");
-
-  function collectBlockText(blocks: any[]): string[] {
-    const out: string[] = [];
-    for (const b of blocks || []) {
-      const props = b?.props || {};
-      if (typeof props.text === "string") out.push(props.text);
-      if (Array.isArray(props.items)) {
-        for (const item of props.items) {
-          if (item && typeof item.key === "string") out.push(item.key);
-          if (item && typeof item.value === "string") out.push(item.value);
-        }
-      }
-      out.push(...Object.values(props).filter((v) => typeof v === "string") as string[]);
-    }
-    return out;
-  }
-
-  const firstStrongChar = scanText.match(/[\p{L}]/u)?.[0];
-  const isTitleRtl =
-    !!firstStrongChar && /[\u0600-\u06FF\u0750-\u077F]/.test(firstStrongChar);
-  const resolvedDir =
-    firstStrongChar ? (isTitleRtl ? "rtl" : "ltr") : dir === "auto" ? "ltr" : dir;
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const wrapperRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -172,7 +130,7 @@ export default function MiniBox({
       <section
         ref={sectionRef as any}
         className="resume-section"
-        dir={resolvedDir}
+        dir="auto"
         style={{ backgroundColor: bg }}
       >
         {(form.icon || form.title) && (
@@ -184,7 +142,7 @@ export default function MiniBox({
 
         <div className="resume-section-content">
           {form.blocks?.map((block) => (
-            <BlockRenderer key={block.id} block={block} />
+            <BlockRenderer key={block.id} block={block} editable={canEdit} />
           ))}
         </div>
       </section>
@@ -197,7 +155,7 @@ export default function MiniBox({
     <section
       ref={sectionRef as any}
       className="resume-section"
-      dir={resolvedDir}
+      dir="auto"
       style={{ backgroundColor: bg }}
       onFocus={() => setIsFocused(true)}
       onBlur={(e) => {
@@ -226,8 +184,13 @@ export default function MiniBox({
           form.icon && <img className="resume-section-icon" src={form.icon} />
         )}
         <h1
+          data-placeholder={t("placeholder.sectionTitle")}
           className={`resume-section-title ${
-            (isFocused || titleFocused) && !(form.title || "").trim() ? "title-placeholder-active" : ""
+            canEdit && !(form.title || "").trim()
+              ? (isFocused || titleFocused)
+                ? "title-placeholder-active"
+                : "title-placeholder"
+              : ""
           }`}
           tabIndex={0}
           contentEditable={isFocused || titleFocused}
@@ -321,7 +284,7 @@ export default function MiniBox({
                   onClickCapture={() => setSelectedBlockId(block.id)}
                   style={{ cursor: "pointer" }}
                 >
-                  <BlockRenderer block={block} />
+                  <BlockRenderer block={block} editable={canEdit} />
                 </div>
               )}
 
