@@ -7,6 +7,8 @@ import { themeNames } from "./themes";
 import { DropdownMenu } from "./components/DropDownMenu";
 import { formTemplateOptions } from "./data/formTemplates";
 import { generateAccentPalette } from "./utils/theming";
+import { FileText, Settings } from "lucide-react";
+import TopBarMenu from "./components/TopBarMenu";
 import { I18nProvider } from "./i18nContext";
 import type { Locale } from "./i18nContext";
 import { translations } from "./i18n";
@@ -137,57 +139,61 @@ export default function App() {
           </label>
           <div className="vdivider" />
 
-          <label className="toolbar-color">
-            <span>{t("settings.accent")}:</span>
-            <input
-              type="color"
-              value={accentColor ?? "#F0F0F0"}
-              onChange={(e) => setAccentColor(e.target.value)}
-            />
-          </label>
+          <TopBarMenu icon={<FileText size={16} />} label={t("app.document")}>
+            <label style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              {t("settings.theme")}
+              <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+                {themeNames.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-          <button
-            className="toolbar-reset"
-            onClick={() => setAccentColor(null)}
-          >
-            {t("settings.reset")}
-          </button>
+            <label style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              {t("settings.accent")}
+              <input
+                type="color"
+                value={accentColor ?? "#F0F0F0"}
+                onChange={(e) => setAccentColor(e.target.value)}
+              />
+              <button
+                type="button"
+                className="toolbar-button"
+                onClick={() => setAccentColor(null)}
+              >
+                {t("settings.reset")}
+              </button>
+            </label>
+          </TopBarMenu>
 
-          <div className="vdivider" />
+          <TopBarMenu icon={<Settings size={16} />} label={t("app.settings")}>
+            <label style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              {t("settings.language")}
+              <select
+                value={locale}
+                onChange={(e) => setLocale(e.target.value as Locale)}
+              >
+                <option value="en">{t("language.english")}</option>
+                <option value="fa">{t("language.persian")}</option>
+              </select>
+            </label>
 
-          <label>{t("settings.theme")}</label>
-          <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-            {themeNames.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-
-          <div className="vdivider" />
-
-          <label>{t("settings.language")}</label>
-          <select
-            value={locale}
-            onChange={(e) => setLocale(e.target.value as Locale)}
-          >
-            <option value="en">{t("language.english")}</option>
-            <option value="fa">{t("language.persian")}</option>
-          </select>
-
-          <div className="vdivider" />
-
-          <label>{t("settings.appTheme")}</label>
-          <select
-            value={appLook}
-            onChange={(e) =>
-              setAppLook(e.target.value as "light" | "dark" | "system")
-            }
-          >
-            <option value="light">{t("theme.light")}</option>
-            <option value="dark">{t("theme.dark")}</option>
-            <option value="system">{t("theme.system")}</option>
-          </select>
+            <label style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              {t("settings.appTheme")}
+              <select
+                value={appLook}
+                onChange={(e) =>
+                  setAppLook(e.target.value as "light" | "dark" | "system")
+                }
+              >
+                <option value="light">{t("theme.light")}</option>
+                <option value="dark">{t("theme.dark")}</option>
+                <option value="system">{t("theme.system")}</option>
+              </select>
+            </label>
+          </TopBarMenu>
 
           <DropdownMenu
             options={formTemplateOptions}
