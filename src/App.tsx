@@ -17,6 +17,38 @@ import { translations } from "./i18n";
 
 import "./blocks";
 
+function firstDocumentImage(document: any): string {
+  for (const form of document?.forms || []) {
+    for (const block of form?.blocks || []) {
+      const image = firstBlockImage(block);
+      if (image) return image;
+    }
+  }
+  return "";
+}
+
+function firstBlockImage(block: any): string {
+  if (!block) return "";
+  if (block.blockType === "image" && typeof block.props?.src === "string") {
+    return block.props.src;
+  }
+  if (Array.isArray(block.props?.columns)) {
+    for (const column of block.props.columns) {
+      for (const child of column?.children || []) {
+        const image = firstBlockImage(child);
+        if (image) return image;
+      }
+    }
+  }
+  if (Array.isArray(block.children)) {
+    for (const child of block.children) {
+      const image = firstBlockImage(child);
+      if (image) return image;
+    }
+  }
+  return "";
+}
+
 function firstDocumentLine(document: any): string {
   for (const form of document?.forms || []) {
     for (const block of form?.blocks || []) {
@@ -242,7 +274,7 @@ export default function App() {
   };
 
   const newDocument = () => {
-    const doc = createDocument("");
+    const doc = createDocument("", [], []);
     setDocuments((prev) => [doc, ...prev]);
     setCurrentId(doc.id);
     setForms(doc.forms);
@@ -463,8 +495,20 @@ export default function App() {
                     onClick={() => selectDocument(doc.id)}
                   >
                     <div className="sidebar-document-thumb">
-                      {firstDocumentLine(doc) ||
-                        (doc.name ? doc.name : t("sidebar.untitled"))}
+                      {firstDocumentImage(doc) ? (
+                        <img
+                          src={firstDocumentImage(doc)}
+                          alt=""
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : (
+                        firstDocumentLine(doc) ||
+                        (doc.name ? doc.name : t("sidebar.untitled"))
+                      )}
                     </div>
                     <div className="sidebar-document-body">
                       {doc.id === currentId && isEditing ? (
