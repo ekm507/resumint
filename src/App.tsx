@@ -1,4 +1,7 @@
 import { useState, useRef, type ChangeEvent, useEffect } from "react";
+import { MobileArrange, MobileSectionEditor } from "./components/MobileWorkspace";
+import { useIsMobile, useMobileNavigation } from "./hooks/useMobileNavigation";
+import "./mobile.css";
 import DraggableLayout from "./components/DraggableLayout";
 import { useReactToPrint } from "react-to-print";
 import { useResumeData } from "./hooks/useResumeData";
@@ -189,6 +192,29 @@ export default function App() {
 
   const [isPrinting, setIsPrinting] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useIsMobile();
+  const mobileNav = useMobileNavigation(isMobile);
+  const [mobileView, setMobileView] = useState<'arrange' | 'preview'>('arrange');
+  const [previewZoom, setPreviewZoom] = useState(false);
+  const [previewWidth, setPreviewWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const resize = () => setPreviewWidth(window.innerWidth);
+    window.addEventListener('resize', resize);
+    return () => window.removeEventListener('resize', resize);
+  }, []);
+  const previewScale = isMobile && !isPrinting && !previewZoom ? Math.min(1, (previewWidth - 24) / (210 * 96 / 25.4)) : 1;
+  const addSection = (template: FormStructure) => {
+    const id = addForm(template);
+    if (isMobile) mobileNav.open(`edit:${id}`);
+  };
+  const editingForm = forms.find(form => mobileNav.screen === `edit:${form.id}`);
+  useEffect(() => {
+    if (isMobile && mobileNav.screen) {
+      const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') history.back(); };
+      window.addEventListener('keydown', escape);
+      return () => window.removeEventListener('keydown', escape);
+    }
+  }, [isMobile, mobileNav]);
   const [editingDocId, setEditingDocId] = useState<string | null>(null);
   const [editingDocName, setEditingDocName] = useState("");
 
@@ -271,6 +297,7 @@ export default function App() {
     const doc = documents.find((item) => item.id === id);
     if (!doc) return;
     setEditingDocId(null);
+    if (isMobile) mobileNav.close();
     setCurrentId(id);
     setForms(doc.forms);
     setLayout(doc.layout);
@@ -279,6 +306,7 @@ export default function App() {
   const newDocument = () => {
     const doc = createDocument("", [], []);
     setDocuments((prev) => [doc, ...prev]);
+    if (isMobile) mobileNav.close();
     setCurrentId(doc.id);
     setForms(doc.forms);
     setLayout(doc.layout);
@@ -295,6 +323,7 @@ export default function App() {
       current.layout,
     );
     setDocuments((prev) => [doc, ...prev]);
+    if (isMobile) mobileNav.close();
     setCurrentId(doc.id);
     setForms(doc.forms);
     setLayout(doc.layout);
@@ -325,6 +354,7 @@ export default function App() {
       data.layout,
     );
     setDocuments((prev) => [doc, ...prev]);
+    if (isMobile) mobileNav.close();
     setCurrentId(doc.id);
     setForms(doc.forms);
     setLayout(doc.layout);
@@ -338,12 +368,27 @@ export default function App() {
 
   return (
     <I18nProvider locale={locale}>
-      <div className="app-root">
-        <div className="app-toolbar">
+      <div className={`app-root ${isMobile ? 'mobile-app' : ''}`}>
+        {isMobile && mobileNav.screen && !editingForm && <button className="mobile-backdrop" aria-label={t('mobile.close')} onClick={mobileNav.close} />}
+        {isMobile && <nav inert={Boolean(mobileNav.screen)} className="mobile-bottom-bar" aria-label={t('mobile.navigation')}>
+          <button aria-pressed={mobileView === 'arrange'} onClick={() => setMobileView('arrange')}>{t('mobile.arrange')}</button>
+          <button aria-pressed={mobileView === 'preview'} onClick={() => setMobileView('preview')}>{t('mobile.preview')}</button>
+          <button onClick={() => mobileNav.open('add')}>{t('mobile.add')}</button>
+          <button onClick={() => mobileNav.open('gallery')}>{t('sidebar.toggle')}</button>
+          <button onClick={() => mobileNav.open('tools')}>{t('mobile.more')}</button>
+        </nav>}
+        {isMobile && mobileNav.screen === 'add' && <div className="mobile-sheet" role="dialog" aria-modal="true" aria-label={t('app.addForm')} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
+          <header><strong>{t('app.addForm')}</strong><button onClick={mobileNav.close}>{t('mobile.close')}</button></header>
+          {formTemplateOptionsWithState.map(option => <button key={option.key} disabled={option.disabled} onClick={() => { addSection(option.value); }}>{option.icon}{t(option.label || option.key)}</button>)}
+        </div>}
+        {isMobile && editingForm && <MobileSectionEditor key={editingForm.id} form={editingForm} onChange={setForm} onClose={mobileNav.close} onDelete={() => { deleteForm(editingForm.id); mobileNav.close(); }} />}
+        {isMobile && <div inert={Boolean(mobileNav.screen)} className="mobile-arrange-container" hidden={mobileView !== 'arrange' || isPrinting} dir={locale === 'fa' ? 'rtl' : 'ltr'}><MobileArrange forms={forms} layout={layout} setLayout={setLayout} onOpen={id => mobileNav.open(`edit:${id}`)} /></div>}
+        <div role={isMobile ? "dialog" : undefined} aria-modal={isMobile || undefined} aria-label={t("mobile.more")} className={`app-toolbar ${isMobile ? 'mobile-sheet' : ''}`} hidden={isMobile && mobileNav.screen !== 'tools'}>
+          {isMobile && <header><strong>{t('mobile.more')}</strong><button onClick={mobileNav.close}>{t('mobile.close')}</button></header>}
           <button
             className="toolbar-button"
             style={{ display: "inline-flex", flexDirection: "row", alignItems: "center", gap: "6px", whiteSpace: "nowrap" }}
-            onClick={() => setSidebarOpen((value) => !value)}
+            onClick={() => isMobile ? mobileNav.open("gallery") : setSidebarOpen((value) => !value)}
           >
             <GalleryHorizontal size={16} />
             {t("sidebar.toggle")} {sidebarOpen ? "◀" : "▶"}          </button>
@@ -450,12 +495,12 @@ export default function App() {
             </label>
           </TopBarMenu>
 
-          <DropdownMenu
+          {isMobile ? <button className="toolbar-button" onClick={() => mobileNav.open("add")}>{t("app.addForm")}</button> : <DropdownMenu
             options={formTemplateOptionsWithState}
-            onChange={(template) => addForm(template)}
+            onChange={addSection}
             text={t("app.addForm")}
             icon={<Plus size={16} />}
-          />
+          />}
 
           <button
             className="toolbar-button"
@@ -479,8 +524,9 @@ export default function App() {
             width: "100%",
           }}
         >
-          {sidebarOpen && (
-            <aside className="app-sidebar">
+          {(isMobile ? mobileNav.screen === "gallery" : sidebarOpen) && (
+            <aside className="app-sidebar" role={isMobile ? 'dialog' : undefined} aria-modal={isMobile || undefined} aria-label={t('sidebar.documents')}>
+              {isMobile && <header><strong>{t('sidebar.documents')}</strong><button onClick={mobileNav.close}>{t('mobile.close')}</button></header>}
               <div className="sidebar-section">
                 <button
                   className="sidebar-button flex items-center gap-2"
@@ -627,7 +673,8 @@ export default function App() {
           )}
 
           <div
-            className="app-layout"
+            inert={isMobile && Boolean(mobileNav.screen)}
+            className={`app-layout ${isMobile && mobileView !== "preview" && !isPrinting ? "mobile-preview-hidden" : ""}`}
             style={{
               display: "flex",
               justifyContent: "center",
@@ -636,20 +683,25 @@ export default function App() {
               paddingTop: "12px",
             }}
           >
+            {isMobile && mobileView === 'preview' && <p className="mobile-preview-hint">{t('mobile.previewHint')}</p>}
+            {isMobile && mobileView === 'preview' && <button className="mobile-preview-zoom" onClick={() => setPreviewZoom(value => !value)}>{t(previewZoom ? 'mobile.fit' : 'mobile.zoom')}</button>}
             <div
               id="resume-render"
               ref={resumeRef}
               className={"resume theme-" + theme}
               style={accentPalette as React.CSSProperties | undefined}
             >
-              <div className="resume-page">
+              <div className="resume-page" style={isMobile && !isPrinting ? { zoom: previewScale } : undefined}>
                 <DraggableLayout
                   layout={layout}
                   setLayout={setLayout}
                   forms={forms}
                   setForm={setForm}
                   deleteForm={deleteForm}
-                  editable={!isPrinting}
+                  editable={!isPrinting && !isMobile}
+                  onOpenSection={isMobile && !isPrinting ? id => mobileNav.open(`edit:${id}`) : undefined}
+                  previewScale={previewScale}
+                  dragDisabled={isPrinting}
                 />
               </div>
             </div>

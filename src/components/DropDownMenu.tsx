@@ -1,3 +1,4 @@
+import { useMenuState } from "../hooks/useMobileNavigation";
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { type DropdownOption } from "../utils/types";
@@ -19,7 +20,7 @@ export function DropdownMenu<T>({
   icon,
 }: DropdownMenuProps<T>) {
   const { t } = useI18n();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useMenuState();
   const [menuPos, setMenuPos] = useState<{
     top: number;
     left: number;

@@ -40,6 +40,7 @@ export function useResumeData() {
     const formLayout = layout || "left";
     setForms((prev) => [...prev, newForm]);
     setLayout((prev) => [...prev, { id: newForm.id, column: formLayout }]);
+    return newForm.id;
   }
 
   return {

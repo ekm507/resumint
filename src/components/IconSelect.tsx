@@ -1,3 +1,5 @@
+import MobilePickerSheet from "./MobilePickerSheet";
+import { useIsMobile, useMenuState } from "../hooks/useMobileNavigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { loadAllIcons } from "../utils/loadIcons";
@@ -11,7 +13,9 @@ interface IconSelectProps {
 
 export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
   const { t } = useI18n();
-  const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useIsMobile();
+  const [search, setSearch] = useState("");
+  const [isOpen, setIsOpen] = useMenuState();
   const [menuPos, setMenuPos] = useState<{
     top: number;
     left: number;
@@ -34,7 +38,9 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
   // (e.g. parent component closing) do not dismiss the icon picker.
   useEffect(() => {
     (window as any).__iconSelectOpen = isOpen;
-    return () => {
+  
+
+  return () => {
       (window as any).__iconSelectOpen = false;
     };
   }, [isOpen]);
@@ -46,9 +52,10 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
   }, []);
 
   // Filter icons by directory if dir prop is provided
-  const filteredIcons = dir
+  const categoryIcons = dir
     ? icons.filter((i) => i.path === dir || i.path.startsWith(dir + "/"))
     : icons;
+  const filteredIcons = isMobile ? categoryIcons.filter(icon => icon.name.toLowerCase().includes(search.toLowerCase())) : categoryIcons;
 
   function calculatePosition() {
     const btn = buttonRef.current?.getBoundingClientRect();
@@ -68,7 +75,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
   }
 
   useLayoutEffect(() => {
-    if (!isOpen || !menuRef.current || !menuPos) return;
+    if (isMobile || !isOpen || !menuRef.current || !menuPos) return;
 
     const menuEl = menuRef.current.getBoundingClientRect();
 
@@ -94,7 +101,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
 
     menuRef.current.style.left = left + "px";
     menuRef.current.style.top = top + "px";
-  }, [isOpen, menuPos]);
+  }, [isOpen, menuPos, isMobile]);
 
   function toggleMenu() {
     calculatePosition();
@@ -131,51 +138,7 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
     };
   }, [isOpen]);
 
-  return (
-    <>
-      <div className="icon-select-box" style={{ position: "relative", zIndex: 30 }}>
-        <button
-          ref={buttonRef}
-          onClick={toggleMenu}
-          className="icon-preview"
-          title={t("common.selectIcon")}
-        >
-          {value ? (
-            <img src={value} className="icon-img" />
-          ) : (
-            <span
-              className="icon-empty-rectangle"
-              style={{
-                display: "inline-block",
-                width: "22px",
-                height: "22px",
-                border: "1px solid #94a3b8",
-                borderRadius: "4px",
-                background: "transparent",
-              }}
-            />
-          )}
-        </button>
-
-
-      </div>
-
-      {isOpen &&
-        menuPos &&
-        createPortal(
-          <div
-            ref={menuRef}
-            className={`icon-select-menu icon-select-menu-${menuPos.direction}`}
-            style={{
-              position: "fixed",
-              left: menuPos.left,
-              top: menuPos.top,
-              transform:
-                menuPos.direction === "down"
-                  ? "translateX(-50%)"
-                  : "translate(-50%, -100%)",
-            }}
-          >
+  const menuContent = (
             <div className="grid-menu">
               <button
                 key="__remove__"
@@ -213,6 +176,58 @@ export default function IconSelect({ value, onSelect, dir }: IconSelectProps) {
                 </button>
               ))}
             </div>
+  );
+
+  return (
+    <>
+      <div className="icon-select-box" style={{ position: "relative", zIndex: 30 }}>
+        <button
+          ref={buttonRef}
+          onClick={toggleMenu}
+          className="icon-preview"
+          title={t("common.selectIcon")}
+        >
+          {value ? (
+            <img src={value} className="icon-img" />
+          ) : (
+            <span
+              className="icon-empty-rectangle"
+              style={{
+                display: "inline-block",
+                width: "22px",
+                height: "22px",
+                border: "1px solid #94a3b8",
+                borderRadius: "4px",
+                background: "transparent",
+              }}
+            />
+          )}
+        </button>
+
+
+      </div>
+
+      {isOpen && isMobile && <MobilePickerSheet title={t("common.selectIcon")} panelRef={menuRef} onClose={() => setIsOpen(false)}>
+        <input className="mobile-icon-search" type="search" aria-label={t("mobile.searchIcons")} placeholder={t("mobile.searchIcons")} value={search} onChange={event => setSearch(event.target.value)} />
+        {menuContent}
+      </MobilePickerSheet>}
+      {isOpen && !isMobile &&
+        menuPos &&
+        createPortal(
+          <div
+            ref={menuRef}
+            className={`icon-select-menu icon-select-menu-${menuPos.direction}`}
+            style={{
+              position: "fixed",
+              left: menuPos.left,
+              top: menuPos.top,
+              transform:
+                menuPos.direction === "down"
+                  ? "translateX(-50%)"
+                  : "translate(-50%, -100%)",
+            }}
+          >
+            {menuContent}
           </div>,
           document.body,
         )}

@@ -1,3 +1,4 @@
+import { useMenuState } from "../hooks/useMobileNavigation";
 import { createPortal } from "react-dom";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
@@ -8,7 +9,7 @@ interface TopBarMenuProps {
 }
 
 export default function TopBarMenu({ icon, label, children }: TopBarMenuProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useMenuState();
   const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
 
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -44,6 +45,12 @@ export default function TopBarMenu({ icon, label, children }: TopBarMenuProps) {
     if (left < margin) left = margin;
     if (panelRef.current) {
       panelRef.current.style.left = `${left}px`;
+      const button = buttonRef.current?.getBoundingClientRect();
+      const top = button && pos.top + panel.height > window.innerHeight - margin
+        ? Math.max(margin, button.top - panel.height - 6) : pos.top;
+      panelRef.current.style.top = `${top}px`;
+      panelRef.current.style.maxHeight = `${window.innerHeight - margin * 2}px`;
+      panelRef.current.style.overflowY = 'auto';
     }
   }, [open, pos]);
 

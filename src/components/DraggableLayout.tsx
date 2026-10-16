@@ -3,6 +3,8 @@ import {
   DragOverlay,
   closestCorners,
   PointerSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   useDroppable,
@@ -21,7 +23,7 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import MiniBox from "./MiniBox";
 import type { FormStructure, LayoutItem } from "../utils/types";
 
@@ -32,12 +34,18 @@ function SortableMiniBox({
   onFormChange,
   onDelete,
   editable,
+  onOpenSection,
+  previewScale = 1,
+  dragDisabled = false,
 }: {
   id: string;
   form: FormStructure;
   onFormChange?: (id: string, form: FormStructure) => void;
   onDelete?: (id: string) => void;
   editable?: boolean;
+  onOpenSection?: (id: string) => void;
+  previewScale?: number;
+  dragDisabled?: boolean;
 }) {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -48,17 +56,31 @@ function SortableMiniBox({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id, disabled: isEditing });
+  } = useSortable({ id, disabled: isEditing || dragDisabled });
 
   const style: React.CSSProperties = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Transform.toString(transform ? { ...transform, x: transform.x / previewScale, y: transform.y / previewScale } : null),
     transition,
-    opacity: isDragging ? 0.4 : 1,
+    opacity: isDragging && !onOpenSection ? 0.4 : 1,
+    position: "relative",
+    zIndex: isDragging ? 10 : undefined,
     cursor: "auto",
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}
+      className={onOpenSection ? 'mobile-preview-section' : undefined}
+      data-section-id={id}
+      aria-label={onOpenSection ? form.title || undefined : undefined}
+      onClickCapture={onOpenSection ? event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!isDragging) onOpenSection(id);
+      } : undefined}
+      onKeyDown={onOpenSection ? event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onOpenSection(id); }
+      } : event => listeners?.onKeyDown?.(event)}
+    >
       <MiniBox
         form={form}
         onFormChange={onFormChange}
@@ -78,6 +100,9 @@ function DroppableColumn({
   onFormChange,
   onDelete,
   editable,
+  onOpenSection,
+  previewScale = 1,
+  dragDisabled = false,
 }: {
   id: "left" | "right";
   itemIds: string[];
@@ -85,6 +110,9 @@ function DroppableColumn({
   onFormChange?: (id: string, form: FormStructure) => void;
   onDelete?: (id: string) => void;
   editable?: boolean;
+  onOpenSection?: (id: string) => void;
+  previewScale?: number;
+  dragDisabled?: boolean;
 }) {
   const { setNodeRef } = useDroppable({ id });
 
@@ -102,6 +130,9 @@ function DroppableColumn({
               onFormChange={onFormChange}
               onDelete={onDelete}
               editable={editable}
+              onOpenSection={onOpenSection}
+              previewScale={previewScale}
+              dragDisabled={dragDisabled}
             />
           );
         })}
@@ -118,6 +149,9 @@ export interface DraggableLayoutProps {
   setForm?: (id: string, form: FormStructure) => void;
   deleteForm?: (id: string) => void;
   editable?: boolean;
+  onOpenSection?: (id: string) => void;
+  previewScale?: number;
+  dragDisabled?: boolean;
 }
 
 function findContainer(id: string, layout: LayoutItem[]): "left" | "right" | null {
@@ -139,7 +173,11 @@ export default function DraggableLayout({
   setForm,
   deleteForm,
   editable,
+  onOpenSection,
+  previewScale = 1,
+  dragDisabled = false,
 }: DraggableLayoutProps) {
+  const dragStartLayout = useRef(layout);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const columns = useMemo(
@@ -150,11 +188,13 @@ export default function DraggableLayout({
     [layout],
   );
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
-  );
+  const desktopSensor = useSensor(PointerSensor, { activationConstraint: { distance: 8 } });
+  const mouseSensor = useSensor(MouseSensor, { activationConstraint: { distance: 8 } });
+  const touchSensor = useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 8 } });
+  const sensors = useSensors(...(onOpenSection ? [mouseSensor, touchSensor] : [desktopSensor]));
 
   const onDragStart = (event: DragStartEvent) => {
+    dragStartLayout.current = layout;
     setActiveId(event.active.id as string);
   };
 
@@ -269,6 +309,7 @@ export default function DraggableLayout({
       onDragStart={onDragStart}
       onDragOver={onDragOver}
       onDragEnd={onDragEnd}
+      onDragCancel={() => { setLayout(dragStartLayout.current); setActiveId(null); }}
     >
       <div className="resume-columns">
         <DroppableColumn
@@ -278,6 +319,9 @@ export default function DraggableLayout({
           onFormChange={setForm}
           onDelete={deleteForm}
           editable={editable}
+          onOpenSection={onOpenSection}
+          previewScale={previewScale}
+          dragDisabled={dragDisabled}
         />
         <DroppableColumn
           id="right"
@@ -286,16 +330,19 @@ export default function DraggableLayout({
           onFormChange={setForm}
           onDelete={deleteForm}
           editable={editable}
+          onOpenSection={onOpenSection}
+          previewScale={previewScale}
+          dragDisabled={dragDisabled}
         />
       </div>
 
-      <DragOverlay>
+      {!onOpenSection && <DragOverlay>
         {activeForm ? (
           <div style={{ opacity: 0.8, cursor: "grabbing" }}>
             <MiniBox form={activeForm} editable={false} />
           </div>
         ) : null}
-      </DragOverlay>
+      </DragOverlay>}
     </DndContext>
   );
 }

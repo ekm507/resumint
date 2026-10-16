@@ -9,6 +9,7 @@ interface Props {
   setBlockType: (id: string, type: string) => void;
   moveUp: () => void;
   moveDown: () => void;
+  autoFocus?: boolean;
 }
 
 export default function BlockEditor({
@@ -18,6 +19,7 @@ export default function BlockEditor({
   setBlockType,
   moveUp,
   moveDown,
+  autoFocus = true,
 }: Props) {
   const { t } = useI18n();
 
@@ -82,6 +84,7 @@ export default function BlockEditor({
         </div>
       )}
       <Editor
+        autoFocus={autoFocus}
         block={block}
         update={(newBlock: Block) => updateBlock(block.id, newBlock)}
       />

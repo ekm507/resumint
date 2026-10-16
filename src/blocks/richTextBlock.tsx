@@ -50,7 +50,7 @@ function ToolbarButton({ active, onClick, title, children }: any) {
    EDITOR
 ========================= */
 
-export function RichTextEditor({ block, update }: any) {
+export function RichTextEditor({ block, update, autoFocus = true }: any) {
   const { t } = useI18n();
   const { content = null } = block.props || {};
 
@@ -94,7 +94,7 @@ export function RichTextEditor({ block, update }: any) {
       }),
     ],
     content,
-    autofocus: true,
+    autofocus: autoFocus,
     onUpdate({ editor }) {
       setProp("content", editor.getJSON());
     },

@@ -1,3 +1,5 @@
+import MobilePickerSheet from "./MobilePickerSheet";
+import { useIsMobile, useMenuState } from "../hooks/useMobileNavigation";
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { getAllBlocks } from "../blocks/blockRegistry";
@@ -9,7 +11,8 @@ interface AddBlockMenuProps {
 
 export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
   const { t } = useI18n();
-  const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useIsMobile();
+  const [isOpen, setIsOpen] = useMenuState();
   const [menuPos, setMenuPos] = useState<{
     top: number;
     left: number;
@@ -51,7 +54,9 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
     const handleResize = () => calculatePosition();
     window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
+  
+
+  return () => window.removeEventListener("resize", handleResize);
   }, [isOpen]);
 
   useLayoutEffect(() => {
@@ -84,6 +89,23 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
     };
   }, [isOpen]);
 
+  const menuContent = (
+            <div className="add-block-grid">
+              {blockTypes.map((b) => (
+                <button
+                  key={b.type}
+                  className="add-block-item"
+                  onClick={() => {
+                    onSelect(b.type);
+                    setIsOpen(false);
+                  }}
+                >
+                  {t(b.label)}
+                </button>
+              ))}
+            </div>
+  );
+
   return (
     <>
       <button
@@ -92,10 +114,11 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
         title={t("common.createBlockHere")}
         onClick={toggleMenu}
       >
-        +
+        {isMobile ? t("common.createBlockHere") : "+"}
       </button>
 
-      {isOpen &&
+      {isOpen && isMobile && <MobilePickerSheet title={t("common.createBlockHere")} panelRef={menuRef} onClose={() => setIsOpen(false)}>{menuContent}</MobilePickerSheet>}
+      {isOpen && !isMobile &&
         menuPos &&
         createPortal(
           <div
@@ -111,20 +134,7 @@ export default function AddBlockMenu({ onSelect }: AddBlockMenuProps) {
                   : "translate(-50%, -100%)",
             }}
           >
-            <div className="add-block-grid">
-              {blockTypes.map((b) => (
-                <button
-                  key={b.type}
-                  className="add-block-item"
-                  onClick={() => {
-                    onSelect(b.type);
-                    setIsOpen(false);
-                  }}
-                >
-                  {t(b.label)}
-                </button>
-              ))}
-            </div>
+            {menuContent}
           </div>,
           document.body,
         )}
